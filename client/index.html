@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary Meta Tags -->
+    <title>Math Farm - Comprehensive Mathematics Learning Platform</title>
+    <meta
+      name="title"
+      content="Math Farm - Comprehensive Mathematics Learning Platform"
+    />
+    <meta
+      name="description"
+      content="Self-hosted mathematics learning platform with interactive tools, step-by-step explanations, and comprehensive curriculum from elementary to advanced topics."
+    />
+    <meta
+      name="keywords"
+      content="mathematics, learning, education, algebra, calculus, geometry, interactive tools, self-hosted"
+    />
+    <meta name="author" content="Math Farm" />
+
+    <!-- Theme and Color -->
+    <meta name="theme-color" content="hsl(262, 65%, 45%)" />
+    <meta name="color-scheme" content="light dark" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="/" />
+    <meta
+      property="og:title"
+      content="Math Farm - Comprehensive Mathematics Learning Platform"
+    />
+    <meta
+      property="og:description"
+      content="Self-hosted mathematics learning platform with interactive tools, step-by-step explanations, and comprehensive curriculum from elementary to advanced topics."
+    />
+    <meta property="og:site_name" content="Math Farm" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="/" />
+    <meta
+      property="twitter:title"
+      content="Math Farm - Comprehensive Mathematics Learning Platform"
+    />
+    <meta
+      property="twitter:description"
+      content="Self-hosted mathematics learning platform with interactive tools, step-by-step explanations, and comprehensive curriculum from elementary to advanced topics."
+    />
+
+    <!-- Accessibility -->
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+
+    <!-- Performance and Security -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- Manifest for PWA -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Skip link for accessibility -->
+    <style>
+      .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 6px;
+        background: hsl(262, 65%, 45%);
+        color: white;
+        padding: 8px;
+        text-decoration: none;
+        border-radius: 4px;
+        z-index: 1000;
+        font-weight: 600;
+      }
+      .skip-link:focus {
+        top: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Skip navigation for screen readers -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Root element with accessibility attributes -->
+    <div
+      id="root"
+      role="application"
+      aria-label="Math Farm Learning Platform"
+    ></div>
+
+    <!-- Main script -->
+    <script type="module" src="/src/main.tsx"></script>
+
+    <!-- No JavaScript fallback -->
+    <noscript>
+      <div
+        style="
+          text-align: center;
+          padding: 2rem;
+          font-family: system-ui, sans-serif;
+        "
+      >
+        <h1>Math Farm</h1>
+        <p>This application requires JavaScript to function properly.</p>
+        <p>
+          Please enable JavaScript in your browser settings and refresh the
+          page.
+        </p>
+      </div>
+    </noscript>
+  </body>
+</html>

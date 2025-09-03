@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light mode colors - Purple theme */
+    --background: 255 15% 98%;
+    --foreground: 255 25% 15%;
+    --card: 255 25% 100%;
+    --card-foreground: 255 25% 15%;
+    --popover: 255 25% 100%;
+    --popover-foreground: 255 25% 15%;
+    --primary: 262 65% 45%;
+    --primary-foreground: 255 15% 98%;
+    --secondary: 255 15% 95%;
+    --secondary-foreground: 255 25% 15%;
+    --muted: 255 15% 95%;
+    --muted-foreground: 255 25% 45%;
+    --accent: 270 75% 65%;
+    --accent-foreground: 255 15% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 255 15% 98%;
+    --border: 255 15% 90%;
+    --input: 255 15% 90%;
+    --ring: 262 65% 45%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Dark mode colors - Purple theme */
+    --background: 255 25% 8%;
+    --foreground: 255 15% 92%;
+    --card: 255 25% 12%;
+    --card-foreground: 255 15% 92%;
+    --popover: 255 25% 12%;
+    --popover-foreground: 255 15% 92%;
+    --primary: 262 65% 55%;
+    --primary-foreground: 255 25% 8%;
+    --secondary: 255 25% 15%;
+    --secondary-foreground: 255 15% 92%;
+    --muted: 255 25% 15%;
+    --muted-foreground: 255 15% 65%;
+    --accent: 270 75% 70%;
+    --accent-foreground: 255 25% 8%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 255 15% 92%;
+    --border: 255 25% 20%;
+    --input: 255 25% 20%;
+    --ring: 262 65% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Smooth scrolling for navigation */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Theme transition for all elements */
+  *,
+  *::before,
+  *::after {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Focus styles for accessibility */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    :root {
+      --border: 255 25% 50%;
+      --ring: 262 65% 35%;
+    }
+    
+    .dark {
+      --border: 255 15% 70%;
+      --ring: 262 65% 65%;
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Responsive typography */
+  @media (max-width: 639px) {
+    html {
+      font-size: 14px;
+    }
+  }
+
+  @media (min-width: 640px) and (max-width: 1023px) {
+    html {
+      font-size: 15px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      font-size: 16px;
+    }
+  }
+
+  /* Touch-friendly interactions on mobile */
+  @media (hover: none) and (pointer: coarse) {
+    button,
+    [role="button"],
+    input[type="button"],
+    input[type="submit"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
+}
