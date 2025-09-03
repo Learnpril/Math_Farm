@@ -1,6 +1,7 @@
 import { PageContainer, Section } from '../components/layout/Layout';
 import { HeroSection } from '../components/HeroSection';
 import { MathDemo } from '../components/MathDemo';
+import { TopicsGrid } from '../components/TopicsGrid';
 
 /**
  * Home page component with placeholder sections for future implementation
@@ -24,22 +25,16 @@ export function Home() {
               to advanced mathematical concepts.
             </p>
             
-            {/* Placeholder for topic cards - will be implemented in future tasks */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
-              {Array.from({ length: 9 }, (_, i) => (
-                <div
-                  key={i}
-                  className="p-6 bg-card border border-border rounded-lg hover:shadow-lg transition-shadow"
-                >
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                    <div className="w-6 h-6 bg-primary/20 rounded"></div>
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2">Topic {i + 1}</h3>
-                  <p className="text-muted-foreground text-sm">
-                    Placeholder for topic description and mathematical expressions.
-                  </p>
-                </div>
-              ))}
+            {/* Topics Grid with actual topic cards */}
+            <div className="mt-12">
+              <TopicsGrid 
+                onTopicClick={(topicId) => {
+                  // Navigate to topic page - will be implemented in future tasks
+                  console.log('Navigate to topic:', topicId);
+                  // For now, just show an alert
+                  alert(`Topic "${topicId}" clicked! Navigation will be implemented in future tasks.`);
+                }}
+              />
             </div>
           </div>
         </PageContainer>

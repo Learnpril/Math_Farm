@@ -1,0 +1,101 @@
+[
+  {
+    "id": "arithmetic",
+    "title": "Arithmetic",
+    "description": "Master the fundamentals of numbers, operations, and basic calculations",
+    "level": "elementary",
+    "icon": "Calculator",
+    "mathExpression": "\\frac{3}{4} + \\frac{1}{2} = \\frac{5}{4}",
+    "prerequisites": [],
+    "estimatedTime": 45,
+    "difficulty": 1
+  },
+  {
+    "id": "algebra",
+    "title": "Algebra",
+    "description": "Explore variables, equations, and algebraic expressions",
+    "level": "middle",
+    "icon": "Variable",
+    "mathExpression": "x^2 + 5x - 6 = (x + 6)(x - 1)",
+    "prerequisites": ["arithmetic"],
+    "estimatedTime": 60,
+    "difficulty": 2
+  },
+  {
+    "id": "geometry",
+    "title": "Geometry",
+    "description": "Study shapes, angles, and spatial relationships",
+    "level": "middle",
+    "icon": "Triangle",
+    "mathExpression": "A = \\pi r^2",
+    "prerequisites": ["arithmetic"],
+    "estimatedTime": 55,
+    "difficulty": 2
+  },
+  {
+    "id": "trigonometry",
+    "title": "Trigonometry",
+    "description": "Understand angles, triangles, and periodic functions",
+    "level": "high",
+    "icon": "Waves",
+    "mathExpression": "\\sin^2(\\theta) + \\cos^2(\\theta) = 1",
+    "prerequisites": ["algebra", "geometry"],
+    "estimatedTime": 70,
+    "difficulty": 3
+  },
+  {
+    "id": "calculus",
+    "title": "Calculus",
+    "description": "Master derivatives, integrals, and limits",
+    "level": "advanced",
+    "icon": "TrendingUp",
+    "mathExpression": "\\frac{d}{dx}[x^n] = nx^{n-1}",
+    "prerequisites": ["algebra", "trigonometry"],
+    "estimatedTime": 90,
+    "difficulty": 4
+  },
+  {
+    "id": "statistics",
+    "title": "Statistics",
+    "description": "Analyze data, probability, and statistical inference",
+    "level": "advanced",
+    "icon": "BarChart3",
+    "mathExpression": "\\mu = \\frac{1}{n}\\sum_{i=1}^{n} x_i",
+    "prerequisites": ["algebra"],
+    "estimatedTime": 65,
+    "difficulty": 3
+  },
+  {
+    "id": "linear-algebra",
+    "title": "Linear Algebra",
+    "description": "Work with vectors, matrices, and linear transformations",
+    "level": "advanced",
+    "icon": "Grid3x3",
+    "mathExpression": "\\begin{bmatrix} a & b \\\\ c & d \\end{bmatrix} \\begin{bmatrix} x \\\\ y \\end{bmatrix} = \\begin{bmatrix} ax+by \\\\ cx+dy \\end{bmatrix}",
+    "prerequisites": ["algebra", "geometry"],
+    "estimatedTime": 80,
+    "difficulty": 4
+  },
+  {
+    "id": "differential-equations",
+    "title": "Differential Equations",
+    "description": "Solve equations involving derivatives and rates of change",
+    "level": "advanced",
+    "icon": "GitBranch",
+    "mathExpression": "\\frac{dy}{dx} + P(x)y = Q(x)",
+    "prerequisites": ["calculus"],
+    "estimatedTime": 85,
+    "difficulty": 5
+  },
+  {
+    "id": "game-design-math",
+    "title": "Game Design Math",
+    "description": "Apply mathematics to game development and interactive systems",
+    "level": "specialized",
+    "icon": "Gamepad2",
+    "mathExpression": "\\vec{v} = \\vec{a} \\cdot \\Delta t + \\vec{v_0}",
+    "prerequisites": ["algebra", "geometry", "trigonometry"],
+    "estimatedTime": 75,
+    "difficulty": 4
+  }
+]
