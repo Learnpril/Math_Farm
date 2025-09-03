@@ -126,12 +126,12 @@ describe("GraphingDemo", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(/Use mouse wheel or pinch to zoom/)
+        screen.getByText(/Mouse wheel or pinch to zoom/)
       ).toBeInTheDocument();
     });
 
     expect(
-      screen.getByText(/Click and drag to pan around the graph/)
+      screen.getByText(/Click and drag to pan around/)
     ).toBeInTheDocument();
     expect(
       screen.getByText(/Try functions like: x\^2, sin\(x\)/)

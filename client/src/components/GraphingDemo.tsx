@@ -72,13 +72,20 @@ export const GraphingDemo: React.FC<GraphingDemoProps> = ({
           }
         }
 
+        // Detect dark mode for curve color
+        const isDarkMode =
+          document.documentElement.classList.contains("dark") ||
+          window.matchMedia("(prefers-color-scheme: dark)").matches;
+
         // Create new function curve
         const curve = boardInstance.current.create(
           "functiongraph",
           [(x: number) => evaluateFunction(func, x)],
           {
-            strokeColor: "hsl(262, 65%, 45%)",
-            strokeWidth: 2,
+            strokeColor: isDarkMode
+              ? "hsl(262, 65%, 65%)"
+              : "hsl(262, 65%, 45%)", // Lighter purple for dark mode
+            strokeWidth: 3,
             name: `f(x) = ${func}`,
             withLabel: false,
           }
@@ -126,9 +133,25 @@ export const GraphingDemo: React.FC<GraphingDemoProps> = ({
         return;
       }
 
+      // Detect dark mode
+      const isDarkMode =
+        document.documentElement.classList.contains("dark") ||
+        window.matchMedia("(prefers-color-scheme: dark)").matches;
+
       const board = window.JXG.JSXGraph.initBoard(boardRef.current, {
         boundingbox: [-10, 10, 10, -10],
-        axis: true,
+        axis: {
+          strokeColor: isDarkMode ? "#64748b" : "#374151", // slate-500 for dark, gray-700 for light
+          strokeWidth: 2,
+          ticks: {
+            strokeColor: isDarkMode ? "#64748b" : "#374151",
+            strokeWidth: 1,
+            label: {
+              fontSize: 12,
+              color: isDarkMode ? "#94a3b8" : "#374151", // slate-400 for dark, gray-700 for light
+            },
+          },
+        },
         showCopyright: false,
         showNavigation: true,
         zoom: {
@@ -144,7 +167,7 @@ export const GraphingDemo: React.FC<GraphingDemoProps> = ({
           needshift: false,
         },
         grid: {
-          strokeColor: "#e0e0e0",
+          strokeColor: isDarkMode ? "#334155" : "#e5e7eb", // slate-700 for dark, gray-200 for light
           strokeWidth: 1,
         },
         resize: {
@@ -329,55 +352,72 @@ export const GraphingDemo: React.FC<GraphingDemoProps> = ({
         </div>
       )}
       {isLoaded && !error && (
-        <>
-          <div className="space-y-4">
-            <div className="flex flex-col sm:flex-row gap-2">
-              <div className="flex-1">
-                <Label htmlFor="equation-input" className="sr-only">
-                  Function equation
-                </Label>
-                <Input
-                  id="equation-input"
-                  type="text"
-                  value={equation}
-                  onChange={(e) => {
-                    setEquation(e.target.value);
-                    // Clear any previous error when user starts typing
-                    if (error && error.includes("Error plotting function")) {
-                      setError(null);
-                    }
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      handleEquationChange(equation);
-                    }
-                  }}
-                  placeholder="Enter function (e.g., x^2, sin(x), x^3-2*x)"
-                  className="font-mono"
-                  aria-label="Function equation input"
-                />
+        <div className="space-y-6">
+          {/* Function Input */}
+          <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 rounded-xl p-6 border shadow-inner">
+            <div className="space-y-4">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <div className="flex-1">
+                  <Label htmlFor="equation-input" className="sr-only">
+                    Function equation
+                  </Label>
+                  <Input
+                    id="equation-input"
+                    type="text"
+                    value={equation}
+                    onChange={(e) => {
+                      setEquation(e.target.value);
+                      // Clear any previous error when user starts typing
+                      if (error && error.includes("Error plotting function")) {
+                        setError(null);
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        handleEquationChange(equation);
+                      }
+                    }}
+                    placeholder="Enter function (e.g., x^2, sin(x), x^3-2*x)"
+                    className="font-mono text-lg bg-white dark:bg-slate-950 border-2 border-slate-200 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-700 dark:text-slate-200 placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                    aria-label="Function equation input"
+                  />
+                </div>
+                <Button
+                  onClick={() => handleEquationChange(equation)}
+                  className="whitespace-nowrap bg-gradient-to-b from-primary to-primary/90 text-primary-foreground hover:from-primary/90 hover:to-primary/80 shadow-md hover:shadow-lg transition-all px-6 py-3 text-base font-semibold"
+                  aria-label="Plot the entered function"
+                >
+                  Plot Function
+                </Button>
               </div>
-              <Button
-                onClick={() => handleEquationChange(equation)}
-                className="whitespace-nowrap"
-                aria-label="Plot the entered function"
-              >
-                Plot Function
-              </Button>
             </div>
+          </div>
 
-            <div className="flex flex-wrap gap-2">
-              <span className="text-sm text-muted-foreground">
+          {/* Quick Examples */}
+          <div className="space-y-3 p-4 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-lg border border-blue-200 dark:border-blue-700">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+              <span className="text-sm font-semibold text-blue-700 dark:text-blue-300">
                 Quick examples:
               </span>
-              {["x^2", "sin(x)", "cos(x)", "x^3-2*x", "1/x"].map((preset) => (
+            </div>
+            <div className="flex flex-wrap gap-3">
+              {[
+                "x^2",
+                "sin(x)",
+                "cos(x)",
+                "x^3-2*x",
+                "1/x",
+                "sqrt(x)",
+                "log(x)",
+                "abs(x)",
+              ].map((preset) => (
                 <Button
                   key={preset}
                   variant="outline"
-                  size="sm"
                   onClick={() => handlePreset(preset)}
-                  className="text-xs font-mono"
+                  className="h-12 px-4 text-base font-mono font-bold bg-gradient-to-b from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 border-blue-200 dark:border-blue-600 text-blue-700 dark:text-blue-300 hover:from-blue-100 hover:to-blue-200 dark:hover:from-blue-800/40 dark:hover:to-blue-700/40 hover:border-blue-300 dark:hover:border-blue-500 transition-all shadow-sm hover:shadow-md hover:scale-105"
                   aria-label={`Plot ${preset}`}
                 >
                   {preset}
@@ -386,35 +426,56 @@ export const GraphingDemo: React.FC<GraphingDemoProps> = ({
             </div>
           </div>
 
-          <div
-            ref={boardRef}
-            className="w-full h-96 border border-border rounded-md bg-background"
-            style={{
-              minHeight: "384px",
-              minWidth: "100%",
-              position: "relative",
-              overflow: "hidden",
-            }}
-            role="img"
-            aria-label={`Graph of function f(x) = ${equation}`}
-            tabIndex={0}
-            onKeyDown={(e) => {
-              // Basic keyboard navigation for accessibility
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                handleEquationChange(equation);
-              }
-            }}
-          />
-
-          <div className="text-xs text-muted-foreground space-y-1">
-            <p>• Use mouse wheel or pinch to zoom</p>
-            <p>• Click and drag to pan around the graph</p>
-            <p>
-              • Try functions like: x^2, sin(x), cos(x), tan(x), log(x), sqrt(x)
-            </p>
+          {/* Graph Container */}
+          <div className="p-4 bg-white dark:bg-slate-900 rounded-xl border shadow-sm">
+            <div
+              ref={boardRef}
+              className="w-full h-96 border-2 border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 shadow-inner"
+              style={{
+                minHeight: "384px",
+                minWidth: "100%",
+                position: "relative",
+                overflow: "hidden",
+              }}
+              role="img"
+              aria-label={`Graph of function f(x) = ${equation}`}
+              tabIndex={0}
+              onKeyDown={(e) => {
+                // Basic keyboard navigation for accessibility
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handleEquationChange(equation);
+                }
+              }}
+            />
           </div>
-        </>
+
+          {/* Help Text */}
+          <div className="p-4 bg-gradient-to-br from-slate-50 to-gray-50 dark:from-slate-900/50 dark:to-gray-900/50 rounded-lg border border-slate-200 dark:border-slate-700">
+            <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3 flex items-center gap-2">
+              <div className="w-2 h-2 bg-slate-500 rounded-full"></div>
+              Interactive Controls
+            </h4>
+            <div className="text-xs text-slate-600 dark:text-slate-400 space-y-2 grid grid-cols-1 md:grid-cols-2 gap-2">
+              <div className="space-y-1">
+                <p className="font-medium text-slate-700 dark:text-slate-300">
+                  Navigation:
+                </p>
+                <p>• Mouse wheel or pinch to zoom</p>
+                <p>• Click and drag to pan around</p>
+                <p>• Press Enter to plot function</p>
+              </div>
+              <div className="space-y-1">
+                <p className="font-medium text-slate-700 dark:text-slate-300">
+                  Functions:
+                </p>
+                <p>• Basic: x^2, x^3, sqrt(x), abs(x)</p>
+                <p>• Trig: sin(x), cos(x), tan(x)</p>
+                <p>• Advanced: log(x), ln(x), exp(x)</p>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </ToolDemo>
   );

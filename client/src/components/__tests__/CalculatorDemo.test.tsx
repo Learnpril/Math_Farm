@@ -220,14 +220,9 @@ describe("CalculatorDemo", () => {
     render(<CalculatorDemo />);
 
     await waitFor(() => {
-      expect(
-        screen.getByText(/Supports advanced functions/)
-      ).toBeInTheDocument();
+      expect(screen.getByText(/Quick Reference/)).toBeInTheDocument();
     });
 
-    expect(
-      screen.getByText(/Constants available: pi, e, phi/)
-    ).toBeInTheDocument();
-    expect(screen.getByText(/Results update in real-time/)).toBeInTheDocument();
+    expect(screen.getByText(/Constants: pi \(π\), e/)).toBeInTheDocument();
   });
 });
