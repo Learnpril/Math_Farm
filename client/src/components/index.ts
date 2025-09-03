@@ -13,3 +13,4 @@ export { ThemeProvider } from './ThemeProvider';
 export { default as ToolDemo } from './ToolDemo';
 export { default as GraphingDemo } from './GraphingDemo';
 export { default as CalculatorDemo } from './CalculatorDemo';
+export { default as ToolsSection } from './ToolsSection';
