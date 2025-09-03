@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Farm - Interactive Mathematics Learning</title>
+    <meta name="description" content="Comprehensive mathematics education platform covering elementary arithmetic through advanced calculus, with step-by-step explanations and interactive tools.">
+    
+    <!-- MathJax for math rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Theme Toggle Button -->
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+        <i data-lucide="sun" class="sun-icon"></i>
+        <i data-lucide="moon" class="moon-icon"></i>
+    </button>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i data-lucide="square-radical" class="logo-icon"></i>
+                    <span class="logo-text">Math Farm</span>
+                </div>
+                
+                <nav class="nav-desktop">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#topics" class="nav-link">Topics</a>
+                    <a href="#practice" class="nav-link">Practice</a>
+                    <a href="#tools" class="nav-link">Tools</a>
+                    <a href="#guides" class="nav-link">Guides</a>
+                </nav>
+                
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-content">
+            <div class="mobile-menu-header">
+                <span class="logo-text">Math Farm</span>
+                <button class="mobile-menu-close" id="mobile-menu-close">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <nav class="mobile-nav">
+                <a href="#home" class="mobile-nav-link">Home</a>
+                <a href="#topics" class="mobile-nav-link">Topics</a>
+                <a href="#practice" class="mobile-nav-link">Practice</a>
+                <a href="#tools" class="mobile-nav-link">Tools</a>
+                <a href="#guides" class="mobile-nav-link">Guides</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <h3 class="sidebar-title">Mathematics Curriculum</h3>
+            <div class="curriculum-sections" id="curriculum-sections">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="container">
+                <!-- Hero Section -->
+                <div class="hero">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Master Mathematics with <span class="text-primary">Math Farm</span></h1>
+                        <p class="hero-description">Comprehensive mathematics education from elementary arithmetic to advanced calculus. Learn step-by-step with interactive tools and clear explanations.</p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary" onclick="showSection('topics')">Explore Topics</button>
+                            <button class="btn btn-outline" onclick="showSection('practice')">Practice Problems</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features Grid -->
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i data-lucide="book-open" class="feature-icon"></i>
+                        <h3>Comprehensive Curriculum</h3>
+                        <p>From basic arithmetic to advanced calculus, covering all major mathematical topics with clear explanations.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i data-lucide="target" class="feature-icon"></i>
+                        <h3>Step-by-Step Solutions</h3>
+                        <p>Detailed problem-solving processes that help you understand the reasoning behind each solution.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i data-lucide="calculator" class="feature-icon"></i>
+                        <h3>Interactive Tools</h3>
+                        <p>Built-in calculators, graphing tools, and equation solvers to enhance your learning experience.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i data-lucide="lightbulb" class="feature-icon"></i>
+                        <h3>Smart Hints</h3>
+                        <p>Gentle guidance when you're stuck, helping you discover solutions independently.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Topics Section -->
+        <section id="topics" class="section">
+            <div class="container">
+                <h2 class="section-title">Mathematics Topics</h2>
+                <div id="topics-content">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Section -->
+        <section id="practice" class="section">
+            <div class="container">
+                <h2 class="section-title">Practice Problems</h2>
+                <div id="practice-content">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools Section -->
+        <section id="tools" class="section">
+            <div class="container">
+                <h2 class="section-title">Mathematical Tools</h2>
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <h3>Equation Solver</h3>
+                        <p>Solve algebraic equations step by step</p>
+                        <div class="tool-content">
+                            <input type="text" id="equation-input" placeholder="Enter equation (e.g., 2x + 5 = 13)" class="tool-input">
+                            <button onclick="solveEquation()" class="btn btn-primary">Solve</button>
+                            <div id="equation-result" class="tool-result"></div>
+                        </div>
+                    </div>
+                    <div class="tool-card">
+                        <h3>Expression Evaluator</h3>
+                        <p>Evaluate mathematical expressions</p>
+                        <div class="tool-content">
+                            <input type="text" id="expression-input" placeholder="Enter expression (e.g., 2^3 + 4*5)" class="tool-input">
+                            <button onclick="evaluateExpression()" class="btn btn-primary">Calculate</button>
+                            <div id="expression-result" class="tool-result"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Guides Section -->
+        <section id="guides" class="section">
+            <div class="container">
+                <h2 class="section-title">Learning Guides</h2>
+                <div class="guides-grid">
+                    <div class="guide-card" onclick="showGuide('latex')">
+                        <h3>LaTeX Guide</h3>
+                        <p>Learn to write beautiful mathematical expressions</p>
+                        <div class="math-preview">$\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}$</div>
+                    </div>
+                    <div class="guide-card" onclick="showGuide('matlab')">
+                        <h3>MATLAB Guide</h3>
+                        <p>Introduction to mathematical computing</p>
+                        <div class="code-preview">plot(x, sin(x))</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <i data-lucide="square-radical" class="footer-icon"></i>
+                    <span>Math Farm</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#home">Home</a>
+                    <a href="#topics">Topics</a>
+                    <a href="#practice">Practice</a>
+                    <a href="#tools">Tools</a>
+                    <a href="#guides">Guides</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Math Farm. Interactive Mathematics Learning Platform.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
