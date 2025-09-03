@@ -284,9 +284,9 @@ export const CalculatorDemo: React.FC<CalculatorDemoProps> = ({
   // Basic calculator buttons
   const basicButtons = [
     ["C", "⌫", "(", ")"],
-    ["7", "8", "9", "/"],
+    ["1", "2", "3", "/"],
     ["4", "5", "6", "*"],
-    ["1", "2", "3", "-"],
+    ["7", "8", "9", "-"],
     ["0", ".", "=", "+"],
   ];
 
@@ -338,7 +338,7 @@ export const CalculatorDemo: React.FC<CalculatorDemoProps> = ({
 
               {result && (
                 <div
-                  className="p-4 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-lg font-mono text-2xl font-bold text-right text-primary dark:text-primary-foreground shadow-sm"
+                  className="p-4 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-lg font-mono text-2xl font-bold text-right text-primary dark:text-white shadow-sm"
                   role="status"
                   aria-live="polite"
                   aria-label={`Result: ${result}`}
@@ -412,7 +412,7 @@ export const CalculatorDemo: React.FC<CalculatorDemoProps> = ({
                 variant="outline"
                 size="sm"
                 onClick={() => handleButtonInput(btn)}
-                className="h-14 text-base font-mono font-bold bg-gradient-to-b from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 border-orange-200 dark:border-orange-700 text-orange-700 dark:text-orange-300 hover:from-orange-100 hover:to-orange-200 dark:hover:from-orange-800/30 dark:hover:to-orange-700/30 hover:border-orange-300 dark:hover:border-orange-600 transition-all shadow-sm hover:shadow-md"
+                className="h-14 text-2xl font-mono font-bold bg-gradient-to-b from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 border-orange-200 dark:border-orange-700 text-orange-700 dark:text-orange-300 hover:from-orange-100 hover:to-orange-200 dark:hover:from-orange-800/30 dark:hover:to-orange-700/30 hover:border-orange-300 dark:hover:border-orange-600 transition-all shadow-sm hover:shadow-md"
                 aria-label={`Memory ${btn}`}
               >
                 {btn}
@@ -434,7 +434,7 @@ export const CalculatorDemo: React.FC<CalculatorDemoProps> = ({
                     variant="outline"
                     size="sm"
                     onClick={() => handleButtonInput(btn)}
-                    className="h-14 text-base font-mono font-bold bg-gradient-to-b from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30 border-purple-200 dark:border-purple-600 text-purple-700 dark:text-purple-300 hover:from-purple-100 hover:to-purple-200 dark:hover:from-purple-800/40 dark:hover:to-purple-700/40 hover:border-purple-300 dark:hover:border-purple-500 transition-all shadow-sm hover:shadow-md hover:scale-105"
+                    className="h-14 text-2xl font-mono font-bold bg-gradient-to-b from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30 border-purple-200 dark:border-purple-600 text-purple-700 dark:text-purple-300 hover:from-purple-100 hover:to-purple-200 dark:hover:from-purple-800/40 dark:hover:to-purple-700/40 hover:border-purple-300 dark:hover:border-purple-500 transition-all shadow-sm hover:shadow-md hover:scale-105"
                     aria-label={`Scientific function ${btn}`}
                   >
                     {btn}
@@ -459,7 +459,7 @@ export const CalculatorDemo: React.FC<CalculatorDemoProps> = ({
                     isEquals ? "default" : isClear ? "destructive" : "outline"
                   }
                   onClick={() => handleButtonInput(btn)}
-                  className={`h-14 text-xl font-bold transition-all shadow-sm hover:shadow-md hover:scale-105 ${
+                  className={`h-14 text-4xl font-bold transition-all shadow-sm hover:shadow-md hover:scale-105 ${
                     isEquals
                       ? "bg-gradient-to-b from-primary to-primary/90 text-primary-foreground hover:from-primary/90 hover:to-primary/80 col-span-1"
                       : isClear
