@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Math Farm Favicon Generator</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        padding: 2rem;
+        background: #f8fafc;
+      }
+      .favicon-preview {
+        display: inline-block;
+        margin: 1rem;
+        text-align: center;
+      }
+      .favicon-preview canvas {
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+        background: white;
+      }
+      .instructions {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        margin-top: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Math Farm Favicon Generator</h1>
+    <p>This page generates PNG versions of the favicon for fallback support.</p>
+
+    <div class="favicon-preview">
+      <h3>16x16 Favicon</h3>
+      <canvas id="favicon16" width="16" height="16"></canvas>
+    </div>
+
+    <div class="favicon-preview">
+      <h3>32x32 Favicon</h3>
+      <canvas id="favicon32" width="32" height="32"></canvas>
+    </div>
+
+    <div class="favicon-preview">
+      <h3>192x192 PWA Icon</h3>
+      <canvas id="favicon192" width="192" height="192"></canvas>
+    </div>
+
+    <div class="favicon-preview">
+      <h3>512x512 PWA Icon</h3>
+      <canvas id="favicon512" width="512" height="512"></canvas>
+    </div>
+
+    <div class="instructions">
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Right-click on each canvas above</li>
+        <li>Select "Save image as..."</li>
+        <li>
+          Save as PNG files with the appropriate names:
+          <ul>
+            <li>favicon-16.png</li>
+            <li>favicon-32.png</li>
+            <li>favicon-192.png</li>
+            <li>favicon-512.png</li>
+          </ul>
+        </li>
+        <li>
+          Use an online ICO converter to create favicon.ico from the 16x16 and
+          32x32 versions
+        </li>
+      </ol>
+    </div>
+
+    <script>
+      // Function to draw the Math Farm favicon
+      function drawFavicon(canvas, size) {
+        const ctx = canvas.getContext("2d");
+        const center = size / 2;
+        const radius = size / 2 - 1;
+
+        // Create gradient background
+        const gradient = ctx.createLinearGradient(0, 0, size, size);
+        gradient.addColorStop(0, "hsl(262, 65%, 45%)");
+        gradient.addColorStop(1, "hsl(270, 75%, 65%)");
+
+        // Draw background circle
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(center, center, radius, 0, 2 * Math.PI);
+        ctx.fill();
+
+        // Draw border
+        ctx.strokeStyle = "hsl(262, 65%, 35%)";
+        ctx.lineWidth = size > 32 ? 2 : 1;
+        ctx.stroke();
+
+        // Draw radical symbol
+        ctx.strokeStyle = "white";
+        ctx.fillStyle = "white";
+        ctx.lineWidth = Math.max(1, size / 16);
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+
+        // Scale factors based on size
+        const scale = size / 32;
+
+        // Radical hook
+        ctx.beginPath();
+        ctx.moveTo(6 * scale, 20 * scale);
+        ctx.lineTo(10 * scale, 24 * scale);
+        ctx.lineTo(14 * scale, 16 * scale);
+        ctx.lineTo(14 * scale, 8 * scale);
+        ctx.stroke();
+
+        // Horizontal line
+        ctx.beginPath();
+        ctx.moveTo(14 * scale, 8 * scale);
+        ctx.lineTo(26 * scale, 8 * scale);
+        ctx.stroke();
+
+        // Small expression under radical (if size allows)
+        if (size >= 32) {
+          ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+          ctx.beginPath();
+          ctx.arc(20 * scale, 14 * scale, 1.5 * scale, 0, 2 * Math.PI);
+          ctx.fill();
+
+          ctx.fillRect(22.5 * scale, 13 * scale, 2 * scale, 2 * scale);
+        }
+      }
+
+      // Generate all favicon sizes
+      drawFavicon(document.getElementById("favicon16"), 16);
+      drawFavicon(document.getElementById("favicon32"), 32);
+      drawFavicon(document.getElementById("favicon192"), 192);
+      drawFavicon(document.getElementById("favicon512"), 512);
+    </script>
+  </body>
+</html>

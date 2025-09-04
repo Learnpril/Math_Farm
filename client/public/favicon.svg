@@ -1,0 +1,30 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle with gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:hsl(262, 65%, 45%);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:hsl(270, 75%, 65%);stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="symbolGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f8fafc;stop-opacity:0.9" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="16" cy="16" r="15" fill="url(#bgGradient)" stroke="hsl(262, 65%, 35%)" stroke-width="1"/>
+  
+  <!-- Mathematical radical symbol (√) -->
+  <g fill="url(#symbolGradient)" stroke="none">
+    <!-- Radical hook -->
+    <path d="M6 20 L10 24 L14 16 L14 8" stroke="url(#symbolGradient)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <!-- Horizontal line over the expression -->
+    <path d="M14 8 L26 8" stroke="url(#symbolGradient)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <!-- Small mathematical expression under the radical -->
+    <circle cx="20" cy="14" r="1.5" fill="url(#symbolGradient)" opacity="0.8"/>
+    <rect x="22.5" y="13" width="2" height="2" fill="url(#symbolGradient)" opacity="0.8"/>
+  </g>
+  
+  <!-- Subtle shadow/depth effect -->
+  <circle cx="16" cy="16" r="15" fill="none" stroke="hsl(262, 65%, 25%)" stroke-width="0.5" opacity="0.3"/>
+</svg>
