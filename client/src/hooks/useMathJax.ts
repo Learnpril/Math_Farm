@@ -7,31 +7,9 @@ export interface UseMathJaxReturn {
   isLoading: boolean;
 }
 
-interface MathJaxConfig {
-  tex: {
-    inlineMath: string[][];
-    displayMath: string[][];
-    processEscapes: boolean;
-    processEnvironments: boolean;
-  };
-  svg: {
-    fontCache: string;
-  };
-  startup: {
-    ready: () => void;
-  };
-}
-
 declare global {
   interface Window {
-    MathJax?: {
-      typesetPromise?: (elements?: HTMLElement[]) => Promise<void>;
-      tex2svgPromise?: (expression: string, options?: any) => Promise<any>;
-      startup?: {
-        promise: Promise<void>;
-      };
-      config?: MathJaxConfig;
-    };
+    MathJax?: any;
   }
 }
 
@@ -49,7 +27,7 @@ export function useMathJax(): UseMathJaxReturn {
   const configureMathJax = useCallback(() => {
     if (typeof window === 'undefined') return;
 
-    window.MathJax = {
+    (window as any).MathJax = {
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
         displayMath: [['$$', '$$'], ['\\[', '\\]']],
@@ -58,20 +36,6 @@ export function useMathJax(): UseMathJaxReturn {
       },
       svg: {
         fontCache: 'global',
-      },
-      startup: {
-        ready: () => {
-          if (window.MathJax?.startup) {
-            window.MathJax.startup.promise.then(() => {
-              setIsLoaded(true);
-              setIsLoading(false);
-              setError(null);
-            }).catch((err) => {
-              setError(`MathJax startup failed: ${err.message}`);
-              setIsLoading(false);
-            });
-          }
-        },
       },
     };
   }, []);
@@ -101,7 +65,8 @@ export function useMathJax(): UseMathJaxReturn {
         script.id = 'mathjax-script';
 
         script.onload = () => {
-          // MathJax will call the ready function in config
+          setIsLoaded(true);
+          setIsLoading(false);
           resolve();
         };
 
@@ -143,7 +108,7 @@ export function useMathJax(): UseMathJaxReturn {
       }
 
       // Clear previous content and set new expression
-      element.innerHTML = `$$${expression}$$`;
+      element.innerHTML = `$${expression}$`;
 
       // Typeset the element
       await window.MathJax.typesetPromise([element]);
