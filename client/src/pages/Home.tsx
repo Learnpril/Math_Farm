@@ -3,6 +3,7 @@ import { HeroSection } from "../components/HeroSection";
 import { MathDemo } from "../components/MathDemo";
 import { TopicsGrid } from "../components/TopicsGrid";
 import { ToolsSection } from "../components/ToolsSection";
+import { ServiceHours } from "../components/ServiceHours";
 
 /**
  * Home page component with placeholder sections for future implementation
@@ -147,6 +148,23 @@ export function Home() {
                 </p>
               </div>
             </div>
+          </div>
+        </PageContainer>
+      </Section>
+
+      {/* Service Hours Section */}
+      <Section id="hours" ariaLabel="Service hours" className="bg-background">
+        <PageContainer>
+          <div className="max-w-2xl mx-auto">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Service Hours
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                Platform maintenance and update schedule
+              </p>
+            </div>
+            <ServiceHours />
           </div>
         </PageContainer>
       </Section>
