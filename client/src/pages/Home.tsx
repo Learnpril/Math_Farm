@@ -6,14 +6,18 @@ import { ToolsSection } from "../components/ToolsSection";
 import { PracticeSection } from "../components/PracticeSection";
 import { FeaturesSection } from "../components/FeaturesSection";
 import { ServiceHours } from "../components/ServiceHours";
+import { HomePageErrorBoundary } from "../components/HomePageErrorBoundary";
+import { MathRenderingErrorBoundary } from "../components/MathRenderingErrorBoundary";
 
 /**
- * Home page component with placeholder sections for future implementation
+ * Home page component with comprehensive error boundaries
  * Includes proper semantic structure and ARIA landmarks
  */
 export function Home() {
   return (
-    <>
+    <HomePageErrorBoundary
+      showErrorDetails={process.env.NODE_ENV === "development"}
+    >
       {/* Hero Section */}
       <HeroSection />
 
@@ -70,7 +74,11 @@ export function Home() {
         ariaLabel="Mathematical expressions demo"
         className="bg-background"
       >
-        <MathDemo />
+        <MathRenderingErrorBoundary
+          showErrorDetails={process.env.NODE_ENV === "development"}
+        >
+          <MathDemo />
+        </MathRenderingErrorBoundary>
       </Section>
 
       {/* Features Section */}
@@ -119,6 +127,6 @@ export function Home() {
           </div>
         </PageContainer>
       </Section>
-    </>
+    </HomePageErrorBoundary>
   );
 }

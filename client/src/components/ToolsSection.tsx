@@ -10,58 +10,14 @@ import {
 } from "./ui/card";
 import { GraphingDemo } from "./GraphingDemo";
 import { CalculatorDemo } from "./CalculatorDemo";
+import { ToolDemoErrorBoundary } from "./ToolDemoErrorBoundary";
 import { ArrowRight, Calculator, TrendingUp, AlertCircle } from "lucide-react";
 
 export interface ToolsSectionProps {
   className?: string;
 }
 
-// Error boundary for tools section
-class ToolsSectionErrorBoundary extends React.Component<
-  { children: React.ReactNode; fallback?: React.ReactNode },
-  { hasError: boolean; error?: Error }
-> {
-  constructor(props: {
-    children: React.ReactNode;
-    fallback?: React.ReactNode;
-  }) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError(error: Error) {
-    return { hasError: true, error };
-  }
-
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error("ToolsSection Error:", error, errorInfo);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        this.props.fallback || (
-          <div
-            className="flex items-center gap-2 p-6 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive"
-            role="alert"
-            aria-live="polite"
-          >
-            <AlertCircle className="h-5 w-5 flex-shrink-0" />
-            <div>
-              <h3 className="font-semibold">Tools Section Error</h3>
-              <p className="text-sm">
-                Unable to load interactive tools. Please refresh the page or try
-                again later.
-              </p>
-            </div>
-          </div>
-        )
-      );
-    }
-
-    return this.props.children;
-  }
-}
+// This error boundary has been replaced with the comprehensive ToolDemoErrorBoundary
 
 // Loading component for tools
 const ToolLoadingFallback: React.FC<{ title: string }> = ({ title }) => (
@@ -150,29 +106,37 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
         </div>
 
         {/* Tool Demonstrations */}
-        <ToolsSectionErrorBoundary>
-          <div className="space-y-8">
-            {/* Calculator Demo */}
-            {activeDemo === "calculator" && (
-              <div
-                className="animate-in slide-in-from-top-4 duration-300"
-                role="region"
-                aria-labelledby="calculator-demo-title"
+        <div className="space-y-8">
+          {/* Calculator Demo */}
+          {activeDemo === "calculator" && (
+            <div
+              className="animate-in slide-in-from-top-4 duration-300"
+              role="region"
+              aria-labelledby="calculator-demo-title"
+            >
+              <ToolDemoErrorBoundary
+                toolName="Advanced Calculator"
+                showErrorDetails={process.env.NODE_ENV === "development"}
               >
                 <Suspense
                   fallback={<ToolLoadingFallback title="Advanced Calculator" />}
                 >
                   <CalculatorDemo />
                 </Suspense>
-              </div>
-            )}
+              </ToolDemoErrorBoundary>
+            </div>
+          )}
 
-            {/* Graphing Demo */}
-            {activeDemo === "graphing" && (
-              <div
-                className="animate-in slide-in-from-top-4 duration-300"
-                role="region"
-                aria-labelledby="graphing-demo-title"
+          {/* Graphing Demo */}
+          {activeDemo === "graphing" && (
+            <div
+              className="animate-in slide-in-from-top-4 duration-300"
+              role="region"
+              aria-labelledby="graphing-demo-title"
+            >
+              <ToolDemoErrorBoundary
+                toolName="Interactive Graphing Tool"
+                showErrorDetails={process.env.NODE_ENV === "development"}
               >
                 <Suspense
                   fallback={
@@ -181,73 +145,73 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
                 >
                   <GraphingDemo />
                 </Suspense>
-              </div>
-            )}
+              </ToolDemoErrorBoundary>
+            </div>
+          )}
 
-            {/* Default state - show overview cards */}
-            {!activeDemo && (
-              <div className="grid md:grid-cols-2 gap-6">
-                {/* Calculator Overview */}
-                <Card className="cursor-pointer hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Calculator className="h-5 w-5 text-primary" />
-                      Advanced Calculator
-                    </CardTitle>
-                    <CardDescription>
-                      Perform complex mathematical calculations with support for
-                      functions, constants, and advanced operations.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-2 text-sm text-muted-foreground mb-4">
-                      <p>• Scientific functions (sin, cos, log, sqrt)</p>
-                      <p>• Mathematical constants (π, e, φ)</p>
-                      <p>• Real-time calculation results</p>
-                      <p>• Calculation history tracking</p>
-                    </div>
-                    <Button
-                      onClick={() => setActiveDemo("calculator")}
-                      className="w-full"
-                      aria-label="Try calculator demonstration"
-                    >
-                      Try Calculator
-                    </Button>
-                  </CardContent>
-                </Card>
+          {/* Default state - show overview cards */}
+          {!activeDemo && (
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Calculator Overview */}
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Calculator className="h-5 w-5 text-primary" />
+                    Advanced Calculator
+                  </CardTitle>
+                  <CardDescription>
+                    Perform complex mathematical calculations with support for
+                    functions, constants, and advanced operations.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2 text-sm text-muted-foreground mb-4">
+                    <p>• Scientific functions (sin, cos, log, sqrt)</p>
+                    <p>• Mathematical constants (π, e, φ)</p>
+                    <p>• Real-time calculation results</p>
+                    <p>• Calculation history tracking</p>
+                  </div>
+                  <Button
+                    onClick={() => setActiveDemo("calculator")}
+                    className="w-full"
+                    aria-label="Try calculator demonstration"
+                  >
+                    Try Calculator
+                  </Button>
+                </CardContent>
+              </Card>
 
-                {/* Graphing Overview */}
-                <Card className="cursor-pointer hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <TrendingUp className="h-5 w-5 text-primary" />
-                      Interactive Graphing
-                    </CardTitle>
-                    <CardDescription>
-                      Visualize mathematical functions with interactive graphs
-                      that you can zoom, pan, and explore in real-time.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-2 text-sm text-muted-foreground mb-4">
-                      <p>• Plot any mathematical function</p>
-                      <p>• Interactive zoom and pan controls</p>
-                      <p>• Multiple function support</p>
-                      <p>• Touch-friendly mobile interface</p>
-                    </div>
-                    <Button
-                      onClick={() => setActiveDemo("graphing")}
-                      className="w-full"
-                      aria-label="Try graphing demonstration"
-                    >
-                      Try Graphing
-                    </Button>
-                  </CardContent>
-                </Card>
-              </div>
-            )}
-          </div>
-        </ToolsSectionErrorBoundary>
+              {/* Graphing Overview */}
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <TrendingUp className="h-5 w-5 text-primary" />
+                    Interactive Graphing
+                  </CardTitle>
+                  <CardDescription>
+                    Visualize mathematical functions with interactive graphs
+                    that you can zoom, pan, and explore in real-time.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2 text-sm text-muted-foreground mb-4">
+                    <p>• Plot any mathematical function</p>
+                    <p>• Interactive zoom and pan controls</p>
+                    <p>• Multiple function support</p>
+                    <p>• Touch-friendly mobile interface</p>
+                  </div>
+                  <Button
+                    onClick={() => setActiveDemo("graphing")}
+                    className="w-full"
+                    aria-label="Try graphing demonstration"
+                  >
+                    Try Graphing
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+        </div>
 
         {/* Call to Action */}
         <div className="text-center mt-12 p-6 bg-muted/50 rounded-lg">

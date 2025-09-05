@@ -3,22 +3,41 @@ import { Router, Route } from "wouter";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { Layout } from "./components/layout/Layout";
 import { Home } from "./pages/Home";
+import {
+  ErrorBoundaryProvider,
+  ErrorBoundaryTester,
+} from "./components/ErrorBoundaryProvider";
 
 function App() {
+  const handleGlobalError = (error: Error, errorId: string) => {
+    // Global error handler - could send to analytics service in the future
+    console.warn(`Global error caught [${errorId}]:`, error);
+  };
+
   return (
-    <ThemeProvider>
-      <Router>
-        <Layout>
-          <Route path="/" component={Home} />
-          {/* Future routes will be added here */}
-          <Route path="/tools" component={PlaceholderPage} />
-          <Route path="/latex-guide" component={PlaceholderPage} />
-          <Route path="/matlab-guide" component={PlaceholderPage} />
-          <Route path="/community" component={PlaceholderPage} />
-          <Route path="/topic/:id" component={PlaceholderPage} />
-        </Layout>
-      </Router>
-    </ThemeProvider>
+    <ErrorBoundaryProvider
+      onGlobalError={handleGlobalError}
+      isDevelopment={process.env.NODE_ENV === "development"}
+    >
+      <ThemeProvider>
+        <Router>
+          <Layout>
+            <Route path="/" component={Home} />
+            {/* Future routes will be added here */}
+            <Route path="/tools" component={PlaceholderPage} />
+            <Route path="/latex-guide" component={PlaceholderPage} />
+            <Route path="/matlab-guide" component={PlaceholderPage} />
+            <Route path="/community" component={PlaceholderPage} />
+            <Route path="/topic/:id" component={PlaceholderPage} />
+          </Layout>
+
+          {/* Development-only error testing component */}
+          <ErrorBoundaryTester>
+            <></>
+          </ErrorBoundaryTester>
+        </Router>
+      </ThemeProvider>
+    </ErrorBoundaryProvider>
   );
 }
 
