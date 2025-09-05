@@ -4,6 +4,7 @@ import { MathDemo } from "../components/MathDemo";
 import { TopicsGrid } from "../components/TopicsGrid";
 import { ToolsSection } from "../components/ToolsSection";
 import { PracticeSection } from "../components/PracticeSection";
+import { FeaturesSection } from "../components/FeaturesSection";
 import { ServiceHours } from "../components/ServiceHours";
 
 /**
@@ -72,8 +73,11 @@ export function Home() {
         <MathDemo />
       </Section>
 
+      {/* Features Section */}
+      <FeaturesSection className="bg-muted/50" />
+
       {/* About Section */}
-      <Section id="about" ariaLabel="About Math Farm" className="bg-muted/50">
+      <Section id="about" ariaLabel="About Math Farm" className="bg-background">
         <PageContainer>
           <div className="text-center space-y-6">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -94,31 +98,6 @@ export function Home() {
                 topics like LaTeX and MATLAB, Math Farm provides the tools and
                 guidance you need to master mathematics at your own pace.
               </p>
-            </div>
-
-            {/* Features grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-              <div className="p-6 bg-card border border-border rounded-lg">
-                <h3 className="text-lg font-semibold mb-2">Self-Hosted</h3>
-                <p className="text-muted-foreground text-sm">
-                  Complete control over your learning environment with no
-                  external dependencies.
-                </p>
-              </div>
-              <div className="p-6 bg-card border border-border rounded-lg">
-                <h3 className="text-lg font-semibold mb-2">Privacy-Focused</h3>
-                <p className="text-muted-foreground text-sm">
-                  All data stays local. No tracking, no external services,
-                  complete privacy.
-                </p>
-              </div>
-              <div className="p-6 bg-card border border-border rounded-lg">
-                <h3 className="text-lg font-semibold mb-2">Accessible</h3>
-                <p className="text-muted-foreground text-sm">
-                  WCAG 2.2 compliant with full keyboard navigation and screen
-                  reader support.
-                </p>
-              </div>
             </div>
           </div>
         </PageContainer>

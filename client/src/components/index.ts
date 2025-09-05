@@ -14,3 +14,5 @@ export { default as ToolDemo } from './ToolDemo';
 export { default as GraphingDemo } from './GraphingDemo';
 export { default as CalculatorDemo } from './CalculatorDemo';
 export { default as ToolsSection } from './ToolsSection';
+export { FeatureCard } from './FeatureCard';
+export { FeaturesSection } from './FeaturesSection';

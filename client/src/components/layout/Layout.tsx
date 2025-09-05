@@ -78,6 +78,20 @@ export function Layout({ children, className = "" }: LayoutProps) {
                   <li>
                     <button
                       onClick={() => {
+                        // Find the features section by looking for the FeaturesSection component
+                        const element = document.querySelector(
+                          '[aria-labelledby="features-heading"]'
+                        );
+                        element?.scrollIntoView({ behavior: "smooth" });
+                      }}
+                      className="text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    >
+                      Features
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => {
                         const element = document.getElementById("about");
                         element?.scrollIntoView({ behavior: "smooth" });
                       }}

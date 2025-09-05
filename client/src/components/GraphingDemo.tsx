@@ -31,9 +31,16 @@ export const GraphingDemo: React.FC<GraphingDemoProps> = ({
   const evaluateFunction = useCallback((func: string, x: number): number => {
     try {
       // Handle common mathematical functions safely
-      const expr = func
+      let expr = func
         .toLowerCase()
+        // First handle implicit multiplication (e.g., 3x -> 3*x, 2sin(x) -> 2*sin(x))
+        .replace(/(\d+)([a-z])/g, "$1*$2")
+        .replace(/(\d+)\(/g, "$1*(")
+        .replace(/\)([a-z])/g, ")*$1")
+        .replace(/\)(\d)/g, ")*$1")
+        // Handle exponents
         .replace(/\^/g, "**")
+        // Handle mathematical functions
         .replace(/sin\(/g, "Math.sin(")
         .replace(/cos\(/g, "Math.cos(")
         .replace(/tan\(/g, "Math.tan(")
@@ -42,8 +49,10 @@ export const GraphingDemo: React.FC<GraphingDemoProps> = ({
         .replace(/sqrt\(/g, "Math.sqrt(")
         .replace(/abs\(/g, "Math.abs(")
         .replace(/exp\(/g, "Math.exp(")
+        // Handle constants
         .replace(/pi/g, "Math.PI")
         .replace(/e(?![a-z])/g, "Math.E")
+        // Finally replace x with the actual value
         .replace(/x/g, `(${x})`);
 
       // Use Function constructor instead of eval for better security
@@ -56,12 +65,131 @@ export const GraphingDemo: React.FC<GraphingDemoProps> = ({
     }
   }, []);
 
-  // Plot function
+  // Detect if equation is implicit (contains both x and y, and has = sign)
+  const isImplicitEquation = useCallback((func: string): boolean => {
+    const normalized = func.toLowerCase().trim();
+    return (
+      normalized.includes("=") &&
+      normalized.includes("x") &&
+      normalized.includes("y")
+    );
+  }, []);
+
+  // Parse implicit equation and create implicit curve
+  const plotImplicitEquation = useCallback((equation: string) => {
+    if (!boardInstance.current || !window.JXG) return;
+
+    try {
+      // Remove the previous curve if it exists
+      if (currentCurve.current) {
+        try {
+          boardInstance.current.removeObject(currentCurve.current);
+          currentCurve.current = null;
+        } catch (e) {
+          console.warn("Error removing previous curve:", e);
+        }
+      }
+
+      // Detect dark mode for curve color
+      const isDarkMode =
+        document.documentElement.classList.contains("dark") ||
+        window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+      // Split equation at = sign
+      const [leftSide, rightSide] = equation.split("=").map((s) => s.trim());
+
+      // Create implicit function: leftSide - rightSide = 0
+      const implicitFunction = (x: number, y: number): number => {
+        try {
+          // Process left side
+          let leftExpr = leftSide
+            .toLowerCase()
+            .replace(/(\d+)([xy])/g, "$1*$2")
+            .replace(/(\d+)\(/g, "$1*(")
+            .replace(/\)([xy])/g, ")*$1")
+            .replace(/\)(\d)/g, ")*$1")
+            .replace(/\^/g, "**")
+            .replace(/sin\(/g, "Math.sin(")
+            .replace(/cos\(/g, "Math.cos(")
+            .replace(/tan\(/g, "Math.tan(")
+            .replace(/log\(/g, "Math.log10(")
+            .replace(/ln\(/g, "Math.log(")
+            .replace(/sqrt\(/g, "Math.sqrt(")
+            .replace(/abs\(/g, "Math.abs(")
+            .replace(/exp\(/g, "Math.exp(")
+            .replace(/pi/g, "Math.PI")
+            .replace(/e(?![a-z])/g, "Math.E")
+            .replace(/x/g, `(${x})`)
+            .replace(/y/g, `(${y})`);
+
+          // Process right side
+          let rightExpr = rightSide
+            .toLowerCase()
+            .replace(/(\d+)([xy])/g, "$1*$2")
+            .replace(/(\d+)\(/g, "$1*(")
+            .replace(/\)([xy])/g, ")*$1")
+            .replace(/\)(\d)/g, ")*$1")
+            .replace(/\^/g, "**")
+            .replace(/sin\(/g, "Math.sin(")
+            .replace(/cos\(/g, "Math.cos(")
+            .replace(/tan\(/g, "Math.tan(")
+            .replace(/log\(/g, "Math.log10(")
+            .replace(/ln\(/g, "Math.log(")
+            .replace(/sqrt\(/g, "Math.sqrt(")
+            .replace(/abs\(/g, "Math.abs(")
+            .replace(/exp\(/g, "Math.exp(")
+            .replace(/pi/g, "Math.PI")
+            .replace(/e(?![a-z])/g, "Math.E")
+            .replace(/x/g, `(${x})`)
+            .replace(/y/g, `(${y})`);
+
+          const leftFn = new Function("Math", `return ${leftExpr}`);
+          const rightFn = new Function("Math", `return ${rightExpr}`);
+
+          const leftResult = leftFn(Math);
+          const rightResult = rightFn(Math);
+
+          return leftResult - rightResult;
+        } catch {
+          return NaN;
+        }
+      };
+
+      // Create implicit curve using JSXGraph's implicit plotting
+      const curve = boardInstance.current.create(
+        "implicitcurve",
+        [implicitFunction],
+        {
+          strokeColor: isDarkMode ? "hsl(262, 65%, 65%)" : "hsl(262, 65%, 45%)",
+          strokeWidth: 3,
+          name: equation,
+          withLabel: false,
+          resolution_outer: 30,
+          resolution_inner: 30,
+        }
+      );
+
+      // Store reference to the new curve
+      currentCurve.current = curve;
+      boardInstance.current.update();
+    } catch (err) {
+      console.warn("Error plotting implicit equation:", err);
+      setError(`Error plotting implicit equation: ${equation}`);
+    }
+  }, []);
+
+  // Plot function (handles both explicit and implicit equations)
   const plotFunction = useCallback(
     (func: string) => {
       if (!boardInstance.current || !window.JXG) return;
 
       try {
+        // Check if this is an implicit equation
+        if (isImplicitEquation(func)) {
+          plotImplicitEquation(func);
+          return;
+        }
+
         // Remove the previous curve if it exists
         if (currentCurve.current) {
           try {
@@ -77,7 +205,7 @@ export const GraphingDemo: React.FC<GraphingDemoProps> = ({
           document.documentElement.classList.contains("dark") ||
           window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-        // Create new function curve
+        // Create new function curve for explicit functions
         const curve = boardInstance.current.create(
           "functiongraph",
           [(x: number) => evaluateFunction(func, x)],
@@ -100,7 +228,7 @@ export const GraphingDemo: React.FC<GraphingDemoProps> = ({
         setError(`Error plotting function: ${func}`);
       }
     },
-    [evaluateFunction]
+    [evaluateFunction, isImplicitEquation, plotImplicitEquation]
   );
 
   // Initialize the board
@@ -140,6 +268,7 @@ export const GraphingDemo: React.FC<GraphingDemoProps> = ({
 
       const board = window.JXG.JSXGraph.initBoard(boardRef.current, {
         boundingbox: [-10, 10, 10, -10],
+        keepAspectRatio: true, // Maintain 1:1 aspect ratio
         axis: {
           strokeColor: isDarkMode ? "#64748b" : "#374151", // slate-500 for dark, gray-700 for light
           strokeWidth: 2,
@@ -412,6 +541,8 @@ export const GraphingDemo: React.FC<GraphingDemoProps> = ({
                 "sqrt(x)",
                 "log(x)",
                 "abs(x)",
+                "x^2 + y^2 = 4",
+                "x^2/4 + y^2/9 = 1",
               ].map((preset) => (
                 <Button
                   key={preset}
@@ -472,6 +603,7 @@ export const GraphingDemo: React.FC<GraphingDemoProps> = ({
                 <p>• Basic: x^2, x^3, sqrt(x), abs(x)</p>
                 <p>• Trig: sin(x), cos(x), tan(x)</p>
                 <p>• Advanced: log(x), ln(x), exp(x)</p>
+                <p>• Implicit: x^2 + y^2 = 4 (circles, ellipses)</p>
               </div>
             </div>
           </div>
