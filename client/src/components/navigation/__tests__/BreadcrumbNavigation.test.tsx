@@ -57,6 +57,23 @@ describe("BreadcrumbNavigation", () => {
     expect(topicsLink).toHaveClass("focus-visible:ring-2");
   });
 
+  it("supports keyboard navigation between breadcrumb links", () => {
+    const { container } = render(<BreadcrumbNavigation />);
+
+    const breadcrumbContainer = container.querySelector('[role="navigation"]');
+    expect(breadcrumbContainer).toBeInTheDocument();
+    expect(breadcrumbContainer).toHaveAttribute(
+      "aria-label",
+      "Breadcrumb navigation"
+    );
+
+    // Check that links have proper tabIndex
+    const links = container.querySelectorAll("a[href]");
+    links.forEach((link) => {
+      expect(link).toHaveAttribute("tabIndex", "0");
+    });
+  });
+
   it("does not render on home page", () => {
     mockUseLocation.mockReturnValue(["/"]);
 

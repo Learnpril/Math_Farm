@@ -9,6 +9,7 @@ import {
   ToolsPage,
   LaTeXGuidePage,
   MATLABGuidePage,
+  MathSymbolsPage,
 } from "./pages";
 import {
   ErrorBoundaryProvider,
@@ -34,6 +35,7 @@ function App() {
             <Route path="/tools" component={ToolsPage} />
             <Route path="/latex-guide" component={LaTeXGuidePage} />
             <Route path="/matlab-guide" component={MATLABGuidePage} />
+            <Route path="/math-symbols" component={MathSymbolsPage} />
             <Route path="/community" component={PlaceholderPage} />
             <Route path="*" component={NotFound} />
           </Layout>

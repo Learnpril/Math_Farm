@@ -288,4 +288,9 @@
       padding: 8px 12px;
     }
   }
+
+  /* Math font family for symbols */
+  .font-math {
+    font-family: "STIX Two Math", "XITS Math", "Cambria Math", "Segoe UI Symbol", "Apple Symbols", "DejaVu Sans", "Arial Unicode MS", Arial, sans-serif;
+  }
 }

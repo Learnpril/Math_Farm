@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useLocation } from "wouter";
 import { Home } from "lucide-react";
 import {
@@ -30,6 +30,7 @@ export function BreadcrumbNavigation({
   className = "",
 }: BreadcrumbNavigationProps) {
   const [location] = useLocation();
+  const breadcrumbRef = useRef<HTMLDivElement>(null);
 
   // Generate breadcrumbs automatically if no items provided
   const breadcrumbItems = items || generateBreadcrumbs(location);
@@ -39,13 +40,52 @@ export function BreadcrumbNavigation({
     return null;
   }
 
+  // Handle keyboard navigation within breadcrumbs
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (!breadcrumbRef.current) return;
+
+    const links = breadcrumbRef.current.querySelectorAll("a[href]");
+    const currentIndex = Array.from(links).findIndex(
+      (link) => link === event.target
+    );
+
+    switch (event.key) {
+      case "ArrowLeft":
+        event.preventDefault();
+        if (currentIndex > 0) {
+          (links[currentIndex - 1] as HTMLElement).focus();
+        }
+        break;
+      case "ArrowRight":
+        event.preventDefault();
+        if (currentIndex < links.length - 1) {
+          (links[currentIndex + 1] as HTMLElement).focus();
+        }
+        break;
+      case "Home":
+        event.preventDefault();
+        (links[0] as HTMLElement).focus();
+        break;
+      case "End":
+        event.preventDefault();
+        (links[links.length - 1] as HTMLElement).focus();
+        break;
+    }
+  };
+
   return (
-    <div className={`py-4 ${className}`}>
+    <div
+      ref={breadcrumbRef}
+      className={`py-4 ${className}`}
+      onKeyDown={handleKeyDown}
+      role="navigation"
+      aria-label="Breadcrumb navigation"
+    >
       <Breadcrumb>
         <BreadcrumbList>
           {/* Always start with Home */}
           <BreadcrumbItem>
-            <BreadcrumbLink href="/" aria-label="Go to home page">
+            <BreadcrumbLink href="/" aria-label="Go to home page" tabIndex={0}>
               <Home className="h-4 w-4" />
               <span className="sr-only">Home</span>
             </BreadcrumbLink>
@@ -59,9 +99,15 @@ export function BreadcrumbNavigation({
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
                   {isLast || !item.href ? (
-                    <BreadcrumbPage>{item.label}</BreadcrumbPage>
+                    <BreadcrumbPage aria-current="page">
+                      {item.label}
+                    </BreadcrumbPage>
                   ) : (
-                    <BreadcrumbLink href={item.href}>
+                    <BreadcrumbLink
+                      href={item.href}
+                      tabIndex={0}
+                      aria-label={`Go to ${item.label}`}
+                    >
                       {item.label}
                     </BreadcrumbLink>
                   )}
@@ -101,6 +147,8 @@ function generateBreadcrumbs(location: string): BreadcrumbItem[] {
     breadcrumbs.push({ label: "LaTeX Guide", isActive: true });
   } else if (location === "/matlab-guide") {
     breadcrumbs.push({ label: "MATLAB Guide", isActive: true });
+  } else if (location === "/math-symbols") {
+    breadcrumbs.push({ label: "Math Symbols", isActive: true });
   } else if (location === "/community") {
     breadcrumbs.push({ label: "Community", isActive: true });
   } else {
@@ -126,6 +174,7 @@ function generateBreadcrumbs(location: string): BreadcrumbItem[] {
  */
 function getTopicTitle(topicId: string): string {
   const topicTitles: Record<string, string> = {
+    arithmetic: "Arithmetic",
     algebra: "Algebra",
     geometry: "Geometry",
     calculus: "Calculus",
@@ -133,8 +182,7 @@ function getTopicTitle(topicId: string): string {
     trigonometry: "Trigonometry",
     "linear-algebra": "Linear Algebra",
     "differential-equations": "Differential Equations",
-    "discrete-math": "Discrete Mathematics",
-    "ai-math": "AI & Machine Learning Math",
+    "game-design-math": "Game Design Math",
   };
 
   return topicTitles[topicId] || formatSegmentLabel(topicId);
