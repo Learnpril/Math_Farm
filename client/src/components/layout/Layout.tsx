@@ -1,5 +1,6 @@
-import { ReactNode } from 'react';
-import { Header, SkipNavigation } from './Header';
+import { ReactNode } from "react";
+import { Header } from "./Header";
+import { SkipNavigation } from "../accessibility/SkipNavigation";
 
 interface LayoutProps {
   children: ReactNode;
@@ -10,17 +11,17 @@ interface LayoutProps {
  * Main layout component with semantic HTML structure and ARIA landmarks
  * Provides consistent page structure across the application
  */
-export function Layout({ children, className = '' }: LayoutProps) {
+export function Layout({ children, className = "" }: LayoutProps) {
   return (
     <div className={`min-h-screen bg-background text-foreground ${className}`}>
       {/* Skip navigation for accessibility */}
       <SkipNavigation />
-      
+
       {/* Main header */}
       <Header />
-      
+
       {/* Main content area */}
-      <main 
+      <main
         id="main-content"
         className="flex-1"
         role="main"
@@ -28,9 +29,9 @@ export function Layout({ children, className = '' }: LayoutProps) {
       >
         {children}
       </main>
-      
+
       {/* Footer */}
-      <footer 
+      <footer
         className="border-t border-border bg-muted/50"
         role="contentinfo"
         aria-label="Site footer"
@@ -41,21 +42,22 @@ export function Layout({ children, className = '' }: LayoutProps) {
             <div>
               <h3 className="text-lg font-semibold mb-4">About Math Farm</h3>
               <p className="text-sm text-muted-foreground">
-                A comprehensive mathematics learning platform designed for 
-                independent learners. Self-hosted, open-source, and completely free.
+                A comprehensive mathematics learning platform designed for
+                independent learners. Self-hosted, open-source, and completely
+                free.
               </p>
             </div>
-            
+
             {/* Quick links */}
             <div>
               <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
               <nav aria-label="Footer navigation">
                 <ul className="space-y-2 text-sm">
                   <li>
-                    <button 
+                    <button
                       onClick={() => {
-                        const element = document.getElementById('topics');
-                        element?.scrollIntoView({ behavior: 'smooth' });
+                        const element = document.getElementById("topics");
+                        element?.scrollIntoView({ behavior: "smooth" });
                       }}
                       className="text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
@@ -63,10 +65,10 @@ export function Layout({ children, className = '' }: LayoutProps) {
                     </button>
                   </li>
                   <li>
-                    <button 
+                    <button
                       onClick={() => {
-                        const element = document.getElementById('practice');
-                        element?.scrollIntoView({ behavior: 'smooth' });
+                        const element = document.getElementById("practice");
+                        element?.scrollIntoView({ behavior: "smooth" });
                       }}
                       className="text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
@@ -74,10 +76,10 @@ export function Layout({ children, className = '' }: LayoutProps) {
                     </button>
                   </li>
                   <li>
-                    <button 
+                    <button
                       onClick={() => {
-                        const element = document.getElementById('about');
-                        element?.scrollIntoView({ behavior: 'smooth' });
+                        const element = document.getElementById("about");
+                        element?.scrollIntoView({ behavior: "smooth" });
                       }}
                       className="text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
@@ -87,7 +89,7 @@ export function Layout({ children, className = '' }: LayoutProps) {
                 </ul>
               </nav>
             </div>
-            
+
             {/* Contact/Info */}
             <div>
               <h3 className="text-lg font-semibold mb-4">Open Source</h3>
@@ -99,11 +101,12 @@ export function Layout({ children, className = '' }: LayoutProps) {
               </p>
             </div>
           </div>
-          
+
           {/* Copyright */}
           <div className="mt-8 pt-8 border-t border-border">
             <p className="text-center text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Math Farm. Open source mathematics learning platform.
+              © {new Date().getFullYear()} Math Farm. Open source mathematics
+              learning platform.
             </p>
           </div>
         </div>
@@ -115,19 +118,19 @@ export function Layout({ children, className = '' }: LayoutProps) {
 /**
  * Page wrapper component for consistent spacing and structure
  */
-export function PageContainer({ 
-  children, 
-  className = '',
-  maxWidth = 'container'
+export function PageContainer({
+  children,
+  className = "",
+  maxWidth = "container",
 }: {
   children: ReactNode;
   className?: string;
-  maxWidth?: 'container' | 'full' | 'prose';
+  maxWidth?: "container" | "full" | "prose";
 }) {
   const maxWidthClasses = {
-    container: 'container mx-auto',
-    full: 'w-full',
-    prose: 'max-w-4xl mx-auto',
+    container: "container mx-auto",
+    full: "w-full",
+    prose: "max-w-4xl mx-auto",
   };
 
   return (
@@ -144,7 +147,7 @@ export function Section({
   children,
   id,
   ariaLabel,
-  className = '',
+  className = "",
 }: {
   children: ReactNode;
   id?: string;
@@ -152,11 +155,7 @@ export function Section({
   className?: string;
 }) {
   return (
-    <section
-      id={id}
-      className={`py-12 ${className}`}
-      aria-label={ariaLabel}
-    >
+    <section id={id} className={`py-12 ${className}`} aria-label={ariaLabel}>
       {children}
     </section>
   );

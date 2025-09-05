@@ -1,4 +1,9 @@
 import '@testing-library/jest-dom';
+import { expect } from 'vitest';
+import { toHaveNoViolations } from 'jest-axe';
+
+// Extend Vitest matchers with jest-axe
+expect.extend(toHaveNoViolations);
 
 // Mock window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
@@ -13,6 +18,47 @@ Object.defineProperty(window, 'matchMedia', {
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),
   })),
+});
+
+// Mock prefers-reduced-motion
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: vi.fn().mockImplementation(query => {
+    if (query === '(prefers-reduced-motion: reduce)') {
+      return {
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      };
+    }
+    if (query === '(prefers-contrast: high)') {
+      return {
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      };
+    }
+    return {
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    };
+  }),
 });
 
 // Mock scrollIntoView
