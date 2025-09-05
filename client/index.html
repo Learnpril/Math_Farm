@@ -59,7 +59,16 @@
     <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
 
     <!-- Preconnect for performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
+    <!-- Resource hints for better performance (prefetch for non-critical resources) -->
+    <link
+      rel="prefetch"
+      href="https://cdn.jsdelivr.net/npm/jsxgraph@1.10.0/distrib/jsxgraphcore.js"
+    />
 
     <!-- MathJax Configuration -->
     <script>

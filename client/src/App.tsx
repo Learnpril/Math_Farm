@@ -1,7 +1,8 @@
-import { Router, Route } from 'wouter';
-import { ThemeProvider } from './components/ThemeProvider';
-import { Layout } from './components/layout/Layout';
-import { Home } from './pages/Home';
+import React from "react";
+import { Router, Route } from "wouter";
+import { ThemeProvider } from "./components/ThemeProvider";
+import { Layout } from "./components/layout/Layout";
+import { Home } from "./pages/Home";
 
 function App() {
   return (
@@ -27,9 +28,7 @@ function App() {
 function PlaceholderPage() {
   return (
     <div className="container mx-auto px-4 py-16 text-center">
-      <h1 className="text-3xl font-bold text-foreground mb-4">
-        Coming Soon
-      </h1>
+      <h1 className="text-3xl font-bold text-foreground mb-4">Coming Soon</h1>
       <p className="text-lg text-muted-foreground mb-8">
         This page will be implemented in future development phases.
       </p>

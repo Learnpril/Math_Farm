@@ -3,6 +3,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import ToolDemo from "./ToolDemo";
+import { loadJSXGraph } from "../lib/lazyLoading";
 
 // JSXGraph types
 declare global {
@@ -341,68 +342,15 @@ export const GraphingDemo: React.FC<GraphingDemoProps> = ({
     }
   }, [plotFunction, equation]);
 
-  // Load JSXGraph library
-  const loadJSXGraph = useCallback(async () => {
+  // Load JSXGraph library using lazy loading utility
+  const loadJSXGraphLibrary = useCallback(async () => {
     try {
-      if (window.JXG) {
-        setIsLoaded(true);
-        setIsLoading(false);
-        return;
-      }
+      const JXG = await loadJSXGraph();
+      console.log("JSXGraph loaded successfully");
 
-      // Check if script is already being loaded
-      const existingScript = document.querySelector('script[src*="jsxgraph"]');
-      if (existingScript) {
-        // Wait for existing script to load
-        existingScript.addEventListener("load", () => {
-          if (window.JXG) {
-            setIsLoaded(true);
-            setError(null);
-          } else {
-            setError("JSXGraph failed to initialize");
-          }
-          setIsLoading(false);
-        });
-        return;
-      }
-
-      // Dynamically import JSXGraph
-      const script = document.createElement("script");
-      script.src =
-        "https://cdn.jsdelivr.net/npm/jsxgraph@1.10.0/distrib/jsxgraphcore.js";
-      script.async = true;
-      script.crossOrigin = "anonymous";
-
-      const loadPromise = new Promise<void>((resolve, reject) => {
-        script.onload = () => {
-          console.log("JSXGraph script loaded, checking initialization...");
-          // Add a small delay to ensure JSXGraph is fully initialized
-          setTimeout(() => {
-            if (window.JXG && window.JXG.JSXGraph) {
-              console.log("JSXGraph successfully initialized");
-              setIsLoaded(true);
-              setError(null);
-              resolve();
-            } else {
-              console.error("JSXGraph object not found after script load");
-              setError("JSXGraph failed to initialize properly");
-              reject(new Error("JSXGraph initialization failed"));
-            }
-            setIsLoading(false);
-          }, 100);
-        };
-
-        script.onerror = () => {
-          setError(
-            "Failed to load JSXGraph library. Please check your internet connection."
-          );
-          setIsLoading(false);
-          reject(new Error("Script loading failed"));
-        };
-      });
-
-      document.head.appendChild(script);
-      await loadPromise;
+      setIsLoaded(true);
+      setError(null);
+      setIsLoading(false);
     } catch (err) {
       console.error("Error loading JSXGraph:", err);
       setError(
@@ -437,13 +385,13 @@ export const GraphingDemo: React.FC<GraphingDemoProps> = ({
     setError(null);
     setIsLoading(true);
     setRetryCount((prev) => prev + 1);
-    loadJSXGraph();
-  }, [loadJSXGraph]);
+    loadJSXGraphLibrary();
+  }, [loadJSXGraphLibrary]);
 
   // Load JSXGraph on mount
   useEffect(() => {
-    loadJSXGraph();
-  }, [loadJSXGraph]);
+    loadJSXGraphLibrary();
+  }, [loadJSXGraphLibrary]);
 
   // Initialize board when loaded
   useEffect(() => {
