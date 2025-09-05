@@ -2,7 +2,14 @@ import React from "react";
 import { Router, Route } from "wouter";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { Layout } from "./components/layout/Layout";
-import { Home } from "./pages/Home";
+import {
+  Home,
+  TopicPage,
+  NotFound,
+  ToolsPage,
+  LaTeXGuidePage,
+  MATLABGuidePage,
+} from "./pages";
 import {
   ErrorBoundaryProvider,
   ErrorBoundaryTester,
@@ -23,12 +30,12 @@ function App() {
         <Router>
           <Layout>
             <Route path="/" component={Home} />
-            {/* Future routes will be added here */}
-            <Route path="/tools" component={PlaceholderPage} />
-            <Route path="/latex-guide" component={PlaceholderPage} />
-            <Route path="/matlab-guide" component={PlaceholderPage} />
+            <Route path="/topic/:id" component={TopicPage} />
+            <Route path="/tools" component={ToolsPage} />
+            <Route path="/latex-guide" component={LaTeXGuidePage} />
+            <Route path="/matlab-guide" component={MATLABGuidePage} />
             <Route path="/community" component={PlaceholderPage} />
-            <Route path="/topic/:id" component={PlaceholderPage} />
+            <Route path="*" component={NotFound} />
           </Layout>
 
           {/* Development-only error testing component */}
