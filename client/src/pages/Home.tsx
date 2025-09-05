@@ -3,6 +3,7 @@ import { HeroSection } from "../components/HeroSection";
 import { MathDemo } from "../components/MathDemo";
 import { TopicsGrid } from "../components/TopicsGrid";
 import { ToolsSection } from "../components/ToolsSection";
+import { PracticeSection } from "../components/PracticeSection";
 import { ServiceHours } from "../components/ServiceHours";
 
 /**
@@ -58,36 +59,7 @@ export function Home() {
         className="bg-background"
       >
         <PageContainer>
-          <div className="text-center space-y-6">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              Practice & Learn
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Engage with interactive practice problems and track your progress
-              with gamified learning experiences.
-            </p>
-
-            {/* Placeholder for practice examples - will be implemented in future tasks */}
-            <div className="max-w-2xl mx-auto mt-12">
-              <div className="p-8 bg-card border border-border rounded-lg">
-                <h3 className="text-xl font-semibold mb-4">Sample Problem</h3>
-                <div className="space-y-4">
-                  <p className="text-muted-foreground">
-                    Interactive practice problems with step-by-step solutions
-                    will be available here.
-                  </p>
-                  <div className="flex items-center justify-center space-x-4">
-                    <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                      <div className="w-4 h-4 bg-primary/20 rounded-full"></div>
-                    </div>
-                    <span className="text-sm text-muted-foreground">
-                      Progress tracking
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <PracticeSection />
         </PageContainer>
       </Section>
 

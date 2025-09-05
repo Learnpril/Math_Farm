@@ -1,0 +1,101 @@
+[
+  {
+    "id": "algebra-linear-1",
+    "question": "Solve for x in the equation:",
+    "expression": "2x + 5 = 13",
+    "steps": [
+      {
+        "id": "step-1",
+        "description": "Subtract 5 from both sides",
+        "expression": "2x + 5 - 5 = 13 - 5",
+        "explanation": "We subtract 5 from both sides to isolate the term with x."
+      },
+      {
+        "id": "step-2",
+        "description": "Simplify both sides",
+        "expression": "2x = 8",
+        "explanation": "After subtracting 5 from both sides, we get 2x = 8."
+      },
+      {
+        "id": "step-3",
+        "description": "Divide both sides by 2",
+        "expression": "x = \\frac{8}{2} = 4",
+        "explanation": "Dividing both sides by 2 gives us the final answer."
+      }
+    ],
+    "correctAnswer": "4",
+    "hints": [
+      "Start by isolating the term with x",
+      "What operation is the opposite of addition?",
+      "Remember to do the same operation to both sides"
+    ],
+    "difficulty": 1,
+    "topic": "Algebra"
+  },
+  {
+    "id": "geometry-area-1",
+    "question": "Find the area of a rectangle with length 8 cm and width 5 cm:",
+    "expression": "A = l \\times w",
+    "steps": [
+      {
+        "id": "step-1",
+        "description": "Identify the formula for rectangle area",
+        "expression": "A = l \\times w",
+        "explanation": "The area of a rectangle is length times width."
+      },
+      {
+        "id": "step-2",
+        "description": "Substitute the given values",
+        "expression": "A = 8 \\times 5",
+        "explanation": "We substitute l = 8 cm and w = 5 cm into the formula."
+      },
+      {
+        "id": "step-3",
+        "description": "Calculate the result",
+        "expression": "A = 40 \\text{ cm}^2",
+        "explanation": "Multiplying 8 by 5 gives us 40 square centimeters."
+      }
+    ],
+    "correctAnswer": "40",
+    "hints": [
+      "Remember the formula: Area = length × width",
+      "Make sure to include the correct units",
+      "Double-check your multiplication"
+    ],
+    "difficulty": 1,
+    "topic": "Geometry"
+  },
+  {
+    "id": "calculus-derivative-1",
+    "question": "Find the derivative of the function:",
+    "expression": "f(x) = x^2 + 3x - 2",
+    "steps": [
+      {
+        "id": "step-1",
+        "description": "Apply the power rule to each term",
+        "expression": "f'(x) = \\frac{d}{dx}(x^2) + \\frac{d}{dx}(3x) + \\frac{d}{dx}(-2)",
+        "explanation": "We differentiate each term separately using the sum rule."
+      },
+      {
+        "id": "step-2",
+        "description": "Calculate each derivative",
+        "expression": "f'(x) = 2x + 3 + 0",
+        "explanation": "Using the power rule: d/dx(x²) = 2x, d/dx(3x) = 3, d/dx(-2) = 0."
+      },
+      {
+        "id": "step-3",
+        "description": "Simplify the result",
+        "expression": "f'(x) = 2x + 3",
+        "explanation": "The final derivative is 2x + 3."
+      }
+    ],
+    "correctAnswer": "2x + 3",
+    "hints": [
+      "Use the power rule: d/dx(x^n) = nx^(n-1)",
+      "The derivative of a constant is zero",
+      "Don't forget the coefficient when differentiating"
+    ],
+    "difficulty": 3,
+    "topic": "Calculus"
+  }
+]
