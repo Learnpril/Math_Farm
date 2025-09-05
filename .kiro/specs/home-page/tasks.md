@@ -102,7 +102,8 @@
   - Write unit tests for gamification features and practice interactions
   - _Requirements: 4.1, 4.2, 4.4, 4.5_
 
-- [ ] 12. Build practice section with gamified examples
+- [xnpm run dev
+  ] 12. Build practice section with gamified examples
 
   - Create PracticeSection.tsx component integrating practice examples
   - Implement visual streak indicators and badge displays
