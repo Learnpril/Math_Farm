@@ -39,15 +39,14 @@ export function ServiceHours({ className = "" }: ServiceHoursProps) {
     const currentTimeInMinutes = currentHour * 60 + currentMinute;
 
     // Define service hours
-    const weekdayStart = 7 * 60; // 7:00 AM in minutes
-    const weekdayEnd = 2 * 60; // 2:00 AM next day in minutes (26:00 = 2:00 AM)
-    const weekendStart = 7 * 60; // 7:00 AM in minutes
-    const weekendEnd = 3 * 60; // 3:00 AM next day in minutes (27:00 = 3:00 AM)
+    const dailyStart = 7 * 60; // 7:00 AM in minutes (same for all days)
+    const weekdayEnd = 2 * 60; // 2:00 AM next day in minutes
+    const weekendEnd = 3 * 60; // 3:00 AM next day in minutes
 
     // Check if currently open
     let isOpen = false;
 
-    if (currentTimeInMinutes >= 7 * 60) {
+    if (currentTimeInMinutes >= dailyStart) {
       // After 7 AM - check today's hours
       if (currentDay >= 1 && currentDay <= 5) {
         // Monday to Friday - open until 2 AM next day
