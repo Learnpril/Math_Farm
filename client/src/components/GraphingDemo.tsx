@@ -26,6 +26,9 @@ export const GraphingDemo: React.FC<GraphingDemoProps> = ({
   const [equation, setEquation] = useState("x^2");
   const [isLoading, setIsLoading] = useState(true);
   const [retryCount, setRetryCount] = useState(0);
+  // Fixed ranges that provide perfect 1:1 visual ratio
+  const xRange = 16;
+  const yRange = 8;
 
   // Safe function evaluator
   const evaluateFunction = useCallback((func: string, x: number): number => {
@@ -267,17 +270,21 @@ export const GraphingDemo: React.FC<GraphingDemoProps> = ({
         window.matchMedia("(prefers-color-scheme: dark)").matches;
 
       const board = window.JXG.JSXGraph.initBoard(boardRef.current, {
-        boundingbox: [-10, 10, 10, -10],
-        keepAspectRatio: true, // Maintain 1:1 aspect ratio
+        boundingbox: [-xRange, yRange, xRange, -yRange],
+        keepAspectRatio: false,
         axis: {
-          strokeColor: isDarkMode ? "#64748b" : "#374151", // slate-500 for dark, gray-700 for light
+          strokeColor: isDarkMode ? "#64748b" : "#374151",
           strokeWidth: 2,
           ticks: {
             strokeColor: isDarkMode ? "#64748b" : "#374151",
             strokeWidth: 1,
+            majorHeight: 10,
+            minorHeight: 0, // Disable minor ticks to clean up the grid
+            minorTicks: 0, // No minor ticks
+            ticksDistance: 2, // Major tick every 2 units for cleaner spacing
             label: {
               fontSize: 12,
-              color: isDarkMode ? "#94a3b8" : "#374151", // slate-400 for dark, gray-700 for light
+              color: isDarkMode ? "#94a3b8" : "#374151",
             },
           },
         },
@@ -306,6 +313,22 @@ export const GraphingDemo: React.FC<GraphingDemoProps> = ({
 
       if (board) {
         boardInstance.current = board;
+
+        // Force board to maintain aspect ratio
+        setTimeout(() => {
+          if (boardInstance.current) {
+            try {
+              boardInstance.current.resizeContainer(
+                boardRef.current?.offsetWidth || 400,
+                boardRef.current?.offsetHeight || 400,
+                true // Keep aspect ratio
+              );
+            } catch (e) {
+              console.warn("Could not resize board container:", e);
+            }
+          }
+        }, 100);
+
         plotFunction(equation);
       } else {
         setError("Failed to create graphing board");
@@ -561,10 +584,10 @@ export const GraphingDemo: React.FC<GraphingDemoProps> = ({
           <div className="p-4 bg-white dark:bg-slate-900 rounded-xl border shadow-sm">
             <div
               ref={boardRef}
-              className="w-full h-96 border-2 border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 shadow-inner"
+              className="w-full aspect-square max-h-[500px] border-2 border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 shadow-inner"
               style={{
-                minHeight: "384px",
-                minWidth: "100%",
+                minHeight: "400px",
+                minWidth: "400px",
                 position: "relative",
                 overflow: "hidden",
               }}
