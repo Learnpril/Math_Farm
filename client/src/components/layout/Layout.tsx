@@ -1,17 +1,31 @@
 import { ReactNode } from "react";
 import { Header } from "./Header";
 import { SkipNavigation } from "../accessibility/SkipNavigation";
+import { BreadcrumbNavigation } from "../navigation/BreadcrumbNavigation";
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+  isActive?: boolean;
+}
 
 interface LayoutProps {
   children: ReactNode;
   className?: string;
+  breadcrumbItems?: BreadcrumbItem[];
+  showBreadcrumbs?: boolean;
 }
 
 /**
  * Main layout component with semantic HTML structure and ARIA landmarks
  * Provides consistent page structure across the application
  */
-export function Layout({ children, className = "" }: LayoutProps) {
+export function Layout({
+  children,
+  className = "",
+  breadcrumbItems,
+  showBreadcrumbs = true,
+}: LayoutProps) {
   return (
     <div className={`min-h-screen bg-background text-foreground ${className}`}>
       {/* Skip navigation for accessibility */}
@@ -27,6 +41,12 @@ export function Layout({ children, className = "" }: LayoutProps) {
         role="main"
         aria-label="Main content"
       >
+        {/* Breadcrumb navigation */}
+        {showBreadcrumbs && (
+          <div className="container mx-auto px-4">
+            <BreadcrumbNavigation items={breadcrumbItems} />
+          </div>
+        )}
         {children}
       </main>
 

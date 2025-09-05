@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, Calculator, Guitar } from "lucide-react";
+import { Menu, X, Calculator, Guitar, ArrowLeft } from "lucide-react";
 import { ThemeToggle } from "../ui/ThemeToggle";
 import { AccessibilitySettings } from "../accessibility/AccessibilitySettings";
 
@@ -81,28 +81,43 @@ export function Header({ className = "" }: HeaderProps) {
     { href: "/#about", label: "About", isInternal: true },
   ];
 
-  const handleInternalNavigation = (href: string) => {
+  const handleInternalNavigation = (href: string, event?: React.MouseEvent) => {
+    if (event) {
+      event.preventDefault();
+    }
     closeMobileMenu();
 
     if (href.includes("#")) {
       const targetId = href.split("#")[1];
-      const targetElement = document.getElementById(targetId);
 
+      // If we're not on the home page, navigate to home first
+      if (location !== "/") {
+        window.location.href = href;
+        return;
+      }
+
+      const targetElement = document.getElementById(targetId);
       if (targetElement) {
         targetElement.scrollIntoView({
           behavior: "smooth",
           block: "start",
         });
+
+        // Update URL hash without triggering navigation
+        window.history.pushState(null, "", href);
       }
     }
   };
 
   const isActiveLink = (href: string) => {
     if (href.includes("#")) {
-      return location === "/";
+      return location === "/" && window.location.hash === href.split("#")[1];
     }
     return location === href;
   };
+
+  // Check if we're on a non-home page to show back button
+  const showBackButton = location !== "/" && !location.includes("#");
 
   return (
     <header
@@ -111,14 +126,28 @@ export function Header({ className = "" }: HeaderProps) {
     >
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2 group">
-            <Calculator
-              className="h-8 w-8 text-primary transition-transform group-hover:scale-110"
-              aria-hidden="true"
-            />
-            <span className="text-xl font-bold text-foreground">Math Farm</span>
-          </Link>
+          {/* Logo and Back Button */}
+          <div className="flex items-center space-x-4">
+            {showBackButton && (
+              <button
+                onClick={() => window.history.back()}
+                className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md p-1"
+                aria-label="Go back to previous page"
+              >
+                <ArrowLeft className="h-5 w-5" aria-hidden="true" />
+                <span className="hidden sm:inline text-sm">Back</span>
+              </button>
+            )}
+            <Link href="/" className="flex items-center space-x-2 group">
+              <Calculator
+                className="h-8 w-8 text-primary transition-transform group-hover:scale-110"
+                aria-hidden="true"
+              />
+              <span className="text-xl font-bold text-foreground">
+                Math Farm
+              </span>
+            </Link>
+          </div>
 
           {/* Desktop Navigation */}
           <nav
@@ -128,9 +157,12 @@ export function Header({ className = "" }: HeaderProps) {
           >
             {navigationItems.map((item) =>
               item.isInternal ? (
-                <button
+                <Link
                   key={item.href}
-                  onClick={() => handleInternalNavigation(item.href)}
+                  href={item.href}
+                  onClick={(event) =>
+                    handleInternalNavigation(item.href, event)
+                  }
                   className={`text-sm font-medium transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                     isActiveLink(item.href)
                       ? "text-primary"
@@ -139,7 +171,7 @@ export function Header({ className = "" }: HeaderProps) {
                   aria-current={isActiveLink(item.href) ? "page" : undefined}
                 >
                   {item.label}
-                </button>
+                </Link>
               ) : (
                 <Link
                   key={item.href}
@@ -268,10 +300,14 @@ export function Header({ className = "" }: HeaderProps) {
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navigationItems.map((item) =>
                 item.isInternal ? (
-                  <button
+                  <Link
                     key={item.href}
-                    onClick={() => handleInternalNavigation(item.href)}
-                    className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
+                    href={item.href}
+                    onClick={(event) => {
+                      handleInternalNavigation(item.href, event);
+                      closeMobileMenu();
+                    }}
+                    className={`block px-3 py-2 rounded-md text-base font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                       isActiveLink(item.href)
                         ? "bg-accent text-accent-foreground"
                         : "text-muted-foreground"
@@ -279,7 +315,7 @@ export function Header({ className = "" }: HeaderProps) {
                     aria-current={isActiveLink(item.href) ? "page" : undefined}
                   >
                     {item.label}
-                  </button>
+                  </Link>
                 ) : (
                   <Link
                     key={item.href}

@@ -9,9 +9,9 @@
   - Test navigation to /topic/algebra and ensure params.id matches topic data
   - _Requirements: 1.1, 1.2, 2.1_
 
-- [ ] 2. Enhance navigation components and user experience
+- [-] 2. Enhance navigation components and user experience
 
-  - [ ] 2.1 Update Header.tsx navigation system
+  - [x] 2.1 Update Header.tsx navigation system
 
     - Replace button-based navigation with Wouter <Link> components for external routes
     - Implement hybrid navigation for hash links (combine with window.scrollTo for smooth scroll)
@@ -19,7 +19,8 @@
     - Integrate ARIA attributes: role="navigation" on nav, aria-current on active links
     - _Requirements: 2.4, 4.1_
 
-  - [ ] 2.2 Implement breadcrumb navigation system
+  - [-] 2.2 Implement breadcrumb navigation system
+
     - Add breadcrumb slot to Layout.tsx main section
     - Create Breadcrumb component using shadcn/ui with Home > Topics > [Topic Title] pattern
     - Implement breadcrumb logic for topic pages and tools/guide pages
