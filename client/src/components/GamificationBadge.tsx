@@ -1,4 +1,4 @@
-import { Badge } from "../../shared/types";
+import { Badge } from "../../../shared/types";
 import { Star, Trophy, Target, Flame, Compass, Wrench } from "lucide-react";
 
 interface GamificationBadgeProps {

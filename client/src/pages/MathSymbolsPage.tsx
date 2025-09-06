@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "wouter";
 import { ArrowLeft, X } from "lucide-react";
 import { MathExpression } from "../components/MathExpression";

@@ -1,12 +1,5 @@
-import React, { useState, useEffect } from "react";
-import {
-  Settings,
-  Eye,
-  EyeOff,
-  Contrast,
-  Volume2,
-  VolumeX,
-} from "lucide-react";
+import { useState, useEffect } from "react";
+import { Settings, Eye, Contrast, Volume2, VolumeX } from "lucide-react";
 import { HighContrastManager } from "../../lib/accessibility";
 
 interface AccessibilitySettingsProps {

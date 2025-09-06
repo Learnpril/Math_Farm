@@ -1,4 +1,4 @@
-import React from "react";
+// React 19 - no need to import React
 import { Link } from "wouter";
 import { ArrowLeft, BookOpen, Code, Copy, Eye } from "lucide-react";
 import { MathExpression } from "../components/MathExpression";

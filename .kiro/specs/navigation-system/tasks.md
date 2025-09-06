@@ -27,7 +27,7 @@
     - Add keyboard navigation support for breadcrumbs
     - _Requirements: 1.6, 4.2_
 
-- [ ] 3. Implement topic card navigation and interactivity
+- [-] 3. Implement topic card navigation and interactivity
 
   - Remove alert placeholder from onTopicClick in TopicsGrid component
   - Use Wouter's navigate(`/topic/${topicId}`) for topic card click handlers

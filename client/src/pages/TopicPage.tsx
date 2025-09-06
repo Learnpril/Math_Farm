@@ -1,4 +1,4 @@
-import React from "react";
+// React 19 - no need to import React
 import { useParams, Link } from "wouter";
 import { ArrowLeft, Clock, Star, BookOpen } from "lucide-react";
 import { MathExpression } from "../components/MathExpression";
@@ -10,7 +10,7 @@ export function TopicPage() {
   const topicId = params.id;
 
   // Find the topic data
-  const topic = topicsData.find((t: Topic) => t.id === topicId);
+  const topic = topicsData.find((t) => t.id === topicId) as Topic | undefined;
 
   if (!topic) {
     return (
@@ -143,9 +143,9 @@ export function TopicPage() {
           </h2>
           <div className="flex flex-wrap gap-3">
             {topic.prerequisites.map((prereqId) => {
-              const prereqTopic = topicsData.find(
-                (t: Topic) => t.id === prereqId
-              );
+              const prereqTopic = topicsData.find((t) => t.id === prereqId) as
+                | Topic
+                | undefined;
               return prereqTopic ? (
                 <Link
                   key={prereqId}

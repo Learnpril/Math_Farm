@@ -1,4 +1,4 @@
-import { ProgressData } from "../../shared/types";
+import { ProgressData } from "../../../shared/types";
 import { calculateCompletionStats } from "../lib/progressUtils";
 import { TrendingUp, BookOpen, Wrench, Trophy } from "lucide-react";
 

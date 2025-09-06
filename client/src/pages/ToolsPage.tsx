@@ -1,4 +1,4 @@
-import React from "react";
+// React 19 - no need to import React
 import { Link } from "wouter";
 import { ArrowLeft, Calculator, TrendingUp, Grid3x3, Zap } from "lucide-react";
 

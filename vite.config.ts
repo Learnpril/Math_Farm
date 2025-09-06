@@ -8,36 +8,38 @@ export default defineConfig({
   build: {
     outDir: '../dist',
     emptyOutDir: true,
-    // Performance optimizations
+    // Maximum readability settings
     rollupOptions: {
       output: {
-        // Manual chunk splitting for better caching
+        format: 'es',
+        // Preserve original names as much as possible
+        preserveModules: false,
+        compact: false,
+        // Keep readable chunk names
+        entryFileNames: 'assets/[name].js',
+        chunkFileNames: 'assets/[name].js',
+        assetFileNames: 'assets/[name].[ext]',
+        // Manual chunk splitting
         manualChunks: {
-          // Vendor chunks
           'react-vendor': ['react', 'react-dom'],
           'router-vendor': ['wouter'],
           'ui-vendor': ['@radix-ui/react-label', '@radix-ui/react-slot', '@radix-ui/react-toast', '@radix-ui/react-tooltip'],
           'math-vendor': ['mathjs'],
           'utils-vendor': ['clsx', 'class-variance-authority', 'tailwind-merge'],
-          // Lazy-loaded chunks (these will be loaded on demand)
           'mathjax-chunk': ['better-react-mathjax'],
         },
       },
+      // Disable optimizations
+      treeshake: false,
     },
-    // Enable minification and compression
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true, // Remove console.logs in production
-        drop_debugger: true,
-      },
-    },
-    // Enable source maps for debugging but keep them separate
+    // No minification
+    minify: false,
+    target: 'esnext',
     sourcemap: true,
-    // Optimize chunk size
-    chunkSizeWarningLimit: 1000,
-    // Enable CSS code splitting
+    cssMinify: false,
+    chunkSizeWarningLimit: 10000,
     cssCodeSplit: true,
+    assetsInlineLimit: 0,
   },
   resolve: {
     alias: {

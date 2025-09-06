@@ -45,32 +45,33 @@ const BreadcrumbItem = React.forwardRef<
 ));
 BreadcrumbItem.displayName = "BreadcrumbItem";
 
-const BreadcrumbLink = React.forwardRef<
-  HTMLAnchorElement,
-  React.ComponentPropsWithoutRef<typeof Link> & {
-    asChild?: boolean;
-  }
->(({ className, asChild, ...props }, ref) => {
-  if (asChild) {
+const BreadcrumbLink = React.forwardRef<HTMLAnchorElement, any>(
+  ({ className, asChild, href, to, ...props }, ref) => {
+    if (asChild) {
+      return (
+        <span
+          className={cn("transition-colors hover:text-foreground", className)}
+          {...props}
+        />
+      );
+    }
+
+    // Ensure we have either href or to prop for wouter Link
+    const linkProps = href ? { href } : { to: to || "#" };
+
     return (
-      <span
-        className={cn("transition-colors hover:text-foreground", className)}
+      <Link
+        ref={ref}
+        className={cn(
+          "transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm",
+          className
+        )}
+        {...linkProps}
         {...props}
       />
     );
   }
-
-  return (
-    <Link
-      ref={ref}
-      className={cn(
-        "transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm",
-        className
-      )}
-      {...props}
-    />
-  );
-});
+);
 BreadcrumbLink.displayName = "BreadcrumbLink";
 
 const BreadcrumbPage = React.forwardRef<

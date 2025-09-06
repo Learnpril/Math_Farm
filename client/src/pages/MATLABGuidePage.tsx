@@ -1,6 +1,6 @@
-import React from "react";
+// React 19 - no need to import React
 import { Link } from "wouter";
-import { ArrowLeft, Terminal, Code, Play, BookOpen } from "lucide-react";
+import { ArrowLeft, Terminal, Code, BookOpen } from "lucide-react";
 
 export function MATLABGuidePage() {
   const sections = [

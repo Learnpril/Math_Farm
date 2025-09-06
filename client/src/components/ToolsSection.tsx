@@ -11,7 +11,7 @@ import {
 import { GraphingDemo } from "./GraphingDemo";
 import { CalculatorDemo } from "./CalculatorDemo";
 import { ToolDemoErrorBoundary } from "./ToolDemoErrorBoundary";
-import { ArrowRight, Calculator, TrendingUp, AlertCircle } from "lucide-react";
+import { ArrowRight, Calculator, TrendingUp } from "lucide-react";
 
 export interface ToolsSectionProps {
   className?: string;

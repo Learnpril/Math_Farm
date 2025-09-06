@@ -3,6 +3,13 @@ import { LucideIcon } from "lucide-react";
 import * as Icons from "lucide-react";
 import { Topic } from "../../../shared/types";
 import { MathExpression } from "./MathExpression";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  TooltipProvider,
+} from "./ui/tooltip";
+import topicsData from "../data/topicsData.json";
 
 interface TopicCardProps {
   topic: Topic;

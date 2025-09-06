@@ -79,7 +79,7 @@ export class ErrorLogger {
       error,
       category,
       severity,
-      errorInfo.componentStack,
+      errorInfo.componentStack || undefined,
       additionalData
     );
 

@@ -1,4 +1,4 @@
-import React from "react";
+// React 19 - no need to import React
 import { Link } from "wouter";
 import { Home, Search, BookOpen } from "lucide-react";
 import topicsData from "../data/topicsData.json";
@@ -53,7 +53,7 @@ export function NotFound() {
           </h3>
 
           <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-3">
-            {suggestedTopics.map((topic: Topic) => (
+            {suggestedTopics.map((topic) => (
               <Link
                 key={topic.id}
                 href={`/topic/${topic.id}`}
