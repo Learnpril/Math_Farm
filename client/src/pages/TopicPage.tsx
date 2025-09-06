@@ -13,13 +13,21 @@ import {
 } from "lucide-react";
 import { MathExpression } from "../components/MathExpression";
 import { Badge } from "../components/ui/badge";
+import { LessonContent } from "../components/LessonContent";
+import {
+  JSXGraphDemo,
+  demoInitializers,
+  demoConfigs,
+} from "../components/JSXGraphDemo";
 import topicsData from "../data/topicsData.json";
+import { lessonContentData } from "../data/lessonContent";
 import type { Topic } from "../../../shared/types";
 
 interface TopicProgress {
   startedAt: Date;
   completedAt?: Date;
   sectionsCompleted: string[];
+  lessonSectionsCompleted: string[];
   timeSpent: number;
 }
 
@@ -87,6 +95,8 @@ export function TopicPage() {
             startedAt: prev.topicProgress[topic.id]?.startedAt || new Date(),
             sectionsCompleted:
               prev.topicProgress[topic.id]?.sectionsCompleted || [],
+            lessonSectionsCompleted:
+              prev.topicProgress[topic.id]?.lessonSectionsCompleted || [],
             timeSpent: prev.topicProgress[topic.id]?.timeSpent || 0,
             ...prev.topicProgress[topic.id],
           },
@@ -299,25 +309,12 @@ export function TopicPage() {
             </div>
           </div>
 
-          {/* Main Content Placeholder */}
-          <div className="bg-card border rounded-lg p-8">
-            <h2 className="text-2xl font-semibold text-foreground mb-4">
-              Coming Soon
-            </h2>
-            <p className="text-muted-foreground mb-6">
-              Detailed lessons, interactive examples, and practice problems for{" "}
-              {topic.title} will be available in the next development phase.
-            </p>
-            <div className="text-sm text-muted-foreground">
-              This content will include:
-            </div>
-            <ul className="list-disc list-inside text-sm text-muted-foreground mt-2 space-y-1">
-              <li>Interactive lesson sections with MathJax integration</li>
-              <li>Step-by-step explanations and examples</li>
-              <li>Practice problems with instant feedback</li>
-              <li>Progress tracking and completion indicators</li>
-            </ul>
-          </div>
+          {/* Lesson Content System */}
+          <LessonContentSection
+            topicId={topic.id}
+            userProgress={userProgress}
+            setUserProgress={setUserProgress}
+          />
         </div>
 
         {/* Sidebar - Progress and Related Topics */}
@@ -375,17 +372,39 @@ export function TopicPage() {
                 </div>
               )}
 
-              {/* Progress placeholder for future implementation */}
+              {/* Lesson Progress */}
               <div className="pt-4 border-t border-border">
-                <div className="text-xs text-muted-foreground mb-2">
-                  Sections (0/4)
-                </div>
-                <div className="w-full bg-muted rounded-full h-2">
-                  <div
-                    className="bg-primary h-2 rounded-full"
-                    style={{ width: "0%" }}
-                  ></div>
-                </div>
+                {(() => {
+                  const lessonContent = lessonContentData[topic.id];
+                  const completedSections =
+                    userProgress.topicProgress[topic.id]
+                      ?.lessonSectionsCompleted || [];
+                  const totalSections = lessonContent?.sections.length || 0;
+                  const progressPercentage =
+                    totalSections > 0
+                      ? (completedSections.length / totalSections) * 100
+                      : 0;
+
+                  return (
+                    <>
+                      <div className="text-xs text-muted-foreground mb-2">
+                        Lesson Sections ({completedSections.length}/
+                        {totalSections})
+                      </div>
+                      <div className="w-full bg-muted rounded-full h-2">
+                        <div
+                          className="bg-primary h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${progressPercentage}%` }}
+                        ></div>
+                      </div>
+                      {totalSections === 0 && (
+                        <p className="text-xs text-muted-foreground mt-2">
+                          Lesson content coming soon
+                        </p>
+                      )}
+                    </>
+                  );
+                })()}
               </div>
             </div>
           </div>
@@ -419,6 +438,121 @@ export function TopicPage() {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+// Lesson Content Section Component
+interface LessonContentSectionProps {
+  topicId: string;
+  userProgress: UserProgress;
+  setUserProgress: React.Dispatch<React.SetStateAction<UserProgress>>;
+}
+
+function LessonContentSection({
+  topicId,
+  userProgress,
+  setUserProgress,
+}: LessonContentSectionProps) {
+  const lessonContent = lessonContentData[topicId];
+
+  // If no lesson content available, show placeholder
+  if (!lessonContent) {
+    return (
+      <div className="bg-card border rounded-lg p-8">
+        <h2 className="text-2xl font-semibold text-foreground mb-4">
+          Lesson Content Coming Soon
+        </h2>
+        <p className="text-muted-foreground mb-6">
+          Detailed lessons, interactive examples, and practice problems for this
+          topic will be available in the next development phase.
+        </p>
+        <div className="text-sm text-muted-foreground">
+          This content will include:
+        </div>
+        <ul className="list-disc list-inside text-sm text-muted-foreground mt-2 space-y-1">
+          <li>Interactive lesson sections with MathJax integration</li>
+          <li>Step-by-step explanations and examples</li>
+          <li>Practice problems with instant feedback</li>
+          <li>Progress tracking and completion indicators</li>
+        </ul>
+      </div>
+    );
+  }
+
+  const completedSections =
+    userProgress.topicProgress[topicId]?.lessonSectionsCompleted || [];
+
+  const handleSectionComplete = (sectionId: string) => {
+    setUserProgress((prev) => ({
+      ...prev,
+      topicProgress: {
+        ...prev.topicProgress,
+        [topicId]: {
+          ...prev.topicProgress[topicId],
+          startedAt: prev.topicProgress[topicId]?.startedAt || new Date(),
+          sectionsCompleted:
+            prev.topicProgress[topicId]?.sectionsCompleted || [],
+          lessonSectionsCompleted: [
+            ...(prev.topicProgress[topicId]?.lessonSectionsCompleted || []),
+            sectionId,
+          ].filter((id, index, arr) => arr.indexOf(id) === index), // Remove duplicates
+          timeSpent: prev.topicProgress[topicId]?.timeSpent || 0,
+        },
+      },
+    }));
+  };
+
+  return (
+    <div className="space-y-8">
+      <LessonContent
+        lessonContent={lessonContent}
+        onSectionComplete={handleSectionComplete}
+        completedSections={completedSections}
+      />
+
+      {/* Interactive Demos Section */}
+      {topicId === "geometry" && (
+        <div className="space-y-6">
+          <h3 className="text-xl font-semibold text-foreground">
+            Interactive Demonstrations
+          </h3>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <JSXGraphDemo
+              id="circle-area-demo"
+              config={demoConfigs.geometryShapes}
+              onInit={demoInitializers.circleArea}
+              title="Circle Area Calculator"
+              description="Drag the radius point to see how the area changes"
+            />
+
+            <JSXGraphDemo
+              id="triangle-area-demo"
+              config={demoConfigs.geometryShapes}
+              onInit={demoInitializers.triangleArea}
+              title="Triangle Area Calculator"
+              description="Move the vertices to explore triangle area calculation"
+            />
+          </div>
+        </div>
+      )}
+
+      {topicId === "algebra" && (
+        <div className="space-y-6">
+          <h3 className="text-xl font-semibold text-foreground">
+            Interactive Function Explorer
+          </h3>
+
+          <JSXGraphDemo
+            id="quadratic-function-demo"
+            config={demoConfigs.functionPlotter}
+            onInit={demoInitializers.quadraticFunction}
+            title="Quadratic Function Explorer"
+            description="Adjust the sliders to see how coefficients affect the parabola"
+          />
+        </div>
+      )}
     </div>
   );
 }

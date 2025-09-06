@@ -54,7 +54,7 @@
     - Add visual difficulty indicators (1-5 scale with color coding)
     - _Requirements: 1.3, 1.5_
 
-  - [ ] 4.3 Build lesson content system with MathJax integration
+  - [x] 4.3 Build lesson content system with MathJax integration
 
     - Implement accordion-based lesson sections using shadcn/ui Accordion
     - Integrate MathJax rendering for mathematical expressions in lesson content
