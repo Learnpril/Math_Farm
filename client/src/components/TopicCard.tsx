@@ -41,6 +41,15 @@ export const TopicCard: React.FC<TopicCardProps> = ({
   // Get the icon component dynamically
   const IconComponent = (Icons as any)[topic.icon] as LucideIcon;
 
+  // Create a lookup for topic titles from prerequisites
+  const topics = topicsData as Topic[];
+  const topicLookup = React.useMemo(() => {
+    return topics.reduce((acc, t) => {
+      acc[t.id] = t.title;
+      return acc;
+    }, {} as Record<string, string>);
+  }, []);
+
   const handleClick = () => {
     onClick(topic.id);
   };
@@ -52,15 +61,18 @@ export const TopicCard: React.FC<TopicCardProps> = ({
     }
   };
 
-  // Generate comprehensive aria-label
-  const ariaLabel = `${topic.title}, ${
+  // Generate comprehensive aria-label with improved accessibility
+  const prerequisiteNames = topic.prerequisites
+    .map((id) => topicLookup[id] || id)
+    .join(", ");
+  const ariaLabel = `Learn ${topic.title}. ${topic.description}. ${
     levelLabels[topic.level]
-  } level, difficulty ${topic.difficulty} out of 5. ${
-    topic.description
-  }. Estimated time: ${topic.estimatedTime} minutes. ${
+  } level, difficulty ${topic.difficulty} out of 5. Estimated time: ${
+    topic.estimatedTime
+  } minutes. ${
     topic.prerequisites.length > 0
-      ? `Prerequisites: ${topic.prerequisites.length}`
-      : "No prerequisites"
+      ? `Prerequisites: ${prerequisiteNames}`
+      : "No prerequisites required"
   }.`;
 
   return (
@@ -141,13 +153,31 @@ export const TopicCard: React.FC<TopicCardProps> = ({
           </span>
 
           {topic.prerequisites.length > 0 && (
-            <span className="flex items-center space-x-1">
-              <Icons.BookOpen size={12} aria-hidden="true" />
-              <span>
-                {topic.prerequisites.length} prereq
-                {topic.prerequisites.length !== 1 ? "s" : ""}
-              </span>
-            </span>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span className="flex items-center space-x-1 cursor-help">
+                    <Icons.BookOpen size={12} aria-hidden="true" />
+                    <span>
+                      {topic.prerequisites.length} prereq
+                      {topic.prerequisites.length !== 1 ? "s" : ""}
+                    </span>
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <div className="text-sm">
+                    <p className="font-medium mb-1">Prerequisites:</p>
+                    <ul className="space-y-1">
+                      {topic.prerequisites.map((prereqId) => (
+                        <li key={prereqId} className="text-xs">
+                          • {topicLookup[prereqId] || prereqId}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           )}
         </div>
       </div>
