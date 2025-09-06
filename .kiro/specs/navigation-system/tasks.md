@@ -27,7 +27,7 @@
     - Add keyboard navigation support for breadcrumbs
     - _Requirements: 1.6, 4.2_
 
-- [-] 3. Implement topic card navigation and interactivity
+- [x] 3. Implement topic card navigation and interactivity
 
   - Remove alert placeholder from onTopicClick in TopicsGrid component
   - Use Wouter's navigate(`/topic/${topicId}`) for topic card click handlers
@@ -36,9 +36,9 @@
   - Add accessibility improvements: aria-label="Learn ${title}" on topic cards
   - _Requirements: 1.1, 1.3, 4.4_
 
-- [ ] 4. Create comprehensive TopicPage component
+- [-] 4. Create comprehensive TopicPage component
 
-  - [ ] 4.1 Set up topic page structure and routing
+  - [x] 4.1 Set up topic page structure and routing
 
     - Create pages/TopicPage.tsx with useParams from Wouter to get topic ID
     - Implement topic data fetching from topicsData.json with error handling for invalid IDs
