@@ -21,39 +21,41 @@ function SymbolModal({ symbol, onClose }: SymbolModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
-      <div className="bg-background border rounded-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-        <div className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-semibold text-foreground">
+      <div className="bg-background border rounded-lg max-w-4xl w-full max-h-[80vh] overflow-y-auto">
+        <div className="p-8">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-3xl font-semibold text-foreground">
               {symbol.name}
             </h2>
             <button
               onClick={onClose}
-              className="p-1 text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md"
+              className="p-2 text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md"
               aria-label="Close modal"
             >
-              <X className="h-6 w-6" />
+              <X className="h-8 w-8" />
             </button>
           </div>
 
-          <div className="text-center mb-6">
-            <div className="text-6xl font-bold text-primary mb-4 font-math">
+          <div className="text-center mb-8">
+            <div className="text-8xl font-bold text-primary mb-6 font-math">
               {symbol.symbol}
             </div>
           </div>
 
           {symbol.description && (
-            <p className="text-muted-foreground mb-6">{symbol.description}</p>
+            <p className="text-2xl text-muted-foreground mb-8">
+              {symbol.description}
+            </p>
           )}
 
           {symbol.examples && symbol.examples.length > 0 && (
             <div>
-              <h3 className="text-lg font-semibold mb-4">Examples:</h3>
-              <div className="space-y-3">
+              <h3 className="text-3xl font-semibold mb-6">Examples:</h3>
+              <div className="space-y-4">
                 {symbol.examples.map((example, index) => (
                   <div
                     key={index}
-                    className="bg-muted/50 p-4 rounded-md border-l-4 border-primary font-mono text-sm"
+                    className="bg-muted/50 p-6 rounded-md border-l-4 border-primary font-mono text-3xl"
                   >
                     <MathExpression expression={example} />
                   </div>
@@ -203,7 +205,11 @@ export function MathSymbolsPage() {
           meaning: "Partial differentiation",
           description:
             "Derivative with respect to one variable while keeping others constant.",
-          examples: ["∂f/∂x", "∂z/∂x where z = f(x,y)", "∂u/∂t = k∇²u"],
+          examples: [
+            "∂f/∂x",
+            "∂z/∂x \\text{ where z} = f(x,y)",
+            "∂u/∂t = k∇²u",
+          ],
         },
         {
           symbol: "∇",
@@ -256,7 +262,7 @@ export function MathSymbolsPage() {
           examples: [
             "5 ∉ {1, 2, 3, 4}",
             "x ∉ ∅",
-            "Used to show non-membership",
+            "\\text{Used to show non-membership}",
           ],
         },
         {
@@ -265,7 +271,11 @@ export function MathSymbolsPage() {
           meaning: "Set containment",
           description:
             "Indicates that all elements of the left set are in the right set.",
-          examples: ["A ⊆ B", "{1, 2} ⊆ {1, 2, 3}", "A ⊆ A is always true"],
+          examples: [
+            "A ⊆ B",
+            "{1, 2} ⊆ {1, 2, 3}",
+            "A ⊆ \\text{A is always true}",
+          ],
         },
         {
           symbol: "∪",
@@ -329,7 +339,11 @@ export function MathSymbolsPage() {
           name: "Lambda",
           meaning: "Wavelength or eigenvalue",
           description: "Used for wavelength, eigenvalues, or lambda calculus.",
-          examples: ["λ = 550 nm", "λ = eigenvalue", "Lambda functions"],
+          examples: [
+            "λ = \\text{550 nm}",
+            "λ = eigenvalue",
+            "\\text{Lambda functions}",
+          ],
         },
         {
           symbol: "μ",
@@ -337,7 +351,11 @@ export function MathSymbolsPage() {
           meaning: "Mean or micro prefix",
           description:
             "Used for mean, coefficient of friction, or micro- prefix.",
-          examples: ["μ = mean", "μ = friction coefficient", "μm = micrometer"],
+          examples: [
+            "μ = mean",
+            "μ = \\text{friction coefficient}",
+            "μm = micrometer",
+          ],
         },
         {
           symbol: "σ",
@@ -345,7 +363,7 @@ export function MathSymbolsPage() {
           meaning: "Standard deviation",
           description: "Used for standard deviation or stress in mechanics.",
           examples: [
-            "σ = standard deviation",
+            "σ = \\text{standard deviation}",
             "σ = stress",
             "σ = cross-section",
           ],
@@ -355,7 +373,11 @@ export function MathSymbolsPage() {
           name: "Omega",
           meaning: "Ohm (electrical resistance)",
           description: "Unit of electrical resistance or solid angle.",
-          examples: ["R = 100Ω", "Ω = solid angle", "Big Omega notation"],
+          examples: [
+            "R = 100Ω",
+            "Ω = solid angle",
+            "\\text{Big Omega notation}",
+          ],
         },
       ],
     },
@@ -367,7 +389,7 @@ export function MathSymbolsPage() {
           name: "For all",
           meaning: "Universal quantifier",
           description: "States that a property holds for every element.",
-          examples: ["∀x ∈ ℕ, x > 0", "∀x (x² ≥ 0)", "Used in proofs"],
+          examples: ["∀x ∈ ℕ, x > 0", "∀x (x² ≥ 0)", "\\text{Used in proofs}"],
         },
         {
           symbol: "∃",
@@ -378,7 +400,7 @@ export function MathSymbolsPage() {
           examples: [
             "∃x ∈ ℝ, x² = 4",
             "∃n ∈ ℕ, n > 1000",
-            "Used to assert existence",
+            "\\text{Used to assert existence}",
           ],
         },
         {
@@ -415,9 +437,9 @@ export function MathSymbolsPage() {
           meaning: "Logical conclusion",
           description: "Indicates a logical conclusion from premises.",
           examples: [
-            "All men are mortal. Socrates is a man. ∴ Socrates is mortal.",
-            "Used in proofs",
-            "Logical arguments",
+            "\\text{All men are mortal. Socrates is a man. } ∴ \\text{ Socrates is mortal.}",
+            "\\text{Used in Proofs}",
+            "\\text{Logical arguments}",
           ],
         },
       ],
@@ -447,10 +469,10 @@ export function MathSymbolsPage() {
 
       {/* Page Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-foreground mb-4">
+        <h1 className="text-6xl font-bold text-foreground mb-4">
           Mathematical Symbols Reference
         </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl">
+        <p className="text-3xl text-muted-foreground max-w-2xl">
           A comprehensive reference of mathematical symbols organized by
           category. Click on any symbol to see detailed information and
           examples.
@@ -465,22 +487,27 @@ export function MathSymbolsPage() {
             className="bg-card border rounded-lg overflow-hidden"
           >
             <div className="bg-primary/10 px-6 py-4 border-b">
-              <h2 className="text-xl font-semibold text-foreground">
+              <h2 className="text-3xl font-semibold text-foreground">
                 {category.name}
               </h2>
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full table-fixed">
+                <colgroup>
+                  <col className="w-24" />
+                  <col className="w-48" />
+                  <col className="w-auto" />
+                </colgroup>
                 <thead>
                   <tr className="border-b bg-muted/50">
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
+                    <th className="px-6 py-4 text-center text-2xl font-semibold text-foreground">
                       Symbol
                     </th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
+                    <th className="px-6 py-4 text-left text-2xl font-semibold text-foreground">
                       Name
                     </th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
+                    <th className="px-8 py-4 text-left text-2xl font-semibold text-foreground">
                       Meaning
                     </th>
                   </tr>
@@ -491,20 +518,20 @@ export function MathSymbolsPage() {
                       key={index}
                       className="border-b hover:bg-muted/50 transition-colors"
                     >
-                      <td className="px-6 py-4 text-center">
-                        <span className="text-4xl font-bold font-math text-primary">
+                      <td className="px-6 py-6 text-center align-middle">
+                        <span className="text-6xl font-bold font-math text-primary">
                           {symbol.symbol}
                         </span>
                       </td>
-                      <td className="px-6 py-4">
-                        <span className="font-semibold text-foreground text-lg">
+                      <td className="px-6 py-6 align-middle">
+                        <span className="font-semibold text-foreground text-2xl">
                           {symbol.name}
                         </span>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-8 py-6 align-middle">
                         <button
                           onClick={() => handleSymbolClick(symbol)}
-                          className="text-primary hover:text-primary/80 transition-colors cursor-pointer text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md text-lg"
+                          className="text-primary hover:text-primary/80 transition-colors cursor-pointer text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md text-2xl w-full text-left"
                         >
                           {symbol.meaning}
                         </button>
