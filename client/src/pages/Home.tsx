@@ -1,3 +1,4 @@
+import { useLocation } from "wouter";
 import { PageContainer, Section } from "../components/layout/Layout";
 import { HeroSection } from "../components/HeroSection";
 import { MathDemo } from "../components/MathDemo";
@@ -14,6 +15,7 @@ import { MathRenderingErrorBoundary } from "../components/MathRenderingErrorBoun
  * Includes proper semantic structure and ARIA landmarks
  */
 export function Home() {
+  const [, navigate] = useLocation();
   return (
     <HomePageErrorBoundary
       showErrorDetails={process.env.NODE_ENV === "development"}
@@ -41,12 +43,7 @@ export function Home() {
             <div className="mt-12">
               <TopicsGrid
                 onTopicClick={(topicId) => {
-                  // Navigate to topic page - will be implemented in future tasks
-                  console.log("Navigate to topic:", topicId);
-                  // For now, just show an alert
-                  alert(
-                    `Topic "${topicId}" clicked! Navigation will be implemented in future tasks.`
-                  );
+                  navigate(`/topic/${topicId}`);
                 }}
               />
             </div>
