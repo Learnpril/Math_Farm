@@ -46,7 +46,7 @@
     - Add focus management on page load for accessibility
     - _Requirements: 1.1, 1.2, 1.6_
 
-  - [ ] 4.2 Implement topic header and metadata display
+  - [x] 4.2 Implement topic header and metadata display
 
     - Render topic title, level, and difficulty using shadcn/ui Badge components
     - Display estimated time with appropriate icon and formatting

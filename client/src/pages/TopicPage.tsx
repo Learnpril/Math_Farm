@@ -9,8 +9,10 @@ import {
   CheckCircle,
   Circle,
   AlertCircle,
+  TrendingUp,
 } from "lucide-react";
 import { MathExpression } from "../components/MathExpression";
+import { Badge } from "../components/ui/badge";
 import topicsData from "../data/topicsData.json";
 import type { Topic } from "../../../shared/types";
 
@@ -42,6 +44,15 @@ export function TopicPage() {
 
   // Find the topic data with error handling
   const topic = topicsData.find((t) => t.id === topicId) as Topic | undefined;
+
+  // Helper functions for progress tracking
+  const isTopicCompleted = (topicId: string) => {
+    return userProgress.completedTopics.includes(topicId);
+  };
+
+  const getPrerequisiteProgress = (prereqId: string) => {
+    return userProgress.topicProgress[prereqId];
+  };
 
   // Focus management on page load for accessibility
   useEffect(() => {
@@ -145,49 +156,6 @@ export function TopicPage() {
     );
   }
 
-  // Helper functions for styling
-  const getDifficultyColor = (difficulty: number) => {
-    switch (difficulty) {
-      case 1:
-        return "text-green-600 dark:text-green-400";
-      case 2:
-        return "text-blue-600 dark:text-blue-400";
-      case 3:
-        return "text-yellow-600 dark:text-yellow-400";
-      case 4:
-        return "text-orange-600 dark:text-orange-400";
-      case 5:
-        return "text-red-600 dark:text-red-400";
-      default:
-        return "text-muted-foreground";
-    }
-  };
-
-  const getLevelBadgeColor = (level: string) => {
-    switch (level) {
-      case "elementary":
-        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
-      case "middle":
-        return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
-      case "high":
-        return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200";
-      case "advanced":
-        return "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200";
-      case "specialized":
-        return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
-      default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
-    }
-  };
-
-  const isTopicCompleted = (topicId: string) => {
-    return userProgress.completedTopics.includes(topicId);
-  };
-
-  const getPrerequisiteProgress = (prereqId: string) => {
-    return userProgress.topicProgress[prereqId];
-  };
-
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Back Navigation */}
@@ -214,42 +182,107 @@ export function TopicPage() {
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6">
               <div className="flex-1">
+                {/* Title and Level Badge */}
                 <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
                   <h1 className="text-3xl sm:text-4xl font-bold text-foreground">
                     {topic.title}
                   </h1>
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm font-medium w-fit ${getLevelBadgeColor(
-                      topic.level
-                    )}`}
-                  >
-                    {topic.level}
-                  </span>
+                  <Badge variant={topic.level as any} className="w-fit">
+                    {topic.level.charAt(0).toUpperCase() + topic.level.slice(1)}
+                  </Badge>
                 </div>
 
                 <p className="text-lg text-muted-foreground mb-6">
                   {topic.description}
                 </p>
 
-                {/* Topic Metadata */}
-                <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4" />
-                    <span>{topic.estimatedTime} minutes</span>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Star className="w-4 h-4" />
-                    <span className={getDifficultyColor(topic.difficulty)}>
-                      Difficulty: {topic.difficulty}/5
+                {/* Enhanced Topic Metadata */}
+                <div className="flex flex-wrap items-center gap-4 mb-6">
+                  {/* Estimated Time */}
+                  <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
+                    <Clock className="w-4 h-4 text-muted-foreground" />
+                    <span className="text-sm font-medium">
+                      {topic.estimatedTime} min
                     </span>
                   </div>
 
+                  {/* Difficulty Badge with Visual Indicators */}
                   <div className="flex items-center gap-2">
-                    <BookOpen className="w-4 h-4" />
-                    <span>Level: {topic.level}</span>
+                    <TrendingUp className="w-4 h-4 text-muted-foreground" />
+                    <Badge
+                      variant={`difficulty${topic.difficulty}` as any}
+                      className="flex items-center gap-1"
+                    >
+                      <span>Difficulty {topic.difficulty}/5</span>
+                      <div className="flex gap-0.5 ml-1">
+                        {[1, 2, 3, 4, 5].map((level) => (
+                          <div
+                            key={level}
+                            className={`w-1.5 h-1.5 rounded-full ${
+                              level <= topic.difficulty
+                                ? level <= 2
+                                  ? "bg-green-500"
+                                  : level <= 3
+                                  ? "bg-yellow-500"
+                                  : level <= 4
+                                  ? "bg-orange-500"
+                                  : "bg-red-500"
+                                : "bg-muted-foreground/30"
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    </Badge>
+                  </div>
+
+                  {/* Level Badge */}
+                  <div className="flex items-center gap-2">
+                    <BookOpen className="w-4 h-4 text-muted-foreground" />
+                    <Badge variant="outline" className="text-xs">
+                      {topic.level.charAt(0).toUpperCase() +
+                        topic.level.slice(1)}{" "}
+                      Level
+                    </Badge>
                   </div>
                 </div>
+
+                {/* Prerequisites Section */}
+                {topic.prerequisites.length > 0 && (
+                  <div className="mb-6">
+                    <h3 className="text-sm font-medium text-muted-foreground mb-3 flex items-center gap-2">
+                      <BookOpen className="w-4 h-4" />
+                      Prerequisites
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {topic.prerequisites.map((prereqId) => {
+                        const prereqTopic = topicsData.find(
+                          (t) => t.id === prereqId
+                        ) as Topic | undefined;
+                        const isCompleted = isTopicCompleted(prereqId);
+                        const progress = getPrerequisiteProgress(prereqId);
+
+                        return prereqTopic ? (
+                          <Link
+                            key={prereqId}
+                            href={`/topic/${prereqId}`}
+                            className="inline-flex items-center gap-2 px-3 py-2 bg-card border rounded-lg hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                          >
+                            <span className="text-sm font-medium">
+                              {prereqTopic.title}
+                            </span>
+                            {isCompleted ? (
+                              <CheckCircle className="w-3 h-3 text-green-600" />
+                            ) : progress ? (
+                              <Circle className="w-3 h-3 text-yellow-600" />
+                            ) : (
+                              <Circle className="w-3 h-3 text-muted-foreground" />
+                            )}
+                          </Link>
+                        ) : null;
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Math Expression Display */}
@@ -287,55 +320,8 @@ export function TopicPage() {
           </div>
         </div>
 
-        {/* Sidebar - Prerequisites and Progress */}
+        {/* Sidebar - Progress and Related Topics */}
         <div className="lg:col-span-1 space-y-6">
-          {/* Prerequisites Section */}
-          {topic.prerequisites.length > 0 && (
-            <div className="bg-card border rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                <BookOpen className="w-5 h-5" />
-                Prerequisites
-              </h3>
-              <div className="space-y-3">
-                {topic.prerequisites.map((prereqId) => {
-                  const prereqTopic = topicsData.find(
-                    (t) => t.id === prereqId
-                  ) as Topic | undefined;
-                  const progress = getPrerequisiteProgress(prereqId);
-                  const isCompleted = isTopicCompleted(prereqId);
-
-                  return prereqTopic ? (
-                    <Link
-                      key={prereqId}
-                      href={`/topic/${prereqId}`}
-                      className="block p-3 bg-muted hover:bg-muted/80 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium">
-                          {prereqTopic.title}
-                        </span>
-                        {isCompleted ? (
-                          <CheckCircle className="w-4 h-4 text-green-600" />
-                        ) : progress ? (
-                          <Circle className="w-4 h-4 text-yellow-600" />
-                        ) : (
-                          <Circle className="w-4 h-4 text-muted-foreground" />
-                        )}
-                      </div>
-                      <div className="text-xs text-muted-foreground mt-1">
-                        {isCompleted
-                          ? "Completed"
-                          : progress
-                          ? "In Progress"
-                          : "Not Started"}
-                      </div>
-                    </Link>
-                  ) : null;
-                })}
-              </div>
-            </div>
-          )}
-
           {/* Progress Section */}
           <div className="bg-card border rounded-lg p-6">
             <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
