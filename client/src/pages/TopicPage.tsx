@@ -553,6 +553,90 @@ function LessonContentSection({
           />
         </div>
       )}
+
+      {topicId === "trigonometry" && (
+        <div className="space-y-6">
+          <h3 className="text-xl font-semibold text-foreground">
+            Interactive Trigonometry
+          </h3>
+
+          <JSXGraphDemo
+            id="trig-functions-demo"
+            config={demoConfigs.geometryShapes}
+            onInit={demoInitializers.trigFunctions}
+            title="Unit Circle and Trigonometric Functions"
+            description="Explore how sine and cosine relate to the unit circle"
+          />
+        </div>
+      )}
+
+      {topicId === "calculus" && (
+        <div className="space-y-6">
+          <h3 className="text-xl font-semibold text-foreground">
+            Interactive Calculus
+          </h3>
+
+          <JSXGraphDemo
+            id="derivative-demo"
+            config={demoConfigs.functionPlotter}
+            onInit={demoInitializers.derivativeVisualization}
+            title="Derivative Visualization"
+            description="See how derivatives represent the slope of tangent lines"
+          />
+        </div>
+      )}
+
+      {topicId === "linear-algebra" && (
+        <div className="space-y-6">
+          <h3 className="text-xl font-semibold text-foreground">
+            Interactive Vector Operations
+          </h3>
+
+          <JSXGraphDemo
+            id="vector-operations-demo"
+            config={demoConfigs.geometryShapes}
+            onInit={demoInitializers.vectorOperations}
+            title="Vector Addition and Operations"
+            description="Drag the vector endpoints to explore vector operations"
+          />
+        </div>
+      )}
+
+      {topicId === "statistics" && (
+        <div className="space-y-6">
+          <h3 className="text-xl font-semibold text-foreground">
+            Interactive Statistics
+          </h3>
+
+          <JSXGraphDemo
+            id="statistics-demo"
+            config={demoConfigs.functionPlotter}
+            onInit={demoInitializers.statisticsVisualization}
+            title="Normal Distribution Explorer"
+            description="Adjust mean and standard deviation to see how they affect the distribution"
+          />
+        </div>
+      )}
+
+      {(topicId === "differential-equations" ||
+        topicId === "game-design-math") && (
+        <div className="space-y-6">
+          <h3 className="text-xl font-semibold text-foreground">
+            Advanced Mathematical Concepts
+          </h3>
+
+          <div className="bg-card border rounded-lg p-6">
+            <p className="text-muted-foreground">
+              Interactive demonstrations for{" "}
+              {topicId === "differential-equations"
+                ? "Differential Equations"
+                : "Game Design Math"}
+              will be available in future updates. The lesson content above
+              provides comprehensive coverage of the key concepts.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
