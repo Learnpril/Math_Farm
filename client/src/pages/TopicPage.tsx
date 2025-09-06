@@ -14,6 +14,7 @@ import {
 import { MathExpression } from "../components/MathExpression";
 import { Badge } from "../components/ui/badge";
 import { LessonContent } from "../components/LessonContent";
+import { PracticeProblems } from "../components/PracticeProblems";
 import {
   JSXGraphDemo,
   demoInitializers,
@@ -21,6 +22,7 @@ import {
 } from "../components/JSXGraphDemo";
 import topicsData from "../data/topicsData.json";
 import { lessonContentData } from "../data/lessonContent";
+import { practiceProblemsData } from "../data/practiceProblems";
 import type { Topic } from "../../../shared/types";
 
 interface TopicProgress {
@@ -28,6 +30,7 @@ interface TopicProgress {
   completedAt?: Date;
   sectionsCompleted: string[];
   lessonSectionsCompleted: string[];
+  practiceProblemsCompleted: string[];
   timeSpent: number;
 }
 
@@ -92,13 +95,15 @@ export function TopicPage() {
         topicProgress: {
           ...prev.topicProgress,
           [topic.id]: {
+            ...prev.topicProgress[topic.id],
             startedAt: prev.topicProgress[topic.id]?.startedAt || new Date(),
             sectionsCompleted:
               prev.topicProgress[topic.id]?.sectionsCompleted || [],
             lessonSectionsCompleted:
               prev.topicProgress[topic.id]?.lessonSectionsCompleted || [],
+            practiceProblemsCompleted:
+              prev.topicProgress[topic.id]?.practiceProblemsCompleted || [],
             timeSpent: prev.topicProgress[topic.id]?.timeSpent || 0,
-            ...prev.topicProgress[topic.id],
           },
         },
       }));
@@ -373,7 +378,7 @@ export function TopicPage() {
               )}
 
               {/* Lesson Progress */}
-              <div className="pt-4 border-t border-border">
+              <div className="pt-4 border-t border-border space-y-4">
                 {(() => {
                   const lessonContent = lessonContentData[topic.id];
                   const completedSections =
@@ -386,7 +391,7 @@ export function TopicPage() {
                       : 0;
 
                   return (
-                    <>
+                    <div>
                       <div className="text-xs text-muted-foreground mb-2">
                         Lesson Sections ({completedSections.length}/
                         {totalSections})
@@ -402,7 +407,40 @@ export function TopicPage() {
                           Lesson content coming soon
                         </p>
                       )}
-                    </>
+                    </div>
+                  );
+                })()}
+
+                {/* Practice Problems Progress */}
+                {(() => {
+                  const completedProblems =
+                    userProgress.topicProgress[topic.id]
+                      ?.practiceProblemsCompleted || [];
+                  const totalProblems =
+                    practiceProblemsData[topic.id]?.length || 0;
+                  const progressPercentage =
+                    totalProblems > 0
+                      ? (completedProblems.length / totalProblems) * 100
+                      : 0;
+
+                  return (
+                    <div>
+                      <div className="text-xs text-muted-foreground mb-2">
+                        Practice Problems ({completedProblems.length}/
+                        {totalProblems})
+                      </div>
+                      <div className="w-full bg-muted rounded-full h-2">
+                        <div
+                          className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${progressPercentage}%` }}
+                        ></div>
+                      </div>
+                      {totalProblems === 0 && (
+                        <p className="text-xs text-muted-foreground mt-2">
+                          Practice problems coming soon
+                        </p>
+                      )}
+                    </div>
                   );
                 })()}
               </div>
@@ -456,32 +494,10 @@ function LessonContentSection({
 }: LessonContentSectionProps) {
   const lessonContent = lessonContentData[topicId];
 
-  // If no lesson content available, show placeholder
-  if (!lessonContent) {
-    return (
-      <div className="bg-card border rounded-lg p-8">
-        <h2 className="text-2xl font-semibold text-foreground mb-4">
-          Lesson Content Coming Soon
-        </h2>
-        <p className="text-muted-foreground mb-6">
-          Detailed lessons, interactive examples, and practice problems for this
-          topic will be available in the next development phase.
-        </p>
-        <div className="text-sm text-muted-foreground">
-          This content will include:
-        </div>
-        <ul className="list-disc list-inside text-sm text-muted-foreground mt-2 space-y-1">
-          <li>Interactive lesson sections with MathJax integration</li>
-          <li>Step-by-step explanations and examples</li>
-          <li>Practice problems with instant feedback</li>
-          <li>Progress tracking and completion indicators</li>
-        </ul>
-      </div>
-    );
-  }
-
   const completedSections =
     userProgress.topicProgress[topicId]?.lessonSectionsCompleted || [];
+  const completedProblems =
+    userProgress.topicProgress[topicId]?.practiceProblemsCompleted || [];
 
   const handleSectionComplete = (sectionId: string) => {
     setUserProgress((prev) => ({
@@ -497,6 +513,32 @@ function LessonContentSection({
             ...(prev.topicProgress[topicId]?.lessonSectionsCompleted || []),
             sectionId,
           ].filter((id, index, arr) => arr.indexOf(id) === index), // Remove duplicates
+          practiceProblemsCompleted:
+            prev.topicProgress[topicId]?.practiceProblemsCompleted || [],
+          timeSpent: prev.topicProgress[topicId]?.timeSpent || 0,
+        },
+      },
+    }));
+  };
+
+  const handleProblemComplete = (problemId: string, isCorrect: boolean) => {
+    if (!isCorrect) return; // Only track correct completions
+
+    setUserProgress((prev) => ({
+      ...prev,
+      topicProgress: {
+        ...prev.topicProgress,
+        [topicId]: {
+          ...prev.topicProgress[topicId],
+          startedAt: prev.topicProgress[topicId]?.startedAt || new Date(),
+          sectionsCompleted:
+            prev.topicProgress[topicId]?.sectionsCompleted || [],
+          lessonSectionsCompleted:
+            prev.topicProgress[topicId]?.lessonSectionsCompleted || [],
+          practiceProblemsCompleted: [
+            ...(prev.topicProgress[topicId]?.practiceProblemsCompleted || []),
+            problemId,
+          ].filter((id, index, arr) => arr.indexOf(id) === index), // Remove duplicates
           timeSpent: prev.topicProgress[topicId]?.timeSpent || 0,
         },
       },
@@ -505,10 +547,19 @@ function LessonContentSection({
 
   return (
     <div className="space-y-8">
-      <LessonContent
-        lessonContent={lessonContent}
-        onSectionComplete={handleSectionComplete}
-        completedSections={completedSections}
+      {lessonContent && (
+        <LessonContent
+          lessonContent={lessonContent}
+          onSectionComplete={handleSectionComplete}
+          completedSections={completedSections}
+        />
+      )}
+
+      {/* Practice Problems Section */}
+      <PracticeProblems
+        topicId={topicId}
+        onProblemComplete={handleProblemComplete}
+        completedProblems={completedProblems}
       />
 
       {/* Interactive Demos Section */}
