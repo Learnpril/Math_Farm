@@ -54,6 +54,8 @@ export function TopicPracticeSection({
     useLocalProgress();
   const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
   const [showProgress, setShowProgress] = useState(false);
+  const [autoAdvanceTimer, setAutoAdvanceTimer] =
+    useState<NodeJS.Timeout | null>(null);
 
   // Get problems for this specific topic
   const topicProblems = practiceProblemsData[topicId] || [];
@@ -66,9 +68,24 @@ export function TopicPracticeSection({
     exploreTopic(topicId);
   }, [topicId, exploreTopic]);
 
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (autoAdvanceTimer) {
+        clearTimeout(autoAdvanceTimer);
+      }
+    };
+  }, [autoAdvanceTimer]);
+
   const currentProblem = advancedProblems[currentProblemIndex];
 
   const handleProblemComplete = (correct: boolean, attempts: number) => {
+    // Clear any existing timer to prevent multiple timers
+    if (autoAdvanceTimer) {
+      clearTimeout(autoAdvanceTimer);
+      setAutoAdvanceTimer(null);
+    }
+
     if (correct) {
       // Update local topic progress
       onProblemComplete(currentProblem.id, true);
@@ -76,9 +93,16 @@ export function TopicPracticeSection({
       // Update global gamification progress
       completePractice();
 
-      // Show progress indicator briefly
-      setShowProgress(true);
-      setTimeout(() => setShowProgress(false), 3000);
+      // Auto-advance to next question after 1 second
+      const timer = setTimeout(() => {
+        nextProblem();
+        setAutoAdvanceTimer(null);
+      }, 1000);
+      setAutoAdvanceTimer(timer);
+
+      // Show progress indicator briefly - temporarily disabled
+      // setShowProgress(true);
+      // setTimeout(() => setShowProgress(false), 3000);
     } else {
       onProblemComplete(currentProblem.id, false);
     }
@@ -367,8 +391,8 @@ export function TopicPracticeSection({
         </div>
       </div>
 
-      {/* Success Animation Overlay */}
-      {showProgress && (
+      {/* Success Animation Overlay - Temporarily disabled */}
+      {false && showProgress && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-card border border-border rounded-lg p-8 text-center space-y-4 animate-in fade-in zoom-in duration-300">
             <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto">

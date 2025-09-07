@@ -10,59 +10,108 @@ import {
   Circle,
   AlertCircle,
   TrendingUp,
+  Zap,
 } from "lucide-react";
 import { MathExpression } from "../components/MathExpression";
 import { Badge } from "../components/ui/badge";
 import { LessonContent } from "../components/LessonContent";
 import { TopicPracticeSection } from "../components/TopicPracticeSection";
+import { ProgressTracker } from "../components/ProgressTracker";
+import { BadgeSystem } from "../components/BadgeSystem";
+import { TimeChallengeMode } from "../components/TimeChallengeMode";
+import { SuccessAnimation } from "../components/SuccessAnimation";
+import { RelatedTopicsSuggestions } from "../components/RelatedTopicsSuggestions";
+import { ErrorBoundary } from "../components/ErrorBoundary";
 import {
   JSXGraphDemo,
   demoInitializers,
   demoConfigs,
 } from "../components/JSXGraphDemo";
+import { useProgressTracker } from "../hooks/useProgressTracker";
 import topicsData from "../data/topicsData.json";
 import { lessonContentData } from "../data/lessonContent";
 import { practiceProblemsData } from "../data/practiceProblems";
 import type { Topic } from "../../../shared/types";
 
-interface TopicProgress {
-  startedAt: Date;
-  completedAt?: Date;
-  sectionsCompleted: string[];
-  lessonSectionsCompleted: string[];
-  practiceProblemsCompleted: string[];
-  timeSpent: number;
-}
-
-interface UserProgress {
-  completedTopics: string[];
-  topicProgress: Record<string, TopicProgress>;
-}
-
 export function TopicPage() {
   const params = useParams();
   const topicId = params.id;
   const mainContentRef = useRef<HTMLDivElement>(null);
-  const [userProgress, setUserProgress] = useState<UserProgress>(() => {
-    // Load progress from localStorage
-    const saved = localStorage.getItem("mathfarm-progress");
-    return saved
-      ? JSON.parse(saved)
-      : { completedTopics: [], topicProgress: {} };
-  });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Gamification states
+  const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
+  const [successAnimationType, setSuccessAnimationType] = useState<
+    "problem" | "section" | "topic" | "badge" | "streak"
+  >("problem");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isChallengeMode, setIsChallengeMode] = useState(false);
+  const sessionInitialized = useRef(false);
+
+  // Use the new progress tracking hook
+  const {
+    userProgress,
+    startTopicSession,
+    endTopicSession,
+    markLessonSectionCompleted,
+    markPracticeCompleted,
+    markTopicCompleted,
+    getProgressStats,
+    getTopicProgress,
+    isTopicCompleted,
+    getTopicCompletionPercentage,
+    updateStreak,
+  } = useProgressTracker();
 
   // Find the topic data with error handling
   const topic = topicsData.find((t) => t.id === topicId) as Topic | undefined;
 
+  // Get lesson and practice data for progress calculations
+  const lessonContent = lessonContentData[topicId || ""];
+  const practiceProblems = practiceProblemsData[topicId || ""];
+  const totalLessonSections = lessonContent?.sections.length || 0;
+  const totalPracticeProblems = practiceProblems?.length || 0;
+
   // Helper functions for progress tracking
-  const isTopicCompleted = (topicId: string) => {
-    return userProgress.completedTopics.includes(topicId);
+  const getPrerequisiteProgress = (prereqId: string) => {
+    return getTopicProgress(prereqId);
   };
 
-  const getPrerequisiteProgress = (prereqId: string) => {
-    return userProgress.topicProgress[prereqId];
+  // Gamification handlers
+  const handleBadgeEarned = (badge: any) => {
+    // Don't show success animation for badges, let BadgeSystem handle it
+    console.log("Badge earned:", badge.name);
+  };
+
+  const handleChallengeComplete = (success: boolean, timeSpent: number) => {
+    if (success) {
+      setSuccessAnimationType("streak");
+      setSuccessMessage("Time Challenge Completed!");
+      setShowSuccessAnimation(true);
+    }
+  };
+
+  const handleSectionComplete = (sectionId: string) => {
+    markLessonSectionCompleted(topicId || "", sectionId);
+    // Temporarily disabled success animation to fix modal issues
+    // setSuccessAnimationType("section");
+    // setSuccessMessage("Section Completed!");
+    // setShowSuccessAnimation(true);
+  };
+
+  const handleProblemComplete = (problemId: string, isCorrect: boolean) => {
+    if (isCorrect && topicId) {
+      try {
+        markPracticeCompleted(topicId, problemId);
+        // Temporarily disabled success animation to fix modal issues
+        // setSuccessAnimationType("problem");
+        // setSuccessMessage("Problem Solved!");
+        // setShowSuccessAnimation(true);
+      } catch (error) {
+        console.error("Error completing problem:", error);
+      }
+    }
   };
 
   // Focus management on page load for accessibility
@@ -82,33 +131,22 @@ export function TopicPage() {
     return () => clearTimeout(timer);
   }, [topic, topicId]);
 
-  // Save progress to localStorage whenever it changes
+  // Track topic visit and update streak
   useEffect(() => {
-    localStorage.setItem("mathfarm-progress", JSON.stringify(userProgress));
-  }, [userProgress]);
-
-  // Track topic visit
-  useEffect(() => {
-    if (topic && !isLoading) {
-      setUserProgress((prev) => ({
-        ...prev,
-        topicProgress: {
-          ...prev.topicProgress,
-          [topic.id]: {
-            ...prev.topicProgress[topic.id],
-            startedAt: prev.topicProgress[topic.id]?.startedAt || new Date(),
-            sectionsCompleted:
-              prev.topicProgress[topic.id]?.sectionsCompleted || [],
-            lessonSectionsCompleted:
-              prev.topicProgress[topic.id]?.lessonSectionsCompleted || [],
-            practiceProblemsCompleted:
-              prev.topicProgress[topic.id]?.practiceProblemsCompleted || [],
-            timeSpent: prev.topicProgress[topic.id]?.timeSpent || 0,
-          },
-        },
-      }));
+    if (topic && !isLoading && topicId && !sessionInitialized.current) {
+      sessionInitialized.current = true;
+      startTopicSession(topicId);
+      updateStreak();
     }
-  }, [topic, isLoading]);
+
+    // Cleanup session tracking when leaving the page
+    return () => {
+      if (sessionInitialized.current) {
+        endTopicSession();
+        sessionInitialized.current = false;
+      }
+    };
+  }, [topic, isLoading, topicId]); // Removed function dependencies to prevent infinite loop
 
   // Loading state
   if (isLoading) {
@@ -259,6 +297,19 @@ export function TopicPage() {
                       Level
                     </Badge>
                   </div>
+
+                  {/* Challenge Mode Toggle */}
+                  <button
+                    onClick={() => setIsChallengeMode(!isChallengeMode)}
+                    className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      isChallengeMode
+                        ? "bg-yellow-100 text-yellow-800 border border-yellow-200"
+                        : "bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    <Zap className="w-4 h-4" />
+                    {isChallengeMode ? "Challenge Active" : "Start Challenge"}
+                  </button>
                 </div>
 
                 {/* Prerequisites Section */}
@@ -315,167 +366,73 @@ export function TopicPage() {
           </div>
 
           {/* Lesson Content System */}
-          <LessonContentSection
-            topicId={topic.id}
-            userProgress={userProgress}
-            setUserProgress={setUserProgress}
-          />
+          <ErrorBoundary>
+            <LessonContentSection
+              topicId={topic.id}
+              handleSectionComplete={handleSectionComplete}
+              handleProblemComplete={handleProblemComplete}
+              getTopicProgress={getTopicProgress}
+            />
+          </ErrorBoundary>
         </div>
 
         {/* Sidebar - Progress and Related Topics */}
         <div className="lg:col-span-1 space-y-6">
-          {/* Progress Section */}
-          <div className="bg-card border rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-              <Star className="w-5 h-5" />
-              Your Progress
-            </h3>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Status</span>
-                <span
-                  className={`text-sm font-medium ${
-                    isTopicCompleted(topic.id)
-                      ? "text-green-600"
-                      : userProgress.topicProgress[topic.id]
-                      ? "text-yellow-600"
-                      : "text-muted-foreground"
-                  }`}
-                >
-                  {isTopicCompleted(topic.id)
-                    ? "Completed"
-                    : userProgress.topicProgress[topic.id]
-                    ? "In Progress"
-                    : "Not Started"}
-                </span>
-              </div>
+          {/* Time Challenge Mode */}
+          <TimeChallengeMode
+            estimatedTime={topic.estimatedTime}
+            topicId={topic.id}
+            onChallengeComplete={handleChallengeComplete}
+            isActive={isChallengeMode}
+          />
 
-              {userProgress.topicProgress[topic.id] && (
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">
-                      Time Spent
-                    </span>
-                    <span className="text-sm font-medium">
-                      {Math.round(
-                        userProgress.topicProgress[topic.id].timeSpent / 60
-                      )}{" "}
-                      min
-                    </span>
-                  </div>
+          {/* Enhanced Progress Section */}
+          <ProgressTracker
+            topicId={topic.id}
+            topicProgress={getTopicProgress(topic.id)}
+            totalLessonSections={totalLessonSections}
+            totalPracticeProblems={totalPracticeProblems}
+            completionPercentage={getTopicCompletionPercentage(
+              topic.id,
+              totalLessonSections,
+              totalPracticeProblems
+            )}
+            isCompleted={isTopicCompleted(topic.id)}
+            stats={getProgressStats()}
+          />
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">
-                      Started
-                    </span>
-                    <span className="text-sm font-medium">
-                      {new Date(
-                        userProgress.topicProgress[topic.id].startedAt
-                      ).toLocaleDateString()}
-                    </span>
-                  </div>
-                </div>
-              )}
+          {/* Badge System - Temporarily disabled to prevent crashes */}
+          {false && (
+            <BadgeSystem
+              userProgress={userProgress}
+              topicId={topic.id}
+              onBadgeEarned={handleBadgeEarned}
+              showBadgeModal={false}
+            />
+          )}
 
-              {/* Lesson Progress */}
-              <div className="pt-4 border-t border-border space-y-4">
-                {(() => {
-                  const lessonContent = lessonContentData[topic.id];
-                  const completedSections =
-                    userProgress.topicProgress[topic.id]
-                      ?.lessonSectionsCompleted || [];
-                  const totalSections = lessonContent?.sections.length || 0;
-                  const progressPercentage =
-                    totalSections > 0
-                      ? (completedSections.length / totalSections) * 100
-                      : 0;
-
-                  return (
-                    <div>
-                      <div className="text-xs text-muted-foreground mb-2">
-                        Lesson Sections ({completedSections.length}/
-                        {totalSections})
-                      </div>
-                      <div className="w-full bg-muted rounded-full h-2">
-                        <div
-                          className="bg-primary h-2 rounded-full transition-all duration-300"
-                          style={{ width: `${progressPercentage}%` }}
-                        ></div>
-                      </div>
-                      {totalSections === 0 && (
-                        <p className="text-xs text-muted-foreground mt-2">
-                          Lesson content coming soon
-                        </p>
-                      )}
-                    </div>
-                  );
-                })()}
-
-                {/* Practice Problems Progress */}
-                {(() => {
-                  const completedProblems =
-                    userProgress.topicProgress[topic.id]
-                      ?.practiceProblemsCompleted || [];
-                  const totalProblems =
-                    practiceProblemsData[topic.id]?.length || 0;
-                  const progressPercentage =
-                    totalProblems > 0
-                      ? (completedProblems.length / totalProblems) * 100
-                      : 0;
-
-                  return (
-                    <div>
-                      <div className="text-xs text-muted-foreground mb-2">
-                        Practice Problems ({completedProblems.length}/
-                        {totalProblems})
-                      </div>
-                      <div className="w-full bg-muted rounded-full h-2">
-                        <div
-                          className="bg-green-500 h-2 rounded-full transition-all duration-300"
-                          style={{ width: `${progressPercentage}%` }}
-                        ></div>
-                      </div>
-                      {totalProblems === 0 && (
-                        <p className="text-xs text-muted-foreground mt-2">
-                          Practice problems coming soon
-                        </p>
-                      )}
-                    </div>
-                  );
-                })()}
-              </div>
-            </div>
-          </div>
-
-          {/* Related Topics */}
-          <div className="bg-card border rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-foreground mb-4">
-              Related Topics
-            </h3>
-            <div className="space-y-2">
-              {topicsData
-                .filter(
-                  (t) =>
-                    t.id !== topic.id &&
-                    (t.prerequisites.includes(topic.id) ||
-                      topic.prerequisites.some((prereq) =>
-                        t.prerequisites.includes(prereq)
-                      ))
-                )
-                .slice(0, 3)
-                .map((relatedTopic) => (
-                  <Link
-                    key={relatedTopic.id}
-                    href={`/topic/${relatedTopic.id}`}
-                    className="block p-2 text-sm hover:bg-muted rounded transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                  >
-                    {relatedTopic.title}
-                  </Link>
-                ))}
-            </div>
-          </div>
+          {/* Enhanced Related Topics */}
+          <RelatedTopicsSuggestions
+            currentTopic={topic}
+            allTopics={topicsData as Topic[]}
+            userProgress={userProgress}
+            getTopicProgress={getTopicProgress}
+            isTopicCompleted={isTopicCompleted}
+            getTopicCompletionPercentage={getTopicCompletionPercentage}
+          />
         </div>
       </div>
+
+      {/* Success Animation - Temporarily disabled to fix modal issues */}
+      {false && (
+        <SuccessAnimation
+          show={showSuccessAnimation}
+          type={successAnimationType}
+          message={successMessage}
+          onComplete={() => setShowSuccessAnimation(false)}
+          duration={2000}
+        />
+      )}
     </div>
   );
 }
@@ -483,67 +440,22 @@ export function TopicPage() {
 // Lesson Content Section Component
 interface LessonContentSectionProps {
   topicId: string;
-  userProgress: UserProgress;
-  setUserProgress: React.Dispatch<React.SetStateAction<UserProgress>>;
+  handleSectionComplete: (sectionId: string) => void;
+  handleProblemComplete: (problemId: string, isCorrect: boolean) => void;
+  getTopicProgress: (topicId: string) => any;
 }
 
 function LessonContentSection({
   topicId,
-  userProgress,
-  setUserProgress,
+  handleSectionComplete,
+  handleProblemComplete,
+  getTopicProgress,
 }: LessonContentSectionProps) {
   const lessonContent = lessonContentData[topicId];
+  const topicProgress = getTopicProgress(topicId);
 
-  const completedSections =
-    userProgress.topicProgress[topicId]?.lessonSectionsCompleted || [];
-  const completedProblems =
-    userProgress.topicProgress[topicId]?.practiceProblemsCompleted || [];
-
-  const handleSectionComplete = (sectionId: string) => {
-    setUserProgress((prev) => ({
-      ...prev,
-      topicProgress: {
-        ...prev.topicProgress,
-        [topicId]: {
-          ...prev.topicProgress[topicId],
-          startedAt: prev.topicProgress[topicId]?.startedAt || new Date(),
-          sectionsCompleted:
-            prev.topicProgress[topicId]?.sectionsCompleted || [],
-          lessonSectionsCompleted: [
-            ...(prev.topicProgress[topicId]?.lessonSectionsCompleted || []),
-            sectionId,
-          ].filter((id, index, arr) => arr.indexOf(id) === index), // Remove duplicates
-          practiceProblemsCompleted:
-            prev.topicProgress[topicId]?.practiceProblemsCompleted || [],
-          timeSpent: prev.topicProgress[topicId]?.timeSpent || 0,
-        },
-      },
-    }));
-  };
-
-  const handleProblemComplete = (problemId: string, isCorrect: boolean) => {
-    if (!isCorrect) return; // Only track correct completions
-
-    setUserProgress((prev) => ({
-      ...prev,
-      topicProgress: {
-        ...prev.topicProgress,
-        [topicId]: {
-          ...prev.topicProgress[topicId],
-          startedAt: prev.topicProgress[topicId]?.startedAt || new Date(),
-          sectionsCompleted:
-            prev.topicProgress[topicId]?.sectionsCompleted || [],
-          lessonSectionsCompleted:
-            prev.topicProgress[topicId]?.lessonSectionsCompleted || [],
-          practiceProblemsCompleted: [
-            ...(prev.topicProgress[topicId]?.practiceProblemsCompleted || []),
-            problemId,
-          ].filter((id, index, arr) => arr.indexOf(id) === index), // Remove duplicates
-          timeSpent: prev.topicProgress[topicId]?.timeSpent || 0,
-        },
-      },
-    }));
-  };
+  const completedSections = topicProgress?.lessonSectionsCompleted || [];
+  const completedProblems = topicProgress?.practiceProblemsCompleted || [];
 
   return (
     <div className="space-y-8">
