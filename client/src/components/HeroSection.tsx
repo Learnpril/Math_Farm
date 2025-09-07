@@ -1,5 +1,5 @@
-import { PageContainer, Section } from './layout/Layout';
-import { CallToActionButtons } from './CallToActionButtons';
+import { PageContainer, Section } from "./layout/Layout";
+import { CallToActionButtons } from "./CallToActionButtons";
 
 interface HeroSectionProps {
   className?: string;
@@ -9,13 +9,13 @@ interface HeroSectionProps {
  * Hero section component with gradient background and call-to-action buttons
  * Features responsive design, accessibility compliance, and smooth scrolling navigation
  */
-export function HeroSection({ className = '' }: HeroSectionProps) {
+export function HeroSection({ className = "" }: HeroSectionProps) {
   const handleStartLearning = () => {
-    const topicsElement = document.getElementById('topics');
+    const topicsElement = document.getElementById("topics");
     if (topicsElement) {
-      topicsElement.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
+      topicsElement.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
       });
     }
   };
@@ -23,29 +23,42 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
   const handleExploreTools = () => {
     // Navigate to tools page - will be implemented when tools page is created
     // For now, we'll use Wouter's navigation when available
-    window.location.href = '/tools';
+    window.location.href = "/tools";
   };
 
   return (
-    <Section 
-      id="hero" 
-      ariaLabel="Welcome and introduction" 
+    <Section
+      id="hero"
+      ariaLabel="Welcome and introduction"
       className={`bg-gradient-to-br from-primary/10 to-accent/10 ${className}`}
     >
       <PageContainer>
         <div className="text-center space-y-8">
+          {/* Hero Illustration */}
+          <div className="flex justify-center mb-8">
+            <div className="relative">
+              <img
+                src="/MathfarmGirl.png"
+                alt="Math Farm mascot - a cheerful girl with purple hair holding a calculator, representing the friendly and approachable nature of mathematics learning"
+                className="w-96 h-96 md:w-120 md:h-120 object-contain hover:scale-105 transition-transform duration-300 drop-shadow-lg"
+              />
+              {/* Subtle glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full blur-3xl -z-10 opacity-50"></div>
+            </div>
+          </div>
+
           {/* Main heading */}
           <div className="space-y-4">
             <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-tight">
-              Welcome to{' '}
+              Welcome to{" "}
               <span className="text-primary bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 Math Farm
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Your comprehensive mathematics learning platform. 
-              From elementary arithmetic to advanced calculus, 
-              learn at your own pace with interactive tools and step-by-step guidance.
+              Your comprehensive mathematics learning platform. From elementary
+              arithmetic to advanced calculus, learn at your own pace with
+              interactive tools and step-by-step guidance.
             </p>
           </div>
 
@@ -63,27 +76,33 @@ export function HeroSection({ className = '' }: HeroSectionProps) {
                 <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
                   <div className="w-6 h-6 bg-primary/20 rounded-full"></div>
                 </div>
-                <h3 className="text-lg font-semibold text-foreground">Interactive Learning</h3>
+                <h3 className="text-lg font-semibold text-foreground">
+                  Interactive Learning
+                </h3>
                 <p className="text-sm text-muted-foreground text-center">
                   Engage with dynamic problems and real-time feedback
                 </p>
               </div>
-              
+
               <div className="flex flex-col items-center space-y-2 p-4">
                 <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center">
                   <div className="w-6 h-6 bg-accent/20 rounded-full"></div>
                 </div>
-                <h3 className="text-lg font-semibold text-foreground">Self-Paced</h3>
+                <h3 className="text-lg font-semibold text-foreground">
+                  Self-Paced
+                </h3>
                 <p className="text-sm text-muted-foreground text-center">
                   Learn at your own speed with personalized progress tracking
                 </p>
               </div>
-              
+
               <div className="flex flex-col items-center space-y-2 p-4">
                 <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
                   <div className="w-6 h-6 bg-primary/20 rounded-full"></div>
                 </div>
-                <h3 className="text-lg font-semibold text-foreground">Privacy-Focused</h3>
+                <h3 className="text-lg font-semibold text-foreground">
+                  Privacy-Focused
+                </h3>
                 <p className="text-sm text-muted-foreground text-center">
                   All data stays local with complete privacy protection
                 </p>

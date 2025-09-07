@@ -14,7 +14,7 @@ import {
 import { MathExpression } from "../components/MathExpression";
 import { Badge } from "../components/ui/badge";
 import { LessonContent } from "../components/LessonContent";
-import { PracticeProblems } from "../components/PracticeProblems";
+import { TopicPracticeSection } from "../components/TopicPracticeSection";
 import {
   JSXGraphDemo,
   demoInitializers,
@@ -555,8 +555,8 @@ function LessonContentSection({
         />
       )}
 
-      {/* Practice Problems Section */}
-      <PracticeProblems
+      {/* Enhanced Practice Problems Section with Gamification */}
+      <TopicPracticeSection
         topicId={topicId}
         onProblemComplete={handleProblemComplete}
         completedProblems={completedProblems}

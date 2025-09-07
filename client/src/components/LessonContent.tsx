@@ -12,7 +12,6 @@ import { Button } from "./ui/button";
 import {
   BookOpen,
   Lightbulb,
-  Calculator,
   CheckCircle,
   Eye,
   EyeOff,
@@ -53,14 +52,23 @@ function ExampleCard({ example, isExpanded, onToggle }: ExampleCardProps) {
           ) : (
             <Eye className="w-4 h-4" />
           )}
-          {isExpanded ? "Hide Solution" : "Show Solution"}
+          {isExpanded ? "Hide Details" : "Show Details"}
         </Button>
       </div>
 
       <div className="mb-3">
-        <p className="text-sm text-muted-foreground mb-2">Problem:</p>
-        <p className="font-medium">{example.problem}</p>
+        <p className="text-sm text-muted-foreground mb-2">
+          {example.concept ? "Concept:" : "Problem:"}
+        </p>
+        <p className="font-medium">{example.concept || example.problem}</p>
       </div>
+
+      {example.demonstration && (
+        <div className="mb-3">
+          <p className="text-sm text-muted-foreground mb-2">Demonstration:</p>
+          <p className="text-foreground">{example.demonstration}</p>
+        </div>
+      )}
 
       <div className="mb-3">
         <p className="text-sm text-muted-foreground mb-2">
@@ -73,21 +81,36 @@ function ExampleCard({ example, isExpanded, onToggle }: ExampleCardProps) {
 
       {isExpanded && (
         <div className="space-y-3 border-t pt-3">
-          <div>
-            <p className="text-sm text-muted-foreground mb-2">Solution:</p>
-            <p className="font-semibold text-primary">{example.solution}</p>
-          </div>
+          {example.solution && (
+            <div>
+              <p className="text-sm text-muted-foreground mb-2">Solution:</p>
+              <p className="font-semibold text-primary">{example.solution}</p>
+            </div>
+          )}
 
           <div>
-            <p className="text-sm text-muted-foreground mb-2">Step-by-step:</p>
-            <ol className="list-decimal list-inside space-y-1">
+            <p className="text-sm text-muted-foreground mb-2">
+              Step-by-step explanation:
+            </p>
+            <ol className="list-decimal list-inside space-y-2">
               {example.steps.map((step, index) => (
-                <li key={index} className="text-sm">
+                <li key={index} className="text-sm leading-relaxed">
                   {step}
                 </li>
               ))}
             </ol>
           </div>
+
+          {example.keyTakeaway && (
+            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
+              <p className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-1">
+                Key Takeaway:
+              </p>
+              <p className="text-sm text-blue-700 dark:text-blue-300">
+                {example.keyTakeaway}
+              </p>
+            </div>
+          )}
         </div>
       )}
     </Card>
@@ -131,8 +154,7 @@ function ContentSectionComponent({
         return <Lightbulb className="w-4 h-4" />;
       case "interactive":
         return <Play className="w-4 h-4" />;
-      case "practice":
-        return <Calculator className="w-4 h-4" />;
+
       default:
         return <BookOpen className="w-4 h-4" />;
     }
@@ -146,8 +168,7 @@ function ContentSectionComponent({
         return "default";
       case "interactive":
         return "outline";
-      case "practice":
-        return "destructive";
+
       default:
         return "secondary";
     }

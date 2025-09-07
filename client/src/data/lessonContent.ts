@@ -1,9 +1,10 @@
-// Lesson content data structure for topics
+// New lesson content structure focused on teaching concepts
+// This will replace the existing lessonContent.ts
 
 export interface ContentSection {
   id: string
   title: string
-  type: "explanation" | "example" | "interactive" | "practice"
+  type: "explanation" | "example" | "interactive"
   content: string
   mathExpressions?: string[]
   interactiveDemo?: InteractiveDemo
@@ -13,10 +14,11 @@ export interface ContentSection {
 export interface MathExample {
   id: string
   title: string
-  problem: string
-  solution: string
+  concept: string
+  demonstration: string
   steps: string[]
   mathExpression: string
+  keyTakeaway: string
 }
 
 export interface InteractiveDemo {
@@ -31,568 +33,394 @@ export interface TopicLessonContent {
   sections: ContentSection[]
 }
 
-// Sample lesson content for different topics
+// Educational lesson content for all topics
 export const lessonContentData: Record<string, TopicLessonContent> = {
   arithmetic: {
     topicId: "arithmetic",
     sections: [
       {
         id: "intro",
-        title: "Introduction to Arithmetic",
+        title: "What is Arithmetic?",
         type: "explanation",
-        content: "Arithmetic is the foundation of all mathematics. It deals with basic operations on numbers: addition, subtraction, multiplication, and division.",
-        mathExpressions: ["2 + 3 = 5", "7 - 4 = 3", "6 \\times 8 = 48", "15 \\div 3 = 5"]
+        content: "Arithmetic is the foundation of all mathematics. It deals with four basic operations on numbers: addition, subtraction, multiplication, and division. These operations allow us to solve everyday problems involving quantities, measurements, and calculations. Understanding arithmetic is essential for all higher mathematics.",
+        mathExpressions: [
+          "2 + 3 = 5 \\text{ (addition combines quantities)}", 
+          "7 - 4 = 3 \\text{ (subtraction finds differences)}", 
+          "6 \\times 8 = 48 \\text{ (multiplication repeats addition)}", 
+          "15 \\div 3 = 5 \\text{ (division splits into equal groups)}"
+        ]
       },
       {
-        id: "addition",
-        title: "Addition and Subtraction",
+        id: "number-system",
+        title: "Understanding Numbers and Place Value",
+        type: "explanation",
+        content: "Our number system is based on powers of 10, called the decimal system. Each position in a number represents a different power of 10. Understanding place value is crucial for performing arithmetic operations correctly.",
+        mathExpressions: [
+          "1,234 = 1 \\times 1000 + 2 \\times 100 + 3 \\times 10 + 4 \\times 1",
+          "\\text{thousands} \\quad \\text{hundreds} \\quad \\text{tens} \\quad \\text{ones}",
+          "10^3 \\quad\\quad\\quad 10^2 \\quad\\quad\\quad 10^1 \\quad\\quad\\quad 10^0"
+        ]
+      },
+      {
+        id: "addition-concepts",
+        title: "Addition: Combining Quantities",
         type: "example",
-        content: "Let's explore how to add and subtract numbers, including working with fractions.",
+        content: "Addition is the process of combining two or more quantities to find their total. It follows important properties that make calculations easier and more reliable.",
+        mathExpressions: [
+          "a + b = b + a \\text{ (commutative property)}",
+          "(a + b) + c = a + (b + c) \\text{ (associative property)}",
+          "a + 0 = a \\text{ (identity property)}"
+        ],
         examples: [
           {
-            id: "basic-addition",
-            title: "Basic Addition",
-            problem: "What is 127 + 89?",
-            solution: "216",
+            id: "place-value-addition",
+            title: "Adding Using Place Value",
+            concept: "How to add multi-digit numbers by aligning place values",
+            demonstration: "Let's learn to add 247 + 156 step by step",
             steps: [
-              "Align the numbers by place value",
-              "Add ones: 7 + 9 = 16 (write 6, carry 1)",
-              "Add tens: 2 + 8 + 1 = 11 (write 1, carry 1)", 
-              "Add hundreds: 1 + 0 + 1 = 2",
-              "Result: 216"
+              "Write the numbers vertically, aligning by place value (ones under ones, tens under tens, etc.)",
+              "Start with the ones column: 7 + 6 = 13. Write down 3 and carry 1 to the tens column",
+              "Tens column: 4 + 5 + 1(carried) = 10. Write down 0 and carry 1 to the hundreds column",
+              "Hundreds column: 2 + 1 + 1(carried) = 4. Write down 4",
+              "The sum is 403"
             ],
-            mathExpression: "127 + 89 = 216"
+            mathExpression: "\\begin{array}{r} 247 \\\\ +156 \\\\ \\hline 403 \\end{array}",
+            keyTakeaway: "When adding, always align numbers by place value and carry over when a column sum exceeds 9."
           },
           {
-            id: "fraction-addition",
-            title: "Adding Fractions",
-            problem: "What is 1/4 + 1/3?",
-            solution: "7/12",
+            id: "mental-addition",
+            title: "Mental Addition Strategies",
+            concept: "Techniques for adding numbers quickly in your head",
+            demonstration: "Adding 67 + 28 using the 'make ten' strategy",
             steps: [
-              "Find common denominator: LCM of 4 and 3 is 12",
-              "Convert fractions: 1/4 = 3/12, 1/3 = 4/12",
-              "Add numerators: 3 + 4 = 7",
-              "Result: 7/12"
+              "Break down 28 into parts: 28 = 3 + 25",
+              "Add the part that makes a round number: 67 + 3 = 70",
+              "Add the remaining part: 70 + 25 = 95",
+              "This method works because we use the associative property: 67 + 28 = 67 + (3 + 25) = (67 + 3) + 25"
             ],
-            mathExpression: "\\frac{1}{4} + \\frac{1}{3} = \\frac{3}{12} + \\frac{4}{12} = \\frac{7}{12}"
+            mathExpression: "67 + 28 = 67 + (3 + 25) = (67 + 3) + 25 = 70 + 25 = 95",
+            keyTakeaway: "Breaking numbers into friendly parts can make mental arithmetic much easier."
           }
         ]
       },
       {
-        id: "multiplication",
-        title: "Multiplication and Division",
+        id: "subtraction-concepts",
+        title: "Subtraction: Finding Differences",
         type: "example",
-        content: "Multiplication and division are inverse operations. Let's see how they work together.",
+        content: "Subtraction finds the difference between quantities or removes one quantity from another. It's the inverse operation of addition.",
         examples: [
           {
-            id: "long-multiplication",
-            title: "Long Multiplication",
-            problem: "What is 23 × 47?",
-            solution: "1081",
+            id: "borrowing-subtraction",
+            title: "Subtraction with Borrowing",
+            concept: "How to subtract when digits in the top number are smaller than those below",
+            demonstration: "Subtracting 403 - 156 using the borrowing method",
             steps: [
-              "23 × 7 = 161",
-              "23 × 40 = 920",
-              "Add: 161 + 920 = 1081"
+              "Align numbers by place value: 403 - 156",
+              "Ones column: 3 - 6. Since 3 < 6, we need to borrow from the tens place",
+              "But tens place is 0, so borrow from hundreds: 4 becomes 3, tens becomes 10",
+              "Now borrow from tens to ones: 10 becomes 9, ones becomes 13",
+              "Calculate: ones: 13 - 6 = 7, tens: 9 - 5 = 4, hundreds: 3 - 1 = 2",
+              "Result: 247"
             ],
-            mathExpression: "23 \\times 47 = 1081"
+            mathExpression: "403 - 156 = 247",
+            keyTakeaway: "When borrowing, we're regrouping place values: 1 ten = 10 ones, 1 hundred = 10 tens."
           }
         ]
       },
       {
-        id: "practice",
-        title: "Practice Problems",
-        type: "practice",
-        content: "Test your understanding with these practice problems.",
+        id: "multiplication-concepts",
+        title: "Multiplication: Repeated Addition",
+        type: "example",
+        content: "Multiplication is repeated addition of the same number. It's a faster way to add equal groups and follows important properties.",
         mathExpressions: [
-          "45 + 67 = ?",
-          "\\frac{2}{5} + \\frac{1}{3} = ?",
-          "84 \\times 12 = ?",
-          "144 \\div 12 = ?"
+          "a \\times b = b \\times a \\text{ (commutative)}",
+          "a \\times (b + c) = a \\times b + a \\times c \\text{ (distributive)}",
+          "a \\times 1 = a \\text{ (identity)}"
+        ],
+        examples: [
+          {
+            id: "area-model-multiplication",
+            title: "Area Model for Multiplication",
+            concept: "Visualizing multiplication as the area of a rectangle",
+            demonstration: "Multiplying 23 × 47 using the area model",
+            steps: [
+              "Break down both numbers: 23 = 20 + 3, and 47 = 40 + 7",
+              "Create a rectangle divided into four parts",
+              "Calculate each area: (20×40) + (20×7) + (3×40) + (3×7)",
+              "Compute: 800 + 140 + 120 + 21",
+              "Add all parts: 800 + 140 + 120 + 21 = 1,081"
+            ],
+            mathExpression: "23 \\times 47 = (20+3) \\times (40+7) = 800 + 140 + 120 + 21 = 1,081",
+            keyTakeaway: "The area model shows why the distributive property works and makes large multiplications manageable."
+          }
+        ]
+      },
+      {
+        id: "division-concepts",
+        title: "Division: Sharing and Grouping",
+        type: "example",
+        content: "Division splits quantities into equal groups or finds how many times one number fits into another. It's the inverse of multiplication.",
+        examples: [
+          {
+            id: "long-division-method",
+            title: "Long Division Algorithm",
+            concept: "The systematic method for dividing large numbers",
+            demonstration: "Dividing 1,081 ÷ 23 step by step",
+            steps: [
+              "Set up: How many times does 23 go into 1,081?",
+              "Start with leftmost digits: 23 goes into 108 about 4 times (4 × 23 = 92)",
+              "Subtract: 108 - 92 = 16, bring down the 1 to get 161",
+              "23 goes into 161 exactly 7 times (7 × 23 = 161)",
+              "Subtract: 161 - 161 = 0, so 1,081 ÷ 23 = 47"
+            ],
+            mathExpression: "1,081 \\div 23 = 47",
+            keyTakeaway: "Long division repeatedly asks 'how many times does the divisor fit?' and builds the answer digit by digit."
+          }
+        ]
+      },
+      {
+        id: "fractions-decimals",
+        title: "Fractions and Decimals",
+        type: "example",
+        content: "Fractions and decimals represent parts of a whole. Understanding their relationship helps in many real-world applications.",
+        examples: [
+          {
+            id: "fraction-concepts",
+            title: "Understanding Fractions",
+            concept: "Fractions as parts of a whole and their operations",
+            demonstration: "Adding fractions with different denominators: 1/4 + 1/3",
+            steps: [
+              "Understand what each fraction means: 1/4 is one part out of four equal parts",
+              "To add fractions, they must have the same denominator (same-sized parts)",
+              "Find the least common multiple of 4 and 3: LCM(4,3) = 12",
+              "Convert to equivalent fractions: 1/4 = 3/12 and 1/3 = 4/12",
+              "Now add: 3/12 + 4/12 = 7/12"
+            ],
+            mathExpression: "\\frac{1}{4} + \\frac{1}{3} = \\frac{3}{12} + \\frac{4}{12} = \\frac{7}{12}",
+            keyTakeaway: "Fractions must have common denominators to be added or subtracted, just like you can only add like units."
+          },
+          {
+            id: "decimal-system",
+            title: "The Decimal System",
+            concept: "How decimals extend place value to represent parts smaller than one",
+            demonstration: "Converting 3/8 to decimal form",
+            steps: [
+              "Decimals use place values that are fractions of 1: tenths, hundredths, thousandths",
+              "To convert 3/8 to decimal, divide 3 by 8",
+              "Set up division: 3.000 ÷ 8",
+              "8 goes into 30 three times (remainder 6), into 60 seven times (remainder 4), into 40 five times exactly",
+              "Result: 0.375"
+            ],
+            mathExpression: "\\frac{3}{8} = 0.375 = 3 \\times \\frac{1}{10} + 7 \\times \\frac{1}{100} + 5 \\times \\frac{1}{1000}",
+            keyTakeaway: "Decimals are another way to write fractions, using powers of 10 as denominators."
+          }
         ]
       }
     ]
   },
+
   algebra: {
     topicId: "algebra",
     sections: [
       {
-        id: "variables",
+        id: "intro-variables",
         title: "Introduction to Variables",
         type: "explanation",
-        content: "Variables are symbols (usually letters) that represent unknown numbers. They allow us to write general mathematical relationships.",
-        mathExpressions: ["x + 5 = 12", "2y - 3 = 7", "3a + 4b = 20"]
+        content: "Variables are symbols (usually letters) that represent unknown or changing numbers. They allow us to write general mathematical relationships and solve problems where some information is missing.",
+        mathExpressions: [
+          "x + 5 = 12 \\text{ (x represents an unknown number)}",
+          "2y - 3 = 7 \\text{ (y is the variable we want to find)}",
+          "A = l \\times w \\text{ (A, l, and w are all variables)}"
+        ]
+      },
+      {
+        id: "algebraic-expressions",
+        title: "Building Algebraic Expressions",
+        type: "example",
+        content: "Algebraic expressions combine numbers, variables, and operations. Learning to translate word problems into algebraic expressions is a key skill.",
+        examples: [
+          {
+            id: "expression-building",
+            title: "Translating Words to Algebra",
+            concept: "Converting everyday language into mathematical expressions",
+            demonstration: "Expressing 'five more than twice a number' algebraically",
+            steps: [
+              "Identify the unknown: 'a number' → let's call it x",
+              "Identify operations: 'twice a number' means 2 times x → 2x",
+              "'Five more than' means add 5 → 2x + 5",
+              "The complete expression is 2x + 5"
+            ],
+            mathExpression: "\\text{'five more than twice a number'} = 2x + 5",
+            keyTakeaway: "Break down word problems into parts: identify the variable, then the operations in order."
+          }
+        ]
       },
       {
         id: "solving-equations",
         title: "Solving Linear Equations",
         type: "example",
-        content: "Learn how to solve equations by isolating the variable.",
+        content: "Solving equations means finding the value of the variable that makes the equation true. We use inverse operations to isolate the variable.",
         examples: [
           {
-            id: "simple-equation",
-            title: "Solving x + 5 = 12",
-            problem: "Solve for x: x + 5 = 12",
-            solution: "x = 7",
+            id: "one-step-equations",
+            title: "One-Step Equations",
+            concept: "Solving equations that require only one operation",
+            demonstration: "Solving x + 5 = 12",
             steps: [
-              "Start with: x + 5 = 12",
+              "The equation states that x plus 5 equals 12",
+              "To find x, we need to 'undo' the addition of 5",
+              "The inverse of adding 5 is subtracting 5",
               "Subtract 5 from both sides: x + 5 - 5 = 12 - 5",
               "Simplify: x = 7",
               "Check: 7 + 5 = 12 ✓"
             ],
-            mathExpression: "x + 5 = 12 \\Rightarrow x = 7"
+            mathExpression: "x + 5 = 12 \\Rightarrow x = 12 - 5 = 7",
+            keyTakeaway: "Whatever you do to one side of an equation, you must do to the other side to keep it balanced."
           },
           {
-            id: "two-step-equation",
-            title: "Solving 2x - 3 = 7",
-            problem: "Solve for x: 2x - 3 = 7",
-            solution: "x = 5",
+            id: "two-step-equations",
+            title: "Two-Step Equations",
+            concept: "Solving equations that require two operations",
+            demonstration: "Solving 2x - 3 = 7",
             steps: [
-              "Start with: 2x - 3 = 7",
-              "Add 3 to both sides: 2x - 3 + 3 = 7 + 3",
-              "Simplify: 2x = 10",
-              "Divide by 2: x = 5",
+              "This equation has two operations: multiply by 2, then subtract 3",
+              "To solve, we undo these operations in reverse order",
+              "First, undo the subtraction: add 3 to both sides",
+              "2x - 3 + 3 = 7 + 3 → 2x = 10",
+              "Next, undo the multiplication: divide both sides by 2",
+              "2x ÷ 2 = 10 ÷ 2 → x = 5",
               "Check: 2(5) - 3 = 10 - 3 = 7 ✓"
             ],
-            mathExpression: "2x - 3 = 7 \\Rightarrow x = 5"
+            mathExpression: "2x - 3 = 7 \\Rightarrow 2x = 10 \\Rightarrow x = 5",
+            keyTakeaway: "For multi-step equations, undo operations in reverse order: addition/subtraction first, then multiplication/division."
           }
         ]
       },
       {
-        id: "factoring",
-        title: "Factoring Expressions",
+        id: "graphing-lines",
+        title: "Graphing Linear Equations",
         type: "example",
-        content: "Factoring is the process of breaking down expressions into their component parts.",
+        content: "Graphing equations helps us visualize the relationship between variables. Linear equations form straight lines when graphed.",
         examples: [
           {
-            id: "factor-quadratic",
-            title: "Factoring x² + 5x + 6",
-            problem: "Factor: x² + 5x + 6",
-            solution: "(x + 2)(x + 3)",
+            id: "slope-intercept-form",
+            title: "Understanding Slope-Intercept Form",
+            concept: "The form y = mx + b and what each part means",
+            demonstration: "Analyzing the equation y = 2x + 1",
             steps: [
-              "Look for two numbers that multiply to 6 and add to 5",
-              "The numbers are 2 and 3: 2 × 3 = 6, 2 + 3 = 5",
-              "Write as: (x + 2)(x + 3)",
-              "Check: (x + 2)(x + 3) = x² + 3x + 2x + 6 = x² + 5x + 6 ✓"
+              "The general form is y = mx + b, where m is slope and b is y-intercept",
+              "In y = 2x + 1: m = 2 (slope) and b = 1 (y-intercept)",
+              "The y-intercept (1) is where the line crosses the y-axis: point (0, 1)",
+              "The slope (2) means 'rise 2, run 1' or go up 2 units for every 1 unit right",
+              "Starting at (0, 1), move right 1 and up 2 to get (1, 3)",
+              "Draw a line through these points"
             ],
-            mathExpression: "x^2 + 5x + 6 = (x + 2)(x + 3)"
+            mathExpression: "y = 2x + 1 \\text{ where slope } = 2, \\text{ y-intercept } = 1",
+            keyTakeaway: "Slope-intercept form immediately tells you where the line starts (y-intercept) and how steep it is (slope)."
           }
         ]
       }
     ]
   },
+
   geometry: {
     topicId: "geometry",
     sections: [
       {
-        id: "shapes",
-        title: "Basic Shapes and Properties",
+        id: "intro-geometry",
+        title: "What is Geometry?",
         type: "explanation",
-        content: "Geometry studies shapes, sizes, and properties of space. Let's start with basic shapes.",
+        content: "Geometry is the study of shapes, sizes, positions, and properties of space. It helps us understand the world around us, from the design of buildings to the patterns in nature.",
         mathExpressions: [
-          "A_{circle} = \\pi r^2",
-          "A_{rectangle} = l \\times w", 
-          "A_{triangle} = \\frac{1}{2}bh"
+          "\\text{Point: has no size, only position}",
+          "\\text{Line: extends infinitely in both directions}",
+          "\\text{Plane: a flat surface extending infinitely}"
+        ]
+      },
+      {
+        id: "basic-shapes",
+        title: "Understanding Basic Shapes",
+        type: "example",
+        content: "Basic geometric shapes are the building blocks of more complex figures. Each shape has specific properties and formulas.",
+        examples: [
+          {
+            id: "triangle-properties",
+            title: "Properties of Triangles",
+            concept: "Understanding what makes a triangle and its key properties",
+            demonstration: "Exploring the angle sum property of triangles",
+            steps: [
+              "A triangle is a polygon with three sides and three angles",
+              "The most important property: the sum of interior angles is always 180°",
+              "This is true for any triangle: acute, right, or obtuse",
+              "If we know two angles, we can find the third: third angle = 180° - (first angle + second angle)",
+              "For example, if angles are 60° and 70°, the third is 180° - (60° + 70°) = 50°"
+            ],
+            mathExpression: "\\alpha + \\beta + \\gamma = 180° \\text{ for any triangle}",
+            keyTakeaway: "The angle sum property is fundamental to solving many triangle problems."
+          }
         ]
       },
       {
         id: "area-perimeter",
-        title: "Area and Perimeter",
+        title: "Area and Perimeter Concepts",
         type: "example",
-        content: "Learn to calculate area and perimeter of common shapes.",
+        content: "Area measures the space inside a shape, while perimeter measures the distance around it. These concepts help us solve real-world problems about space and materials.",
         examples: [
           {
-            id: "rectangle-area",
-            title: "Rectangle Area",
-            problem: "Find the area of a rectangle with length 8 cm and width 5 cm.",
-            solution: "40 cm²",
+            id: "rectangle-measurements",
+            title: "Rectangle Area and Perimeter",
+            concept: "Understanding how to measure rectangles",
+            demonstration: "Finding area and perimeter of a 8×5 rectangle",
             steps: [
-              "Use the formula: Area = length × width",
-              "Substitute values: Area = 8 × 5",
-              "Calculate: Area = 40 cm²"
+              "A rectangle has four right angles and opposite sides are equal",
+              "Area = length × width (how many unit squares fit inside)",
+              "For our rectangle: Area = 8 × 5 = 40 square units",
+              "Perimeter = distance around = 2 × length + 2 × width",
+              "Perimeter = 2 × 8 + 2 × 5 = 16 + 10 = 26 units"
             ],
-            mathExpression: "A = l \\times w = 8 \\times 5 = 40 \\text{ cm}^2"
+            mathExpression: "A = l \\times w = 40, \\quad P = 2l + 2w = 26",
+            keyTakeaway: "Area is measured in square units (units²), perimeter in linear units."
           },
           {
-            id: "circle-area",
-            title: "Circle Area",
-            problem: "Find the area of a circle with radius 3 cm.",
-            solution: "9π cm² ≈ 28.27 cm²",
+            id: "circle-measurements",
+            title: "Circle Area and Circumference",
+            concept: "Understanding circular measurements using π",
+            demonstration: "Measuring a circle with radius 3",
             steps: [
-              "Use the formula: Area = πr²",
-              "Substitute radius: Area = π × 3²",
-              "Calculate: Area = π × 9 = 9π cm²",
-              "Approximate: 9π ≈ 28.27 cm²"
+              "A circle is defined by its center and radius (distance from center to edge)",
+              "Circumference (perimeter) = 2πr, where π ≈ 3.14159",
+              "For radius 3: C = 2π(3) = 6π ≈ 18.85 units",
+              "Area = πr², the number of unit squares that fit inside",
+              "For radius 3: A = π(3)² = 9π ≈ 28.27 square units"
             ],
-            mathExpression: "A = \\pi r^2 = \\pi \\times 3^2 = 9\\pi \\text{ cm}^2"
+            mathExpression: "C = 2\\pi r = 6\\pi, \\quad A = \\pi r^2 = 9\\pi",
+            keyTakeaway: "π (pi) is the ratio of circumference to diameter, approximately 3.14159."
           }
-        ],
-        interactiveDemo: {
-          id: "shape-calculator",
-          type: "jsxgraph",
-          description: "Interactive shape area calculator",
-          config: {
-            boundingbox: [-5, 5, 5, -5],
-            axis: true,
-            showNavigation: false
-          }
-        }
-      }
-    ]
-  },
-  trigonometry: {
-    topicId: "trigonometry",
-    sections: [
-      {
-        id: "intro-trig",
-        title: "Introduction to Trigonometry",
-        type: "explanation",
-        content: "Trigonometry studies the relationships between angles and sides in triangles. It's fundamental to understanding periodic phenomena, waves, and rotational motion.",
-        mathExpressions: [
-          "\\sin(\\theta) = \\frac{\\text{opposite}}{\\text{hypotenuse}}",
-          "\\cos(\\theta) = \\frac{\\text{adjacent}}{\\text{hypotenuse}}",
-          "\\tan(\\theta) = \\frac{\\text{opposite}}{\\text{adjacent}}"
         ]
       },
       {
-        id: "unit-circle",
-        title: "The Unit Circle",
+        id: "pythagorean-theorem",
+        title: "The Pythagorean Theorem",
         type: "example",
-        content: "The unit circle is a circle with radius 1 centered at the origin. It helps us understand trigonometric functions for all angles.",
+        content: "The Pythagorean theorem relates the sides of right triangles and is one of the most important theorems in mathematics.",
         examples: [
           {
-            id: "special-angles",
-            title: "Special Angles",
-            problem: "Find sin(30°), cos(30°), and tan(30°)",
-            solution: "sin(30°) = 1/2, cos(30°) = √3/2, tan(30°) = √3/3",
+            id: "pythagorean-concept",
+            title: "Understanding the Pythagorean Theorem",
+            concept: "Why a² + b² = c² works for right triangles",
+            demonstration: "Proving the theorem with a 3-4-5 triangle",
             steps: [
-              "Draw a 30-60-90 triangle",
-              "In this triangle, sides are in ratio 1:√3:2",
-              "For 30° angle: opposite = 1, adjacent = √3, hypotenuse = 2",
-              "sin(30°) = 1/2, cos(30°) = √3/2, tan(30°) = 1/√3 = √3/3"
+              "In a right triangle, the longest side (opposite the right angle) is the hypotenuse",
+              "The theorem states: (leg₁)² + (leg₂)² = (hypotenuse)²",
+              "For a triangle with legs 3 and 4: 3² + 4² = 9 + 16 = 25",
+              "The hypotenuse should be √25 = 5",
+              "This creates a perfect right triangle: the 3-4-5 triangle"
             ],
-            mathExpression: "\\sin(30°) = \\frac{1}{2}, \\cos(30°) = \\frac{\\sqrt{3}}{2}, \\tan(30°) = \\frac{\\sqrt{3}}{3}"
+            mathExpression: "a^2 + b^2 = c^2 \\Rightarrow 3^2 + 4^2 = 5^2 \\Rightarrow 9 + 16 = 25",
+            keyTakeaway: "The Pythagorean theorem only works for right triangles, but it's incredibly useful for finding distances and solving real-world problems."
           }
-        ]
-      },
-      {
-        id: "trig-identities",
-        title: "Trigonometric Identities",
-        type: "example",
-        content: "Trigonometric identities are equations that are true for all values of the variables involved.",
-        mathExpressions: [
-          "\\sin^2(\\theta) + \\cos^2(\\theta) = 1",
-          "\\tan(\\theta) = \\frac{\\sin(\\theta)}{\\cos(\\theta)}",
-          "\\sin(2\\theta) = 2\\sin(\\theta)\\cos(\\theta)"
-        ],
-        examples: [
-          {
-            id: "pythagorean-identity",
-            title: "Pythagorean Identity",
-            problem: "Prove that sin²(θ) + cos²(θ) = 1",
-            solution: "This follows directly from the Pythagorean theorem",
-            steps: [
-              "Consider a right triangle with hypotenuse 1",
-              "Let the sides be sin(θ) and cos(θ)",
-              "By Pythagorean theorem: sin²(θ) + cos²(θ) = 1²",
-              "Therefore: sin²(θ) + cos²(θ) = 1"
-            ],
-            mathExpression: "\\sin^2(\\theta) + \\cos^2(\\theta) = 1"
-          }
-        ]
-      }
-    ]
-  },
-  calculus: {
-    topicId: "calculus",
-    sections: [
-      {
-        id: "limits",
-        title: "Introduction to Limits",
-        type: "explanation",
-        content: "Limits describe the behavior of functions as inputs approach specific values. They form the foundation of calculus.",
-        mathExpressions: [
-          "\\lim_{x \\to a} f(x) = L",
-          "\\lim_{x \\to \\infty} \\frac{1}{x} = 0",
-          "\\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}"
-        ]
-      },
-      {
-        id: "derivatives",
-        title: "Derivatives and Differentiation",
-        type: "example",
-        content: "Derivatives measure the rate of change of functions. They tell us how fast something is changing at any given point.",
-        examples: [
-          {
-            id: "power-rule",
-            title: "Power Rule",
-            problem: "Find the derivative of f(x) = x³",
-            solution: "f'(x) = 3x²",
-            steps: [
-              "Apply the power rule: d/dx[xⁿ] = nxⁿ⁻¹",
-              "For f(x) = x³, n = 3",
-              "f'(x) = 3x³⁻¹ = 3x²"
-            ],
-            mathExpression: "\\frac{d}{dx}[x^3] = 3x^2"
-          },
-          {
-            id: "chain-rule",
-            title: "Chain Rule",
-            problem: "Find the derivative of f(x) = (2x + 1)³",
-            solution: "f'(x) = 6(2x + 1)²",
-            steps: [
-              "Let u = 2x + 1, so f(x) = u³",
-              "f'(x) = 3u² · u'",
-              "u' = d/dx[2x + 1] = 2",
-              "f'(x) = 3(2x + 1)² · 2 = 6(2x + 1)²"
-            ],
-            mathExpression: "\\frac{d}{dx}[(2x + 1)^3] = 6(2x + 1)^2"
-          }
-        ]
-      },
-      {
-        id: "integrals",
-        title: "Integration",
-        type: "example",
-        content: "Integration is the reverse of differentiation. It finds the area under curves and accumulates quantities over intervals.",
-        examples: [
-          {
-            id: "basic-integration",
-            title: "Basic Integration",
-            problem: "Find ∫x² dx",
-            solution: "x³/3 + C",
-            steps: [
-              "Use the power rule for integration: ∫xⁿ dx = xⁿ⁺¹/(n+1) + C",
-              "For ∫x² dx, n = 2",
-              "∫x² dx = x²⁺¹/(2+1) + C = x³/3 + C"
-            ],
-            mathExpression: "\\int x^2 \\, dx = \\frac{x^3}{3} + C"
-          }
-        ]
-      }
-    ]
-  },
-  statistics: {
-    topicId: "statistics",
-    sections: [
-      {
-        id: "descriptive-stats",
-        title: "Descriptive Statistics",
-        type: "explanation",
-        content: "Descriptive statistics summarize and describe the main features of a dataset using measures of central tendency and variability.",
-        mathExpressions: [
-          "\\bar{x} = \\frac{1}{n}\\sum_{i=1}^{n} x_i",
-          "s^2 = \\frac{1}{n-1}\\sum_{i=1}^{n} (x_i - \\bar{x})^2",
-          "s = \\sqrt{s^2}"
-        ]
-      },
-      {
-        id: "probability",
-        title: "Probability Fundamentals",
-        type: "example",
-        content: "Probability quantifies the likelihood of events occurring. It ranges from 0 (impossible) to 1 (certain).",
-        examples: [
-          {
-            id: "basic-probability",
-            title: "Basic Probability",
-            problem: "What's the probability of rolling a 6 on a fair die?",
-            solution: "1/6 ≈ 0.167",
-            steps: [
-              "Identify favorable outcomes: rolling a 6 (1 outcome)",
-              "Identify total possible outcomes: 1, 2, 3, 4, 5, 6 (6 outcomes)",
-              "P(rolling 6) = favorable/total = 1/6"
-            ],
-            mathExpression: "P(\\text{rolling 6}) = \\frac{1}{6}"
-          },
-          {
-            id: "conditional-probability",
-            title: "Conditional Probability",
-            problem: "Given P(A) = 0.3, P(B) = 0.4, P(A∩B) = 0.1, find P(A|B)",
-            solution: "P(A|B) = 0.25",
-            steps: [
-              "Use conditional probability formula: P(A|B) = P(A∩B)/P(B)",
-              "Substitute values: P(A|B) = 0.1/0.4",
-              "P(A|B) = 0.25"
-            ],
-            mathExpression: "P(A|B) = \\frac{P(A \\cap B)}{P(B)} = \\frac{0.1}{0.4} = 0.25"
-          }
-        ]
-      },
-      {
-        id: "distributions",
-        title: "Probability Distributions",
-        type: "example",
-        content: "Probability distributions describe how probabilities are distributed over the values of a random variable.",
-        mathExpressions: [
-          "f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}",
-          "P(X = k) = \\binom{n}{k} p^k (1-p)^{n-k}",
-          "E[X] = \\mu, \\text{Var}(X) = \\sigma^2"
-        ]
-      }
-    ]
-  },
-  "linear-algebra": {
-    topicId: "linear-algebra",
-    sections: [
-      {
-        id: "vectors",
-        title: "Vectors and Vector Operations",
-        type: "explanation",
-        content: "Vectors are mathematical objects that have both magnitude and direction. They're fundamental to linear algebra and many applications.",
-        mathExpressions: [
-          "\\vec{v} = \\begin{bmatrix} v_1 \\\\ v_2 \\\\ v_3 \\end{bmatrix}",
-          "\\vec{u} + \\vec{v} = \\begin{bmatrix} u_1 + v_1 \\\\ u_2 + v_2 \\\\ u_3 + v_3 \\end{bmatrix}",
-          "\\vec{u} \\cdot \\vec{v} = u_1v_1 + u_2v_2 + u_3v_3"
-        ]
-      },
-      {
-        id: "matrices",
-        title: "Matrices and Matrix Operations",
-        type: "example",
-        content: "Matrices are rectangular arrays of numbers that can represent linear transformations and systems of equations.",
-        examples: [
-          {
-            id: "matrix-multiplication",
-            title: "Matrix Multiplication",
-            problem: "Multiply matrices A = [[1,2],[3,4]] and B = [[5,6],[7,8]]",
-            solution: "AB = [[19,22],[43,50]]",
-            steps: [
-              "For element (1,1): 1×5 + 2×7 = 5 + 14 = 19",
-              "For element (1,2): 1×6 + 2×8 = 6 + 16 = 22",
-              "For element (2,1): 3×5 + 4×7 = 15 + 28 = 43",
-              "For element (2,2): 3×6 + 4×8 = 18 + 32 = 50"
-            ],
-            mathExpression: "\\begin{bmatrix} 1 & 2 \\\\ 3 & 4 \\end{bmatrix} \\begin{bmatrix} 5 & 6 \\\\ 7 & 8 \\end{bmatrix} = \\begin{bmatrix} 19 & 22 \\\\ 43 & 50 \\end{bmatrix}"
-          }
-        ]
-      },
-      {
-        id: "eigenvalues",
-        title: "Eigenvalues and Eigenvectors",
-        type: "example",
-        content: "Eigenvalues and eigenvectors reveal the fundamental directions and scaling factors of linear transformations.",
-        mathExpressions: [
-          "A\\vec{v} = \\lambda\\vec{v}",
-          "\\det(A - \\lambda I) = 0",
-          "\\text{characteristic polynomial}"
-        ]
-      }
-    ]
-  },
-  "differential-equations": {
-    topicId: "differential-equations",
-    sections: [
-      {
-        id: "intro-de",
-        title: "Introduction to Differential Equations",
-        type: "explanation",
-        content: "Differential equations involve functions and their derivatives. They model how quantities change over time or space.",
-        mathExpressions: [
-          "\\frac{dy}{dx} = f(x, y)",
-          "\\frac{d^2y}{dx^2} + p(x)\\frac{dy}{dx} + q(x)y = g(x)",
-          "y' + P(x)y = Q(x)"
-        ]
-      },
-      {
-        id: "first-order",
-        title: "First-Order Differential Equations",
-        type: "example",
-        content: "First-order differential equations involve only the first derivative of the unknown function.",
-        examples: [
-          {
-            id: "separable-de",
-            title: "Separable Differential Equation",
-            problem: "Solve dy/dx = xy",
-            solution: "y = Ce^(x²/2)",
-            steps: [
-              "Separate variables: dy/y = x dx",
-              "Integrate both sides: ∫dy/y = ∫x dx",
-              "ln|y| = x²/2 + C₁",
-              "y = e^(x²/2 + C₁) = Ce^(x²/2)"
-            ],
-            mathExpression: "\\frac{dy}{dx} = xy \\Rightarrow y = Ce^{\\frac{x^2}{2}}"
-          }
-        ]
-      },
-      {
-        id: "applications",
-        title: "Applications of Differential Equations",
-        type: "example",
-        content: "Differential equations model many real-world phenomena including population growth, radioactive decay, and oscillations.",
-        mathExpressions: [
-          "\\frac{dP}{dt} = kP \\text{ (exponential growth)}",
-          "m\\frac{d^2x}{dt^2} + c\\frac{dx}{dt} + kx = F(t) \\text{ (damped oscillator)}",
-          "\\frac{dN}{dt} = -\\lambda N \\text{ (radioactive decay)}"
-        ]
-      }
-    ]
-  },
-  "game-design-math": {
-    topicId: "game-design-math",
-    sections: [
-      {
-        id: "vectors-games",
-        title: "Vectors in Game Development",
-        type: "explanation",
-        content: "Vectors are essential in game development for representing positions, velocities, forces, and directions in 2D and 3D space.",
-        mathExpressions: [
-          "\\vec{position} = \\vec{position_0} + \\vec{velocity} \\cdot t",
-          "\\vec{F} = m\\vec{a}",
-          "\\vec{v}_{final} = \\vec{v}_{initial} + \\vec{a} \\cdot t"
-        ]
-      },
-      {
-        id: "physics-simulation",
-        title: "Physics Simulation",
-        type: "example",
-        content: "Game physics simulate realistic motion using mathematical models of forces, collisions, and constraints.",
-        examples: [
-          {
-            id: "projectile-motion",
-            title: "Projectile Motion",
-            problem: "Calculate the trajectory of a projectile launched at 45° with initial velocity 20 m/s",
-            solution: "Range ≈ 40.8 m, Max height ≈ 10.2 m",
-            steps: [
-              "Break velocity into components: vₓ = 20cos(45°) = 14.14 m/s, vᵧ = 20sin(45°) = 14.14 m/s",
-              "Time to max height: t = vᵧ/g = 14.14/9.8 = 1.44 s",
-              "Max height: h = vᵧt - ½gt² = 14.14(1.44) - ½(9.8)(1.44)² = 10.2 m",
-              "Total flight time: 2t = 2.88 s, Range: R = vₓ × 2t = 14.14 × 2.88 = 40.8 m"
-            ],
-            mathExpression: "x(t) = v_0 \\cos(\\theta) \\cdot t, \\quad y(t) = v_0 \\sin(\\theta) \\cdot t - \\frac{1}{2}gt^2"
-          }
-        ]
-      },
-      {
-        id: "collision-detection",
-        title: "Collision Detection and Response",
-        type: "example",
-        content: "Collision detection uses geometric algorithms to determine when objects intersect, enabling realistic interactions.",
-        examples: [
-          {
-            id: "circle-collision",
-            title: "Circle-Circle Collision",
-            problem: "Detect collision between circles at (0,0) radius 3 and (4,0) radius 2",
-            solution: "Collision detected: distance = 4, sum of radii = 5",
-            steps: [
-              "Calculate distance between centers: d = √[(4-0)² + (0-0)²] = 4",
-              "Sum of radii: r₁ + r₂ = 3 + 2 = 5",
-              "Since d < r₁ + r₂ (4 < 5), circles are colliding",
-              "Overlap distance: 5 - 4 = 1 unit"
-            ],
-            mathExpression: "\\text{collision if } |\\vec{c_1} - \\vec{c_2}| < r_1 + r_2"
-          }
-        ]
-      },
-      {
-        id: "game-mechanics",
-        title: "Mathematical Game Mechanics",
-        type: "example",
-        content: "Game mechanics often rely on mathematical formulas for damage calculation, experience systems, and procedural generation.",
-        mathExpressions: [
-          "\\text{damage} = \\text{base} \\times (1 + \\text{multipliers}) - \\text{defense}",
-          "\\text{XP needed} = \\text{level}^2 \\times \\text{base XP}",
-          "\\text{drop rate} = \\text{base rate} \\times (1 + \\text{luck bonus})"
         ]
       }
     ]
   }
-}
+};
