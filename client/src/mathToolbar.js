@@ -569,8 +569,8 @@
     setTimeout(insertToolbar, 3000);
   }
 
-  // Start the script
-  init();
+  // Start the script - DISABLED since we have topic-specific toolbars
+  // init();
 
   // Make functions globally available for debugging
   window.mathToolbar = {

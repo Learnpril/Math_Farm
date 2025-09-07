@@ -32,6 +32,104 @@ interface PracticeExampleProps {
   className?: string;
 }
 
+// Get topic-specific symbols for the toolbar
+const getTopicSymbols = (topic: string) => {
+  const symbolSets = {
+    arithmetic: [
+      { symbol: "%", name: "Percent" },
+      { symbol: "×", name: "Times" },
+      { symbol: "÷", name: "Divide" },
+      { symbol: "/", name: "Fraction" },
+      { symbol: ".", name: "Decimal" },
+    ],
+    algebra: [
+      { symbol: "²", name: "Squared" },
+      { symbol: "³", name: "Cubed" },
+      { symbol: "(", name: "Left Parenthesis" },
+      { symbol: ")", name: "Right Parenthesis" },
+      { symbol: "x", name: "Variable x" },
+      { symbol: "y", name: "Variable y" },
+      { symbol: "=", name: "Equals" },
+      { symbol: "+", name: "Plus" },
+      { symbol: "-", name: "Minus" },
+    ],
+    geometry: [
+      { symbol: "π", name: "Pi" },
+      { symbol: "°", name: "Degree" },
+      { symbol: "√", name: "Square Root" },
+      { symbol: "²", name: "Squared" },
+      { symbol: "³", name: "Cubed" },
+    ],
+    trigonometry: [
+      { symbol: "π", name: "Pi" },
+      { symbol: "/", name: "Fraction" },
+      { symbol: "°", name: "Degree" },
+      { symbol: "θ", name: "Theta" },
+      { symbol: "²", name: "Squared" },
+      { symbol: "1/2", name: "One Half" },
+      { symbol: "2π", name: "Two Pi" },
+      { symbol: "π/4", name: "Pi over 4" },
+    ],
+    calculus: [
+      { symbol: "∫", name: "Integral" },
+      { symbol: "²", name: "Squared" },
+      { symbol: "³", name: "Cubed" },
+      { symbol: "x²", name: "x squared" },
+      { symbol: "3x²", name: "3x squared" },
+      { symbol: "+ C", name: "Plus constant" },
+      { symbol: "→", name: "Approaches" },
+      { symbol: "lim", name: "Limit" },
+    ],
+    statistics: [
+      { symbol: "σ", name: "Sigma (std dev)" },
+      { symbol: "μ", name: "Mu (mean)" },
+      { symbol: "√", name: "Square Root" },
+      { symbol: "²", name: "Squared" },
+      { symbol: "∪", name: "Union" },
+      { symbol: "∩", name: "Intersection" },
+      { symbol: "≤", name: "Less/Equal" },
+      { symbol: "%", name: "Percent" },
+      { symbol: "0.68", name: "68%" },
+    ],
+    "linear-algebra": [
+      { symbol: "[", name: "Left Bracket" },
+      { symbol: "]", name: "Right Bracket" },
+      { symbol: ",", name: "Comma" },
+      { symbol: "·", name: "Dot Product" },
+      { symbol: "×", name: "Times" },
+      { symbol: "-", name: "Minus" },
+      { symbol: "True", name: "True" },
+      { symbol: "False", name: "False" },
+    ],
+    "differential-equations": [
+      { symbol: "y", name: "y variable" },
+      { symbol: "x", name: "x variable" },
+      { symbol: "C", name: "Constant" },
+      { symbol: "e^", name: "e to the power" },
+      { symbol: "²", name: "Squared" },
+      { symbol: "dy/dx", name: "dy over dx" },
+      { symbol: "d²y/dx²", name: "Second derivative" },
+      { symbol: "e^(2x)", name: "e to 2x" },
+      { symbol: "True", name: "True" },
+      { symbol: "False", name: "False" },
+    ],
+    "game-design-math": [
+      { symbol: "[", name: "Left Bracket" },
+      { symbol: "]", name: "Right Bracket" },
+      { symbol: ",", name: "Comma" },
+      { symbol: "·", name: "Dot Product" },
+      { symbol: "×", name: "Times" },
+      { symbol: "√", name: "Square Root" },
+      { symbol: "²", name: "Squared" },
+      { symbol: "°", name: "Degree" },
+      { symbol: "(", name: "Left Parenthesis" },
+      { symbol: ")", name: "Right Parenthesis" },
+    ],
+  };
+
+  return symbolSets[topic as keyof typeof symbolSets] || [];
+};
+
 /**
  * PracticeExample component with interactive problem solving
  * Provides step-by-step solutions with immediate feedback
@@ -211,6 +309,51 @@ export function PracticeExample({
                 Submit
               </button>
             </div>
+
+            {/* Topic-specific symbols toolbar */}
+            {(() => {
+              const topicSymbols = getTopicSymbols(question.topic);
+              return topicSymbols.length > 0 ? (
+                <div className="space-y-2">
+                  <div className="flex flex-wrap gap-2 p-3 bg-gradient-to-r from-primary/10 to-purple-500/10 border border-primary/20 rounded-lg">
+                    <div className="text-sm font-medium text-foreground w-full mb-2">
+                      🧮{" "}
+                      {question.topic.charAt(0).toUpperCase() +
+                        question.topic.slice(1).replace("-", " ")}{" "}
+                      Symbols - Click to Insert:
+                    </div>
+                    {topicSymbols.map((symbolData, index) => (
+                      <button
+                        key={index}
+                        type="button"
+                        className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-2 px-4 rounded text-lg min-w-[50px] h-10 transition-all duration-200 hover:scale-105"
+                        onClick={() => {
+                          const newValue = userAnswer + symbolData.symbol;
+                          setUserAnswer(newValue);
+                        }}
+                        disabled={isSubmitted && isCorrect}
+                        title={symbolData.name}
+                      >
+                        {symbolData.symbol}
+                      </button>
+                    ))}
+                    <button
+                      type="button"
+                      className="bg-destructive hover:bg-destructive/90 text-destructive-foreground font-bold py-2 px-4 rounded text-sm min-w-[60px] h-10"
+                      onClick={() => {
+                        setUserAnswer("");
+                      }}
+                      disabled={isSubmitted && isCorrect}
+                    >
+                      Clear
+                    </button>
+                  </div>
+                  <div className="text-xs text-muted-foreground text-center">
+                    💡 Tip: You can also type shortcuts like "pi", "deg", "sqrt"
+                  </div>
+                </div>
+              ) : null;
+            })()}
 
             {/* Feedback */}
             {isSubmitted && (
