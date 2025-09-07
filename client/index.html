@@ -146,6 +146,39 @@
       aria-label="Math Farm Learning Platform"
     ></div>
 
+    <!-- Math Symbol Toolbar -->
+    <script src="/src/mathToolbar.js"></script>
+
+    <!-- Layout ordering styles -->
+    <style>
+      /* Help reorder practice problem elements */
+      .practice-problem-container {
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Ensure proper spacing */
+      #math-symbol-toolbar {
+        order: 4;
+        margin-top: 16px !important;
+      }
+
+      /* Style adjustments for better layout */
+      input[placeholder*="answer"] {
+        order: 1;
+      }
+
+      button:has-text("Submit") {
+        order: 2;
+        margin-top: 12px;
+      }
+
+      button:has-text("Show Hint") {
+        order: 3;
+        margin-top: 8px;
+      }
+    </style>
+
     <!-- Main script -->
     <script type="module" src="/src/main.tsx"></script>
 

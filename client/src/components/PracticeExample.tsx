@@ -294,65 +294,84 @@ export function PracticeExample({
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <h4 className="font-medium text-foreground">
-                Step-by-Step Solution
+                {question.steps.length > 0
+                  ? "Step-by-Step Solution"
+                  : "Solution"}
               </h4>
-              <span className="text-sm text-muted-foreground">
-                Step {currentStep + 1} of {question.steps.length}
-              </span>
+              {question.steps.length > 0 && (
+                <span className="text-sm text-muted-foreground">
+                  Step {currentStep + 1} of {question.steps.length}
+                </span>
+              )}
             </div>
 
             {/* Current Step */}
-            <div className="p-4 border border-border rounded-lg space-y-3">
-              <p className="font-medium text-foreground">
-                {question.steps[currentStep].description}
-              </p>
+            {question.steps.length > 0 && question.steps[currentStep] ? (
+              <div className="p-4 border border-border rounded-lg space-y-3">
+                <p className="font-medium text-foreground">
+                  {question.steps[currentStep].description}
+                </p>
 
-              {question.steps[currentStep].expression && (
-                <div className="bg-muted/50 p-3 rounded-md">
-                  <MathExpression
-                    expression={question.steps[currentStep].expression}
-                    className="text-center"
-                  />
-                </div>
-              )}
+                {question.steps[currentStep].expression && (
+                  <div className="bg-muted/50 p-3 rounded-md">
+                    <MathExpression
+                      expression={question.steps[currentStep].expression}
+                      className="text-center"
+                    />
+                  </div>
+                )}
 
-              <p className="text-sm text-muted-foreground">
-                {question.steps[currentStep].explanation}
-              </p>
-            </div>
-
-            {/* Navigation */}
-            <div className="flex justify-between">
-              <div className="flex gap-1">
-                {question.steps.map((_, index) => (
-                  <div
-                    key={index}
-                    className={`w-2 h-2 rounded-full ${
-                      index <= currentStep ? "bg-primary" : "bg-muted"
-                    }`}
-                  />
-                ))}
+                <p className="text-sm text-muted-foreground">
+                  {question.steps[currentStep].explanation}
+                </p>
               </div>
-
-              {currentStep < question.steps.length - 1 && (
-                <button
-                  onClick={nextStep}
-                  className="inline-flex items-center gap-2 px-3 py-1 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
-                >
-                  Next Step
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              )}
-            </div>
-
-            {/* Final Answer */}
-            {currentStep === question.steps.length - 1 && (
-              <div className="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-md">
-                <p className="text-sm font-medium text-green-900 dark:text-green-100">
-                  Final Answer: {question.correctAnswer}
+            ) : (
+              <div className="p-4 border border-border rounded-lg">
+                <p className="text-foreground">
+                  This problem doesn't have step-by-step solution available.
+                </p>
+                <p className="text-sm text-muted-foreground mt-2">
+                  The correct answer is:{" "}
+                  <strong>{question.correctAnswer}</strong>
                 </p>
               </div>
             )}
+
+            {/* Navigation */}
+            {question.steps.length > 0 && (
+              <div className="flex justify-between">
+                <div className="flex gap-1">
+                  {question.steps.map((_, index) => (
+                    <div
+                      key={index}
+                      className={`w-2 h-2 rounded-full ${
+                        index <= currentStep ? "bg-primary" : "bg-muted"
+                      }`}
+                    />
+                  ))}
+                </div>
+
+                {currentStep < question.steps.length - 1 && (
+                  <button
+                    onClick={nextStep}
+                    className="inline-flex items-center gap-2 px-3 py-1 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+                  >
+                    Next Step
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
+            )}
+
+            {/* Final Answer */}
+            {question.steps.length > 0 &&
+              currentStep === question.steps.length - 1 && (
+                <div className="p-3 bg-primary/10 border border-primary/20 rounded-md">
+                  <p className="text-sm font-medium text-primary">
+                    Final Answer: {question.correctAnswer}
+                  </p>
+                </div>
+              )}
           </div>
         )}
       </div>

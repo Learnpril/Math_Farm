@@ -41,11 +41,36 @@ export function RelatedTopicsSuggestions({
   isTopicCompleted,
   getTopicCompletionPercentage,
 }: RelatedTopicsSuggestionsProps) {
+  // Early return if required props are not available
+  if (
+    !currentTopic ||
+    !allTopics ||
+    !getTopicProgress ||
+    !isTopicCompleted ||
+    !getTopicCompletionPercentage
+  ) {
+    return (
+      <Card className="p-6">
+        <h3 className="text-lg font-semibold text-foreground mb-4">
+          Related Topics
+        </h3>
+        <div className="text-center py-6">
+          <BookOpen className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+          <p className="text-muted-foreground">Loading related topics...</p>
+        </div>
+      </Card>
+    );
+  }
   const getSuggestedTopics = (): SuggestedTopic[] => {
     const suggestions: SuggestedTopic[] = [];
 
+    // Safety checks for required data
+    if (!allTopics || !Array.isArray(allTopics) || !currentTopic) {
+      return suggestions;
+    }
+
     allTopics.forEach((topic) => {
-      if (topic.id === currentTopic.id) return;
+      if (!topic || topic.id === currentTopic.id) return;
 
       const progress = getTopicProgress(topic.id);
       const completed = isTopicCompleted(topic.id);
@@ -57,26 +82,28 @@ export function RelatedTopicsSuggestions({
 
       let suggestionReason: SuggestedTopic["suggestionReason"] | null = null;
 
+      // Ensure prerequisites arrays exist
+      const topicPrereqs = topic.prerequisites || [];
+      const currentTopicPrereqs = currentTopic.prerequisites || [];
+
       // Check if this topic builds on the current topic (current topic is a prerequisite)
-      if (topic.prerequisites.includes(currentTopic.id)) {
+      if (topicPrereqs.includes(currentTopic.id)) {
         suggestionReason = "next-step";
       }
       // Check if this topic shares prerequisites with current topic
       else if (
-        topic.prerequisites.some((prereq) =>
-          currentTopic.prerequisites.includes(prereq)
-        )
+        topicPrereqs.some((prereq) => currentTopicPrereqs.includes(prereq))
       ) {
         suggestionReason = "related";
       }
       // Check if this topic is a prerequisite for the current topic
-      else if (currentTopic.prerequisites.includes(topic.id)) {
+      else if (currentTopicPrereqs.includes(topic.id)) {
         suggestionReason = "prerequisite";
       }
       // Check if topics are at similar level and difficulty
       else if (
         topic.level === currentTopic.level &&
-        Math.abs(topic.difficulty - currentTopic.difficulty) <= 1
+        Math.abs((topic.difficulty || 0) - (currentTopic.difficulty || 0)) <= 1
       ) {
         suggestionReason = "similar-level";
       }
@@ -124,7 +151,7 @@ export function RelatedTopicsSuggestions({
         if (a.isCompleted && !b.isCompleted) return 1;
 
         // Finally by difficulty
-        return a.difficulty - b.difficulty;
+        return (a.difficulty || 0) - (b.difficulty || 0);
       })
       .slice(0, 6); // Limit to 6 suggestions
   };
@@ -266,12 +293,12 @@ export function RelatedTopicsSuggestions({
                   )}
 
                   {/* Prerequisites Check */}
-                  {topic.prerequisites.length > 0 && (
+                  {topic.prerequisites && topic.prerequisites.length > 0 && (
                     <div className="text-xs text-muted-foreground">
                       <span>Prerequisites: </span>
-                      {topic.prerequisites.map((prereqId, index) => {
-                        const prereqTopic = allTopics.find(
-                          (t) => t.id === prereqId
+                      {(topic.prerequisites || []).map((prereqId, index) => {
+                        const prereqTopic = allTopics?.find(
+                          (t) => t && t.id === prereqId
                         );
                         const prereqCompleted = isTopicCompleted(prereqId);
 
@@ -286,7 +313,8 @@ export function RelatedTopicsSuggestions({
                             >
                               {prereqTopic?.title || prereqId}
                             </span>
-                            {index < topic.prerequisites.length - 1 && ", "}
+                            {index < (topic.prerequisites || []).length - 1 &&
+                              ", "}
                           </span>
                         );
                       })}

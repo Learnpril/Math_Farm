@@ -1,14 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
-import { RotateCcw, Play } from "lucide-react";
-
-// JSXGraph will be loaded dynamically
-declare global {
-  interface Window {
-    JXG?: any;
-  }
-}
+import { RotateCcw, Play, AlertCircle } from "lucide-react";
+import { jsxGraphManager } from "../lib/jsxGraphManager";
 
 interface JSXGraphDemoProps {
   id: string;
@@ -33,6 +27,8 @@ export function JSXGraphDemo({
 }: JSXGraphDemoProps) {
   const boardRef = useRef<HTMLDivElement>(null);
   const boardInstanceRef = useRef<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const defaultConfig = {
     boundingbox: [-5, 5, 5, -5],
@@ -42,23 +38,67 @@ export function JSXGraphDemo({
     ...config,
   };
 
-  const initializeBoard = () => {
-    if (!boardRef.current || !window.JXG) return;
-
-    // Clear existing board
-    if (boardInstanceRef.current) {
-      window.JXG.JSXGraph.freeBoard(boardInstanceRef.current);
+  const initializeBoard = async () => {
+    // Check if component is still mounted and container exists
+    if (!boardRef.current || !boardRef.current.isConnected) {
+      return;
     }
 
-    // Create new board
-    boardInstanceRef.current = window.JXG.JSXGraph.initBoard(
-      boardRef.current,
-      defaultConfig
-    );
+    try {
+      setError(null);
 
-    // Call custom initialization if provided
-    if (onInit && boardInstanceRef.current) {
-      onInit(boardInstanceRef.current);
+      // Clear existing board safely
+      if (boardInstanceRef.current) {
+        try {
+          jsxGraphManager.freeBoard(boardInstanceRef.current, id);
+        } catch (error) {
+          console.warn("Error freeing existing board:", error);
+        }
+        boardInstanceRef.current = null;
+      }
+
+      // Ensure the container is ready and still in DOM
+      if (
+        !boardRef.current.offsetWidth ||
+        !boardRef.current.offsetHeight ||
+        !boardRef.current.isConnected
+      ) {
+        // Container not ready or removed from DOM, try again later
+        const retryTimeout = setTimeout(() => {
+          if (boardRef.current && boardRef.current.isConnected) {
+            initializeBoard();
+          }
+        }, 100);
+
+        // Store timeout for cleanup
+        return;
+      }
+
+      // Create new board using the manager with ID tracking
+      boardInstanceRef.current = jsxGraphManager.createBoard(
+        boardRef.current,
+        defaultConfig,
+        id
+      );
+
+      // Call custom initialization if provided
+      if (onInit && boardInstanceRef.current) {
+        try {
+          onInit(boardInstanceRef.current);
+        } catch (error) {
+          console.warn("Error in JSXGraph initialization callback:", error);
+          setError("Error initializing interactive demo");
+          return;
+        }
+      }
+
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error initializing JSXGraph board:", error);
+      setError(
+        error instanceof Error ? error.message : "Failed to initialize demo"
+      );
+      setIsLoading(false);
     }
   };
 
@@ -67,31 +107,54 @@ export function JSXGraphDemo({
   };
 
   useEffect(() => {
-    // Load JSXGraph dynamically if not already loaded
-    if (!window.JXG) {
-      const script = document.createElement("script");
-      script.src =
-        "https://cdn.jsdelivr.net/npm/jsxgraph@1.11.1/distrib/jsxgraphcore.js";
-      script.async = true;
-      script.onload = () => {
-        // Also load CSS
-        const link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href =
-          "https://cdn.jsdelivr.net/npm/jsxgraph@1.11.1/distrib/jsxgraph.css";
-        document.head.appendChild(link);
+    let mounted = true;
+    let timeoutId: NodeJS.Timeout | null = null;
 
-        // Initialize board after JSXGraph loads
-        setTimeout(initializeBoard, 100);
-      };
-      document.head.appendChild(script);
-    } else {
-      initializeBoard();
-    }
+    const loadAndInitialize = async () => {
+      try {
+        if (!mounted) return;
+
+        setIsLoading(true);
+        setError(null);
+
+        // Load JSXGraph using the manager
+        await jsxGraphManager.loadJSXGraph();
+
+        if (!mounted) return;
+
+        // Initialize board after a short delay to ensure DOM is ready
+        timeoutId = setTimeout(() => {
+          if (mounted && boardRef.current) {
+            initializeBoard();
+          }
+        }, 100);
+      } catch (error) {
+        if (mounted) {
+          console.error("Failed to load JSXGraph:", error);
+          setError("Failed to load interactive demo");
+          setIsLoading(false);
+        }
+      }
+    };
+
+    loadAndInitialize();
 
     return () => {
+      mounted = false;
+
+      // Clear any pending timeouts
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
+      // Clean up board safely
       if (boardInstanceRef.current) {
-        window.JXG.JSXGraph.freeBoard(boardInstanceRef.current);
+        try {
+          jsxGraphManager.freeBoard(boardInstanceRef.current, id);
+        } catch (error) {
+          console.warn("Error during board cleanup:", error);
+        }
+        boardInstanceRef.current = null;
       }
     };
   }, []);
@@ -122,9 +185,41 @@ export function JSXGraphDemo({
       <div
         ref={boardRef}
         id={id}
-        className="w-full h-64 border rounded-lg bg-white"
+        className="w-full h-64 border rounded-lg bg-white relative"
         style={{ minHeight: "256px" }}
-      />
+      >
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white/80">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-2"></div>
+              <p className="text-sm text-muted-foreground">
+                Loading interactive demo...
+              </p>
+            </div>
+          </div>
+        )}
+
+        {error && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white">
+            <div className="text-center">
+              <AlertCircle className="h-8 w-8 text-destructive mx-auto mb-2" />
+              <p className="text-sm text-destructive">{error}</p>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setError(null);
+                  setIsLoading(true);
+                  initializeBoard();
+                }}
+                className="mt-2"
+              >
+                Try Again
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
 
       <div className="mt-3 text-xs text-muted-foreground">
         <p>Interactive mathematical visualization powered by JSXGraph</p>

@@ -22,11 +22,12 @@ import { TimeChallengeMode } from "../components/TimeChallengeMode";
 import { SuccessAnimation } from "../components/SuccessAnimation";
 import { RelatedTopicsSuggestions } from "../components/RelatedTopicsSuggestions";
 import { ErrorBoundary } from "../components/ErrorBoundary";
-import {
-  JSXGraphDemo,
-  demoInitializers,
-  demoConfigs,
-} from "../components/JSXGraphDemo";
+// JSXGraph demos temporarily disabled to prevent DOM manipulation errors
+// import {
+//   JSXGraphDemo,
+//   demoInitializers,
+//   demoConfigs,
+// } from "../components/JSXGraphDemo";
 import { useProgressTracker } from "../hooks/useProgressTracker";
 import topicsData from "../data/topicsData.json";
 import { lessonContentData } from "../data/lessonContent";
@@ -412,14 +413,16 @@ export function TopicPage() {
           )}
 
           {/* Enhanced Related Topics */}
-          <RelatedTopicsSuggestions
-            currentTopic={topic}
-            allTopics={topicsData as Topic[]}
-            userProgress={userProgress}
-            getTopicProgress={getTopicProgress}
-            isTopicCompleted={isTopicCompleted}
-            getTopicCompletionPercentage={getTopicCompletionPercentage}
-          />
+          {topic && topicsData && (
+            <RelatedTopicsSuggestions
+              currentTopic={topic}
+              allTopics={topicsData as Topic[]}
+              userProgress={userProgress}
+              getTopicProgress={getTopicProgress}
+              isTopicCompleted={isTopicCompleted}
+              getTopicCompletionPercentage={getTopicCompletionPercentage}
+            />
+          )}
         </div>
       </div>
 
@@ -482,21 +485,33 @@ function LessonContentSection({
           </h3>
 
           <div className="grid gap-6 md:grid-cols-2">
-            <JSXGraphDemo
-              id="circle-area-demo"
-              config={demoConfigs.geometryShapes}
-              onInit={demoInitializers.circleArea}
-              title="Circle Area Calculator"
-              description="Drag the radius point to see how the area changes"
-            />
+            <div className="bg-card border rounded-lg p-6">
+              <h4 className="font-medium text-foreground mb-2">
+                Circle Area Calculator
+              </h4>
+              <p className="text-sm text-muted-foreground mb-4">
+                Interactive circle area demonstration will be available soon.
+              </p>
+              <div className="w-full h-48 border rounded-lg bg-muted/20 flex items-center justify-center">
+                <p className="text-sm text-muted-foreground">
+                  Interactive demo coming soon
+                </p>
+              </div>
+            </div>
 
-            <JSXGraphDemo
-              id="triangle-area-demo"
-              config={demoConfigs.geometryShapes}
-              onInit={demoInitializers.triangleArea}
-              title="Triangle Area Calculator"
-              description="Move the vertices to explore triangle area calculation"
-            />
+            <div className="bg-card border rounded-lg p-6">
+              <h4 className="font-medium text-foreground mb-2">
+                Triangle Area Calculator
+              </h4>
+              <p className="text-sm text-muted-foreground mb-4">
+                Interactive triangle area demonstration will be available soon.
+              </p>
+              <div className="w-full h-48 border rounded-lg bg-muted/20 flex items-center justify-center">
+                <p className="text-sm text-muted-foreground">
+                  Interactive demo coming soon
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -507,13 +522,20 @@ function LessonContentSection({
             Interactive Function Explorer
           </h3>
 
-          <JSXGraphDemo
-            id="quadratic-function-demo"
-            config={demoConfigs.functionPlotter}
-            onInit={demoInitializers.quadraticFunction}
-            title="Quadratic Function Explorer"
-            description="Adjust the sliders to see how coefficients affect the parabola"
-          />
+          <div className="bg-card border rounded-lg p-6">
+            <h4 className="font-medium text-foreground mb-2">
+              Quadratic Function Explorer
+            </h4>
+            <p className="text-sm text-muted-foreground mb-4">
+              Interactive quadratic function demonstration will be available
+              soon.
+            </p>
+            <div className="w-full h-64 border rounded-lg bg-muted/20 flex items-center justify-center">
+              <p className="text-sm text-muted-foreground">
+                Interactive demo coming soon
+              </p>
+            </div>
+          </div>
         </div>
       )}
 
@@ -523,13 +545,19 @@ function LessonContentSection({
             Interactive Trigonometry
           </h3>
 
-          <JSXGraphDemo
-            id="trig-functions-demo"
-            config={demoConfigs.geometryShapes}
-            onInit={demoInitializers.trigFunctions}
-            title="Unit Circle and Trigonometric Functions"
-            description="Explore how sine and cosine relate to the unit circle"
-          />
+          <div className="bg-card border rounded-lg p-6">
+            <h4 className="font-medium text-foreground mb-2">
+              Unit Circle and Trigonometric Functions
+            </h4>
+            <p className="text-sm text-muted-foreground mb-4">
+              Interactive trigonometry demonstration will be available soon.
+            </p>
+            <div className="w-full h-64 border rounded-lg bg-muted/20 flex items-center justify-center">
+              <p className="text-sm text-muted-foreground">
+                Interactive demo coming soon
+              </p>
+            </div>
+          </div>
         </div>
       )}
 
@@ -539,13 +567,19 @@ function LessonContentSection({
             Interactive Calculus
           </h3>
 
-          <JSXGraphDemo
-            id="derivative-demo"
-            config={demoConfigs.functionPlotter}
-            onInit={demoInitializers.derivativeVisualization}
-            title="Derivative Visualization"
-            description="See how derivatives represent the slope of tangent lines"
-          />
+          <div className="bg-card border rounded-lg p-6">
+            <h4 className="font-medium text-foreground mb-2">
+              Derivative Visualization
+            </h4>
+            <p className="text-sm text-muted-foreground mb-4">
+              Interactive calculus demonstration will be available soon.
+            </p>
+            <div className="w-full h-64 border rounded-lg bg-muted/20 flex items-center justify-center">
+              <p className="text-sm text-muted-foreground">
+                Interactive demo coming soon
+              </p>
+            </div>
+          </div>
         </div>
       )}
 
@@ -555,13 +589,20 @@ function LessonContentSection({
             Interactive Vector Operations
           </h3>
 
-          <JSXGraphDemo
-            id="vector-operations-demo"
-            config={demoConfigs.geometryShapes}
-            onInit={demoInitializers.vectorOperations}
-            title="Vector Addition and Operations"
-            description="Drag the vector endpoints to explore vector operations"
-          />
+          <div className="bg-card border rounded-lg p-6">
+            <h4 className="font-medium text-foreground mb-2">
+              Vector Addition and Operations
+            </h4>
+            <p className="text-sm text-muted-foreground mb-4">
+              Interactive vector operations demonstration will be available
+              soon.
+            </p>
+            <div className="w-full h-64 border rounded-lg bg-muted/20 flex items-center justify-center">
+              <p className="text-sm text-muted-foreground">
+                Interactive demo coming soon
+              </p>
+            </div>
+          </div>
         </div>
       )}
 
@@ -571,13 +612,19 @@ function LessonContentSection({
             Interactive Statistics
           </h3>
 
-          <JSXGraphDemo
-            id="statistics-demo"
-            config={demoConfigs.functionPlotter}
-            onInit={demoInitializers.statisticsVisualization}
-            title="Normal Distribution Explorer"
-            description="Adjust mean and standard deviation to see how they affect the distribution"
-          />
+          <div className="bg-card border rounded-lg p-6">
+            <h4 className="font-medium text-foreground mb-2">
+              Normal Distribution Explorer
+            </h4>
+            <p className="text-sm text-muted-foreground mb-4">
+              Interactive statistics demonstration will be available soon.
+            </p>
+            <div className="w-full h-64 border rounded-lg bg-muted/20 flex items-center justify-center">
+              <p className="text-sm text-muted-foreground">
+                Interactive demo coming soon
+              </p>
+            </div>
+          </div>
         </div>
       )}
 

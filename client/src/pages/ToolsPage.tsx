@@ -1,9 +1,42 @@
-// React 19 - no need to import React
+import { useState } from "react";
+import {
+  Calculator,
+  TrendingUp,
+  RotateCcw,
+  Zap,
+  ArrowLeft,
+  Type,
+} from "lucide-react";
 import { Link } from "wouter";
-import { ArrowLeft, Calculator, TrendingUp, Grid3x3, Zap } from "lucide-react";
+import { ToolsBreadcrumb } from "../components/ToolsBreadcrumb";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../components/ui/dialog";
+import { Badge } from "../components/ui/badge";
+import { Calculator as CalculatorTool } from "../components/tools/Calculator";
+import { GraphPlotter } from "../components/tools/GraphPlotter";
+import { UnitConverter } from "../components/tools/UnitConverter";
+import { EquationSolver } from "../components/tools/EquationSolver";
+import { MathSymbolInputDemo } from "../components/MathSymbolInputDemo";
+
+interface Tool {
+  id: string;
+  title: string;
+  description: string;
+  icon: React.ComponentType<{ className?: string }>;
+  category: string;
+  component: React.ComponentType;
+  preview: string;
+}
 
 export function ToolsPage() {
-  const tools = [
+  const [selectedTool, setSelectedTool] = useState<Tool | null>(null);
+
+  const tools: Tool[] = [
     {
       id: "calculator",
       title: "Advanced Calculator",
@@ -11,7 +44,9 @@ export function ToolsPage() {
         "Perform complex mathematical calculations with step-by-step solutions",
       icon: Calculator,
       category: "computation",
-      comingSoon: true,
+      component: CalculatorTool,
+      preview:
+        "Scientific calculator with advanced functions, memory operations, and expression evaluation.",
     },
     {
       id: "graphing",
@@ -20,16 +55,19 @@ export function ToolsPage() {
         "Visualize mathematical functions and explore their properties",
       icon: TrendingUp,
       category: "visualization",
-      comingSoon: true,
+      component: GraphPlotter,
+      preview:
+        "Interactive graph plotter supporting polynomials, trigonometric, and logarithmic functions.",
     },
     {
-      id: "matrix",
-      title: "Matrix Calculator",
-      description:
-        "Work with matrices, solve systems of equations, and perform linear algebra operations",
-      icon: Grid3x3,
-      category: "linear-algebra",
-      comingSoon: true,
+      id: "converter",
+      title: "Unit Converter",
+      description: "Convert between different units of measurement",
+      icon: RotateCcw,
+      category: "conversion",
+      component: UnitConverter,
+      preview:
+        "Convert length, area, volume, mass, temperature, and angle units with precision.",
     },
     {
       id: "solver",
@@ -38,7 +76,9 @@ export function ToolsPage() {
         "Solve algebraic equations, derivatives, and integrals symbolically",
       icon: Zap,
       category: "symbolic",
-      comingSoon: true,
+      component: EquationSolver,
+      preview:
+        "Solve equations, find derivatives, simplify expressions with step-by-step solutions.",
     },
   ];
 
@@ -48,7 +88,7 @@ export function ToolsPage() {
         return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
       case "visualization":
         return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
-      case "linear-algebra":
+      case "conversion":
         return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200";
       case "symbolic":
         return "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200";
@@ -57,8 +97,15 @@ export function ToolsPage() {
     }
   };
 
+  const handleToolClick = (tool: Tool) => {
+    setSelectedTool(tool);
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* Breadcrumb Navigation */}
+      <ToolsBreadcrumb currentTool={selectedTool?.title} />
+
       {/* Back Navigation */}
       <div className="mb-6">
         <Link
@@ -77,69 +124,148 @@ export function ToolsPage() {
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl">
           Interactive tools to help you solve problems, visualize concepts, and
-          explore mathematics.
+          explore mathematics. Click on any tool to open it in a modal
+          interface.
         </p>
       </div>
 
-      {/* Tools Grid */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
+      {/* Tools Grid - Responsive: 1 column mobile, 2 tablet, 3 desktop */}
+      <div className="grid gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         {tools.map((tool) => {
           const IconComponent = tool.icon;
+          const ToolComponent = tool.component;
 
           return (
-            <div
-              key={tool.id}
-              className="bg-card border rounded-lg p-6 hover:bg-muted/50 transition-colors"
-            >
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <IconComponent className="w-6 h-6 text-primary" />
-                </div>
-
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="font-semibold text-foreground">
-                      {tool.title}
-                    </h3>
-                    <span
-                      className={`px-2 py-1 rounded-full text-xs font-medium ${getCategoryColor(
-                        tool.category
-                      )}`}
-                    >
-                      {tool.category.replace("-", " ")}
-                    </span>
-                  </div>
-
-                  <p className="text-sm text-muted-foreground mb-4">
-                    {tool.description}
-                  </p>
-
-                  {tool.comingSoon ? (
-                    <div className="text-xs text-muted-foreground bg-muted/50 px-3 py-2 rounded-md">
-                      Coming Soon
+            <Dialog key={tool.id}>
+              <DialogTrigger asChild>
+                <div
+                  className="bg-card border rounded-lg p-6 hover:bg-muted/50 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  onClick={() => handleToolClick(tool)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      handleToolClick(tool);
+                    }
+                  }}
+                  aria-label={`Open ${tool.title} tool`}
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                      <IconComponent className="w-6 h-6 text-primary" />
                     </div>
-                  ) : (
-                    <button className="text-sm font-medium text-primary hover:text-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md">
-                      Open Tool →
-                    </button>
-                  )}
+
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-2">
+                        <h3 className="font-semibold text-foreground">
+                          {tool.title}
+                        </h3>
+                        <Badge
+                          variant="secondary"
+                          className={getCategoryColor(tool.category)}
+                        >
+                          {tool.category.replace("-", " ")}
+                        </Badge>
+                      </div>
+
+                      <p className="text-sm text-muted-foreground mb-3">
+                        {tool.description}
+                      </p>
+
+                      <p className="text-xs text-muted-foreground bg-muted/50 p-2 rounded">
+                        {tool.preview}
+                      </p>
+
+                      <div className="mt-3">
+                        <span className="text-sm font-medium text-primary hover:text-primary/80 transition-colors">
+                          Open Tool →
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </DialogTrigger>
+
+              <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle className="flex items-center gap-2">
+                    <IconComponent className="w-5 h-5 text-primary" />
+                    {tool.title}
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="mt-4">
+                  <ToolComponent />
+                </div>
+              </DialogContent>
+            </Dialog>
           );
         })}
       </div>
 
-      {/* Coming Soon Notice */}
-      <div className="mt-12 p-6 bg-muted/50 rounded-lg text-center">
-        <h2 className="text-xl font-semibold text-foreground mb-2">
-          More Tools Coming Soon
+      {/* Features Section */}
+      <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="p-6 bg-muted/50 rounded-lg">
+          <h3 className="font-semibold mb-2">Real-time Calculations</h3>
+          <p className="text-sm text-muted-foreground">
+            All tools provide instant feedback and real-time calculations as you
+            type.
+          </p>
+        </div>
+        <div className="p-6 bg-muted/50 rounded-lg">
+          <h3 className="font-semibold mb-2">Step-by-step Solutions</h3>
+          <p className="text-sm text-muted-foreground">
+            Get detailed explanations and step-by-step breakdowns for complex
+            problems.
+          </p>
+        </div>
+        <div className="p-6 bg-muted/50 rounded-lg">
+          <h3 className="font-semibold mb-2">Export & Share</h3>
+          <p className="text-sm text-muted-foreground">
+            Save your work and share results with others (coming soon).
+          </p>
+        </div>
+      </div>
+
+      {/* Usage Tips */}
+      <div className="mt-12 p-6 bg-primary/5 border border-primary/20 rounded-lg">
+        <h2 className="text-xl font-semibold text-foreground mb-4">
+          Usage Tips
         </h2>
-        <p className="text-muted-foreground">
-          We're working on adding more interactive mathematical tools to help
-          with your learning journey. These tools will be implemented in future
-          development phases.
-        </p>
+        <div className="grid gap-4 md:grid-cols-2">
+          <div>
+            <h3 className="font-medium mb-2">Keyboard Shortcuts</h3>
+            <ul className="text-sm text-muted-foreground space-y-1">
+              <li>
+                • Press{" "}
+                <kbd className="px-1 py-0.5 bg-muted rounded text-xs">
+                  Enter
+                </kbd>{" "}
+                to calculate
+              </li>
+              <li>
+                • Press{" "}
+                <kbd className="px-1 py-0.5 bg-muted rounded text-xs">Esc</kbd>{" "}
+                to clear
+              </li>
+              <li>• Use arrow keys for navigation</li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-medium mb-2">Function Syntax</h3>
+            <ul className="text-sm text-muted-foreground space-y-1">
+              <li>
+                • Use <code>^</code> for exponents: <code>x^2</code>
+              </li>
+              <li>
+                • Functions: <code>sin(x)</code>, <code>cos(x)</code>,{" "}
+                <code>log(x)</code>
+              </li>
+              <li>
+                • Constants: <code>pi</code>, <code>e</code>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   );

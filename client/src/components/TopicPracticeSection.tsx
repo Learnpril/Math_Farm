@@ -208,7 +208,7 @@ export function TopicPracticeSection({
           <div className="w-px h-8 bg-border"></div>
 
           <div className="flex items-center gap-2">
-            <Target className="w-5 h-5 text-green-500" />
+            <Target className="w-5 h-5 text-primary" />
             <div className="text-center">
               <p className="text-2xl font-bold text-foreground">
                 {progress.practiceCompleted}
@@ -256,7 +256,7 @@ export function TopicPracticeSection({
                 Problem {currentProblemIndex + 1} of {advancedProblems.length}
               </h3>
               {completedProblems.includes(currentProblem.id) && (
-                <div className="flex items-center gap-1 px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full text-sm">
+                <div className="flex items-center gap-1 px-2 py-1 bg-primary/10 text-primary rounded-full text-sm">
                   <Trophy className="w-3 h-3" />
                   Completed
                 </div>
@@ -297,9 +297,9 @@ export function TopicPracticeSection({
                   key={problem.id}
                   className={`w-2 h-2 rounded-full transition-colors cursor-pointer ${
                     completedProblems.includes(problem.id)
-                      ? "bg-green-500"
-                      : index === currentProblemIndex
                       ? "bg-primary"
+                      : index === currentProblemIndex
+                      ? "bg-primary/60"
                       : "bg-muted"
                   }`}
                   title={`Problem ${index + 1}: ${
@@ -395,8 +395,8 @@ export function TopicPracticeSection({
       {false && showProgress && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-card border border-border rounded-lg p-8 text-center space-y-4 animate-in fade-in zoom-in duration-300">
-            <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto">
-              <Trophy className="w-8 h-8 text-green-600 dark:text-green-400" />
+            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+              <Trophy className="w-8 h-8 text-primary" />
             </div>
             <h3 className="text-xl font-semibold text-foreground">
               Great Job! 🎉

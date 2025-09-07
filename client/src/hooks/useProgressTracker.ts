@@ -250,13 +250,19 @@ export function useProgressTracker() {
 
   // Get progress for a specific topic
   const getTopicProgress = useCallback((topicId: string) => {
+    if (!topicId || !userProgress || !userProgress.topicProgress) {
+      return null;
+    }
     return userProgress.topicProgress[topicId] || null;
-  }, [userProgress.topicProgress]);
+  }, [userProgress]);
 
   // Check if topic is completed
   const isTopicCompleted = useCallback((topicId: string) => {
+    if (!topicId || !userProgress || !Array.isArray(userProgress.completedTopics)) {
+      return false;
+    }
     return userProgress.completedTopics.includes(topicId);
-  }, [userProgress.completedTopics]);
+  }, [userProgress]);
 
   // Calculate completion percentage for a topic
   const getTopicCompletionPercentage = useCallback((
@@ -264,18 +270,29 @@ export function useProgressTracker() {
     totalLessonSections: number,
     totalPracticeProblems: number
   ) => {
+    if (!topicId || !userProgress || !userProgress.topicProgress) {
+      return 0;
+    }
+    
     const progress = userProgress.topicProgress[topicId];
     if (!progress) return 0;
 
+    const lessonSectionsCompleted = Array.isArray(progress.lessonSectionsCompleted) 
+      ? progress.lessonSectionsCompleted 
+      : [];
+    const practiceProblemsCompleted = Array.isArray(progress.practiceProblemsCompleted) 
+      ? progress.practiceProblemsCompleted 
+      : [];
+
     const lessonProgress = totalLessonSections > 0 
-      ? (progress.lessonSectionsCompleted.length / totalLessonSections) * 50 
+      ? (lessonSectionsCompleted.length / totalLessonSections) * 50 
       : 0;
     const practiceProgress = totalPracticeProblems > 0 
-      ? (progress.practiceProblemsCompleted.length / totalPracticeProblems) * 50 
+      ? (practiceProblemsCompleted.length / totalPracticeProblems) * 50 
       : 0;
 
     return Math.round(lessonProgress + practiceProgress);
-  }, [userProgress.topicProgress]);
+  }, [userProgress]);
 
   // Update daily streak
   const updateStreak = useCallback(() => {
