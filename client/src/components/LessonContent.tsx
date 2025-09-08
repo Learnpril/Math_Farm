@@ -60,7 +60,9 @@ function ExampleCard({ example, isExpanded, onToggle }: ExampleCardProps) {
         <p className="text-sm text-muted-foreground mb-2">
           {example.concept ? "Concept:" : "Problem:"}
         </p>
-        <p className="font-medium">{example.concept || example.problem}</p>
+        <p className="font-medium">
+          {example.concept || (example as any).problem}
+        </p>
       </div>
 
       {example.demonstration && (
@@ -81,10 +83,12 @@ function ExampleCard({ example, isExpanded, onToggle }: ExampleCardProps) {
 
       {isExpanded && (
         <div className="space-y-3 border-t pt-3">
-          {example.solution && (
+          {(example as any).solution && (
             <div>
               <p className="text-sm text-muted-foreground mb-2">Solution:</p>
-              <p className="font-semibold text-primary">{example.solution}</p>
+              <p className="font-semibold text-primary">
+                {(example as any).solution}
+              </p>
             </div>
           )}
 

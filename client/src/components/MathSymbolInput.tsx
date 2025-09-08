@@ -8,7 +8,7 @@ import {
   Pi,
   Infinity,
   Square,
-  SquareRoot,
+  // SquareRoot, // Not available in this version
   Superscript,
   Subscript,
   ChevronDown,

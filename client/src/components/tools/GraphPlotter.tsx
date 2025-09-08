@@ -6,12 +6,7 @@ import { Card } from "../ui/card";
 import { SaveShareButtons } from "./SaveShareButtons";
 import { ToolResult } from "../../lib/toolUtils";
 
-// JSXGraph types
-declare global {
-  interface Window {
-    JXG: any;
-  }
-}
+// JSXGraph types - removed to prevent conflicts
 
 export function GraphPlotter() {
   const boardRef = useRef<HTMLDivElement>(null);

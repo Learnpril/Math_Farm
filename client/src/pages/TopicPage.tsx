@@ -406,7 +406,7 @@ export function TopicPage() {
           {false && (
             <BadgeSystem
               userProgress={userProgress}
-              topicId={topic.id}
+              topicId={topic?.id || ""}
               onBadgeEarned={handleBadgeEarned}
               showBadgeModal={false}
             />

@@ -5,12 +5,7 @@ import { Label } from "./ui/label";
 import ToolDemo from "./ToolDemo";
 import { loadJSXGraph } from "../lib/lazyLoading";
 
-// JSXGraph types
-declare global {
-  interface Window {
-    JXG?: any;
-  }
-}
+// JSXGraph types - removed to prevent conflicts
 
 export interface GraphingDemoProps {
   className?: string;
