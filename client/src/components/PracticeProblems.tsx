@@ -17,6 +17,7 @@ import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import { MathExpression } from "./MathExpression";
 import { MathSymbolInput } from "./MathSymbolInput";
+import { getTopicSymbols } from "../lib/symbolSets";
 
 import {
   practiceProblemsData,
@@ -48,109 +49,9 @@ export function PracticeProblems({
   const problems = practiceProblemsData[topicId] || [];
   const [problemStates, setProblemStates] = useState<ProblemState>({});
 
-  // Get topic-specific symbols for the toolbar
-  const getTopicSymbols = (topic: string) => {
-    const symbolSets = {
-      arithmetic: [
-        { symbol: "%", name: "Percent" },
-        { symbol: "×", name: "Times" },
-        { symbol: "÷", name: "Divide" },
-        { symbol: "/", name: "Fraction" },
-        { symbol: ".", name: "Decimal" },
-      ],
-      algebra: [
-        { symbol: "²", name: "Squared" },
-        { symbol: "³", name: "Cubed" },
-        { symbol: "(", name: "Left Parenthesis" },
-        { symbol: ")", name: "Right Parenthesis" },
-        { symbol: "x", name: "Variable x" },
-        { symbol: "y", name: "Variable y" },
-        { symbol: "=", name: "Equals" },
-        { symbol: "+", name: "Plus" },
-        { symbol: "-", name: "Minus" },
-      ],
-      geometry: [
-        { symbol: "π", name: "Pi" },
-        { symbol: "°", name: "Degree" },
-        { symbol: "√", name: "Square Root" },
-        { symbol: "²", name: "Squared" },
-        { symbol: "³", name: "Cubed" },
-      ],
-      trigonometry: [
-        { symbol: "π", name: "Pi" },
-        { symbol: "/", name: "Fraction" },
-        { symbol: "°", name: "Degree" },
-        { symbol: "θ", name: "Theta" },
-        { symbol: "²", name: "Squared" },
-        { symbol: "1/2", name: "One Half" },
-        { symbol: "2π", name: "Two Pi" },
-        { symbol: "π/4", name: "Pi over 4" },
-      ],
-      calculus: [
-        { symbol: "∫", name: "Integral" },
-        { symbol: "²", name: "Squared" },
-        { symbol: "³", name: "Cubed" },
-        { symbol: "x²", name: "x squared" },
-        { symbol: "3x²", name: "3x squared" },
-        { symbol: "+ C", name: "Plus constant" },
-        { symbol: "→", name: "Approaches" },
-        { symbol: "lim", name: "Limit" },
-      ],
-      statistics: [
-        { symbol: "σ", name: "Sigma (std dev)" },
-        { symbol: "μ", name: "Mu (mean)" },
-        { symbol: "√", name: "Square Root" },
-        { symbol: "²", name: "Squared" },
-        { symbol: "∪", name: "Union" },
-        { symbol: "∩", name: "Intersection" },
-        { symbol: "≤", name: "Less/Equal" },
-        { symbol: "%", name: "Percent" },
-        { symbol: "0.68", name: "68%" },
-      ],
-      "linear-algebra": [
-        { symbol: "[", name: "Left Bracket" },
-        { symbol: "]", name: "Right Bracket" },
-        { symbol: ",", name: "Comma" },
-        { symbol: "·", name: "Dot Product" },
-        { symbol: "×", name: "Times" },
-        { symbol: "-", name: "Minus" },
-        { symbol: "True", name: "True" },
-        { symbol: "False", name: "False" },
-      ],
-      "differential-equations": [
-        { symbol: "y", name: "y variable" },
-        { symbol: "x", name: "x variable" },
-        { symbol: "C", name: "Constant" },
-        { symbol: "e^", name: "e to the power" },
-        { symbol: "²", name: "Squared" },
-        { symbol: "dy/dx", name: "dy over dx" },
-        { symbol: "d²y/dx²", name: "Second derivative" },
-        { symbol: "e^(2x)", name: "e to 2x" },
-        { symbol: "True", name: "True" },
-        { symbol: "False", name: "False" },
-      ],
-      "game-design-math": [
-        { symbol: "[", name: "Left Bracket" },
-        { symbol: "]", name: "Right Bracket" },
-        { symbol: ",", name: "Comma" },
-        { symbol: "·", name: "Dot Product" },
-        { symbol: "×", name: "Times" },
-        { symbol: "√", name: "Square Root" },
-        { symbol: "²", name: "Squared" },
-        { symbol: "°", name: "Degree" },
-        { symbol: "(", name: "Left Parenthesis" },
-        { symbol: ")", name: "Right Parenthesis" },
-      ],
-    };
-
-    return symbolSets[topic as keyof typeof symbolSets] || [];
-  };
+  import { getTopicSymbols } from "../lib/symbolSets";
 
   const topicSymbols = getTopicSymbols(topicId);
-
-  // Debug logging
-  console.log("Current topicId:", topicId);
-  console.log("Topic symbols:", topicSymbols);
 
   // Initialize problem states
   useEffect(() => {
@@ -189,30 +90,16 @@ export function PracticeProblems({
     const normalizedUser = normalizeAnswer(userAnswer);
     const normalizedCorrect = normalizeAnswer(correctAnswer);
 
-    // Debug logging for all problems
-    console.log("VALIDATION DEBUG:", {
-      problemId: problem.id,
-      userAnswer: `"${userAnswer}"`,
-      correctAnswer: `"${correctAnswer}"`,
-      normalizedUser: `"${normalizedUser}"`,
-      normalizedCorrect: `"${normalizedCorrect}"`,
-      match: normalizedUser === normalizedCorrect,
-    });
-
     // Check for multiple acceptable formats for certain problems
     let isCorrect = normalizedUser === normalizedCorrect;
 
     // Special handling for circle area problem - ALWAYS ACCEPT 25π variants
     if (problem.id === "geo-1") {
-      console.log("GEO-1 VALIDATION STARTING");
-
       // PRIORITY 1: Check session storage first (from math toolbar)
       const mathAnswer =
         typeof sessionStorage !== "undefined"
           ? sessionStorage.getItem("mathAnswer")
           : null;
-
-      console.log("Session storage check:", mathAnswer);
 
       if (
         mathAnswer &&
@@ -220,7 +107,6 @@ export function PracticeProblems({
         (mathAnswer.includes("π") || mathAnswer.includes("pi"))
       ) {
         isCorrect = true;
-        console.log("ACCEPTED via session storage:", mathAnswer);
       }
 
       // PRIORITY 2: Direct string matches

@@ -82,7 +82,6 @@ export function TopicPage() {
   // Gamification handlers
   const handleBadgeEarned = (badge: any) => {
     // Don't show success animation for badges, let BadgeSystem handle it
-    console.log("Badge earned:", badge.name);
   };
 
   const handleChallengeComplete = (success: boolean, timeSpent: number) => {

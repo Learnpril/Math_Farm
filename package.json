@@ -10,12 +10,7 @@
     "build:server": "tsc --project server/tsconfig.json",
     "build:all": "npm run build && npm run build:server",
     "start": "NODE_ENV=production node dist/index.js",
-    "preview": "vite preview",
-    "check": "tsc",
-    "db:push": "drizzle-kit push",
-    "test": "vitest",
-    "test:run": "vitest run",
-    "test:ui": "vitest --ui"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@jridgewell/trace-mapping": "^0.3.25",
