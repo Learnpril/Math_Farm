@@ -107,9 +107,9 @@
     - Create save/share functionality for tool results
     - _Requirements: 2.2_
 
-- [ ] 7. Implement LaTeX and MATLAB guide pages
+- [x] 7. Implement LaTeX and MATLAB guide pages
 
-  - [ ] 7.1 Create LaTeX guide with interactive editor
+  - [x] 7.1 Create LaTeX guide with interactive editor
 
     - Build LaTeX tutorial page with structured content sections
     - Implement live LaTeX editor with MathJax preview functionality
@@ -117,7 +117,8 @@
     - Create sections for basics, advanced symbols, and complex equations
     - _Requirements: 3.1, 3.3_
 
-  - [ ] 7.2 Develop MATLAB guide with code examples
+  - [x] 7.2 Develop MATLAB guide with code examples
+
     - Create MATLAB tutorial page with step-by-step instructions
     - Add syntax highlighting for MATLAB code snippets
     - Implement code examples with detailed explanations
