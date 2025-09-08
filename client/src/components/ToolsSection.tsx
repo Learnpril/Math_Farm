@@ -10,8 +10,16 @@ import {
 } from "./ui/card";
 import { GraphingDemo } from "./GraphingDemo";
 import { CalculatorDemo } from "./CalculatorDemo";
+import { FunctionGrapherDemo } from "./FunctionGrapherDemo";
+import { UnitConverterDemo } from "./UnitConverterDemo";
 import { ToolDemoErrorBoundary } from "./ToolDemoErrorBoundary";
-import { ArrowRight, Calculator, TrendingUp } from "lucide-react";
+import {
+  ArrowRight,
+  Calculator,
+  TrendingUp,
+  BarChart3,
+  ArrowLeftRight,
+} from "lucide-react";
 
 export interface ToolsSectionProps {
   className?: string;
@@ -43,7 +51,7 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
   className = "",
 }) => {
   const [activeDemo, setActiveDemo] = useState<
-    "graphing" | "calculator" | null
+    "graphing" | "calculator" | "function-grapher" | "unit-converter" | null
   >(null);
 
   return (
@@ -78,7 +86,7 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
         </div>
 
         {/* Tool Selection */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center">
+        <div className="flex flex-wrap gap-3 mb-8 justify-center">
           <Button
             variant={activeDemo === "calculator" ? "default" : "outline"}
             onClick={() =>
@@ -89,7 +97,7 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
             aria-label="Toggle calculator demonstration"
           >
             <Calculator className="h-4 w-4" />
-            Calculator Demo
+            Advanced Calculator
           </Button>
           <Button
             variant={activeDemo === "graphing" ? "default" : "outline"}
@@ -101,7 +109,35 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
             aria-label="Toggle graphing demonstration"
           >
             <TrendingUp className="h-4 w-4" />
-            Graphing Demo
+            Interactive Graphing
+          </Button>
+          <Button
+            variant={activeDemo === "function-grapher" ? "default" : "outline"}
+            onClick={() =>
+              setActiveDemo(
+                activeDemo === "function-grapher" ? null : "function-grapher"
+              )
+            }
+            className="flex items-center gap-2"
+            aria-pressed={activeDemo === "function-grapher"}
+            aria-label="Toggle function grapher demonstration"
+          >
+            <BarChart3 className="h-4 w-4" />
+            Function Grapher
+          </Button>
+          <Button
+            variant={activeDemo === "unit-converter" ? "default" : "outline"}
+            onClick={() =>
+              setActiveDemo(
+                activeDemo === "unit-converter" ? null : "unit-converter"
+              )
+            }
+            className="flex items-center gap-2"
+            aria-pressed={activeDemo === "unit-converter"}
+            aria-label="Toggle unit converter demonstration"
+          >
+            <ArrowLeftRight className="h-4 w-4" />
+            Unit Converter
           </Button>
         </div>
 
@@ -149,9 +185,49 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
             </div>
           )}
 
+          {/* Function Grapher Demo */}
+          {activeDemo === "function-grapher" && (
+            <div
+              className="animate-in slide-in-from-top-4 duration-300"
+              role="region"
+              aria-labelledby="function-grapher-demo-title"
+            >
+              <ToolDemoErrorBoundary
+                toolName="Function Grapher"
+                showErrorDetails={process.env.NODE_ENV === "development"}
+              >
+                <Suspense
+                  fallback={<ToolLoadingFallback title="Function Grapher" />}
+                >
+                  <FunctionGrapherDemo />
+                </Suspense>
+              </ToolDemoErrorBoundary>
+            </div>
+          )}
+
+          {/* Unit Converter Demo */}
+          {activeDemo === "unit-converter" && (
+            <div
+              className="animate-in slide-in-from-top-4 duration-300"
+              role="region"
+              aria-labelledby="unit-converter-demo-title"
+            >
+              <ToolDemoErrorBoundary
+                toolName="Unit Converter"
+                showErrorDetails={process.env.NODE_ENV === "development"}
+              >
+                <Suspense
+                  fallback={<ToolLoadingFallback title="Unit Converter" />}
+                >
+                  <UnitConverterDemo />
+                </Suspense>
+              </ToolDemoErrorBoundary>
+            </div>
+          )}
+
           {/* Default state - show overview cards */}
           {!activeDemo && (
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* Calculator Overview */}
               <Card className="cursor-pointer hover:shadow-lg transition-shadow">
                 <CardHeader>
@@ -206,6 +282,64 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
                     aria-label="Try graphing demonstration"
                   >
                     Try Graphing
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Function Grapher Overview */}
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <BarChart3 className="h-5 w-5 text-primary" />
+                    Function Grapher
+                  </CardTitle>
+                  <CardDescription>
+                    Plot and visualize multiple mathematical functions
+                    simultaneously with customizable viewing ranges.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2 text-sm text-muted-foreground mb-4">
+                    <p>• Plot multiple functions at once</p>
+                    <p>• Customizable X/Y axis ranges</p>
+                    <p>• Function visibility controls</p>
+                    <p>• Built-in function presets</p>
+                  </div>
+                  <Button
+                    onClick={() => setActiveDemo("function-grapher")}
+                    className="w-full"
+                    aria-label="Try function grapher demonstration"
+                  >
+                    Try Function Grapher
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Unit Converter Overview */}
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <ArrowLeftRight className="h-5 w-5 text-primary" />
+                    Unit Converter
+                  </CardTitle>
+                  <CardDescription>
+                    Convert between different units of measurement including
+                    length, weight, temperature, and more.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2 text-sm text-muted-foreground mb-4">
+                    <p>• Length, weight, temperature units</p>
+                    <p>• Real-time conversion results</p>
+                    <p>• Quick conversion presets</p>
+                    <p>• Precise calculation accuracy</p>
+                  </div>
+                  <Button
+                    onClick={() => setActiveDemo("unit-converter")}
+                    className="w-full"
+                    aria-label="Try unit converter demonstration"
+                  >
+                    Try Unit Converter
                   </Button>
                 </CardContent>
               </Card>

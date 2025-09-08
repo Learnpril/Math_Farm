@@ -7,11 +7,13 @@ import { Card } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { SaveShareButtons } from "./SaveShareButtons";
 import { ToolResult } from "../../lib/toolUtils";
+import { MathExpression } from "../MathExpression";
 
 interface SolutionStep {
   step: string;
   explanation: string;
   result: string;
+  latex?: string;
 }
 
 export function EquationSolver() {
@@ -21,9 +23,45 @@ export function EquationSolver() {
     "solve" | "derivative" | "simplify" | "evaluate"
   >("solve");
   const [result, setResult] = useState<string>("");
+  const [resultLatex, setResultLatex] = useState<string>("");
   const [steps, setSteps] = useState<SolutionStep[]>([]);
   const [error, setError] = useState<string>("");
   const [lastSolution, setLastSolution] = useState<ToolResult | null>(null);
+
+  // Convert mathematical expressions to LaTeX format
+  const toLatex = (expression: string): string => {
+    let latex = expression;
+
+    // Replace common mathematical notation
+    latex = latex.replace(/\*\*/g, "^"); // ** to ^
+    latex = latex.replace(/\*/g, " \\cdot "); // * to \cdot
+    latex = latex.replace(/\^(\w+)/g, "^{$1}"); // x^2 to x^{2}
+    latex = latex.replace(/\^(\d+)/g, "^{$1}"); // x^2 to x^{2}
+    latex = latex.replace(/sqrt\(([^)]+)\)/g, "\\sqrt{$1}"); // sqrt() to \sqrt{}
+    latex = latex.replace(/sin\(([^)]+)\)/g, "\\sin($1)"); // sin() to \sin()
+    latex = latex.replace(/cos\(([^)]+)\)/g, "\\cos($1)"); // cos() to \cos()
+    latex = latex.replace(/tan\(([^)]+)\)/g, "\\tan($1)"); // tan() to \tan()
+    latex = latex.replace(/log\(([^)]+)\)/g, "\\log($1)"); // log() to \log()
+    latex = latex.replace(/ln\(([^)]+)\)/g, "\\ln($1)"); // ln() to \ln()
+    latex = latex.replace(/exp\(([^)]+)\)/g, "e^{$1}"); // exp() to e^{}
+    latex = latex.replace(/pi/g, "\\pi"); // pi to \pi
+    latex = latex.replace(/infinity/g, "\\infty"); // infinity to \infty
+
+    // Handle fractions (simple cases)
+    latex = latex.replace(/(\w+)\/(\w+)/g, "\\frac{$1}{$2}");
+    latex = latex.replace(/\(([^)]+)\)\/\(([^)]+)\)/g, "\\frac{$1}{$2}");
+
+    // Handle subscripts for roots like x₁, x₂
+    latex = latex.replace(/x₁/g, "x_1");
+    latex = latex.replace(/x₂/g, "x_2");
+    latex = latex.replace(/x₃/g, "x_3");
+    latex = latex.replace(/x₄/g, "x_4");
+
+    // Handle discriminant symbol
+    latex = latex.replace(/Δ/g, "\\Delta");
+
+    return latex;
+  };
 
   const solveEquation = () => {
     setError("");
@@ -63,6 +101,7 @@ export function EquationSolver() {
               step: "1",
               explanation: `Taking the derivative of ${equation} with respect to ${variable}`,
               result: solution,
+              latex: toLatex(solution),
             });
           } catch (err) {
             throw new Error("Could not compute derivative");
@@ -78,6 +117,7 @@ export function EquationSolver() {
               step: "1",
               explanation: `Simplifying ${equation}`,
               result: solution,
+              latex: toLatex(solution),
             });
           } catch (err) {
             throw new Error("Could not simplify expression");
@@ -97,6 +137,7 @@ export function EquationSolver() {
               step: "1",
               explanation: `Evaluating ${equation} with ${variable} = ${valueToUse}`,
               result: solution.toString(),
+              latex: solution.toString(),
             });
           } catch (err) {
             throw new Error("Could not evaluate expression");
@@ -107,7 +148,9 @@ export function EquationSolver() {
       setSteps(solutionSteps);
       if (solution !== undefined) {
         const resultStr = solution.toString();
+        const resultLatexStr = toLatex(resultStr);
         setResult(resultStr);
+        setResultLatex(resultLatexStr);
 
         // Create tool result for saving/sharing
         const toolResult: ToolResult = {
@@ -120,6 +163,7 @@ export function EquationSolver() {
           },
           output: {
             result: resultStr,
+            latex: resultLatexStr,
           },
           timestamp: new Date(),
           steps: solutionSteps,
@@ -171,6 +215,7 @@ export function EquationSolver() {
         step: "1",
         explanation: "Identify coefficients in ax² + bx + c = 0",
         result: `a = ${a}, b = ${b}, c = ${c}`,
+        latex: `a = ${a}, b = ${b}, c = ${c}`,
       });
 
       const discriminant = b * b - 4 * a * c;
@@ -179,6 +224,7 @@ export function EquationSolver() {
         step: "2",
         explanation: "Calculate discriminant: b² - 4ac",
         result: `Δ = ${b}² - 4(${a})(${c}) = ${discriminant}`,
+        latex: `\\Delta = ${b}^2 - 4(${a})(${c}) = ${discriminant}`,
       });
 
       if (discriminant < 0) {
@@ -186,8 +232,10 @@ export function EquationSolver() {
           step: "3",
           explanation: "Since discriminant < 0, there are no real roots",
           result: "No real solutions",
+          latex: "\\text{No real solutions}",
         });
         setResult("No real solutions");
+        setResultLatex("\\text{No real solutions}");
       } else if (discriminant === 0) {
         const root = -b / (2 * a);
         steps.push({
@@ -195,8 +243,10 @@ export function EquationSolver() {
           explanation:
             "Since discriminant = 0, there is one repeated root: x = -b/(2a)",
           result: `x = ${root}`,
+          latex: `x = ${root}`,
         });
         setResult(root.toString());
+        setResultLatex(root.toString());
       } else {
         const root1 = (-b + Math.sqrt(discriminant)) / (2 * a);
         const root2 = (-b - Math.sqrt(discriminant)) / (2 * a);
@@ -205,8 +255,11 @@ export function EquationSolver() {
           step: "3",
           explanation: "Apply quadratic formula: x = (-b ± √Δ)/(2a)",
           result: `x₁ = ${root1.toFixed(4)}, x₂ = ${root2.toFixed(4)}`,
+          latex: `x_1 = ${root1.toFixed(4)}, x_2 = ${root2.toFixed(4)}`,
         });
-        setResult(`x₁ = ${root1.toFixed(4)}, x₂ = ${root2.toFixed(4)}`);
+        const resultStr = `x₁ = ${root1.toFixed(4)}, x₂ = ${root2.toFixed(4)}`;
+        setResult(resultStr);
+        setResultLatex(`x_1 = ${root1.toFixed(4)}, x_2 = ${root2.toFixed(4)}`);
       }
     } catch (err) {
       steps.push({
@@ -346,8 +399,25 @@ export function EquationSolver() {
       {result && (
         <Card className="p-6">
           <h3 className="font-semibold mb-3">Result</h3>
-          <div className="p-4 bg-muted rounded-lg">
-            <code className="text-lg">{result}</code>
+
+          {/* LaTeX Rendered Result */}
+          <div className="mb-4">
+            <Label className="text-sm font-medium text-muted-foreground mb-2 block">
+              Formatted Result
+            </Label>
+            <div className="p-4 bg-background border rounded-lg text-center">
+              <MathExpression expression={resultLatex || result} />
+            </div>
+          </div>
+
+          {/* Plain Text Result */}
+          <div>
+            <Label className="text-sm font-medium text-muted-foreground mb-2 block">
+              Plain Text
+            </Label>
+            <div className="p-4 bg-muted rounded-lg">
+              <code className="text-lg">{result}</code>
+            </div>
           </div>
         </Card>
       )}
@@ -356,18 +426,27 @@ export function EquationSolver() {
       {steps.length > 0 && (
         <Card className="p-6">
           <h3 className="font-semibold mb-3">Step-by-step Solution</h3>
-          <div className="space-y-3">
+          <div className="space-y-4">
             {steps.map((step, index) => (
               <div key={index} className="border-l-2 border-primary pl-4">
                 <div className="flex items-start gap-2">
                   <Badge variant="outline" className="text-xs">
                     Step {step.step}
                   </Badge>
-                  <div className="flex-1">
-                    <p className="text-sm text-muted-foreground mb-1">
+                  <div className="flex-1 space-y-2">
+                    <p className="text-sm text-muted-foreground">
                       {step.explanation}
                     </p>
-                    <code className="text-sm bg-muted px-2 py-1 rounded">
+
+                    {/* LaTeX Rendered Step */}
+                    {step.latex && (
+                      <div className="p-3 bg-background border rounded-lg text-center">
+                        <MathExpression expression={step.latex} />
+                      </div>
+                    )}
+
+                    {/* Plain Text Step */}
+                    <code className="text-sm bg-muted px-2 py-1 rounded block">
                       {step.result}
                     </code>
                   </div>
