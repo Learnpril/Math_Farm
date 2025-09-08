@@ -74,9 +74,9 @@ export function LaTeXGuidePage() {
       category: "symbols",
       title: "Greek Letters (Uppercase)",
       latex:
-        "\\alpha, \\beta, \\Gamma, \\Delta, \\Theta, \\Lambda, \\Pi, \\Sigma, \\Phi, \\Omega",
+        "A, B, \\Gamma, \\Delta, \\Theta, \\Lambda, \\Pi, \\Sigma, \\Phi, \\Omega",
       description:
-        "Greek letters (α, β are lowercase; Γ, Δ, etc. are uppercase)",
+        "Uppercase Greek letters (A, B used for Alpha/Beta; \\Alpha, \\Beta need special packages)",
       tags: ["greek", "letters", "uppercase"],
     },
     {

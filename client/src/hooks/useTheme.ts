@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-export type Theme = 'light' | 'dark';
+export type Theme = "light" | "dark";
 
 interface UseThemeReturn {
   theme: Theme;
@@ -16,15 +16,17 @@ interface UseThemeReturn {
 export function useTheme(): UseThemeReturn {
   // Get system theme preference
   const getSystemTheme = (): Theme => {
-    if (typeof window === 'undefined') return 'light';
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    if (typeof window === "undefined") return "light";
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
   };
 
-  // Get stored theme or fall back to system preference
+  // Get stored theme or fall back to dark mode (default for Math Farm)
   const getStoredTheme = (): Theme => {
-    if (typeof window === 'undefined') return 'light';
-    const stored = localStorage.getItem('theme') as Theme | null;
-    return stored || getSystemTheme();
+    if (typeof window === "undefined") return "dark";
+    const stored = localStorage.getItem("theme") as Theme | null;
+    return stored || "dark";
   };
 
   const [theme, setThemeState] = useState<Theme>(getStoredTheme);
@@ -33,52 +35,52 @@ export function useTheme(): UseThemeReturn {
   // Apply theme to document
   const applyTheme = (newTheme: Theme) => {
     const root = document.documentElement;
-    root.classList.remove('light', 'dark');
+    root.classList.remove("light", "dark");
     root.classList.add(newTheme);
-    
+
     // Update meta theme-color for mobile browsers
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');
     if (metaThemeColor) {
-      const themeColor = newTheme === 'dark' 
-        ? 'hsl(255, 25%, 8%)' 
-        : 'hsl(255, 15%, 98%)';
-      metaThemeColor.setAttribute('content', themeColor);
+      const themeColor =
+        newTheme === "dark" ? "hsl(255, 25%, 8%)" : "hsl(255, 15%, 98%)";
+      metaThemeColor.setAttribute("content", themeColor);
     }
   };
 
   // Set theme and persist to localStorage
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
-    localStorage.setItem('theme', newTheme);
+    localStorage.setItem("theme", newTheme);
     applyTheme(newTheme);
   };
 
   // Toggle between light and dark themes
   const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
+    const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
   };
 
   // Listen for system theme changes
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
     const handleSystemThemeChange = (e: MediaQueryListEvent) => {
-      const newSystemTheme = e.matches ? 'dark' : 'light';
+      const newSystemTheme = e.matches ? "dark" : "light";
       setSystemTheme(newSystemTheme);
-      
-      // If no theme is stored, update to match system
-      const storedTheme = localStorage.getItem('theme');
+
+      // If no theme is stored, keep dark mode as default (don't auto-switch)
+      const storedTheme = localStorage.getItem("theme");
       if (!storedTheme) {
-        setThemeState(newSystemTheme);
-        applyTheme(newSystemTheme);
+        // Keep dark mode as default, don't auto-switch with system
+        setThemeState("dark");
+        applyTheme("dark");
       }
     };
 
-    mediaQuery.addEventListener('change', handleSystemThemeChange);
-    
+    mediaQuery.addEventListener("change", handleSystemThemeChange);
+
     return () => {
-      mediaQuery.removeEventListener('change', handleSystemThemeChange);
+      mediaQuery.removeEventListener("change", handleSystemThemeChange);
     };
   }, []);
 
@@ -89,12 +91,11 @@ export function useTheme(): UseThemeReturn {
 
   // Initialize theme on mount
   useEffect(() => {
-    const storedTheme = localStorage.getItem('theme') as Theme | null;
+    const storedTheme = localStorage.getItem("theme") as Theme | null;
     if (!storedTheme) {
-      // No stored preference, use system theme
-      const currentSystemTheme = getSystemTheme();
-      setThemeState(currentSystemTheme);
-      applyTheme(currentSystemTheme);
+      // No stored preference, default to dark mode for Math Farm
+      setThemeState("dark");
+      applyTheme("dark");
     } else {
       // Use stored preference
       applyTheme(storedTheme);
