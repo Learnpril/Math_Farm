@@ -5,20 +5,38 @@ import { Router } from "wouter";
 import { ToolsSection } from "../ToolsSection";
 
 // Mock the demo components to avoid loading external libraries in tests
-vi.mock("../GraphingDemo", () => ({
-  GraphingDemo: ({ className }: { className?: string }) => (
-    <div data-testid="graphing-demo" className={className}>
-      <h3>Interactive Graphing Tool</h3>
-      <p>Mocked graphing demo component</p>
-    </div>
-  ),
-}));
-
 vi.mock("../CalculatorDemo", () => ({
   CalculatorDemo: ({ className }: { className?: string }) => (
     <div data-testid="calculator-demo" className={className}>
       <h3>Advanced Calculator</h3>
       <p>Mocked calculator demo component</p>
+    </div>
+  ),
+}));
+
+vi.mock("../FunctionGrapherDemo", () => ({
+  FunctionGrapherDemo: ({ className }: { className?: string }) => (
+    <div data-testid="function-grapher-demo" className={className}>
+      <h3>Function Grapher</h3>
+      <p>Mocked function grapher demo component</p>
+    </div>
+  ),
+}));
+
+vi.mock("../UnitConverterDemo", () => ({
+  UnitConverterDemo: ({ className }: { className?: string }) => (
+    <div data-testid="unit-converter-demo" className={className}>
+      <h3>Unit Converter</h3>
+      <p>Mocked unit converter demo component</p>
+    </div>
+  ),
+}));
+
+vi.mock("../EquationSolverDemo", () => ({
+  EquationSolverDemo: ({ className }: { className?: string }) => (
+    <div data-testid="equation-solver-demo" className={className}>
+      <h3>Equation Solver</h3>
+      <p>Mocked equation solver demo component</p>
     </div>
   ),
 }));
@@ -93,7 +111,19 @@ describe("ToolsSection", () => {
         screen.getByRole("button", { name: /toggle calculator demonstration/i })
       ).toBeInTheDocument();
       expect(
-        screen.getByRole("button", { name: /toggle graphing demonstration/i })
+        screen.getByRole("button", {
+          name: /toggle function grapher demonstration/i,
+        })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", {
+          name: /toggle unit converter demonstration/i,
+        })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", {
+          name: /toggle equation solver demonstration/i,
+        })
       ).toBeInTheDocument();
     });
 
@@ -105,12 +135,20 @@ describe("ToolsSection", () => {
       );
 
       expect(screen.getByText("Advanced Calculator")).toBeInTheDocument();
-      expect(screen.getByText("Interactive Graphing")).toBeInTheDocument();
+      expect(screen.getByText("Function Grapher")).toBeInTheDocument();
+      expect(screen.getByText("Unit Converter")).toBeInTheDocument();
+      expect(screen.getByText("Equation Solver")).toBeInTheDocument();
       expect(
         screen.getByRole("button", { name: /try calculator/i })
       ).toBeInTheDocument();
       expect(
-        screen.getByRole("button", { name: /try graphing/i })
+        screen.getByRole("button", { name: /try function grapher/i })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /try unit converter/i })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /try equation solver/i })
       ).toBeInTheDocument();
     });
   });
@@ -136,24 +174,66 @@ describe("ToolsSection", () => {
       expect(screen.queryByText("Try Calculator")).not.toBeInTheDocument();
     });
 
-    it("shows graphing demo when graphing button is clicked", async () => {
+    it("shows function grapher demo when function grapher button is clicked", async () => {
       render(
         <TestWrapper>
           <ToolsSection />
         </TestWrapper>
       );
 
-      const graphingButton = screen.getByRole("button", {
-        name: /toggle graphing demonstration/i,
+      const functionGrapherButton = screen.getByRole("button", {
+        name: /toggle function grapher demonstration/i,
       });
-      fireEvent.click(graphingButton);
+      fireEvent.click(functionGrapherButton);
 
       await waitFor(() => {
-        expect(screen.getByTestId("graphing-demo")).toBeInTheDocument();
+        expect(screen.getByTestId("function-grapher-demo")).toBeInTheDocument();
       });
 
       // Overview cards should be hidden
-      expect(screen.queryByText("Try Graphing")).not.toBeInTheDocument();
+      expect(
+        screen.queryByText("Try Function Grapher")
+      ).not.toBeInTheDocument();
+    });
+
+    it("shows unit converter demo when unit converter button is clicked", async () => {
+      render(
+        <TestWrapper>
+          <ToolsSection />
+        </TestWrapper>
+      );
+
+      const unitConverterButton = screen.getByRole("button", {
+        name: /toggle unit converter demonstration/i,
+      });
+      fireEvent.click(unitConverterButton);
+
+      await waitFor(() => {
+        expect(screen.getByTestId("unit-converter-demo")).toBeInTheDocument();
+      });
+
+      // Overview cards should be hidden
+      expect(screen.queryByText("Try Unit Converter")).not.toBeInTheDocument();
+    });
+
+    it("shows equation solver demo when equation solver button is clicked", async () => {
+      render(
+        <TestWrapper>
+          <ToolsSection />
+        </TestWrapper>
+      );
+
+      const equationSolverButton = screen.getByRole("button", {
+        name: /toggle equation solver demonstration/i,
+      });
+      fireEvent.click(equationSolverButton);
+
+      await waitFor(() => {
+        expect(screen.getByTestId("equation-solver-demo")).toBeInTheDocument();
+      });
+
+      // Overview cards should be hidden
+      expect(screen.queryByText("Try Equation Solver")).not.toBeInTheDocument();
     });
 
     it("toggles demo visibility when clicking the same button twice", async () => {
@@ -191,8 +271,8 @@ describe("ToolsSection", () => {
       const calculatorButton = screen.getByRole("button", {
         name: /toggle calculator demonstration/i,
       });
-      const graphingButton = screen.getByRole("button", {
-        name: /toggle graphing demonstration/i,
+      const functionGrapherButton = screen.getByRole("button", {
+        name: /toggle function grapher demonstration/i,
       });
 
       // Show calculator demo
@@ -201,10 +281,10 @@ describe("ToolsSection", () => {
         expect(screen.getByTestId("calculator-demo")).toBeInTheDocument();
       });
 
-      // Switch to graphing demo
-      fireEvent.click(graphingButton);
+      // Switch to function grapher demo
+      fireEvent.click(functionGrapherButton);
       await waitFor(() => {
-        expect(screen.getByTestId("graphing-demo")).toBeInTheDocument();
+        expect(screen.getByTestId("function-grapher-demo")).toBeInTheDocument();
         expect(screen.queryByTestId("calculator-demo")).not.toBeInTheDocument();
       });
     });
@@ -226,20 +306,54 @@ describe("ToolsSection", () => {
       });
     });
 
-    it("shows graphing demo when 'Try Graphing' button is clicked", async () => {
+    it("shows function grapher demo when 'Try Function Grapher' button is clicked", async () => {
       render(
         <TestWrapper>
           <ToolsSection />
         </TestWrapper>
       );
 
-      const tryGraphingButton = screen.getByRole("button", {
-        name: /try graphing/i,
+      const tryFunctionGrapherButton = screen.getByRole("button", {
+        name: /try function grapher/i,
       });
-      fireEvent.click(tryGraphingButton);
+      fireEvent.click(tryFunctionGrapherButton);
 
       await waitFor(() => {
-        expect(screen.getByTestId("graphing-demo")).toBeInTheDocument();
+        expect(screen.getByTestId("function-grapher-demo")).toBeInTheDocument();
+      });
+    });
+
+    it("shows unit converter demo when 'Try Unit Converter' button is clicked", async () => {
+      render(
+        <TestWrapper>
+          <ToolsSection />
+        </TestWrapper>
+      );
+
+      const tryUnitConverterButton = screen.getByRole("button", {
+        name: /try unit converter/i,
+      });
+      fireEvent.click(tryUnitConverterButton);
+
+      await waitFor(() => {
+        expect(screen.getByTestId("unit-converter-demo")).toBeInTheDocument();
+      });
+    });
+
+    it("shows equation solver demo when 'Try Equation Solver' button is clicked", async () => {
+      render(
+        <TestWrapper>
+          <ToolsSection />
+        </TestWrapper>
+      );
+
+      const tryEquationSolverButton = screen.getByRole("button", {
+        name: /try equation solver/i,
+      });
+      fireEvent.click(tryEquationSolverButton);
+
+      await waitFor(() => {
+        expect(screen.getByTestId("equation-solver-demo")).toBeInTheDocument();
       });
     });
   });
@@ -262,12 +376,12 @@ describe("ToolsSection", () => {
       const calculatorButton = screen.getByRole("button", {
         name: /toggle calculator demonstration/i,
       });
-      const graphingButton = screen.getByRole("button", {
-        name: /toggle graphing demonstration/i,
+      const functionGrapherButton = screen.getByRole("button", {
+        name: /toggle function grapher demonstration/i,
       });
 
       expect(calculatorButton).toHaveAttribute("aria-pressed", "false");
-      expect(graphingButton).toHaveAttribute("aria-pressed", "false");
+      expect(functionGrapherButton).toHaveAttribute("aria-pressed", "false");
     });
 
     it("updates ARIA pressed state when buttons are clicked", async () => {
@@ -418,15 +532,31 @@ describe("ToolsSection", () => {
       expect(screen.getByText(/real-time calculation/i)).toBeInTheDocument();
       expect(screen.getByText(/calculation history/i)).toBeInTheDocument();
 
-      // Graphing features
+      // Function Grapher features
       expect(
-        screen.getByText(/plot any mathematical function/i)
+        screen.getByText(/plot multiple functions at once/i)
       ).toBeInTheDocument();
-      expect(screen.getByText(/interactive zoom and pan/i)).toBeInTheDocument();
       expect(
-        screen.getByText(/multiple function support/i)
+        screen.getByText(/customizable x\/y axis ranges/i)
       ).toBeInTheDocument();
-      expect(screen.getByText(/touch-friendly mobile/i)).toBeInTheDocument();
+      expect(
+        screen.getByText(/function visibility controls/i)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(/built-in function presets/i)
+      ).toBeInTheDocument();
+
+      // Unit Converter features
+      expect(
+        screen.getByText(/length, weight, temperature units/i)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(/real-time conversion results/i)
+      ).toBeInTheDocument();
+      expect(screen.getByText(/quick conversion presets/i)).toBeInTheDocument();
+      expect(
+        screen.getByText(/precise calculation accuracy/i)
+      ).toBeInTheDocument();
     });
 
     it("displays call-to-action section", () => {

@@ -8,17 +8,18 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { GraphingDemo } from "./GraphingDemo";
 import { CalculatorDemo } from "./CalculatorDemo";
 import { FunctionGrapherDemo } from "./FunctionGrapherDemo";
 import { UnitConverterDemo } from "./UnitConverterDemo";
+import { EquationSolverDemo } from "./EquationSolverDemo";
 import { ToolDemoErrorBoundary } from "./ToolDemoErrorBoundary";
+import { ToolErrorBoundary } from "./ToolErrorBoundary";
 import {
   ArrowRight,
   Calculator,
-  TrendingUp,
   BarChart3,
   ArrowLeftRight,
+  Zap,
 } from "lucide-react";
 
 export interface ToolsSectionProps {
@@ -51,7 +52,11 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
   className = "",
 }) => {
   const [activeDemo, setActiveDemo] = useState<
-    "graphing" | "calculator" | "function-grapher" | "unit-converter" | null
+    | "calculator"
+    | "function-grapher"
+    | "unit-converter"
+    | "equation-solver"
+    | null
   >(null);
 
   return (
@@ -99,18 +104,7 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
             <Calculator className="h-4 w-4" />
             Advanced Calculator
           </Button>
-          <Button
-            variant={activeDemo === "graphing" ? "default" : "outline"}
-            onClick={() =>
-              setActiveDemo(activeDemo === "graphing" ? null : "graphing")
-            }
-            className="flex items-center gap-2"
-            aria-pressed={activeDemo === "graphing"}
-            aria-label="Toggle graphing demonstration"
-          >
-            <TrendingUp className="h-4 w-4" />
-            Interactive Graphing
-          </Button>
+
           <Button
             variant={activeDemo === "function-grapher" ? "default" : "outline"}
             onClick={() =>
@@ -139,6 +133,21 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
             <ArrowLeftRight className="h-4 w-4" />
             Unit Converter
           </Button>
+
+          <Button
+            variant={activeDemo === "equation-solver" ? "default" : "outline"}
+            onClick={() =>
+              setActiveDemo(
+                activeDemo === "equation-solver" ? null : "equation-solver"
+              )
+            }
+            className="flex items-center gap-2"
+            aria-pressed={activeDemo === "equation-solver"}
+            aria-label="Toggle equation solver demonstration"
+          >
+            <Zap className="h-4 w-4" />
+            Equation Solver
+          </Button>
         </div>
 
         {/* Tool Demonstrations */}
@@ -157,29 +166,9 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
                 <Suspense
                   fallback={<ToolLoadingFallback title="Advanced Calculator" />}
                 >
-                  <CalculatorDemo />
-                </Suspense>
-              </ToolDemoErrorBoundary>
-            </div>
-          )}
-
-          {/* Graphing Demo */}
-          {activeDemo === "graphing" && (
-            <div
-              className="animate-in slide-in-from-top-4 duration-300"
-              role="region"
-              aria-labelledby="graphing-demo-title"
-            >
-              <ToolDemoErrorBoundary
-                toolName="Interactive Graphing Tool"
-                showErrorDetails={process.env.NODE_ENV === "development"}
-              >
-                <Suspense
-                  fallback={
-                    <ToolLoadingFallback title="Interactive Graphing Tool" />
-                  }
-                >
-                  <GraphingDemo />
+                  <ToolErrorBoundary toolName="Advanced Calculator">
+                    <CalculatorDemo />
+                  </ToolErrorBoundary>
                 </Suspense>
               </ToolDemoErrorBoundary>
             </div>
@@ -199,7 +188,9 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
                 <Suspense
                   fallback={<ToolLoadingFallback title="Function Grapher" />}
                 >
-                  <FunctionGrapherDemo />
+                  <ToolErrorBoundary toolName="Function Grapher">
+                    <FunctionGrapherDemo />
+                  </ToolErrorBoundary>
                 </Suspense>
               </ToolDemoErrorBoundary>
             </div>
@@ -219,7 +210,31 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
                 <Suspense
                   fallback={<ToolLoadingFallback title="Unit Converter" />}
                 >
-                  <UnitConverterDemo />
+                  <ToolErrorBoundary toolName="Unit Converter">
+                    <UnitConverterDemo />
+                  </ToolErrorBoundary>
+                </Suspense>
+              </ToolDemoErrorBoundary>
+            </div>
+          )}
+
+          {/* Equation Solver Demo */}
+          {activeDemo === "equation-solver" && (
+            <div
+              className="animate-in slide-in-from-top-4 duration-300"
+              role="region"
+              aria-labelledby="equation-solver-demo-title"
+            >
+              <ToolDemoErrorBoundary
+                toolName="Equation Solver"
+                showErrorDetails={process.env.NODE_ENV === "development"}
+              >
+                <Suspense
+                  fallback={<ToolLoadingFallback title="Equation Solver" />}
+                >
+                  <ToolErrorBoundary toolName="Equation Solver">
+                    <EquationSolverDemo />
+                  </ToolErrorBoundary>
                 </Suspense>
               </ToolDemoErrorBoundary>
             </div>
@@ -229,7 +244,7 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
           {!activeDemo && (
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* Calculator Overview */}
-              <Card className="cursor-pointer hover:shadow-lg transition-shadow">
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow flex flex-col h-full">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Calculator className="h-5 w-5 text-primary" />
@@ -240,8 +255,8 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
                     functions, constants, and advanced operations.
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-2 text-sm text-muted-foreground mb-4">
+                <CardContent className="flex-1 flex flex-col">
+                  <div className="space-y-2 text-sm text-muted-foreground mb-4 flex-1">
                     <p>• Scientific functions (sin, cos, log, sqrt)</p>
                     <p>• Mathematical constants (π, e, φ)</p>
                     <p>• Real-time calculation results</p>
@@ -249,7 +264,7 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
                   </div>
                   <Button
                     onClick={() => setActiveDemo("calculator")}
-                    className="w-full"
+                    className="w-full mt-auto"
                     aria-label="Try calculator demonstration"
                   >
                     Try Calculator
@@ -257,37 +272,8 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
                 </CardContent>
               </Card>
 
-              {/* Graphing Overview */}
-              <Card className="cursor-pointer hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <TrendingUp className="h-5 w-5 text-primary" />
-                    Interactive Graphing
-                  </CardTitle>
-                  <CardDescription>
-                    Visualize mathematical functions with interactive graphs
-                    that you can zoom, pan, and explore in real-time.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2 text-sm text-muted-foreground mb-4">
-                    <p>• Plot any mathematical function</p>
-                    <p>• Interactive zoom and pan controls</p>
-                    <p>• Multiple function support</p>
-                    <p>• Touch-friendly mobile interface</p>
-                  </div>
-                  <Button
-                    onClick={() => setActiveDemo("graphing")}
-                    className="w-full"
-                    aria-label="Try graphing demonstration"
-                  >
-                    Try Graphing
-                  </Button>
-                </CardContent>
-              </Card>
-
               {/* Function Grapher Overview */}
-              <Card className="cursor-pointer hover:shadow-lg transition-shadow">
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow flex flex-col h-full">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <BarChart3 className="h-5 w-5 text-primary" />
@@ -298,8 +284,8 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
                     simultaneously with customizable viewing ranges.
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-2 text-sm text-muted-foreground mb-4">
+                <CardContent className="flex-1 flex flex-col">
+                  <div className="space-y-2 text-sm text-muted-foreground mb-4 flex-1">
                     <p>• Plot multiple functions at once</p>
                     <p>• Customizable X/Y axis ranges</p>
                     <p>• Function visibility controls</p>
@@ -307,7 +293,7 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
                   </div>
                   <Button
                     onClick={() => setActiveDemo("function-grapher")}
-                    className="w-full"
+                    className="w-full mt-auto"
                     aria-label="Try function grapher demonstration"
                   >
                     Try Function Grapher
@@ -316,7 +302,7 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
               </Card>
 
               {/* Unit Converter Overview */}
-              <Card className="cursor-pointer hover:shadow-lg transition-shadow">
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow flex flex-col h-full">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <ArrowLeftRight className="h-5 w-5 text-primary" />
@@ -327,8 +313,8 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
                     length, weight, temperature, and more.
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-2 text-sm text-muted-foreground mb-4">
+                <CardContent className="flex-1 flex flex-col">
+                  <div className="space-y-2 text-sm text-muted-foreground mb-4 flex-1">
                     <p>• Length, weight, temperature units</p>
                     <p>• Real-time conversion results</p>
                     <p>• Quick conversion presets</p>
@@ -336,10 +322,39 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
                   </div>
                   <Button
                     onClick={() => setActiveDemo("unit-converter")}
-                    className="w-full"
+                    className="w-full mt-auto"
                     aria-label="Try unit converter demonstration"
                   >
                     Try Unit Converter
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Equation Solver Overview */}
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow flex flex-col h-full">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Zap className="h-5 w-5 text-primary" />
+                    Equation Solver
+                  </CardTitle>
+                  <CardDescription>
+                    Solve algebraic equations, derivatives, and integrals
+                    symbolically with step-by-step solutions.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="flex-1 flex flex-col">
+                  <div className="space-y-2 text-sm text-muted-foreground mb-4 flex-1">
+                    <p>• Solve equations symbolically</p>
+                    <p>• Find derivatives and integrals</p>
+                    <p>• Simplify expressions</p>
+                    <p>• Step-by-step solutions</p>
+                  </div>
+                  <Button
+                    onClick={() => setActiveDemo("equation-solver")}
+                    className="w-full mt-auto"
+                    aria-label="Try equation solver demonstration"
+                  >
+                    Try Equation Solver
                   </Button>
                 </CardContent>
               </Card>

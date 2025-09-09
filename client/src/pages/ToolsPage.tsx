@@ -5,7 +5,6 @@ import {
   RotateCcw,
   Zap,
   ArrowLeft,
-  Type,
 } from "lucide-react";
 import { Link } from "wouter";
 import { ToolsBreadcrumb } from "../components/ToolsBreadcrumb";
@@ -21,7 +20,7 @@ import { Calculator as CalculatorTool } from "../components/tools/Calculator";
 import { GraphPlotter } from "../components/tools/GraphPlotter";
 import { UnitConverter } from "../components/tools/UnitConverter";
 import { EquationSolver } from "../components/tools/EquationSolver";
-import { MathSymbolInputDemo } from "../components/MathSymbolInputDemo";
+import { ToolErrorBoundary } from "../components/ToolErrorBoundary";
 
 interface Tool {
   id: string;
@@ -194,7 +193,9 @@ export function ToolsPage() {
                   </DialogTitle>
                 </DialogHeader>
                 <div className="mt-4">
-                  <ToolComponent />
+                  <ToolErrorBoundary toolName={tool.title}>
+                    <ToolComponent />
+                  </ToolErrorBoundary>
                 </div>
               </DialogContent>
             </Dialog>

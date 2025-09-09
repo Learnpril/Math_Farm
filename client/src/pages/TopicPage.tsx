@@ -169,40 +169,134 @@ export function TopicPage() {
     );
   }
 
-  // Error state - topic not found
+  // Enhanced error state with smart suggestions
   if (error || !topic) {
+    // Find similar topics based on the requested topic ID
+    const getSimilarTopics = () => {
+      if (!topicId) return topicsData.slice(0, 6);
+
+      const searchTerm = topicId.replace(/-/g, " ").toLowerCase();
+
+      // Find topics with similar names or content
+      const similarTopics = topicsData.filter(
+        (t) =>
+          t.title.toLowerCase().includes(searchTerm) ||
+          t.id.toLowerCase().includes(searchTerm) ||
+          t.description.toLowerCase().includes(searchTerm) ||
+          searchTerm
+            .split(" ")
+            .some(
+              (word) =>
+                t.title.toLowerCase().includes(word) ||
+                t.id.toLowerCase().includes(word)
+            )
+      );
+
+      // If no similar topics found, return popular topics
+      return similarTopics.length > 0
+        ? similarTopics.slice(0, 6)
+        : topicsData.slice(0, 6);
+    };
+
+    const similarTopics = getSimilarTopics();
+
     return (
-      <div className="container mx-auto px-4 py-16 text-center">
-        <div className="max-w-md mx-auto">
+      <div className="container mx-auto px-4 py-16">
+        <div className="max-w-2xl mx-auto text-center">
           <AlertCircle className="w-16 h-16 text-destructive mx-auto mb-4" />
           <h1 className="text-3xl font-bold text-foreground mb-4">
             Topic Not Found
           </h1>
-          <p className="text-lg text-muted-foreground mb-8">
+          <p className="text-lg text-muted-foreground mb-2">
             {error || `The topic "${topicId}" could not be found.`}
           </p>
-          <div className="space-y-4">
+
+          {topicId && (
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg text-amber-700 dark:text-amber-300 mb-8">
+              <AlertCircle className="w-4 h-4" />
+              <span className="text-sm">
+                Looking for: <strong>"{topicId.replace(/-/g, " ")}"</strong>
+              </span>
+            </div>
+          )}
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Link
               href="/#topics"
-              className="inline-flex items-center gap-2 px-6 py-2 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Topics
             </Link>
-            <div className="text-sm text-muted-foreground">
-              <p>Suggested topics:</p>
-              <div className="flex flex-wrap gap-2 mt-2 justify-center">
-                {topicsData.slice(0, 3).map((suggestedTopic) => (
-                  <Link
-                    key={suggestedTopic.id}
-                    href={`/topic/${suggestedTopic.id}`}
-                    className="px-3 py-1 bg-muted hover:bg-muted/80 rounded text-xs transition-colors"
-                  >
-                    {suggestedTopic.title}
-                  </Link>
-                ))}
-              </div>
+
+            <Link
+              href="/tools"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-muted hover:bg-muted/80 text-foreground rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              <Zap className="w-4 h-4" />
+              Try Math Tools
+            </Link>
+          </div>
+
+          <div className="text-left">
+            <h3 className="text-xl font-semibold text-foreground mb-6 text-center">
+              {topicId ? "Similar Topics" : "Popular Topics"}
+            </h3>
+
+            <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+              {similarTopics.map((suggestedTopic) => (
+                <Link
+                  key={suggestedTopic.id}
+                  href={`/topic/${suggestedTopic.id}`}
+                  className="group block p-4 bg-card border rounded-lg hover:bg-muted/50 hover:border-primary/20 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="flex-shrink-0 w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                      <BookOpen className="w-4 h-4 text-primary" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h4 className="font-medium text-foreground group-hover:text-primary transition-colors">
+                          {suggestedTopic.title}
+                        </h4>
+                        <TrendingUp className="w-3 h-3 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all opacity-0 group-hover:opacity-100" />
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-2 overflow-hidden">
+                        {suggestedTopic.description}
+                      </p>
+                      <div className="flex items-center gap-2 text-xs">
+                        <Badge variant="outline" className="text-xs">
+                          {suggestedTopic.level}
+                        </Badge>
+                        <span className="text-muted-foreground">
+                          {suggestedTopic.estimatedTime} min
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
             </div>
+          </div>
+
+          <div className="mt-8 p-4 bg-muted/50 rounded-lg">
+            <p className="text-sm text-muted-foreground">
+              Can't find the topic you're looking for? Try browsing by
+              <Link
+                href="/#topics"
+                className="text-primary hover:text-primary/80 font-medium mx-1"
+              >
+                difficulty level
+              </Link>
+              or check out our
+              <Link
+                href="/tools"
+                className="text-primary hover:text-primary/80 font-medium mx-1"
+              >
+                interactive tools
+              </Link>
+              .
+            </p>
           </div>
         </div>
       </div>
