@@ -1,5 +1,5 @@
 // React 19 - no need to import React
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   CheckCircle,
   XCircle,
@@ -9,6 +9,13 @@ import {
   RotateCcw,
   Trophy,
 } from "lucide-react";
+import { useKeyboardNavigation } from "../hooks/useKeyboardNavigation";
+import { KeyboardShortcutHint } from "./accessibility/KeyboardShortcuts";
+import {
+  PracticeAnnouncer,
+  StatusAnnouncer,
+  InteractionAnnouncer,
+} from "./accessibility/ScreenReaderAnnouncements";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -48,10 +55,59 @@ export function PracticeProblems({
 }: PracticeProblemsProps) {
   const problems = practiceProblemsData[topicId] || [];
   const [problemStates, setProblemStates] = useState<ProblemState>({});
+  const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
+  const practiceContainerRef = useRef<HTMLDivElement>(null);
 
-  import { getTopicSymbols } from "../lib/symbolSets";
+  // Screen reader announcements
+  const [announcement, setAnnouncement] = useState({
+    problem: "",
+    interaction: "",
+    status: "",
+  });
 
   const topicSymbols = getTopicSymbols(topicId);
+
+  // Keyboard navigation for practice problems
+  const keyboardNav = useKeyboardNavigation(practiceContainerRef, {
+    enableArrowKeys: true,
+    enableHomeEnd: true,
+    customHandlers: {
+      "Ctrl+h": () => {
+        const currentProblem = problems[currentProblemIndex];
+        if (currentProblem) {
+          toggleHint(currentProblem.id);
+        }
+      },
+      "Ctrl+s": () => {
+        const currentProblem = problems[currentProblemIndex];
+        if (currentProblem) {
+          toggleSolution(currentProblem.id);
+        }
+      },
+      "Ctrl+Enter": () => {
+        const currentProblem = problems[currentProblemIndex];
+        if (currentProblem && !problemStates[currentProblem.id]?.isSubmitted) {
+          handleSubmit(currentProblem);
+        }
+      },
+      "Ctrl+r": () => {
+        const currentProblem = problems[currentProblemIndex];
+        if (currentProblem) {
+          handleReset(currentProblem.id);
+        }
+      },
+      "Ctrl+n": () => {
+        if (currentProblemIndex < problems.length - 1) {
+          setCurrentProblemIndex(currentProblemIndex + 1);
+        }
+      },
+      "Ctrl+p": () => {
+        if (currentProblemIndex > 0) {
+          setCurrentProblemIndex(currentProblemIndex - 1);
+        }
+      },
+    },
+  });
 
   // Initialize problem states
   useEffect(() => {
@@ -82,6 +138,12 @@ export function PracticeProblems({
   const handleSubmit = (problem: PracticeProblem) => {
     const state = problemStates[problem.id];
     if (!state || state.isSubmitted) return;
+
+    // Update current problem index for keyboard navigation
+    const problemIndex = problems.findIndex((p) => p.id === problem.id);
+    if (problemIndex !== -1) {
+      setCurrentProblemIndex(problemIndex);
+    }
 
     const userAnswer = state.userAnswer.trim();
     const correctAnswer = String(problem.correctAnswer).trim();
@@ -181,6 +243,14 @@ export function PracticeProblems({
 
     // Notify parent component
     onProblemComplete(problem.id, isCorrect);
+
+    // Announce result to screen readers
+    setAnnouncement((prev) => ({
+      ...prev,
+      status: isCorrect
+        ? `Correct! Problem ${problemIndex + 1} solved.`
+        : `Incorrect answer. Try again or view the hint.`,
+    }));
   };
 
   const handleReset = (problemId: string) => {
@@ -197,23 +267,51 @@ export function PracticeProblems({
   };
 
   const toggleSolution = (problemId: string) => {
+    const currentState = problemStates[problemId];
+    const willShow = !currentState?.showSolution;
+
     setProblemStates((prev) => ({
       ...prev,
       [problemId]: {
         ...prev[problemId],
-        showSolution: !prev[problemId].showSolution,
+        showSolution: willShow,
       },
     }));
+
+    // Announce solution toggle
+    const problem = problems.find((p) => p.id === problemId);
+    if (problem) {
+      setAnnouncement((prev) => ({
+        ...prev,
+        interaction: willShow
+          ? `Solution revealed. The correct answer is ${problem.correctAnswer}`
+          : "Solution hidden",
+      }));
+    }
   };
 
   const toggleHint = (problemId: string) => {
+    const currentState = problemStates[problemId];
+    const willShow = !currentState?.showHint;
+
     setProblemStates((prev) => ({
       ...prev,
       [problemId]: {
         ...prev[problemId],
-        showHint: !prev[problemId].showHint,
+        showHint: willShow,
       },
     }));
+
+    // Announce hint toggle
+    const problem = problems.find((p) => p.id === problemId);
+    if (problem) {
+      setAnnouncement((prev) => ({
+        ...prev,
+        interaction: willShow
+          ? `Hint revealed: ${problem.hint}`
+          : "Hint hidden",
+      }));
+    }
   };
 
   // Normalize answers for comparison (handle different formats)
@@ -324,7 +422,27 @@ export function PracticeProblems({
   const stats = getCompletionStats();
 
   return (
-    <div className="space-y-6">
+    <div
+      className="space-y-6"
+      ref={practiceContainerRef}
+      id="practice-problems"
+      tabIndex={-1}
+      aria-label="Practice problems section"
+    >
+      {/* Screen reader announcements */}
+      <StatusAnnouncer status={announcement.status} />
+      <InteractionAnnouncer
+        action={announcement.interaction ? "Action completed" : ""}
+        result={announcement.interaction}
+      />
+
+      {/* Keyboard shortcuts help */}
+      <div className="sr-only" id="practice-shortcuts-help">
+        Use Ctrl+h to toggle hints, Ctrl+s to toggle solutions, Ctrl+Enter to
+        submit answers, Ctrl+r to reset problems, Ctrl+n for next problem,
+        Ctrl+p for previous problem.
+      </div>
+
       {/* Header with Progress */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -334,6 +452,11 @@ export function PracticeProblems({
           <p className="text-muted-foreground">
             Test your understanding with interactive problems
           </p>
+          <KeyboardShortcutHint
+            keys={["Ctrl", "h"]}
+            description="Toggle hint"
+            className="mt-2 text-xs"
+          />
         </div>
 
         <div className="flex items-center gap-4">
@@ -362,7 +485,16 @@ export function PracticeProblems({
           };
 
           return (
-            <Card key={problem.id} className="relative">
+            <Card
+              key={problem.id}
+              className={`relative ${
+                currentProblemIndex === index
+                  ? "ring-2 ring-primary ring-offset-2"
+                  : ""
+              }`}
+              tabIndex={-1}
+              aria-describedby="practice-shortcuts-help"
+            >
               <CardHeader className="pb-4">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
@@ -502,6 +634,8 @@ export function PracticeProblems({
                       onClick={() => handleSubmit(problem)}
                       disabled={!state.userAnswer.trim()}
                       className="flex items-center gap-2"
+                      data-action="submit-answer"
+                      aria-describedby="practice-shortcuts-help"
                     >
                       Submit Answer
                     </Button>
@@ -510,6 +644,7 @@ export function PracticeProblems({
                       onClick={() => handleReset(problem.id)}
                       variant="outline"
                       className="flex items-center gap-2"
+                      data-action="reset-problem"
                     >
                       <RotateCcw className="w-4 h-4" />
                       Try Again
@@ -522,6 +657,10 @@ export function PracticeProblems({
                       variant="outline"
                       size="sm"
                       className="flex items-center gap-2"
+                      data-action="toggle-hint"
+                      aria-label={`${
+                        state.showHint ? "Hide" : "Show"
+                      } hint for problem ${index + 1}`}
                     >
                       <Lightbulb className="w-4 h-4" />
                       {state.showHint ? "Hide Hint" : "Show Hint"}
@@ -533,6 +672,10 @@ export function PracticeProblems({
                     variant="outline"
                     size="sm"
                     className="flex items-center gap-2"
+                    data-action="toggle-solution"
+                    aria-label={`${
+                      state.showSolution ? "Hide" : "Show"
+                    } solution for problem ${index + 1}`}
                   >
                     {state.showSolution ? (
                       <EyeOff className="w-4 h-4" />

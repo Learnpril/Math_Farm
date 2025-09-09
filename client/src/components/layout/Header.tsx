@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { Menu, X, Calculator, Guitar, ArrowLeft } from "lucide-react";
 import { ThemeToggle } from "../ui/ThemeToggle";
 import { AccessibilitySettings } from "../accessibility/AccessibilitySettings";
+import { KeyboardShortcuts } from "../accessibility/KeyboardShortcuts";
 
 interface HeaderProps {
   className?: string;
@@ -192,6 +193,7 @@ export function Header({ className = "" }: HeaderProps) {
 
           {/* Desktop Controls */}
           <div className="hidden md:flex items-center space-x-4">
+            <KeyboardShortcuts />
             <AccessibilitySettings />
             <ThemeToggle size="sm" />
             <div className="relative">
@@ -234,6 +236,7 @@ export function Header({ className = "" }: HeaderProps) {
 
           {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center space-x-2">
+            <KeyboardShortcuts />
             <AccessibilitySettings />
             <ThemeToggle size="sm" />
             <div className="relative">

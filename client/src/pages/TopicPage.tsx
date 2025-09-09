@@ -12,6 +12,19 @@ import {
   TrendingUp,
   Zap,
 } from "lucide-react";
+import {
+  useKeyboardNavigation,
+  useGlobalKeyboardShortcuts,
+} from "../hooks/useKeyboardNavigation";
+import {
+  FocusManager,
+  FocusAnnouncer,
+} from "../components/accessibility/FocusManager";
+import { KeyboardShortcutHint } from "../components/accessibility/KeyboardShortcuts";
+import {
+  NavigationAnnouncer,
+  ProgressAnnouncer,
+} from "../components/accessibility/ScreenReaderAnnouncements";
 import { MathExpression } from "../components/MathExpression";
 import { Badge } from "../components/ui/badge";
 import { LessonContent } from "../components/LessonContent";
@@ -38,8 +51,10 @@ export function TopicPage() {
   const params = useParams();
   const topicId = params.id;
   const mainContentRef = useRef<HTMLDivElement>(null);
+  const navigationRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [focusAnnouncement, setFocusAnnouncement] = useState("");
 
   // Gamification states
   const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
@@ -114,10 +129,76 @@ export function TopicPage() {
     }
   };
 
+  // Keyboard navigation setup
+  const keyboardNav = useKeyboardNavigation(mainContentRef, {
+    enableArrowKeys: true,
+    enableHomeEnd: true,
+    enableEscape: true,
+    customHandlers: {
+      "Ctrl+h": () => {
+        // Toggle hint in current practice problem
+        const hintButton = document.querySelector(
+          '[data-action="toggle-hint"]'
+        ) as HTMLElement;
+        hintButton?.click();
+      },
+      "Ctrl+s": () => {
+        // Toggle solution in current practice problem
+        const solutionButton = document.querySelector(
+          '[data-action="toggle-solution"]'
+        ) as HTMLElement;
+        solutionButton?.click();
+      },
+      "Ctrl+Enter": () => {
+        // Submit current practice problem
+        const submitButton = document.querySelector(
+          '[data-action="submit-answer"]'
+        ) as HTMLElement;
+        submitButton?.click();
+      },
+      "Ctrl+r": () => {
+        // Reset current practice problem
+        const resetButton = document.querySelector(
+          '[data-action="reset-problem"]'
+        ) as HTMLElement;
+        resetButton?.click();
+      },
+    },
+  });
+
+  // Global keyboard shortcuts for topic pages
+  useGlobalKeyboardShortcuts({
+    "Alt+l": () => {
+      // Focus lesson content
+      const lessonContent = document.getElementById("lesson-content");
+      if (lessonContent) {
+        lessonContent.focus();
+        setFocusAnnouncement("Focused on lesson content");
+      }
+    },
+    "Alt+p": () => {
+      // Focus practice problems
+      const practiceProblems = document.getElementById("practice-problems");
+      if (practiceProblems) {
+        practiceProblems.focus();
+        setFocusAnnouncement("Focused on practice problems");
+      }
+    },
+    "Alt+b": () => {
+      // Go back to topics
+      window.location.href = "/#topics";
+    },
+  });
+
   // Focus management on page load for accessibility
   useEffect(() => {
     if (mainContentRef.current) {
       mainContentRef.current.focus();
+      if (topic) {
+        setFocusAnnouncement(
+          `Loaded ${topic.title} topic page. Use Alt+L for lesson content, Alt+P for practice problems.`
+        );
+      }
     }
 
     // Simulate loading state for better UX
@@ -304,232 +385,267 @@ export function TopicPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Back Navigation */}
-      <div className="mb-6">
-        <Link
-          href="/#topics"
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Topics
-        </Link>
-      </div>
+    <FocusManager
+      isActive={!isLoading && !error}
+      announcement={focusAnnouncement}
+      autoFocus={false}
+    >
+      <div className="container mx-auto px-4 py-8">
+        {/* Focus announcements */}
+        <FocusAnnouncer message={focusAnnouncement} />
 
-      {/* Responsive Layout with Sidebar */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* Main Content Area */}
-        <div
-          className="lg:col-span-3 space-y-8"
-          ref={mainContentRef}
-          tabIndex={-1}
-          aria-label={`${topic.title} topic content`}
-        >
-          {/* Topic Header */}
-          <div className="space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6">
-              <div className="flex-1">
-                {/* Title and Level Badge */}
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
-                  <h1 className="text-3xl sm:text-4xl font-bold text-foreground">
-                    {topic.title}
-                  </h1>
-                  <Badge variant={topic.level as any} className="w-fit">
-                    {topic.level.charAt(0).toUpperCase() + topic.level.slice(1)}
-                  </Badge>
-                </div>
+        {/* Navigation announcements */}
+        <NavigationAnnouncer
+          currentPage={topic ? `${topic.title} topic page` : "Topic page"}
+        />
 
-                <p className="text-lg text-muted-foreground mb-6">
-                  {topic.description}
-                </p>
+        {/* Back Navigation */}
+        <div className="mb-6" ref={navigationRef}>
+          <Link
+            href="/#topics"
+            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md"
+            aria-label="Go back to topics section"
+          >
+            <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+            Back to Topics
+          </Link>
+          <KeyboardShortcutHint
+            keys={["Alt", "b"]}
+            description="Quick shortcut"
+            className="ml-4 hidden sm:inline-flex"
+          />
+        </div>
 
-                {/* Enhanced Topic Metadata */}
-                <div className="flex flex-wrap items-center gap-4 mb-6">
-                  {/* Estimated Time */}
-                  <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
-                    <Clock className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-sm font-medium">
-                      {topic.estimatedTime} min
-                    </span>
-                  </div>
-
-                  {/* Difficulty Badge with Visual Indicators */}
-                  <div className="flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4 text-muted-foreground" />
-                    <Badge
-                      variant={`difficulty${topic.difficulty}` as any}
-                      className="flex items-center gap-1"
-                    >
-                      <span>Difficulty {topic.difficulty}/5</span>
-                      <div className="flex gap-0.5 ml-1">
-                        {[1, 2, 3, 4, 5].map((level) => (
-                          <div
-                            key={level}
-                            className={`w-1.5 h-1.5 rounded-full ${
-                              level <= topic.difficulty
-                                ? level <= 2
-                                  ? "bg-green-500"
-                                  : level <= 3
-                                  ? "bg-yellow-500"
-                                  : level <= 4
-                                  ? "bg-orange-500"
-                                  : "bg-red-500"
-                                : "bg-muted-foreground/30"
-                            }`}
-                          />
-                        ))}
-                      </div>
-                    </Badge>
-                  </div>
-
-                  {/* Level Badge */}
-                  <div className="flex items-center gap-2">
-                    <BookOpen className="w-4 h-4 text-muted-foreground" />
-                    <Badge variant="outline" className="text-xs">
+        {/* Responsive Layout with Sidebar */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Main Content Area */}
+          <div
+            className="lg:col-span-3 space-y-8"
+            ref={mainContentRef}
+            tabIndex={-1}
+            aria-label={`${topic.title} topic content`}
+            role="main"
+            aria-describedby="topic-shortcuts-help"
+          >
+            {/* Keyboard shortcuts help */}
+            <div id="topic-shortcuts-help" className="sr-only">
+              Use Alt+l to focus lesson content, Alt+p to focus practice
+              problems, Ctrl+h to toggle hints, Ctrl+s to toggle solutions,
+              Ctrl+Enter to submit answers.
+            </div>
+            {/* Topic Header */}
+            <div className="space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6">
+                <div className="flex-1">
+                  {/* Title and Level Badge */}
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
+                    <h1 className="text-3xl sm:text-4xl font-bold text-foreground">
+                      {topic.title}
+                    </h1>
+                    <Badge variant={topic.level as any} className="w-fit">
                       {topic.level.charAt(0).toUpperCase() +
-                        topic.level.slice(1)}{" "}
-                      Level
+                        topic.level.slice(1)}
                     </Badge>
                   </div>
 
-                  {/* Challenge Mode Toggle */}
-                  <button
-                    onClick={() => setIsChallengeMode(!isChallengeMode)}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      isChallengeMode
-                        ? "bg-yellow-100 text-yellow-800 border border-yellow-200"
-                        : "bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    <Zap className="w-4 h-4" />
-                    {isChallengeMode ? "Challenge Active" : "Start Challenge"}
-                  </button>
+                  <p className="text-lg text-muted-foreground mb-6">
+                    {topic.description}
+                  </p>
+
+                  {/* Enhanced Topic Metadata */}
+                  <div className="flex flex-wrap items-center gap-4 mb-6">
+                    {/* Estimated Time */}
+                    <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
+                      <Clock className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-sm font-medium">
+                        {topic.estimatedTime} min
+                      </span>
+                    </div>
+
+                    {/* Difficulty Badge with Visual Indicators */}
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="w-4 h-4 text-muted-foreground" />
+                      <Badge
+                        variant={`difficulty${topic.difficulty}` as any}
+                        className="flex items-center gap-1"
+                      >
+                        <span>Difficulty {topic.difficulty}/5</span>
+                        <div className="flex gap-0.5 ml-1">
+                          {[1, 2, 3, 4, 5].map((level) => (
+                            <div
+                              key={level}
+                              className={`w-1.5 h-1.5 rounded-full ${
+                                level <= topic.difficulty
+                                  ? level <= 2
+                                    ? "bg-green-500"
+                                    : level <= 3
+                                    ? "bg-yellow-500"
+                                    : level <= 4
+                                    ? "bg-orange-500"
+                                    : "bg-red-500"
+                                  : "bg-muted-foreground/30"
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </Badge>
+                    </div>
+
+                    {/* Level Badge */}
+                    <div className="flex items-center gap-2">
+                      <BookOpen className="w-4 h-4 text-muted-foreground" />
+                      <Badge variant="outline" className="text-xs">
+                        {topic.level.charAt(0).toUpperCase() +
+                          topic.level.slice(1)}{" "}
+                        Level
+                      </Badge>
+                    </div>
+
+                    {/* Challenge Mode Toggle */}
+                    <button
+                      onClick={() => setIsChallengeMode(!isChallengeMode)}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                        isChallengeMode
+                          ? "bg-yellow-100 text-yellow-800 border border-yellow-200"
+                          : "bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      <Zap className="w-4 h-4" />
+                      {isChallengeMode ? "Challenge Active" : "Start Challenge"}
+                    </button>
+                  </div>
+
+                  {/* Prerequisites Section */}
+                  {topic.prerequisites.length > 0 && (
+                    <div className="mb-6">
+                      <h3 className="text-sm font-medium text-muted-foreground mb-3 flex items-center gap-2">
+                        <BookOpen className="w-4 h-4" />
+                        Prerequisites
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        {topic.prerequisites.map((prereqId) => {
+                          const prereqTopic = topicsData.find(
+                            (t) => t.id === prereqId
+                          ) as Topic | undefined;
+                          const isCompleted = isTopicCompleted(prereqId);
+                          const progress = getPrerequisiteProgress(prereqId);
+
+                          return prereqTopic ? (
+                            <Link
+                              key={prereqId}
+                              href={`/topic/${prereqId}`}
+                              className="inline-flex items-center gap-2 px-3 py-2 bg-card border rounded-lg hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                            >
+                              <span className="text-sm font-medium">
+                                {prereqTopic.title}
+                              </span>
+                              {isCompleted ? (
+                                <CheckCircle className="w-3 h-3 text-green-600" />
+                              ) : progress ? (
+                                <Circle className="w-3 h-3 text-yellow-600" />
+                              ) : (
+                                <Circle className="w-3 h-3 text-muted-foreground" />
+                              )}
+                            </Link>
+                          ) : null;
+                        })}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
-                {/* Prerequisites Section */}
-                {topic.prerequisites.length > 0 && (
-                  <div className="mb-6">
-                    <h3 className="text-sm font-medium text-muted-foreground mb-3 flex items-center gap-2">
-                      <BookOpen className="w-4 h-4" />
-                      Prerequisites
+                {/* Math Expression Display */}
+                <div className="sm:w-80">
+                  <div className="bg-card border rounded-lg p-6 text-center">
+                    <h3 className="text-sm font-medium text-muted-foreground mb-4">
+                      Key Formula
                     </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {topic.prerequisites.map((prereqId) => {
-                        const prereqTopic = topicsData.find(
-                          (t) => t.id === prereqId
-                        ) as Topic | undefined;
-                        const isCompleted = isTopicCompleted(prereqId);
-                        const progress = getPrerequisiteProgress(prereqId);
-
-                        return prereqTopic ? (
-                          <Link
-                            key={prereqId}
-                            href={`/topic/${prereqId}`}
-                            className="inline-flex items-center gap-2 px-3 py-2 bg-card border rounded-lg hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                          >
-                            <span className="text-sm font-medium">
-                              {prereqTopic.title}
-                            </span>
-                            {isCompleted ? (
-                              <CheckCircle className="w-3 h-3 text-green-600" />
-                            ) : progress ? (
-                              <Circle className="w-3 h-3 text-yellow-600" />
-                            ) : (
-                              <Circle className="w-3 h-3 text-muted-foreground" />
-                            )}
-                          </Link>
-                        ) : null;
-                      })}
+                    <div className="text-lg">
+                      <MathExpression expression={topic.mathExpression} />
                     </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Math Expression Display */}
-              <div className="sm:w-80">
-                <div className="bg-card border rounded-lg p-6 text-center">
-                  <h3 className="text-sm font-medium text-muted-foreground mb-4">
-                    Key Formula
-                  </h3>
-                  <div className="text-lg">
-                    <MathExpression expression={topic.mathExpression} />
                   </div>
                 </div>
               </div>
             </div>
+
+            {/* Lesson Content System */}
+            <ErrorBoundary>
+              <div
+                id="lesson-content"
+                tabIndex={-1}
+                aria-label="Lesson content section"
+              >
+                <LessonContentSection
+                  topicId={topic.id}
+                  handleSectionComplete={handleSectionComplete}
+                  handleProblemComplete={handleProblemComplete}
+                  getTopicProgress={getTopicProgress}
+                />
+              </div>
+            </ErrorBoundary>
           </div>
 
-          {/* Lesson Content System */}
-          <ErrorBoundary>
-            <LessonContentSection
+          {/* Sidebar - Progress and Related Topics */}
+          <div className="lg:col-span-1 space-y-6">
+            {/* Time Challenge Mode */}
+            <TimeChallengeMode
+              estimatedTime={topic.estimatedTime}
               topicId={topic.id}
-              handleSectionComplete={handleSectionComplete}
-              handleProblemComplete={handleProblemComplete}
-              getTopicProgress={getTopicProgress}
+              onChallengeComplete={handleChallengeComplete}
+              isActive={isChallengeMode}
             />
-          </ErrorBoundary>
-        </div>
 
-        {/* Sidebar - Progress and Related Topics */}
-        <div className="lg:col-span-1 space-y-6">
-          {/* Time Challenge Mode */}
-          <TimeChallengeMode
-            estimatedTime={topic.estimatedTime}
-            topicId={topic.id}
-            onChallengeComplete={handleChallengeComplete}
-            isActive={isChallengeMode}
-          />
+            {/* Enhanced Progress Section */}
+            <ProgressTracker
+              topicId={topic.id}
+              topicProgress={getTopicProgress(topic.id)}
+              totalLessonSections={totalLessonSections}
+              totalPracticeProblems={totalPracticeProblems}
+              completionPercentage={getTopicCompletionPercentage(
+                topic.id,
+                totalLessonSections,
+                totalPracticeProblems
+              )}
+              isCompleted={isTopicCompleted(topic.id)}
+              stats={getProgressStats()}
+            />
 
-          {/* Enhanced Progress Section */}
-          <ProgressTracker
-            topicId={topic.id}
-            topicProgress={getTopicProgress(topic.id)}
-            totalLessonSections={totalLessonSections}
-            totalPracticeProblems={totalPracticeProblems}
-            completionPercentage={getTopicCompletionPercentage(
-              topic.id,
-              totalLessonSections,
-              totalPracticeProblems
+            {/* Badge System - Temporarily disabled to prevent crashes */}
+            {false && (
+              <BadgeSystem
+                userProgress={userProgress}
+                topicId={topic?.id || ""}
+                onBadgeEarned={handleBadgeEarned}
+                showBadgeModal={false}
+              />
             )}
-            isCompleted={isTopicCompleted(topic.id)}
-            stats={getProgressStats()}
-          />
 
-          {/* Badge System - Temporarily disabled to prevent crashes */}
-          {false && (
-            <BadgeSystem
-              userProgress={userProgress}
-              topicId={topic?.id || ""}
-              onBadgeEarned={handleBadgeEarned}
-              showBadgeModal={false}
-            />
-          )}
-
-          {/* Enhanced Related Topics */}
-          {topic && topicsData && (
-            <RelatedTopicsSuggestions
-              currentTopic={topic}
-              allTopics={topicsData as Topic[]}
-              userProgress={userProgress}
-              getTopicProgress={getTopicProgress}
-              isTopicCompleted={isTopicCompleted}
-              getTopicCompletionPercentage={getTopicCompletionPercentage}
-            />
-          )}
+            {/* Enhanced Related Topics */}
+            {topic && topicsData && (
+              <RelatedTopicsSuggestions
+                currentTopic={topic}
+                allTopics={topicsData as Topic[]}
+                userProgress={userProgress}
+                getTopicProgress={getTopicProgress}
+                isTopicCompleted={isTopicCompleted}
+                getTopicCompletionPercentage={getTopicCompletionPercentage}
+              />
+            )}
+          </div>
         </div>
-      </div>
 
-      {/* Success Animation - Temporarily disabled to fix modal issues */}
-      {false && (
-        <SuccessAnimation
-          show={showSuccessAnimation}
-          type={successAnimationType}
-          message={successMessage}
-          onComplete={() => setShowSuccessAnimation(false)}
-          duration={2000}
-        />
-      )}
-    </div>
+        {/* Success Animation - Temporarily disabled to fix modal issues */}
+        {false && (
+          <SuccessAnimation
+            show={showSuccessAnimation}
+            type={successAnimationType}
+            message={successMessage}
+            onComplete={() => setShowSuccessAnimation(false)}
+            duration={2000}
+          />
+        )}
+      </div>
+    </FocusManager>
   );
 }
 

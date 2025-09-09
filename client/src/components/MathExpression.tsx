@@ -65,9 +65,33 @@ export const MathExpression: React.FC<MathExpressionProps> = ({
               if (mathRef.current) {
                 const mathElement =
                   mathRef.current.querySelector("[data-mathml]") ||
+                  mathRef.current.querySelector("mjx-container") ||
                   mathRef.current;
+
                 mathElement.setAttribute("aria-label", accessibleDescription);
                 mathElement.setAttribute("role", "img");
+
+                // Try to enable MathML output for better screen reader support
+                const mathmlElement = mathRef.current.querySelector("math");
+                if (mathmlElement) {
+                  mathmlElement.setAttribute(
+                    "aria-label",
+                    accessibleDescription
+                  );
+                  mathmlElement.setAttribute("role", "math");
+                  // Add alttext attribute for screen readers
+                  mathmlElement.setAttribute("alttext", accessibleDescription);
+                }
+
+                // Add semantic information if available
+                const mjxContainer =
+                  mathRef.current.querySelector("mjx-container");
+                if (mjxContainer) {
+                  mjxContainer.setAttribute(
+                    "aria-describedby",
+                    `math-desc-${Math.random().toString(36).substr(2, 9)}`
+                  );
+                }
               }
             } else {
               setHasError(true);

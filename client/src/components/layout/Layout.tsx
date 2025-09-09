@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { Header } from "./Header";
 import { SkipNavigation } from "../accessibility/SkipNavigation";
 import { BreadcrumbNavigation } from "../navigation/BreadcrumbNavigation";
+import { ShortcutToastContainer } from "../accessibility/ShortcutToast";
 
 interface BreadcrumbItem {
   label: string;
@@ -31,6 +32,9 @@ export function Layout({
       {/* Skip navigation for accessibility */}
       <SkipNavigation />
 
+      {/* Keyboard shortcut toast notifications */}
+      <ShortcutToastContainer />
+
       {/* Main header */}
       <Header />
 
@@ -52,6 +56,7 @@ export function Layout({
 
       {/* Footer */}
       <footer
+        id="footer"
         className="border-t border-border bg-muted/50"
         role="contentinfo"
         aria-label="Site footer"

@@ -15,6 +15,10 @@ interface TopicCardProps {
   topic: Topic;
   onClick: (id: string) => void;
   className?: string;
+  tabIndex?: number;
+  role?: string;
+  "aria-posinset"?: number;
+  "aria-setsize"?: number;
 }
 
 const difficultyColors = {
@@ -37,6 +41,10 @@ export const TopicCard: React.FC<TopicCardProps> = ({
   topic,
   onClick,
   className = "",
+  tabIndex,
+  role,
+  "aria-posinset": ariaPosinset,
+  "aria-setsize": ariaSetsize,
 }) => {
   // Get the icon component dynamically
   const IconComponent = (Icons as any)[topic.icon] as LucideIcon;
@@ -85,10 +93,12 @@ export const TopicCard: React.FC<TopicCardProps> = ({
       `}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
-      tabIndex={0}
-      role="button"
+      tabIndex={tabIndex ?? 0}
+      role={role ?? "button"}
       aria-label={ariaLabel}
       aria-describedby={`topic-${topic.id}-description`}
+      aria-posinset={ariaPosinset}
+      aria-setsize={ariaSetsize}
     >
       {/* Gradient overlay for visual appeal */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
