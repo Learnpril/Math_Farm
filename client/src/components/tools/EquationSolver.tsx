@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { evaluate, parse, derivative, simplify } from "mathjs";
+import * as math from "mathjs";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -68,6 +68,12 @@ export function EquationSolver() {
     setResult("");
     setSteps([]);
 
+    // Basic input validation
+    if (!equation.trim()) {
+      setError("Please enter an equation");
+      return;
+    }
+
     try {
       let solution: any;
       let solutionSteps: SolutionStep[] = [];
@@ -94,9 +100,32 @@ export function EquationSolver() {
 
         case "derivative":
           try {
-            const expr = parse(equation);
-            const derivative_result = derivative(expr, variable);
-            solution = derivative_result.toString();
+            // For basic derivatives, we'll implement simple rules
+            let derivative_result = "";
+            if (equation.includes("x^2")) {
+              derivative_result = equation.replace(/x\^2/g, "2*x");
+            } else if (equation.includes("x^3")) {
+              derivative_result = equation.replace(/x\^3/g, "3*x^2");
+            } else if (equation.includes("x^")) {
+              // Handle general power rule: x^n -> n*x^(n-1)
+              derivative_result = equation.replace(
+                /x\^(\d+)/g,
+                (match, power) => {
+                  const n = parseInt(power);
+                  if (n === 1) return "1";
+                  if (n === 2) return "2*x";
+                  return `${n}*x^${n - 1}`;
+                }
+              );
+            } else if (equation === "x") {
+              derivative_result = "1";
+            } else if (!equation.includes("x")) {
+              derivative_result = "0";
+            } else {
+              derivative_result = "d/dx(" + equation + ")";
+            }
+
+            solution = derivative_result;
             solutionSteps.push({
               step: "1",
               explanation: `Taking the derivative of ${equation} with respect to ${variable}`,
@@ -110,8 +139,8 @@ export function EquationSolver() {
 
         case "simplify":
           try {
-            const expr = parse(equation);
-            const simplified = simplify(expr);
+            const expr = math.parse(equation);
+            const simplified = math.simplify(expr);
             solution = simplified.toString();
             solutionSteps.push({
               step: "1",
@@ -132,7 +161,7 @@ export function EquationSolver() {
               new RegExp(variable, "g"),
               valueToUse.toString()
             );
-            solution = evaluate(expr);
+            solution = math.evaluate(expr);
             solutionSteps.push({
               step: "1",
               explanation: `Evaluating ${equation} with ${variable} = ${valueToUse}`,
@@ -279,7 +308,7 @@ export function EquationSolver() {
     for (let i = -10; i <= 10; i++) {
       try {
         const expr = eq.replace(new RegExp(variable, "g"), i.toString());
-        const result = evaluate(expr);
+        const result = math.evaluate(expr);
         if (Math.abs(result) < 0.0001) {
           // Close to zero
           roots.push(i);

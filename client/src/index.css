@@ -2,6 +2,86 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+  
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+}
+
+@layer components {
+  /* Math expression styling for topic cards */
+  .math-expression {
+    max-width: 100%;
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .math-expression mjx-container {
+    max-width: 100% !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: inline-block;
+  }
+  
+  .math-expression mjx-math {
+    font-size: 0.875rem !important;
+    max-width: 100%;
+  }
+  
+  /* Ensure MathJax containers don't break layout */
+  .math-expression .MathJax {
+    max-width: 100% !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  
+  /* Topic card specific styling */
+  .topic-card {
+    min-height: 280px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .topic-card .math-expression {
+    font-size: 0.75rem;
+    max-width: 100%;
+  }
+  
+  .topic-card .math-expression mjx-container {
+    font-size: 0.75rem !important;
+    max-width: 100%;
+    transform: scale(0.9);
+    transform-origin: center;
+  }
+  
+  /* Ensure text doesn't overflow */
+  .topic-card h3,
+  .topic-card p,
+  .topic-card span {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+}
+
 @layer base {
   :root {
     /* Light mode colors - Purple theme */

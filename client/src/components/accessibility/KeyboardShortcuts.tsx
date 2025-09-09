@@ -45,20 +45,7 @@ const KEYBOARD_SHORTCUTS: KeyboardShortcut[] = [
       }
     },
   },
-  {
-    keys: ["Alt", "p"],
-    description: "Go to practice section",
-    category: "Navigation",
-    action: () => {
-      const element = document.getElementById("practice");
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      } else {
-        // If not on home page, navigate there first
-        window.location.href = "/#practice";
-      }
-    },
-  },
+
   {
     keys: ["Alt", "a"],
     description: "Go to about section",

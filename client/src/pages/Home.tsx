@@ -1,21 +1,20 @@
 import { useLocation } from "wouter";
 import { PageContainer, Section } from "../components/layout/Layout";
 import { HeroSection } from "../components/HeroSection";
-import { MathDemo } from "../components/MathDemo";
+
 import { TopicsGrid } from "../components/TopicsGrid";
 import { ToolsSection } from "../components/ToolsSection";
-import { PracticeSection } from "../components/PracticeSection";
+
 import { FeaturesSection } from "../components/FeaturesSection";
 import { ServiceHours } from "../components/ServiceHours";
 import { HomePageErrorBoundary } from "../components/HomePageErrorBoundary";
-import { MathRenderingErrorBoundary } from "../components/MathRenderingErrorBoundary";
 
 /**
  * Home page component with comprehensive error boundaries
  * Includes proper semantic structure and ARIA landmarks
  */
 export function Home() {
-  const [, navigate] = useLocation();
+  const [location, setLocation] = useLocation();
   return (
     <HomePageErrorBoundary
       showErrorDetails={process.env.NODE_ENV === "development"}
@@ -43,7 +42,7 @@ export function Home() {
             <div className="mt-12">
               <TopicsGrid
                 onTopicClick={(topicId) => {
-                  navigate(`/topic/${topicId}`);
+                  setLocation(`/topic/${topicId}`);
                 }}
               />
             </div>
@@ -52,30 +51,12 @@ export function Home() {
       </Section>
 
       {/* Tools Section */}
-      <ToolsSection className="bg-muted/50" />
-
-      {/* Practice Section */}
       <Section
-        id="practice"
-        ariaLabel="Practice problems"
-        className="bg-background"
+        id="tools"
+        ariaLabel="Mathematical tools"
+        className="bg-muted/50"
       >
-        <PageContainer>
-          <PracticeSection />
-        </PageContainer>
-      </Section>
-
-      {/* MathJax Demo Section */}
-      <Section
-        id="math-demo"
-        ariaLabel="Mathematical expressions demo"
-        className="bg-background"
-      >
-        <MathRenderingErrorBoundary
-          showErrorDetails={process.env.NODE_ENV === "development"}
-        >
-          <MathDemo />
-        </MathRenderingErrorBoundary>
+        <ToolsSection />
       </Section>
 
       {/* Features Section */}

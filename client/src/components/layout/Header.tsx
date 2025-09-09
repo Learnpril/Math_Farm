@@ -3,7 +3,6 @@ import { Link, useLocation } from "wouter";
 import { Menu, X, Calculator, Guitar, ArrowLeft } from "lucide-react";
 import { ThemeToggle } from "../ui/ThemeToggle";
 import { AccessibilitySettings } from "../accessibility/AccessibilitySettings";
-import { KeyboardShortcuts } from "../accessibility/KeyboardShortcuts";
 
 interface HeaderProps {
   className?: string;
@@ -15,7 +14,7 @@ interface HeaderProps {
  */
 export function Header({ className = "" }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const [showVolumeSlider, setShowVolumeSlider] = useState(false);
@@ -77,7 +76,6 @@ export function Header({ className = "" }: HeaderProps) {
     { href: "/latex-guide", label: "LaTeX Guide", isInternal: false },
     { href: "/matlab-guide", label: "MATLAB Guide", isInternal: false },
     { href: "/math-symbols", label: "Math Symbols", isInternal: false },
-    { href: "/#practice", label: "Practice", isInternal: true },
     { href: "/#hours", label: "Hours", isInternal: true },
     { href: "/community", label: "Community", isInternal: false },
     { href: "/#about", label: "About", isInternal: true },
@@ -92,28 +90,60 @@ export function Header({ className = "" }: HeaderProps) {
     if (href.includes("#")) {
       const targetId = href.split("#")[1];
 
-      // If we're not on the home page, navigate to home first
+      // If we're not on the home page, navigate to home first, then scroll
       if (location !== "/") {
-        window.location.href = href;
+        // Navigate to homepage first
+        setLocation("/");
+
+        // Wait for navigation to complete, then scroll to section
+        setTimeout(() => {
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            // Calculate offset to account for fixed header
+            const headerHeight = 80; // Approximate header height
+            const elementPosition = targetElement.offsetTop - headerHeight;
+
+            window.scrollTo({
+              top: elementPosition,
+              behavior: "smooth",
+            });
+
+            // Update URL hash
+            window.history.pushState(null, "", href);
+          } else {
+            console.warn(`Element with id "${targetId}" not found`);
+          }
+        }, 300); // Longer delay for page navigation
         return;
       }
 
-      const targetElement = document.getElementById(targetId);
-      if (targetElement) {
-        targetElement.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
+      // If we're already on homepage, scroll immediately
+      setTimeout(() => {
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          // Calculate offset to account for fixed header
+          const headerHeight = 80; // Approximate header height
+          const elementPosition = targetElement.offsetTop - headerHeight;
 
-        // Update URL hash without triggering navigation
-        window.history.pushState(null, "", href);
-      }
+          window.scrollTo({
+            top: elementPosition,
+            behavior: "smooth",
+          });
+
+          // Update URL hash without triggering navigation
+          window.history.pushState(null, "", href);
+        } else {
+          console.warn(`Element with id "${targetId}" not found`);
+        }
+      }, 100);
     }
   };
 
   const isActiveLink = (href: string) => {
     if (href.includes("#")) {
-      return location === "/" && window.location.hash === href.split("#")[1];
+      return (
+        location === "/" && window.location.hash === `#${href.split("#")[1]}`
+      );
     }
     return location === href;
   };
@@ -140,7 +170,23 @@ export function Header({ className = "" }: HeaderProps) {
                 <span className="hidden sm:inline text-sm">Back</span>
               </button>
             )}
-            <Link href="/" className="flex items-center space-x-2 group">
+            <Link
+              href="/"
+              className="flex items-center space-x-2 group"
+              onClick={(e) => {
+                // If we're already on the homepage, scroll to top
+                if (location === "/") {
+                  e.preventDefault();
+                  window.scrollTo({
+                    top: 0,
+                    behavior: "smooth",
+                  });
+                  // Update URL to remove any hash
+                  window.history.pushState(null, "", "/");
+                }
+                closeMobileMenu();
+              }}
+            >
               <Calculator
                 className="h-8 w-8 text-primary transition-transform group-hover:scale-110"
                 aria-hidden="true"
@@ -193,7 +239,6 @@ export function Header({ className = "" }: HeaderProps) {
 
           {/* Desktop Controls */}
           <div className="hidden md:flex items-center space-x-4">
-            <KeyboardShortcuts />
             <AccessibilitySettings />
             <ThemeToggle size="sm" />
             <div className="relative">
@@ -236,7 +281,6 @@ export function Header({ className = "" }: HeaderProps) {
 
           {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center space-x-2">
-            <KeyboardShortcuts />
             <AccessibilitySettings />
             <ThemeToggle size="sm" />
             <div className="relative">

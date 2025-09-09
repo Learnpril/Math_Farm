@@ -1,8 +1,9 @@
 import React from "react";
-import { Router, Route } from "wouter";
+import { Router, Route, Redirect } from "wouter";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { Layout } from "./components/layout/Layout";
 import { Home, NotFound, MathSymbolsPage } from "./pages";
+import { CommunityPage } from "./pages/CommunityPage";
 import {
   LazyTopicPage,
   LazyToolsPage,
@@ -51,6 +52,11 @@ function App() {
                 </LazyWrapper>
               )}
             />
+            {/* Tool redirects - redirect specific tool URLs to main tools page */}
+            <Route path="/tools/:toolId">
+              <Redirect to="/tools" />
+            </Route>
+
             <Route
               path="/tools"
               component={() => (
@@ -88,8 +94,11 @@ function App() {
               )}
             />
             <Route path="/math-symbols" component={MathSymbolsPage} />
-            <Route path="/community" component={PlaceholderPage} />
-            <Route path="*" component={NotFound} />
+            <Route path="/community" component={CommunityPage} />
+
+            <Route path="*">
+              <Redirect to="/" />
+            </Route>
           </Layout>
 
           {/* Development-only error testing component */}

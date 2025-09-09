@@ -28,6 +28,7 @@ export const TopicsGrid: React.FC<TopicsGridProps> = ({
       className={`grid gap-6 md:grid-cols-2 lg:grid-cols-3 ${className}`}
       role="grid"
       aria-label="Mathematics topics"
+      style={{ gridAutoRows: "1fr" }}
     >
       {topics.map((topic, index) => (
         <TopicCard

@@ -21,9 +21,14 @@ export function HeroSection({ className = "" }: HeroSectionProps) {
   };
 
   const handleExploreTools = () => {
-    // Navigate to tools page - will be implemented when tools page is created
-    // For now, we'll use Wouter's navigation when available
-    window.location.href = "/tools";
+    // Scroll to tools section instead of navigating to separate page
+    const toolsElement = document.getElementById("tools");
+    if (toolsElement) {
+      toolsElement.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
   };
 
   return (
