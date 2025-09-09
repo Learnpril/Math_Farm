@@ -16,6 +16,7 @@ import {
 } from "./components/ErrorBoundaryProvider";
 import { preloadMathJax } from "./lib/mathJaxLoader";
 import { PerformanceDashboard } from "./components/PerformanceDashboard";
+import { installDOMErrorHandler } from "./lib/domErrorHandler";
 
 function App() {
   const handleGlobalError = (error: Error, errorId: string) => {
@@ -23,8 +24,9 @@ function App() {
     console.warn(`Global error caught [${errorId}]:`, error);
   };
 
-  // Preload MathJax when app starts
+  // Preload MathJax and install DOM error handler when app starts
   React.useEffect(() => {
+    installDOMErrorHandler();
     preloadMathJax();
   }, []);
 

@@ -231,6 +231,23 @@ export function clearMathJaxCache(): void {
     if (MathJax?.startup?.document?.clear) {
       MathJax.startup.document.clear();
     }
+
+    // Also clear any MathJax-created DOM elements that might be orphaned
+    if (typeof document !== "undefined") {
+      const mathJaxElements = document.querySelectorAll(
+        "mjx-container, .MathJax, .MathJax_Display"
+      );
+      mathJaxElements.forEach((element) => {
+        try {
+          if (element.parentNode) {
+            element.parentNode.removeChild(element);
+          }
+        } catch (error) {
+          // Silently handle removal errors
+          console.debug("MathJax element cleanup handled:", error);
+        }
+      });
+    }
   } catch (error) {
     console.warn("Error clearing MathJax cache:", error);
   }

@@ -244,7 +244,15 @@ export function ErrorBoundaryTester({ children }: { children: ReactNode }) {
     }.json`;
     document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
+
+    // Safe removal with error handling
+    try {
+      if (a.parentNode === document.body) {
+        document.body.removeChild(a);
+      }
+    } catch (error) {
+      console.debug("Download link already removed:", error);
+    }
     URL.revokeObjectURL(url);
   };
 

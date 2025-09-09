@@ -151,6 +151,27 @@ export const MathExpression: React.FC<MathExpressionProps> = ({
     return () => {
       isCancelled = true;
       clearTimeout(timeoutId);
+
+      // Clean up any MathJax elements in this component
+      if (mathRef.current) {
+        try {
+          const mathElements = mathRef.current.querySelectorAll(
+            "mjx-container, .MathJax"
+          );
+          mathElements.forEach((element) => {
+            try {
+              if (element.parentNode) {
+                element.parentNode.removeChild(element);
+              }
+            } catch (error) {
+              // Silently handle cleanup errors
+              console.debug("MathExpression cleanup handled:", error);
+            }
+          });
+        } catch (error) {
+          console.debug("MathExpression cleanup error:", error);
+        }
+      }
     };
   }, [expression, inline, accessibleDescription, isVisible, priority]);
 

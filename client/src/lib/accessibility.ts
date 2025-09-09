@@ -18,9 +18,17 @@ export function announceToScreenReader(
 
   document.body.appendChild(announcement);
 
-  // Remove after announcement
+  // Remove after announcement with proper error handling
   setTimeout(() => {
-    document.body.removeChild(announcement);
+    try {
+      // Check if the element is still a child before removing
+      if (announcement.parentNode === document.body) {
+        document.body.removeChild(announcement);
+      }
+    } catch (error) {
+      // Silently handle the case where element was already removed
+      console.debug("Announcement element already removed:", error);
+    }
   }, 1000);
 }
 

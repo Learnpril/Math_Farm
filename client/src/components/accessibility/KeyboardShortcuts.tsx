@@ -461,7 +461,13 @@ export function useKeyboardShortcutAnnouncement() {
         document.body.appendChild(announcement);
 
         setTimeout(() => {
-          document.body.removeChild(announcement);
+          try {
+            if (announcement.parentNode === document.body) {
+              document.body.removeChild(announcement);
+            }
+          } catch (error) {
+            console.debug("Announcement element already removed:", error);
+          }
         }, 1000);
       }
     };
