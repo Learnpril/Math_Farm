@@ -153,7 +153,6 @@ export function generateMathDescription(expression: string): string {
 
     // Constants and symbols
     "\\infty": "infinity",
-    "\\pi": "pi",
     "\\e": "e",
     "\\emptyset": "empty set",
     "\\varnothing": "empty set",

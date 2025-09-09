@@ -11,15 +11,19 @@ import { ToolsBreadcrumb } from "../components/ToolsBreadcrumb";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "../components/ui/dialog";
 import { Badge } from "../components/ui/badge";
-import { Calculator as CalculatorTool } from "../components/tools/Calculator";
-import { GraphPlotter } from "../components/tools/GraphPlotter";
-import { UnitConverter } from "../components/tools/UnitConverter";
-import { EquationSolver } from "../components/tools/EquationSolver";
+import {
+  LazyCalculator,
+  LazyGraphPlotter,
+  LazyUnitConverter,
+  LazyEquationSolver,
+} from "../components/LazyComponents";
+import { LazyWrapper } from "../components/LazyWrapper";
 import { ToolErrorBoundary } from "../components/ToolErrorBoundary";
 
 interface Tool {
@@ -43,7 +47,7 @@ export function ToolsPage() {
         "Perform complex mathematical calculations with step-by-step solutions",
       icon: Calculator,
       category: "computation",
-      component: CalculatorTool,
+      component: LazyCalculator,
       preview:
         "Scientific calculator with advanced functions, memory operations, and expression evaluation.",
     },
@@ -54,7 +58,7 @@ export function ToolsPage() {
         "Visualize mathematical functions and explore their properties",
       icon: TrendingUp,
       category: "visualization",
-      component: GraphPlotter,
+      component: LazyGraphPlotter,
       preview:
         "Interactive graph plotter supporting polynomials, trigonometric, and logarithmic functions.",
     },
@@ -64,7 +68,7 @@ export function ToolsPage() {
       description: "Convert between different units of measurement",
       icon: RotateCcw,
       category: "conversion",
-      component: UnitConverter,
+      component: LazyUnitConverter,
       preview:
         "Convert length, area, volume, mass, temperature, and angle units with precision.",
     },
@@ -75,7 +79,7 @@ export function ToolsPage() {
         "Solve algebraic equations, derivatives, and integrals symbolically",
       icon: Zap,
       category: "symbolic",
-      component: EquationSolver,
+      component: LazyEquationSolver,
       preview:
         "Solve equations, find derivatives, simplify expressions with step-by-step solutions.",
     },
@@ -191,10 +195,17 @@ export function ToolsPage() {
                     <IconComponent className="w-5 h-5 text-primary" />
                     {tool.title}
                   </DialogTitle>
+                  <DialogDescription>{tool.description}</DialogDescription>
                 </DialogHeader>
                 <div className="mt-4">
                   <ToolErrorBoundary toolName={tool.title}>
-                    <ToolComponent />
+                    <LazyWrapper
+                      fallback="skeleton"
+                      skeletonVariant="tool"
+                      loadingText={`Loading ${tool.title}...`}
+                    >
+                      <ToolComponent />
+                    </LazyWrapper>
                   </ToolErrorBoundary>
                 </div>
               </DialogContent>

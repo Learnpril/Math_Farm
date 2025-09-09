@@ -155,8 +155,9 @@ export function useKeyboardNavigation(
         return;
       }
 
-      // Debug: log unhandled key combinations (only in development)
+      // Debug: log unhandled key combinations (only in development) - disabled to reduce console noise
       if (
+        false &&
         process.env.NODE_ENV === "development" &&
         (ctrlKey || altKey || metaKey) &&
         Object.keys(customHandlers).length > 0
@@ -336,6 +337,7 @@ export function useGlobalKeyboardShortcuts(
       } else {
         // Debug: log unhandled key combinations (only in development)
         if (
+          false &&
           process.env.NODE_ENV === "development" &&
           (ctrlKey || altKey || metaKey)
         ) {

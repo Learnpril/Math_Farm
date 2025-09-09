@@ -2,25 +2,31 @@ import React from "react";
 import { Router, Route } from "wouter";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { Layout } from "./components/layout/Layout";
+import { Home, NotFound, MathSymbolsPage } from "./pages";
 import {
-  Home,
-  TopicPage,
-  NotFound,
-  ToolsPage,
-  LaTeXGuidePage,
-  MATLABGuidePage,
-  MathSymbolsPage,
-} from "./pages";
+  LazyTopicPage,
+  LazyToolsPage,
+  LazyLaTeXGuidePage,
+  LazyMATLABGuidePage,
+} from "./components/LazyComponents";
+import { LazyWrapper } from "./components/LazyWrapper";
 import {
   ErrorBoundaryProvider,
   ErrorBoundaryTester,
 } from "./components/ErrorBoundaryProvider";
+import { preloadMathJax } from "./lib/mathJaxLoader";
+import { PerformanceDashboard } from "./components/PerformanceDashboard";
 
 function App() {
   const handleGlobalError = (error: Error, errorId: string) => {
     // Global error handler - could send to analytics service in the future
     console.warn(`Global error caught [${errorId}]:`, error);
   };
+
+  // Preload MathJax when app starts
+  React.useEffect(() => {
+    preloadMathJax();
+  }, []);
 
   return (
     <ErrorBoundaryProvider
@@ -31,10 +37,54 @@ function App() {
         <Router>
           <Layout>
             <Route path="/" component={Home} />
-            <Route path="/topic/:id" component={TopicPage} />
-            <Route path="/tools" component={ToolsPage} />
-            <Route path="/latex-guide" component={LaTeXGuidePage} />
-            <Route path="/matlab-guide" component={MATLABGuidePage} />
+            <Route
+              path="/topic/:id"
+              component={() => (
+                <LazyWrapper
+                  fallback="skeleton"
+                  skeletonVariant="topic"
+                  loadingText="Loading topic..."
+                >
+                  <LazyTopicPage />
+                </LazyWrapper>
+              )}
+            />
+            <Route
+              path="/tools"
+              component={() => (
+                <LazyWrapper
+                  fallback="skeleton"
+                  skeletonVariant="page"
+                  loadingText="Loading tools..."
+                >
+                  <LazyToolsPage />
+                </LazyWrapper>
+              )}
+            />
+            <Route
+              path="/latex-guide"
+              component={() => (
+                <LazyWrapper
+                  fallback="skeleton"
+                  skeletonVariant="page"
+                  loadingText="Loading LaTeX guide..."
+                >
+                  <LazyLaTeXGuidePage />
+                </LazyWrapper>
+              )}
+            />
+            <Route
+              path="/matlab-guide"
+              component={() => (
+                <LazyWrapper
+                  fallback="skeleton"
+                  skeletonVariant="page"
+                  loadingText="Loading MATLAB guide..."
+                >
+                  <LazyMATLABGuidePage />
+                </LazyWrapper>
+              )}
+            />
             <Route path="/math-symbols" component={MathSymbolsPage} />
             <Route path="/community" component={PlaceholderPage} />
             <Route path="*" component={NotFound} />
@@ -45,6 +95,11 @@ function App() {
             <></>
           </ErrorBoundaryTester>
         </Router>
+
+        {/* Performance monitoring dashboard - temporarily disabled to fix infinite loop */}
+        {process.env.NODE_ENV === "development" && false && (
+          <PerformanceDashboard componentName="Math Farm App" />
+        )}
       </ThemeProvider>
     </ErrorBoundaryProvider>
   );

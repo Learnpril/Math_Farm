@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { generateMathDescription } from "../lib/accessibility";
+import { typesetMath, isMathJaxReady, loadMathJax } from "../lib/mathJaxLoader";
 
 interface MathExpressionProps {
   expression: string;
@@ -7,6 +8,7 @@ interface MathExpressionProps {
   fallback?: string;
   inline?: boolean;
   ariaLabel?: string;
+  priority?: "high" | "normal" | "low";
 }
 
 export const MathExpression: React.FC<MathExpressionProps> = ({
@@ -15,13 +17,15 @@ export const MathExpression: React.FC<MathExpressionProps> = ({
   fallback,
   inline = false,
   ariaLabel,
+  priority = "normal",
 }) => {
   const mathRef = useRef<HTMLDivElement>(null);
-  const [isLoaded, setIsLoaded] = React.useState(false);
-  const [hasError, setHasError] = React.useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   // Generate accessible description for screen readers
-  const accessibleDescription = React.useMemo(() => {
+  const accessibleDescription = useMemo(() => {
     return (
       ariaLabel ||
       generateMathDescription(expression) ||
@@ -30,95 +34,127 @@ export const MathExpression: React.FC<MathExpressionProps> = ({
     );
   }, [expression, ariaLabel, fallback]);
 
+  // Intersection Observer for lazy loading
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
+    if (!mathRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            observer.disconnect();
+          }
+        });
+      },
+      {
+        rootMargin: "50px", // Start loading 50px before element is visible
+        threshold: 0.1,
+      }
+    );
+
+    observer.observe(mathRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Optimized math rendering with priority-based loading
+  useEffect(() => {
+    if (!isVisible && priority !== "high") return;
+    if (!mathRef.current) return;
+
+    let isCancelled = false;
 
     const renderMath = async () => {
-      if (!mathRef.current) return;
-
       try {
-        // Check if MathJax is available and ready
-        if (
-          typeof window !== "undefined" &&
-          (window as any).MathJax &&
-          (window as any).MathJax.startup
-        ) {
-          const MathJax = (window as any).MathJax;
+        // Ensure MathJax is loaded
+        if (!isMathJaxReady()) {
+          await loadMathJax();
+        }
 
-          // Wait for MathJax to be ready
-          await MathJax.startup.promise;
+        if (isCancelled || !mathRef.current) return;
 
-          if (mathRef.current) {
-            // Set content with proper delimiters
-            const mathContent = inline
-              ? `\\(${expression}\\)`
-              : `\\[${expression}\\]`;
-            mathRef.current.innerHTML = mathContent;
+        // Set content with proper delimiters
+        const mathContent = inline
+          ? `\\(${expression}\\)`
+          : `\\[${expression}\\]`;
+        mathRef.current.innerHTML = mathContent;
 
-            // Render the math
-            if (MathJax.typesetPromise) {
-              await MathJax.typesetPromise([mathRef.current]);
-              setIsLoaded(true);
-              setHasError(false);
+        // Render the math with optimized typesetting
+        await typesetMath(mathRef.current);
 
-              // Add accessibility attributes after rendering
-              if (mathRef.current) {
-                const mathElement =
-                  mathRef.current.querySelector("[data-mathml]") ||
-                  mathRef.current.querySelector("mjx-container") ||
-                  mathRef.current;
+        if (isCancelled) return;
 
-                mathElement.setAttribute("aria-label", accessibleDescription);
-                mathElement.setAttribute("role", "img");
+        setIsLoaded(true);
+        setHasError(false);
 
-                // Try to enable MathML output for better screen reader support
-                const mathmlElement = mathRef.current.querySelector("math");
-                if (mathmlElement) {
-                  mathmlElement.setAttribute(
-                    "aria-label",
-                    accessibleDescription
-                  );
-                  mathmlElement.setAttribute("role", "math");
-                  // Add alttext attribute for screen readers
-                  mathmlElement.setAttribute("alttext", accessibleDescription);
-                }
+        // Add accessibility attributes after rendering - batch DOM operations to reduce reflows
+        if (mathRef.current) {
+          // Use requestAnimationFrame to batch DOM operations
+          requestAnimationFrame(() => {
+            if (!mathRef.current) return;
 
-                // Add semantic information if available
-                const mjxContainer =
-                  mathRef.current.querySelector("mjx-container");
-                if (mjxContainer) {
-                  mjxContainer.setAttribute(
-                    "aria-describedby",
-                    `math-desc-${Math.random().toString(36).substr(2, 9)}`
-                  );
-                }
+            const mathElement =
+              mathRef.current.querySelector("[data-mathml]") ||
+              mathRef.current.querySelector("mjx-container") ||
+              mathRef.current;
+
+            if (mathElement) {
+              // Batch attribute updates
+              const attributes = [
+                ["aria-label", accessibleDescription],
+                ["role", "img"],
+              ];
+
+              attributes.forEach(([attr, value]) => {
+                mathElement.setAttribute(attr, value);
+              });
+
+              // Try to enable MathML output for better screen reader support
+              const mathmlElement = mathRef.current.querySelector("math");
+              if (mathmlElement) {
+                const mathmlAttributes = [
+                  ["aria-label", accessibleDescription],
+                  ["role", "math"],
+                  ["alttext", accessibleDescription],
+                ];
+
+                mathmlAttributes.forEach(([attr, value]) => {
+                  mathmlElement.setAttribute(attr, value);
+                });
               }
-            } else {
-              setHasError(true);
+
+              // Add semantic information if available
+              const mjxContainer =
+                mathRef.current.querySelector("mjx-container");
+              if (mjxContainer) {
+                mjxContainer.setAttribute(
+                  "aria-describedby",
+                  `math-desc-${Math.random().toString(36).substr(2, 9)}`
+                );
+              }
             }
-          }
-        } else {
-          // MathJax not ready yet, try again after a delay
-          timeoutId = setTimeout(() => {
-            renderMath();
-          }, 500);
+          });
         }
       } catch (error) {
-        console.warn("MathJax rendering error:", error);
-        setHasError(true);
+        if (!isCancelled) {
+          console.warn("MathJax rendering error:", error);
+          setHasError(true);
+        }
       }
     };
 
-    // Start rendering after a small delay to ensure DOM is ready
-    timeoutId = setTimeout(renderMath, 100);
+    // Priority-based delay
+    const delay = priority === "high" ? 0 : priority === "normal" ? 50 : 200;
+    const timeoutId = setTimeout(renderMath, delay);
 
     return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
+      isCancelled = true;
+      clearTimeout(timeoutId);
     };
-  }, [expression, inline, accessibleDescription]);
+  }, [expression, inline, accessibleDescription, isVisible, priority]);
 
+  // Error fallback
   if (hasError) {
     return (
       <span
@@ -140,18 +176,20 @@ export const MathExpression: React.FC<MathExpressionProps> = ({
       ref={mathRef}
       className={`math-expression ${className} ${
         !isLoaded ? "opacity-50" : ""
-      }`}
+      } ${!isVisible && priority !== "high" ? "min-h-[1.5em]" : ""}`}
       aria-label={accessibleDescription}
       role="img"
       title={accessibleDescription}
     >
-      {/* Hidden text for screen readers when MathJax is loading */}
-      <span className="sr-only">{accessibleDescription}</span>
-
-      {/* Initial content before MathJax processes it */}
-      <span aria-hidden="true">
-        {inline ? `\\(${expression}\\)` : `\\[${expression}\\]`}
-      </span>
+      {/* Loading state */}
+      {!isLoaded && (
+        <>
+          <span className="sr-only">{accessibleDescription}</span>
+          <span aria-hidden="true" className="text-muted-foreground">
+            {inline ? `\\(${expression}\\)` : `\\[${expression}\\]`}
+          </span>
+        </>
+      )}
     </Element>
   );
 };
