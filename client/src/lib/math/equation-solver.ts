@@ -1,6 +1,7 @@
 import { MathResult, SolutionStep, SolverType } from './types';
 import { MathValidator } from './validation';
 import { getMathInstance } from './math-loader';
+import { getNerdamerInstance, loadNerdamer } from './nerdamer-loader';
 import { createFallbackMath } from './fallback-math';
 import { mathErrorHandler } from './error-handler';
 
@@ -36,7 +37,10 @@ export class EquationSolver {
 
       switch (solverType) {
         case 'solve':
-          const solveResult = this.solveEquation(sanitizedEquation, variable);
+          const solveResult = this.solveEquationSync(
+            sanitizedEquation,
+            variable
+          );
           steps = solveResult.steps;
           solution = solveResult.result;
           break;
@@ -85,16 +89,127 @@ export class EquationSolver {
   }
 
   /**
-   * Solves algebraic equations
+   * Synchronous wrapper for equation solving (falls back to numerical if symbolic fails)
    */
-  private static solveEquation(
+  private static solveEquationSync(
     equation: string,
     variable: string
   ): {
     result: string;
     steps: SolutionStep[];
   } {
+    // Try nerdamer if available synchronously
+    const nerdamer = getNerdamerInstance();
+    if (nerdamer) {
+      const steps: SolutionStep[] = [];
+      try {
+        steps.push({
+          step: '1',
+          explanation: 'Using symbolic solver (nerdamer) to solve equation',
+          result: `Solving: ${equation}`,
+        });
+
+        const solutions = nerdamer.solve(equation, variable);
+        const solutionStrings = solutions.map(sol => sol.toString());
+
+        steps.push({
+          step: '2',
+          explanation: `Found ${solutions.length} solution(s)`,
+          result: solutionStrings.join(', '),
+        });
+
+        return {
+          result:
+            solutionStrings.length > 0
+              ? `${variable} = ${solutionStrings.join(', ')}`
+              : 'No solutions found',
+          steps,
+        };
+      } catch (nerdamerError) {
+        steps.push({
+          step: 'Error',
+          explanation:
+            'Symbolic solver failed, falling back to numerical method',
+          result: 'Switching to numerical approach...',
+        });
+        return this.solveEquationNumerical(equation, variable, steps);
+      }
+    }
+
+    // Fallback to numerical solving
+    return this.solveEquationNumerical(equation, variable);
+  }
+
+  /**
+   * Solves algebraic equations using nerdamer for symbolic solving
+   */
+  private static async solveEquationSymbolic(
+    equation: string,
+    variable: string
+  ): Promise<{
+    result: string;
+    steps: SolutionStep[];
+  }> {
     const steps: SolutionStep[] = [];
+
+    try {
+      // Try to load nerdamer for symbolic solving
+      const nerdamerResult = await loadNerdamer();
+      if (nerdamerResult.loaded && nerdamerResult.nerdamerInstance) {
+        const nerdamer = nerdamerResult.nerdamerInstance;
+
+        steps.push({
+          step: '1',
+          explanation: 'Using symbolic solver (nerdamer) to solve equation',
+          result: `Solving: ${equation}`,
+        });
+
+        try {
+          const solutions = nerdamer.solve(equation, variable);
+          const solutionStrings = solutions.map(sol => sol.toString());
+
+          steps.push({
+            step: '2',
+            explanation: `Found ${solutions.length} solution(s)`,
+            result: solutionStrings.join(', '),
+          });
+
+          return {
+            result:
+              solutionStrings.length > 0
+                ? `${variable} = ${solutionStrings.join(', ')}`
+                : 'No solutions found',
+            steps,
+          };
+        } catch (nerdamerError) {
+          steps.push({
+            step: 'Error',
+            explanation:
+              'Symbolic solver failed, falling back to numerical method',
+            result: 'Switching to numerical approach...',
+          });
+        }
+      }
+
+      // Fallback to numerical solving
+      return this.solveEquationNumerical(equation, variable, steps);
+    } catch (error) {
+      return this.solveEquationNumerical(equation, variable, steps);
+    }
+  }
+
+  /**
+   * Solves algebraic equations using numerical methods
+   */
+  private static solveEquationNumerical(
+    equation: string,
+    variable: string,
+    existingSteps: SolutionStep[] = []
+  ): {
+    result: string;
+    steps: SolutionStep[];
+  } {
+    const steps: SolutionStep[] = [...existingSteps];
 
     try {
       // Check if it's a quadratic equation
@@ -282,7 +397,7 @@ export class EquationSolver {
   }
 
   /**
-   * Finds the derivative of an expression
+   * Finds the derivative of an expression using nerdamer for symbolic differentiation
    */
   private static findDerivative(
     expression: string,
@@ -292,100 +407,132 @@ export class EquationSolver {
     steps: SolutionStep[];
   } {
     const steps: SolutionStep[] = [];
-    const math = getMathInstance();
 
-    if (!math) {
-      steps.push({
-        step: 'Error',
-        explanation: 'Math library not available',
-        result: 'Math library not loaded',
-      });
-      return { result: 'Math library not loaded', steps };
-    }
+    // Try nerdamer first for symbolic differentiation
+    const nerdamer = getNerdamerInstance();
+    if (nerdamer) {
+      try {
+        steps.push({
+          step: '1',
+          explanation: `Taking the derivative of ${expression} with respect to ${variable}`,
+          result: 'Using symbolic differentiation...',
+        });
 
-    try {
-      // Check if derivative function exists
-      if (typeof math.derivative !== 'function') {
-        // Provide a basic derivative for simple cases
-        return this.basicDerivative(expression, variable);
+        const derivative = nerdamer.diff(expression, variable);
+        const result = derivative.toString();
+
+        steps.push({
+          step: '2',
+          explanation: 'Computed symbolic derivative',
+          result: result,
+          latex: this.toLatex(result),
+        });
+
+        return { result, steps };
+      } catch (nerdamerError) {
+        steps.push({
+          step: 'Error',
+          explanation:
+            'Symbolic differentiation failed, trying numerical approach',
+          result: 'Falling back to basic derivative rules...',
+        });
       }
-
-      const expr = math.parse(expression);
-      const derivative = math.derivative(expr, variable);
-      const result = derivative.toString();
-
-      steps.push({
-        step: '1',
-        explanation: `Taking the derivative of ${expression} with respect to ${variable}`,
-        result: result,
-        latex: this.toLatex(result),
-      });
-
-      return { result, steps };
-    } catch (error) {
-      const errorMsg = error instanceof Error ? error.message : 'Unknown error';
-      steps.push({
-        step: 'Error',
-        explanation: `Could not compute derivative: ${errorMsg}`,
-        result: 'Derivative calculation failed',
-      });
-      return { result: `Error computing derivative: ${errorMsg}`, steps };
     }
+
+    // Fallback to math.js or basic derivative
+    const math = getMathInstance();
+    if (math && typeof math.derivative === 'function') {
+      try {
+        const expr = math.parse(expression);
+        const derivative = math.derivative(expr, variable);
+        const result = derivative.toString();
+
+        steps.push({
+          step: '2',
+          explanation: `Using math.js derivative function`,
+          result: result,
+          latex: this.toLatex(result),
+        });
+
+        return { result, steps };
+      } catch (error) {
+        // Continue to basic derivative
+      }
+    }
+
+    // Final fallback to basic derivative rules
+    return this.basicDerivative(expression, variable, steps);
   }
 
   /**
-   * Simplifies mathematical expressions
+   * Simplifies mathematical expressions using nerdamer for symbolic simplification
    */
   private static simplifyExpression(expression: string): {
     result: string;
     steps: SolutionStep[];
   } {
     const steps: SolutionStep[] = [];
-    const math = getMathInstance();
 
-    if (!math) {
-      steps.push({
-        step: 'Error',
-        explanation: 'Math library not available',
-        result: 'Math library not loaded',
-      });
-      return { result: 'Math library not loaded', steps };
-    }
-
-    try {
-      // Check if simplify function exists
-      if (typeof math.simplify !== 'function') {
-        // Return the expression as-is if simplify is not available
+    // Try nerdamer first for symbolic simplification
+    const nerdamer = getNerdamerInstance();
+    if (nerdamer) {
+      try {
         steps.push({
           step: '1',
-          explanation: `Expression: ${expression} (simplification not available)`,
-          result: expression,
-          latex: this.toLatex(expression),
+          explanation: `Simplifying expression: ${expression}`,
+          result: 'Using symbolic simplification...',
         });
-        return { result: expression, steps };
+
+        const simplified = nerdamer.simplify(expression);
+        const result = simplified.toString();
+
+        steps.push({
+          step: '2',
+          explanation: 'Applied symbolic simplification rules',
+          result: result,
+          latex: this.toLatex(result),
+        });
+
+        return { result, steps };
+      } catch (nerdamerError) {
+        steps.push({
+          step: 'Error',
+          explanation: 'Symbolic simplification failed, trying math.js',
+          result: 'Falling back to math.js simplification...',
+        });
       }
-
-      const expr = math.parse(expression);
-      const simplified = math.simplify(expr);
-      const result = simplified.toString();
-
-      steps.push({
-        step: '1',
-        explanation: `Simplifying ${expression}`,
-        result: result,
-        latex: this.toLatex(result),
-      });
-
-      return { result, steps };
-    } catch (error) {
-      const errorMsg = error instanceof Error ? error.message : 'Unknown error';
-      steps.push({
-        step: 'Error',
-        explanation: `Could not simplify expression: ${errorMsg}`,
-        result: 'Simplification failed',
-      });
-      return { result: `Error simplifying expression: ${errorMsg}`, steps };
     }
+
+    // Fallback to math.js
+    const math = getMathInstance();
+    if (math && typeof math.simplify === 'function') {
+      try {
+        const expr = math.parse(expression);
+        const simplified = math.simplify(expr);
+        const result = simplified.toString();
+
+        steps.push({
+          step: '2',
+          explanation: `Using math.js simplification`,
+          result: result,
+          latex: this.toLatex(result),
+        });
+
+        return { result, steps };
+      } catch (error) {
+        // Continue to basic simplification
+      }
+    }
+
+    // Final fallback - return expression as-is
+    steps.push({
+      step: 'Final',
+      explanation: `Expression: ${expression} (no simplification available)`,
+      result: expression,
+      latex: this.toLatex(expression),
+    });
+
+    return { result: expression, steps };
   }
 
   /**
@@ -451,12 +598,13 @@ export class EquationSolver {
    */
   private static basicDerivative(
     expression: string,
-    variable: string
+    variable: string,
+    existingSteps: SolutionStep[] = []
   ): {
     result: string;
     steps: SolutionStep[];
   } {
-    const steps: SolutionStep[] = [];
+    const steps: SolutionStep[] = [...existingSteps];
 
     // Handle basic polynomial derivatives
     if (expression.includes(`${variable}^`)) {

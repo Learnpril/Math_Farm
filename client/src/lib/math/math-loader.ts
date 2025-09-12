@@ -2,20 +2,27 @@
  * Math library loader utility for dynamically loading math.js
  */
 
+import { create, all, MathJsStatic } from 'mathjs';
 import { createFallbackMath } from './fallback-math';
 import { errorLogger } from '../errorLogging';
+
+declare global {
+  interface Window {
+    math?: MathJsStatic;
+  }
+}
 
 export interface MathLoaderResult {
   loaded: boolean;
   error?: string;
-  mathInstance?: any;
+  mathInstance?: MathJsStatic;
 }
 
 export class MathLoader {
   private static instance: MathLoader;
   private loadPromise: Promise<MathLoaderResult> | null = null;
   private isLoaded = false;
-  private mathInstance: any = null;
+  private mathInstance: MathJsStatic | null = null;
 
   private constructor() {}
 
@@ -51,32 +58,33 @@ export class MathLoader {
   private async performLoad(): Promise<MathLoaderResult> {
     try {
       // Check if math.js is already available
-      if (window.math) {
-        this.isLoaded = true;
-        this.mathInstance = window.math;
+      if (this.mathInstance) {
         return {
           loaded: true,
-          mathInstance: window.math,
+          mathInstance: this.mathInstance,
         };
       }
 
-      // For now, skip loading external math.js due to module compatibility issues
-      // and use fallback implementation
-      console.warn(
-        'Using fallback math implementation due to compatibility issues'
-      );
+      // Create a new math.js instance with all functions
+      const mathInstance = create(all, {
+        // Configure for better performance and safety
+        number: 'BigNumber',
+        precision: 64,
+        predictable: true,
+      });
 
-      // Set up a minimal math object to satisfy the interface
-      if (!window.math) {
-        window.math = createFallbackMath();
-      }
-
+      // Store the instance
+      this.mathInstance = mathInstance;
       this.isLoaded = true;
-      this.mathInstance = window.math;
+
+      // Also make it available globally for compatibility
+      if (typeof window !== 'undefined') {
+        window.math = mathInstance;
+      }
 
       return {
         loaded: true,
-        mathInstance: window.math,
+        mathInstance: mathInstance,
       };
     } catch (error) {
       const errorObj =
@@ -129,35 +137,39 @@ export class MathLoader {
   /**
    * Gets the loaded math.js instance
    */
-  getMathInstance(): any | null {
-    return this.mathInstance || window.math || null;
+  getMathInstance(): MathJsStatic | null {
+    return (
+      this.mathInstance ||
+      (typeof window !== 'undefined' ? window.math : null) ||
+      null
+    );
   }
 
   /**
    * Checks if math.js is loaded and available
    */
   isMathLoaded(): boolean {
-    return this.isLoaded && !!window.math;
+    return this.isLoaded && !!this.mathInstance;
   }
 
   /**
    * Creates a configured math.js instance with specific settings
    */
-  createConfiguredInstance(config: any = {}): any | null {
-    const math = this.getMathInstance();
-    if (!math || typeof math.create !== 'function') {
-      return null;
-    }
-
+  createConfiguredInstance(config: any = {}): MathJsStatic | null {
     try {
-      const instance = math.create();
-      if (config && typeof instance.config === 'function') {
-        instance.config(config);
-      }
+      // Create a new instance with custom configuration
+      const instance = create(all, {
+        // Default configuration
+        number: 'BigNumber',
+        precision: 64,
+        predictable: true,
+        // Merge with custom config
+        ...config,
+      });
       return instance;
     } catch (error) {
       console.warn('Failed to create configured math.js instance:', error);
-      return math; // Fallback to global instance
+      return this.getMathInstance(); // Fallback to main instance
     }
   }
 }
@@ -173,7 +185,7 @@ export const loadMathJS = async (): Promise<MathLoaderResult> => {
 /**
  * Convenience function to get math.js instance
  */
-export const getMathInstance = (): any | null => {
+export const getMathInstance = (): MathJsStatic | any => {
   const loader = MathLoader.getInstance();
   const mathInstance = loader.getMathInstance();
 

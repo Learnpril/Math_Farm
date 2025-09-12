@@ -38,6 +38,10 @@ export default defineConfig({
         manualChunks: {
           // Vendor chunk for React and core libraries
           vendor: ['react', 'react-dom', 'wouter'],
+          // Math libraries chunk for lazy loading
+          math: ['mathjs', 'nerdamer', 'mathjax', 'better-react-mathjax'],
+          // Interactive components chunk
+          interactive: ['jsxgraph'],
           // UI components chunk
           ui: [
             '@radix-ui/react-accordion',
@@ -102,6 +106,14 @@ export default defineConfig({
       '@tanstack/react-query',
       'clsx',
       'tailwind-merge',
+    ],
+    // Exclude math libraries from pre-bundling for lazy loading
+    exclude: [
+      'mathjs',
+      'nerdamer',
+      'mathjax',
+      'better-react-mathjax',
+      'jsxgraph',
     ],
   },
   // Performance optimizations without minification
