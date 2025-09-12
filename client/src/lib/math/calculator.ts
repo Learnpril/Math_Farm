@@ -81,6 +81,14 @@ export class Calculator {
    * Formats calculation results consistently
    */
   static formatResult(result: any): string {
+    if (result === null) {
+      return 'null';
+    }
+
+    if (result === undefined) {
+      return 'undefined';
+    }
+
     if (typeof result === 'number') {
       if (!isFinite(result)) {
         return result.toString(); // Infinity, -Infinity, NaN
@@ -100,7 +108,7 @@ export class Calculator {
       }
     }
 
-    return result.toString();
+    return result?.toString() || 'null';
   }
 
   /**
