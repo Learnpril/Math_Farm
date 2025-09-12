@@ -1,41 +1,41 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
-import { Router } from "wouter";
-import { ThemeProvider } from "../ThemeProvider";
-import { TopicPage } from "../../pages/TopicPage";
-import { NotFound } from "../../pages/NotFound";
-import topicsData from "../../data/topicsData.json";
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { render, screen, waitFor } from '@testing-library/react';
+import { Router } from 'wouter';
+import { ThemeProvider } from '../ThemeProvider';
+import { TopicPage } from '../../pages/TopicPage';
+import { NotFound } from '../../pages/NotFound';
+import topicsData from '../../data/topicsData.json';
 
 // Mock heavy dependencies
-vi.mock("../../lib/mathJaxLoader", () => ({
+vi.mock('../../lib/mathJaxLoader', () => ({
   preloadMathJax: vi.fn(),
 }));
 
-vi.mock("../../components/MathExpression", () => ({
+vi.mock('../../components/MathExpression', () => ({
   MathExpression: ({ children }: { children: string }) => (
-    <div data-testid="math-expression">{children}</div>
+    <div data-testid='math-expression'>{children}</div>
   ),
 }));
 
-vi.mock("../../components/LessonContent", () => ({
+vi.mock('../../components/LessonContent', () => ({
   LessonContent: ({ topicId }: { topicId: string }) => (
-    <div data-testid="lesson-content">Lesson content for {topicId}</div>
+    <div data-testid='lesson-content'>Lesson content for {topicId}</div>
   ),
 }));
 
-vi.mock("../../components/TopicPracticeSection", () => ({
+vi.mock('../../components/TopicPracticeSection', () => ({
   TopicPracticeSection: ({ topicId }: { topicId: string }) => (
-    <div data-testid="practice-section">Practice for {topicId}</div>
+    <div data-testid='practice-section'>Practice for {topicId}</div>
   ),
 }));
 
-vi.mock("../../components/ProgressTracker", () => ({
+vi.mock('../../features/practice/components/ProgressTracker', () => ({
   ProgressTracker: ({ topicId }: { topicId: string }) => (
-    <div data-testid="progress-tracker">Progress for {topicId}</div>
+    <div data-testid='progress-tracker'>Progress for {topicId}</div>
   ),
 }));
 
-vi.mock("../../hooks/useProgressTracker", () => ({
+vi.mock('../../hooks/useProgressTracker', () => ({
   useProgressTracker: () => ({
     progress: {
       completedSections: [],
@@ -48,7 +48,7 @@ vi.mock("../../hooks/useProgressTracker", () => ({
   }),
 }));
 
-vi.mock("../../hooks/useKeyboardNavigation", () => ({
+vi.mock('../../hooks/useKeyboardNavigation', () => ({
   useKeyboardNavigation: () => ({
     currentFocus: 0,
     setCurrentFocus: vi.fn(),
@@ -58,8 +58,8 @@ vi.mock("../../hooks/useKeyboardNavigation", () => ({
 
 // Mock Wouter's useParams hook
 const mockUseParams = vi.fn();
-vi.mock("wouter", async () => {
-  const actual = await vi.importActual("wouter");
+vi.mock('wouter', async () => {
+  const actual = await vi.importActual('wouter');
   return {
     ...actual,
     useParams: mockUseParams,
@@ -72,7 +72,7 @@ const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   </ThemeProvider>
 );
 
-describe("Topic Component Rendering", () => {
+describe('Topic Component Rendering', () => {
   beforeEach(() => {
     // Reset mocks
     vi.clearAllMocks();
@@ -87,7 +87,7 @@ describe("Topic Component Rendering", () => {
       removeItem: vi.fn(),
       clear: vi.fn(),
     };
-    Object.defineProperty(window, "localStorage", {
+    Object.defineProperty(window, 'localStorage', {
       value: localStorageMock,
     });
   });
@@ -96,8 +96,8 @@ describe("Topic Component Rendering", () => {
     vi.clearAllMocks();
   });
 
-  describe("TopicPage Component Rendering", () => {
-    it("should render topic page with valid topic data", async () => {
+  describe('TopicPage Component Rendering', () => {
+    it('should render topic page with valid topic data', async () => {
       const validTopic = topicsData[0]; // Use first topic from data
       mockUseParams.mockReturnValue({ id: validTopic.id });
 
@@ -112,15 +112,15 @@ describe("Topic Component Rendering", () => {
       });
 
       expect(screen.getByText(validTopic.description)).toBeInTheDocument();
-      expect(screen.getByTestId("lesson-content")).toBeInTheDocument();
-      expect(screen.getByTestId("practice-section")).toBeInTheDocument();
-      expect(screen.getByTestId("progress-tracker")).toBeInTheDocument();
+      expect(screen.getByTestId('lesson-content')).toBeInTheDocument();
+      expect(screen.getByTestId('practice-section')).toBeInTheDocument();
+      expect(screen.getByTestId('progress-tracker')).toBeInTheDocument();
     });
 
-    it("should render topic with different difficulty levels", async () => {
+    it('should render topic with different difficulty levels', async () => {
       // Test with different difficulty levels
-      const easyTopic = topicsData.find((topic) => topic.difficulty === 1);
-      const hardTopic = topicsData.find((topic) => topic.difficulty >= 4);
+      const easyTopic = topicsData.find(topic => topic.difficulty === 1);
+      const hardTopic = topicsData.find(topic => topic.difficulty >= 4);
 
       if (easyTopic) {
         mockUseParams.mockReturnValue({ id: easyTopic.id });
@@ -160,9 +160,9 @@ describe("Topic Component Rendering", () => {
       }
     });
 
-    it("should render topic with prerequisites", async () => {
+    it('should render topic with prerequisites', async () => {
       const topicWithPrereqs = topicsData.find(
-        (topic) => topic.prerequisites.length > 0
+        topic => topic.prerequisites.length > 0
       );
 
       if (topicWithPrereqs) {
@@ -183,9 +183,9 @@ describe("Topic Component Rendering", () => {
       }
     });
 
-    it("should render topic without prerequisites", async () => {
+    it('should render topic without prerequisites', async () => {
       const topicWithoutPrereqs = topicsData.find(
-        (topic) => topic.prerequisites.length === 0
+        topic => topic.prerequisites.length === 0
       );
 
       if (topicWithoutPrereqs) {
@@ -211,8 +211,8 @@ describe("Topic Component Rendering", () => {
       }
     });
 
-    it("should render math expressions correctly", async () => {
-      const topicWithMath = topicsData.find((topic) => topic.mathExpression);
+    it('should render math expressions correctly', async () => {
+      const topicWithMath = topicsData.find(topic => topic.mathExpression);
 
       if (topicWithMath) {
         mockUseParams.mockReturnValue({ id: topicWithMath.id });
@@ -224,17 +224,17 @@ describe("Topic Component Rendering", () => {
         );
 
         await waitFor(() => {
-          expect(screen.getByTestId("math-expression")).toBeInTheDocument();
+          expect(screen.getByTestId('math-expression')).toBeInTheDocument();
         });
 
-        expect(screen.getByTestId("math-expression")).toHaveTextContent(
+        expect(screen.getByTestId('math-expression')).toHaveTextContent(
           topicWithMath.mathExpression
         );
       }
     });
 
-    it("should handle missing topic data gracefully", async () => {
-      mockUseParams.mockReturnValue({ id: "non-existent-topic" });
+    it('should handle missing topic data gracefully', async () => {
+      mockUseParams.mockReturnValue({ id: 'non-existent-topic' });
 
       render(
         <TestWrapper>
@@ -246,21 +246,21 @@ describe("Topic Component Rendering", () => {
       await waitFor(() => {
         const errorMessage =
           screen.queryByText(/not found/i) || screen.queryByText(/error/i);
-        expect(errorMessage || screen.getByText("404")).toBeInTheDocument();
+        expect(errorMessage || screen.getByText('404')).toBeInTheDocument();
       });
     });
 
-    it("should render different topic levels correctly", async () => {
+    it('should render different topic levels correctly', async () => {
       const levels = [
-        "elementary",
-        "middle",
-        "high",
-        "advanced",
-        "specialized",
+        'elementary',
+        'middle',
+        'high',
+        'advanced',
+        'specialized',
       ];
 
       for (const level of levels) {
-        const topicOfLevel = topicsData.find((topic) => topic.level === level);
+        const topicOfLevel = topicsData.find(topic => topic.level === level);
 
         if (topicOfLevel) {
           mockUseParams.mockReturnValue({ id: topicOfLevel.id });
@@ -283,8 +283,8 @@ describe("Topic Component Rendering", () => {
       }
     });
 
-    it("should render estimated time correctly", async () => {
-      const topicWithTime = topicsData.find((topic) => topic.estimatedTime > 0);
+    it('should render estimated time correctly', async () => {
+      const topicWithTime = topicsData.find(topic => topic.estimatedTime > 0);
 
       if (topicWithTime) {
         mockUseParams.mockReturnValue({ id: topicWithTime.id });
@@ -304,10 +304,10 @@ describe("Topic Component Rendering", () => {
     });
   });
 
-  describe("Error Handling for Invalid Topic Data", () => {
-    it("should handle malformed topic data", async () => {
+  describe('Error Handling for Invalid Topic Data', () => {
+    it('should handle malformed topic data', async () => {
       // Mock a topic with missing required fields
-      mockUseParams.mockReturnValue({ id: "malformed-topic" });
+      mockUseParams.mockReturnValue({ id: 'malformed-topic' });
 
       render(
         <TestWrapper>
@@ -322,8 +322,8 @@ describe("Topic Component Rendering", () => {
       });
     });
 
-    it("should handle empty topic ID", async () => {
-      mockUseParams.mockReturnValue({ id: "" });
+    it('should handle empty topic ID', async () => {
+      mockUseParams.mockReturnValue({ id: '' });
 
       render(
         <TestWrapper>
@@ -337,7 +337,7 @@ describe("Topic Component Rendering", () => {
       });
     });
 
-    it("should handle undefined topic ID", async () => {
+    it('should handle undefined topic ID', async () => {
       mockUseParams.mockReturnValue({ id: undefined });
 
       render(
@@ -353,30 +353,30 @@ describe("Topic Component Rendering", () => {
     });
   });
 
-  describe("NotFound Component with Topic Suggestions", () => {
+  describe('NotFound Component with Topic Suggestions', () => {
     beforeEach(() => {
       // Mock window.location for NotFound component
-      Object.defineProperty(window, "location", {
+      Object.defineProperty(window, 'location', {
         value: {
-          pathname: "/topic/invalid-topic",
-          href: "http://localhost/topic/invalid-topic",
+          pathname: '/topic/invalid-topic',
+          href: 'http://localhost/topic/invalid-topic',
         },
         writable: true,
       });
     });
 
-    it("should render topic suggestions based on URL", () => {
+    it('should render topic suggestions based on URL', () => {
       render(
         <TestWrapper>
           <NotFound />
         </TestWrapper>
       );
 
-      expect(screen.getByText("Topic Not Found")).toBeInTheDocument();
+      expect(screen.getByText('Topic Not Found')).toBeInTheDocument();
       expect(screen.getByText(/invalid topic/i)).toBeInTheDocument();
     });
 
-    it("should show search functionality", () => {
+    it('should show search functionality', () => {
       render(
         <TestWrapper>
           <NotFound />
@@ -384,11 +384,11 @@ describe("Topic Component Rendering", () => {
       );
 
       expect(
-        screen.getByPlaceholderText("Search for topics...")
+        screen.getByPlaceholderText('Search for topics...')
       ).toBeInTheDocument();
     });
 
-    it("should display topic cards with correct data", () => {
+    it('should display topic cards with correct data', () => {
       render(
         <TestWrapper>
           <NotFound />
@@ -400,14 +400,14 @@ describe("Topic Component Rendering", () => {
       expect(topicCards.length).toBeGreaterThan(0);
     });
 
-    it("should handle empty search results", async () => {
+    it('should handle empty search results', async () => {
       render(
         <TestWrapper>
           <NotFound />
         </TestWrapper>
       );
 
-      const searchInput = screen.getByPlaceholderText("Search for topics...");
+      const searchInput = screen.getByPlaceholderText('Search for topics...');
 
       // Type a search that won't match anything
       await waitFor(() => {
@@ -419,8 +419,8 @@ describe("Topic Component Rendering", () => {
     });
   });
 
-  describe("Component State Management", () => {
-    it("should maintain component state during re-renders", async () => {
+  describe('Component State Management', () => {
+    it('should maintain component state during re-renders', async () => {
       const validTopic = topicsData[0];
       mockUseParams.mockReturnValue({ id: validTopic.id });
 
@@ -445,7 +445,7 @@ describe("Topic Component Rendering", () => {
       expect(screen.getByText(validTopic.title)).toBeInTheDocument();
     });
 
-    it("should update when topic ID changes", async () => {
+    it('should update when topic ID changes', async () => {
       const firstTopic = topicsData[0];
       const secondTopic = topicsData[1];
 

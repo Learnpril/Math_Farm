@@ -1,7 +1,7 @@
-import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { ToolDemoErrorBoundary } from "../ToolDemoErrorBoundary";
+import React from 'react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { ToolDemoErrorBoundary } from '../../features/math-tools/components/ToolDemoErrorBoundary';
 
 // Mock console methods
 const originalConsoleError = console.error;
@@ -27,27 +27,27 @@ afterEach(() => {
 const ThrowError: React.FC<{
   shouldThrow?: boolean;
   errorMessage?: string;
-  errorType?: "jsxgraph" | "math" | "network" | "canvas" | "generic";
+  errorType?: 'jsxgraph' | 'math' | 'network' | 'canvas' | 'generic';
 }> = ({
   shouldThrow = true,
-  errorMessage = "Test error",
-  errorType = "generic",
+  errorMessage = 'Test error',
+  errorType = 'generic',
 }) => {
   if (shouldThrow) {
     let message = errorMessage;
 
     switch (errorType) {
-      case "jsxgraph":
-        message = "JSXGraph initialization failed";
+      case 'jsxgraph':
+        message = 'JSXGraph initialization failed';
         break;
-      case "math":
-        message = "Math.js evaluation error";
+      case 'math':
+        message = 'Math.js evaluation error';
         break;
-      case "network":
-        message = "Network fetch failed";
+      case 'network':
+        message = 'Network fetch failed';
         break;
-      case "canvas":
-        message = "Canvas context not supported";
+      case 'canvas':
+        message = 'Canvas context not supported';
         break;
     }
 
@@ -56,34 +56,34 @@ const ThrowError: React.FC<{
   return <div>Tool working correctly</div>;
 };
 
-describe("ToolDemoErrorBoundary", () => {
-  it("renders children when there is no error", () => {
+describe('ToolDemoErrorBoundary', () => {
+  it('renders children when there is no error', () => {
     render(
-      <ToolDemoErrorBoundary toolName="Test Tool">
+      <ToolDemoErrorBoundary toolName='Test Tool'>
         <div>Tool content</div>
       </ToolDemoErrorBoundary>
     );
 
-    expect(screen.getByText("Tool content")).toBeInTheDocument();
+    expect(screen.getByText('Tool content')).toBeInTheDocument();
   });
 
-  it("renders error UI when child component throws", () => {
+  it('renders error UI when child component throws', () => {
     render(
-      <ToolDemoErrorBoundary toolName="Test Tool">
+      <ToolDemoErrorBoundary toolName='Test Tool'>
         <ThrowError />
       </ToolDemoErrorBoundary>
     );
 
-    expect(screen.getByText("Test Tool Unavailable")).toBeInTheDocument();
+    expect(screen.getByText('Test Tool Unavailable')).toBeInTheDocument();
     expect(
       screen.getByText(
         /We're having trouble loading this interactive demonstration/
       )
     ).toBeInTheDocument();
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getByRole('alert')).toBeInTheDocument();
   });
 
-  it("uses default tool name when not provided", () => {
+  it('uses default tool name when not provided', () => {
     render(
       <ToolDemoErrorBoundary>
         <ThrowError />
@@ -91,18 +91,18 @@ describe("ToolDemoErrorBoundary", () => {
     );
 
     expect(
-      screen.getByText("Interactive Tool Unavailable")
+      screen.getByText('Interactive Tool Unavailable')
     ).toBeInTheDocument();
   });
 
-  it("provides specific suggestions for JSXGraph errors", () => {
+  it('provides specific suggestions for JSXGraph errors', () => {
     render(
-      <ToolDemoErrorBoundary toolName="Graphing Tool">
-        <ThrowError errorType="jsxgraph" />
+      <ToolDemoErrorBoundary toolName='Graphing Tool'>
+        <ThrowError errorType='jsxgraph' />
       </ToolDemoErrorBoundary>
     );
 
-    expect(screen.getByText("Suggestions:")).toBeInTheDocument();
+    expect(screen.getByText('Suggestions:')).toBeInTheDocument();
     expect(
       screen.getByText(/Try refreshing the page to reload JSXGraph/)
     ).toBeInTheDocument();
@@ -111,10 +111,10 @@ describe("ToolDemoErrorBoundary", () => {
     ).toBeInTheDocument();
   });
 
-  it("provides specific suggestions for math errors", () => {
+  it('provides specific suggestions for math errors', () => {
     render(
-      <ToolDemoErrorBoundary toolName="Calculator">
-        <ThrowError errorType="math" />
+      <ToolDemoErrorBoundary toolName='Calculator'>
+        <ThrowError errorType='math' />
       </ToolDemoErrorBoundary>
     );
 
@@ -126,10 +126,10 @@ describe("ToolDemoErrorBoundary", () => {
     ).toBeInTheDocument();
   });
 
-  it("provides specific suggestions for network errors", () => {
+  it('provides specific suggestions for network errors', () => {
     render(
-      <ToolDemoErrorBoundary toolName="Online Tool">
-        <ThrowError errorType="network" />
+      <ToolDemoErrorBoundary toolName='Online Tool'>
+        <ThrowError errorType='network' />
       </ToolDemoErrorBoundary>
     );
 
@@ -139,10 +139,10 @@ describe("ToolDemoErrorBoundary", () => {
     expect(screen.getByText(/Try again in a few moments/)).toBeInTheDocument();
   });
 
-  it("provides generic suggestions for unknown errors", () => {
+  it('provides generic suggestions for unknown errors', () => {
     render(
-      <ToolDemoErrorBoundary toolName="Generic Tool">
-        <ThrowError errorType="generic" />
+      <ToolDemoErrorBoundary toolName='Generic Tool'>
+        <ThrowError errorType='generic' />
       </ToolDemoErrorBoundary>
     );
 
@@ -152,7 +152,7 @@ describe("ToolDemoErrorBoundary", () => {
     ).toBeInTheDocument();
   });
 
-  it("handles retry functionality", async () => {
+  it('handles retry functionality', async () => {
     const TestComponent: React.FC = () => {
       const [shouldThrow, setShouldThrow] = React.useState(true);
 
@@ -165,13 +165,13 @@ describe("ToolDemoErrorBoundary", () => {
     };
 
     render(
-      <ToolDemoErrorBoundary toolName="Retry Tool">
+      <ToolDemoErrorBoundary toolName='Retry Tool'>
         <TestComponent />
       </ToolDemoErrorBoundary>
     );
 
     // Initially shows error
-    expect(screen.getByText("Retry Tool Unavailable")).toBeInTheDocument();
+    expect(screen.getByText('Retry Tool Unavailable')).toBeInTheDocument();
 
     // Click retry button
     const retryButton = screen.getByText(/Try Again/);
@@ -180,14 +180,14 @@ describe("ToolDemoErrorBoundary", () => {
     // Should attempt to render children again
     await waitFor(() => {
       expect(
-        screen.queryByText("Retry Tool Unavailable")
+        screen.queryByText('Retry Tool Unavailable')
       ).not.toBeInTheDocument();
     });
   });
 
-  it("limits retry attempts to 2", () => {
+  it('limits retry attempts to 2', () => {
     render(
-      <ToolDemoErrorBoundary toolName="Limited Retry Tool">
+      <ToolDemoErrorBoundary toolName='Limited Retry Tool'>
         <ThrowError />
       </ToolDemoErrorBoundary>
     );
@@ -207,9 +207,9 @@ describe("ToolDemoErrorBoundary", () => {
     expect(screen.queryByText(/Try Again/)).not.toBeInTheDocument();
   });
 
-  it("shows graceful degradation message", () => {
+  it('shows graceful degradation message', () => {
     render(
-      <ToolDemoErrorBoundary toolName="Degraded Tool">
+      <ToolDemoErrorBoundary toolName='Degraded Tool'>
         <ThrowError />
       </ToolDemoErrorBoundary>
     );
@@ -222,44 +222,44 @@ describe("ToolDemoErrorBoundary", () => {
     ).toBeInTheDocument();
   });
 
-  it("shows error details in development mode", () => {
+  it('shows error details in development mode', () => {
     render(
-      <ToolDemoErrorBoundary toolName="Dev Tool" showErrorDetails={true}>
-        <ThrowError errorMessage="Development error details" />
+      <ToolDemoErrorBoundary toolName='Dev Tool' showErrorDetails={true}>
+        <ThrowError errorMessage='Development error details' />
       </ToolDemoErrorBoundary>
     );
 
-    expect(screen.getByText("🔧 Technical Details")).toBeInTheDocument();
+    expect(screen.getByText('🔧 Technical Details')).toBeInTheDocument();
 
     // Click to expand details
-    fireEvent.click(screen.getByText("🔧 Technical Details"));
+    fireEvent.click(screen.getByText('🔧 Technical Details'));
 
-    expect(screen.getByText("Error:")).toBeInTheDocument();
-    expect(screen.getByText("Development error details")).toBeInTheDocument();
+    expect(screen.getByText('Error:')).toBeInTheDocument();
+    expect(screen.getByText('Development error details')).toBeInTheDocument();
   });
 
-  it("hides error details in production mode", () => {
+  it('hides error details in production mode', () => {
     render(
-      <ToolDemoErrorBoundary toolName="Prod Tool" showErrorDetails={false}>
+      <ToolDemoErrorBoundary toolName='Prod Tool' showErrorDetails={false}>
         <ThrowError />
       </ToolDemoErrorBoundary>
     );
 
-    expect(screen.queryByText("🔧 Technical Details")).not.toBeInTheDocument();
+    expect(screen.queryByText('🔧 Technical Details')).not.toBeInTheDocument();
   });
 
-  it("calls onError callback when error occurs", () => {
+  it('calls onError callback when error occurs', () => {
     const onError = vi.fn();
 
     render(
-      <ToolDemoErrorBoundary toolName="Callback Tool" onError={onError}>
-        <ThrowError errorMessage="Callback test error" />
+      <ToolDemoErrorBoundary toolName='Callback Tool' onError={onError}>
+        <ThrowError errorMessage='Callback test error' />
       </ToolDemoErrorBoundary>
     );
 
     expect(onError).toHaveBeenCalledWith(
       expect.objectContaining({
-        message: "Callback test error",
+        message: 'Callback test error',
       }),
       expect.objectContaining({
         componentStack: expect.any(String),
@@ -267,83 +267,83 @@ describe("ToolDemoErrorBoundary", () => {
     );
   });
 
-  it("renders custom fallback when provided", () => {
+  it('renders custom fallback when provided', () => {
     const customFallback = <div>Custom tool error message</div>;
 
     render(
-      <ToolDemoErrorBoundary toolName="Custom Tool" fallback={customFallback}>
+      <ToolDemoErrorBoundary toolName='Custom Tool' fallback={customFallback}>
         <ThrowError />
       </ToolDemoErrorBoundary>
     );
 
-    expect(screen.getByText("Custom tool error message")).toBeInTheDocument();
+    expect(screen.getByText('Custom tool error message')).toBeInTheDocument();
     expect(
-      screen.queryByText("Custom Tool Unavailable")
+      screen.queryByText('Custom Tool Unavailable')
     ).not.toBeInTheDocument();
   });
 
-  it("logs tool-specific error analysis", () => {
+  it('logs tool-specific error analysis', () => {
     render(
-      <ToolDemoErrorBoundary toolName="Analysis Tool">
-        <ThrowError errorType="jsxgraph" />
+      <ToolDemoErrorBoundary toolName='Analysis Tool'>
+        <ThrowError errorType='jsxgraph' />
       </ToolDemoErrorBoundary>
     );
 
     expect(console.error).toHaveBeenCalledWith(
-      "ToolDemoErrorBoundary (Analysis Tool) caught an error:",
+      'ToolDemoErrorBoundary (Analysis Tool) caught an error:',
       expect.objectContaining({
-        toolName: "Analysis Tool",
-        error: "Error: JSXGraph initialization failed",
+        toolName: 'Analysis Tool',
+        error: 'Error: JSXGraph initialization failed',
         timestamp: expect.any(String),
       })
     );
 
     expect(console.group).toHaveBeenCalledWith(
-      "🔧 Tool Demo Error Analysis: Analysis Tool"
+      '🔧 Tool Demo Error Analysis: Analysis Tool'
     );
-    expect(console.error).toHaveBeenCalledWith("Category:", "JSXGraph Error");
+    expect(console.error).toHaveBeenCalledWith('Category:', 'JSXGraph Error');
     expect(console.groupEnd).toHaveBeenCalled();
   });
 
-  it("handles reload page action", () => {
+  it('handles reload page action', () => {
     // Mock window.location.reload
     const mockReload = vi.fn();
-    Object.defineProperty(window, "location", {
+    Object.defineProperty(window, 'location', {
       value: { reload: mockReload },
       writable: true,
     });
 
     render(
-      <ToolDemoErrorBoundary toolName="Reload Tool">
+      <ToolDemoErrorBoundary toolName='Reload Tool'>
         <ThrowError />
       </ToolDemoErrorBoundary>
     );
 
-    fireEvent.click(screen.getByText("Reload Page"));
+    fireEvent.click(screen.getByText('Reload Page'));
     expect(mockReload).toHaveBeenCalled();
   });
 
-  it("has proper accessibility attributes", () => {
+  it('has proper accessibility attributes', () => {
     render(
-      <ToolDemoErrorBoundary toolName="Accessible Tool">
+      <ToolDemoErrorBoundary toolName='Accessible Tool'>
         <ThrowError />
       </ToolDemoErrorBoundary>
     );
 
-    const errorContainer = screen.getByRole("alert");
-    expect(errorContainer).toHaveAttribute("aria-live", "polite");
+    const errorContainer = screen.getByRole('alert');
+    expect(errorContainer).toHaveAttribute('aria-live', 'polite');
 
     // Check that buttons have proper labels
     expect(screen.getByText(/Try Again/)).toBeInTheDocument();
-    expect(screen.getByText("Reload Page")).toBeInTheDocument();
+    expect(screen.getByText('Reload Page')).toBeInTheDocument();
   });
 
-  it("categorizes different error types correctly", () => {
+  it('categorizes different error types correctly', () => {
     const errorTypes = [
-      { type: "jsxgraph" as const, expectedCategory: "JSXGraph Error" },
-      { type: "math" as const, expectedCategory: "Math.js Error" },
-      { type: "network" as const, expectedCategory: "Network Error" },
-      { type: "canvas" as const, expectedCategory: "Graphics Error" },
+      { type: 'jsxgraph' as const, expectedCategory: 'JSXGraph Error' },
+      { type: 'math' as const, expectedCategory: 'Math.js Error' },
+      { type: 'network' as const, expectedCategory: 'Network Error' },
+      { type: 'canvas' as const, expectedCategory: 'Graphics Error' },
     ];
 
     errorTypes.forEach(({ type, expectedCategory }) => {
@@ -353,27 +353,27 @@ describe("ToolDemoErrorBoundary", () => {
         </ToolDemoErrorBoundary>
       );
 
-      expect(console.error).toHaveBeenCalledWith("Category:", expectedCategory);
+      expect(console.error).toHaveBeenCalledWith('Category:', expectedCategory);
       unmount();
     });
   });
 
-  it("maintains error state across re-renders", () => {
+  it('maintains error state across re-renders', () => {
     const { rerender } = render(
-      <ToolDemoErrorBoundary toolName="Persistent Tool">
+      <ToolDemoErrorBoundary toolName='Persistent Tool'>
         <ThrowError />
       </ToolDemoErrorBoundary>
     );
 
-    expect(screen.getByText("Persistent Tool Unavailable")).toBeInTheDocument();
+    expect(screen.getByText('Persistent Tool Unavailable')).toBeInTheDocument();
 
     // Re-render with same error
     rerender(
-      <ToolDemoErrorBoundary toolName="Persistent Tool">
+      <ToolDemoErrorBoundary toolName='Persistent Tool'>
         <ThrowError />
       </ToolDemoErrorBoundary>
     );
 
-    expect(screen.getByText("Persistent Tool Unavailable")).toBeInTheDocument();
+    expect(screen.getByText('Persistent Tool Unavailable')).toBeInTheDocument();
   });
 });
