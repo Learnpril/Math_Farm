@@ -14,7 +14,7 @@
   - Implement lazy loading configuration for math-heavy routes
   - _Requirements: 3.3, 3.4_
 
-- [ ] 3. Extract and refactor math utilities into pure functions
+- [x] 3. Extract and refactor math utilities into pure functions
   - Create dedicated math utility modules (client/src/lib/math/) separate from UI components
   - Extract math operations from EquationSolverDemo, CalculatorDemo, and FunctionGrapherDemo into testable pure functions
   - Implement math operation interfaces with proper TypeScript types

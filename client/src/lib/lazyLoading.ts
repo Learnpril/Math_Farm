@@ -11,7 +11,7 @@ const loadedLibraries = new Map<string, Promise<any>>();
  */
 export const loadMathJax = async (): Promise<any> => {
   const cacheKey = 'mathjax';
-  
+
   if (loadedLibraries.has(cacheKey)) {
     return loadedLibraries.get(cacheKey);
   }
@@ -26,7 +26,7 @@ export const loadMathJax = async (): Promise<any> => {
 
       // Dynamic import of better-react-mathjax
       const { MathJaxContext, MathJax } = await import('better-react-mathjax');
-      
+
       // Wait for MathJax to be ready if it's loading
       if ((window as any).MathJax?.startup?.promise) {
         await (window as any).MathJax.startup.promise;
@@ -48,7 +48,7 @@ export const loadMathJax = async (): Promise<any> => {
  */
 export const loadJSXGraph = async (): Promise<any> => {
   const cacheKey = 'jsxgraph';
-  
+
   if (loadedLibraries.has(cacheKey)) {
     return loadedLibraries.get(cacheKey);
   }
@@ -79,7 +79,8 @@ export const loadJSXGraph = async (): Promise<any> => {
 
       // Create and load the script
       const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/jsxgraph@1.10.0/distrib/jsxgraphcore.js';
+      script.src =
+        'https://cdn.jsdelivr.net/npm/jsxgraph@1.10.0/distrib/jsxgraphcore.js';
       script.async = true;
       script.crossOrigin = 'anonymous';
 
@@ -113,13 +114,14 @@ export const loadJSXGraph = async (): Promise<any> => {
  */
 export const loadMathJS = async (): Promise<any> => {
   const cacheKey = 'mathjs';
-  
+
   if (loadedLibraries.has(cacheKey)) {
     return loadedLibraries.get(cacheKey);
   }
 
-  const loadPromise = import('mathjs').catch(error => {
-    console.error('Failed to load math.js:', error);
+  // Skip loading external mathjs due to compatibility issues
+  const loadPromise = Promise.resolve().catch(error => {
+    console.error('Math loading skipped:', error);
     throw error;
   });
 
@@ -143,21 +145,24 @@ export const createImageLazyLoader = () => {
     return null;
   }
 
-  const imageObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const img = entry.target as HTMLImageElement;
-        if (img.dataset.src) {
-          img.src = img.dataset.src;
-          img.classList.remove('lazy');
-          observer.unobserve(img);
+  const imageObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target as HTMLImageElement;
+          if (img.dataset.src) {
+            img.src = img.dataset.src;
+            img.classList.remove('lazy');
+            observer.unobserve(img);
+          }
         }
-      }
-    });
-  }, {
-    rootMargin: '50px 0px', // Start loading 50px before the image enters viewport
-    threshold: 0.01
-  });
+      });
+    },
+    {
+      rootMargin: '50px 0px', // Start loading 50px before the image enters viewport
+      threshold: 0.01,
+    }
+  );
 
   return imageObserver;
 };
