@@ -254,7 +254,7 @@ export function useToolErrorHandler(toolName?: string) {
     (error: Error, operation?: string, input?: string) => {
       const category = categorizeError(error);
       const severity = determineSeverity(error, category);
-      
+
       // Log the error with enhanced context
       const errorId = errorLogger.logGeneralError(error, category, severity, {
         toolName,
@@ -269,7 +269,11 @@ export function useToolErrorHandler(toolName?: string) {
         error,
         operation || 'unknown',
         input || '',
-        { operation: operation || 'unknown', input: input || '', timestamp: new Date() }
+        {
+          operation: operation || 'unknown',
+          input: input || '',
+          timestamp: new Date(),
+        }
       );
 
       setError(error);
@@ -288,7 +292,7 @@ export function useToolErrorHandler(toolName?: string) {
   const handleMathError = useCallback(
     (error: Error, operation: string, input: string) => {
       const result = mathErrorHandler.handleError(error, operation, input);
-      
+
       setError(error);
       setErrorMetadata({
         operation,
@@ -312,7 +316,7 @@ export function useToolErrorHandler(toolName?: string) {
   );
 
   const retryOperation = useCallback(
-    async <T>(operation: () => Promise<T> | T): Promise<T> => {
+    async (operation: () => Promise<any> | any): Promise<any> => {
       try {
         const result = await operation();
         resetError(); // Clear error on success
@@ -339,11 +343,11 @@ export function useToolErrorHandler(toolName?: string) {
     }
   }, [error, retryCount, resetError]);
 
-  return { 
-    error, 
+  return {
+    error,
     errorMetadata,
     retryCount,
-    handleError, 
+    handleError,
     handleMathError,
     handleValidationError,
     retryOperation,

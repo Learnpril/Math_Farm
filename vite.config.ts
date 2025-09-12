@@ -39,7 +39,7 @@ export default defineConfig({
           // Vendor chunk for React and core libraries
           vendor: ['react', 'react-dom', 'wouter'],
           // Math libraries chunk for lazy loading
-          math: ['mathjs', 'nerdamer', 'mathjax', 'better-react-mathjax'],
+          math: ['mathjax', 'better-react-mathjax'],
           // Interactive components chunk
           interactive: ['jsxgraph'],
           // UI components chunk
@@ -93,9 +93,13 @@ export default defineConfig({
       '@': path.resolve(__dirname, './client/src'),
     },
   },
+  define: {
+    global: 'globalThis',
+  },
   server: {
     port: 3000,
     host: true,
+    force: true, // Force dependency re-optimization
   },
   // Enhanced dependency optimization for better performance
   optimizeDeps: {
@@ -107,10 +111,11 @@ export default defineConfig({
       'clsx',
       'tailwind-merge',
     ],
-    // Exclude math libraries from pre-bundling for lazy loading
+    // Exclude math libraries from pre-bundling to avoid Node.js compatibility issues
     exclude: [
       'mathjs',
       'nerdamer',
+      'javascript-natural-sort',
       'mathjax',
       'better-react-mathjax',
       'jsxgraph',

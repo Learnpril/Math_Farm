@@ -3,6 +3,9 @@
  */
 
 import nerdamer from 'nerdamer';
+import nerdamer from 'nerdamer';
+import nerdamer from 'nerdamer';
+import nerdamer from 'nerdamer';
 import { errorLogger } from '../errorLogging';
 
 export interface NerdamerLoaderResult {
@@ -58,22 +61,14 @@ export class NerdamerLoader {
         };
       }
 
-      // Load nerdamer directly since it's now installed
-      this.nerdamerInstance = nerdamer;
-      this.isLoaded = true;
-
-      // Configure nerdamer for better performance
-      nerdamer.set('PARSE2NUMBER', false); // Keep symbolic results
-      nerdamer.set('expand', true); // Auto-expand expressions
-
-      // Also make it available globally for compatibility
-      if (typeof window !== 'undefined') {
-        window.nerdamer = nerdamer;
-      }
+      // For now, skip loading nerdamer to avoid compatibility issues
+      console.warn(
+        'Nerdamer loading skipped due to browser compatibility issues'
+      );
 
       return {
-        loaded: true,
-        nerdamerInstance: nerdamer,
+        loaded: false,
+        error: 'Nerdamer not available in browser environment',
       };
     } catch (error) {
       const errorObj =
