@@ -1,4 +1,5 @@
 import { ValidationResult } from './types';
+import { errorLogger } from '../errorLogging';
 
 /**
  * Validates and sanitizes mathematical expressions for safe evaluation
@@ -69,40 +70,60 @@ export class MathValidator {
    * Validates a mathematical expression for safety and correctness
    */
   static validateExpression(input: string): ValidationResult {
-    if (!input || typeof input !== 'string') {
-      return { valid: false, error: 'Input must be a non-empty string' };
-    }
-
-    const trimmed = input.trim();
-    if (!trimmed) {
-      return { valid: false, error: 'Expression cannot be empty' };
-    }
-
-    // Check for dangerous patterns
-    for (const pattern of this.DANGEROUS_PATTERNS) {
-      if (pattern.test(trimmed)) {
-        return {
-          valid: false,
-          error: 'Expression contains potentially dangerous code',
-        };
+    try {
+      if (!input || typeof input !== 'string') {
+        const error = 'Input must be a non-empty string';
+        errorLogger.logValidationError(input || '', 'expression', error);
+        return { valid: false, error };
       }
+
+      const trimmed = input.trim();
+      if (!trimmed) {
+        const error = 'Expression cannot be empty';
+        errorLogger.logValidationError(input, 'expression', error);
+        return { valid: false, error };
+      }
+
+      // Check for dangerous patterns
+      for (const pattern of this.DANGEROUS_PATTERNS) {
+        if (pattern.test(trimmed)) {
+          const error = 'Expression contains potentially dangerous code';
+          errorLogger.logValidationError(input, 'security', error, {
+            pattern: pattern.toString(),
+            securityRisk: true,
+          });
+          return { valid: false, error };
+        }
+      }
+
+      // Check for balanced parentheses
+      if (!this.hasBalancedParentheses(trimmed)) {
+        const error = 'Unbalanced parentheses';
+        errorLogger.logValidationError(input, 'syntax', error);
+        return { valid: false, error };
+      }
+
+      // Check for valid characters (allow letters, numbers, operators, parentheses, dots, spaces)
+      const validCharPattern = /^[a-zA-Z0-9+\-*/^().,\s_πe]+$/;
+      if (!validCharPattern.test(trimmed)) {
+        const error = 'Expression contains invalid characters';
+        errorLogger.logValidationError(input, 'characters', error);
+        return { valid: false, error };
+      }
+
+      // Sanitize the expression
+      const sanitized = this.sanitizeExpression(trimmed);
+
+      return { valid: true, sanitized };
+    } catch (error) {
+      const errorObj =
+        error instanceof Error ? error : new Error('Validation failed');
+      errorLogger.logValidationError(input || '', 'general', errorObj);
+      return {
+        valid: false,
+        error: 'Validation failed due to an unexpected error',
+      };
     }
-
-    // Check for balanced parentheses
-    if (!this.hasBalancedParentheses(trimmed)) {
-      return { valid: false, error: 'Unbalanced parentheses' };
-    }
-
-    // Check for valid characters (allow letters, numbers, operators, parentheses, dots, spaces)
-    const validCharPattern = /^[a-zA-Z0-9+\-*/^().,\s_πe]+$/;
-    if (!validCharPattern.test(trimmed)) {
-      return { valid: false, error: 'Expression contains invalid characters' };
-    }
-
-    // Sanitize the expression
-    const sanitized = this.sanitizeExpression(trimmed);
-
-    return { valid: true, sanitized };
   }
 
   /**

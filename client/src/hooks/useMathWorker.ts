@@ -9,6 +9,8 @@ import {
   mathOperations,
 } from '../lib/workers/worker-interface';
 import { MathResult, GraphBounds, AngleMode } from '../lib/math/types';
+import { mathErrorHandler } from '../lib/math/error-handler';
+import { errorLogger } from '../lib/errorLogging';
 
 export interface MathWorkerState {
   isLoading: boolean;
@@ -86,12 +88,22 @@ export function useMathWorker(): MathWorkerState & MathWorkerOperations {
       } catch (error) {
         // Only update state if this is still the latest operation
         if (operationId === operationCountRef.current) {
-          const errorMessage =
-            error instanceof Error ? error.message : `${operationName} failed`;
+          const errorObj =
+            error instanceof Error
+              ? error
+              : new Error(`${operationName} failed`);
+
+          // Enhanced error handling for worker operations
+          const errorResult = mathErrorHandler.handleWorker(
+            'math-worker',
+            operationName,
+            errorObj
+          );
+
           setState(prev => ({
             ...prev,
             isLoading: false,
-            error: errorMessage,
+            error: errorResult.error || errorObj.message,
           }));
         }
         throw error;

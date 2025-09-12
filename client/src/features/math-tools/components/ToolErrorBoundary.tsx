@@ -1,6 +1,21 @@
 import { Component, ReactNode, useState, useCallback, useEffect } from 'react';
-import { AlertTriangle, RefreshCw, Home, Wrench } from 'lucide-react';
+import {
+  AlertTriangle,
+  RefreshCw,
+  Home,
+  Wrench,
+  HelpCircle,
+  ExternalLink,
+} from 'lucide-react';
 import { Link } from 'wouter';
+import {
+  errorLogger,
+  ErrorCategory,
+  ErrorSeverity,
+  categorizeError,
+  determineSeverity,
+} from '../../../lib/errorLogging';
+import { mathErrorHandler } from '../../../lib/math/error-handler';
 
 interface Props {
   children: ReactNode;
@@ -30,16 +45,91 @@ export class ToolErrorBoundary extends Component<Props, State> {
       errorInfo,
     });
 
-    // Log error for debugging
-    console.error(
-      `Tool Error in ${this.props.toolName || 'Unknown Tool'}:`,
-      error,
-      errorInfo
-    );
+    // Enhanced error logging with categorization
+    const category = categorizeError(error);
+    const severity = determineSeverity(error, category);
+
+    errorLogger.logError(error, errorInfo, category, severity, {
+      toolName: this.props.toolName,
+      timestamp: new Date().toISOString(),
+      userAgent: navigator.userAgent,
+      url: window.location.href,
+    });
   }
 
   handleRetry = () => {
     this.setState({ hasError: false, error: null, errorInfo: null });
+  };
+
+  getErrorMessage = (): string => {
+    if (!this.state.error) {
+      return 'Something went wrong with this tool.';
+    }
+
+    const message = this.state.error.message.toLowerCase();
+    const toolName = this.props.toolName || 'tool';
+
+    // Provide context-specific error messages
+    if (message.includes('jsxgraph')) {
+      return `The ${toolName} visualization engine failed to load. This might be due to a browser compatibility issue or network problem.`;
+    }
+
+    if (message.includes('math') || message.includes('calculate')) {
+      return `The ${toolName} encountered a mathematical error. This could be due to invalid input or a calculation that's too complex.`;
+    }
+
+    if (message.includes('network') || message.includes('fetch')) {
+      return `The ${toolName} couldn't load required resources. Please check your internet connection.`;
+    }
+
+    if (message.includes('memory') || message.includes('stack')) {
+      return `The ${toolName} ran out of memory. Try using simpler calculations or refresh the page.`;
+    }
+
+    return `The ${toolName} encountered an unexpected error. This might be temporary.`;
+  };
+
+  getSuggestedActions = (): string[] => {
+    if (!this.state.error) {
+      return ['Try refreshing the page'];
+    }
+
+    const message = this.state.error.message.toLowerCase();
+    const actions: string[] = [];
+
+    if (message.includes('jsxgraph') || message.includes('visualization')) {
+      actions.push(
+        'Try refreshing the page to reload the visualization engine',
+        'Check if your browser supports modern JavaScript features',
+        'Disable browser extensions that might block scripts'
+      );
+    } else if (message.includes('math') || message.includes('calculate')) {
+      actions.push(
+        'Check your mathematical expression for errors',
+        'Try using simpler calculations',
+        'Ensure all parentheses are properly matched'
+      );
+    } else if (message.includes('network') || message.includes('fetch')) {
+      actions.push(
+        'Check your internet connection',
+        'Try again in a few moments',
+        'Disable any ad blockers or security extensions'
+      );
+    } else if (message.includes('memory') || message.includes('stack')) {
+      actions.push(
+        'Close other browser tabs to free up memory',
+        'Try using smaller numbers or simpler expressions',
+        'Refresh the page and try again'
+      );
+    }
+
+    // Always include these general actions
+    actions.push(
+      'Try using a different browser if the problem persists',
+      'Contact support if this error continues to occur'
+    );
+
+    return actions.slice(0, 4); // Limit to 4 actions to avoid overwhelming the user
   };
 
   render() {
@@ -59,10 +149,27 @@ export class ToolErrorBoundary extends Component<Props, State> {
               : 'Tool Error'}
           </h3>
 
-          <p className='text-sm text-muted-foreground text-center mb-6 max-w-md'>
-            Something went wrong with this tool. This might be due to a library
-            loading issue or an unexpected error in the calculation.
+          <p className='text-sm text-muted-foreground text-center mb-4 max-w-md'>
+            {this.getErrorMessage()}
           </p>
+
+          {/* Suggested Actions */}
+          {this.getSuggestedActions().length > 0 && (
+            <div className='mb-6 max-w-md'>
+              <h4 className='text-sm font-medium text-foreground mb-2 flex items-center gap-2'>
+                <HelpCircle className='w-4 h-4' />
+                Try these solutions:
+              </h4>
+              <ul className='text-xs text-muted-foreground space-y-1'>
+                {this.getSuggestedActions().map((action, index) => (
+                  <li key={index} className='flex items-start gap-2'>
+                    <span className='inline-block w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0'></span>
+                    {action}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <div className='flex flex-col sm:flex-row gap-3 mb-6'>
             <button
@@ -131,32 +238,116 @@ export class ToolErrorBoundary extends Component<Props, State> {
   }
 }
 
-// Hook version for functional components
+// Hook version for functional components with enhanced error handling
 export function useToolErrorHandler(toolName?: string) {
   const [error, setError] = useState<Error | null>(null);
+  const [errorMetadata, setErrorMetadata] = useState<any>(null);
+  const [retryCount, setRetryCount] = useState(0);
 
   const resetError = useCallback(() => {
     setError(null);
+    setErrorMetadata(null);
+    setRetryCount(0);
   }, []);
 
   const handleError = useCallback(
-    (error: Error) => {
-      console.error(`Tool Error in ${toolName || 'Unknown Tool'}:`, error);
+    (error: Error, operation?: string, input?: string) => {
+      const category = categorizeError(error);
+      const severity = determineSeverity(error, category);
+      
+      // Log the error with enhanced context
+      const errorId = errorLogger.logGeneralError(error, category, severity, {
+        toolName,
+        operation,
+        input,
+        retryCount,
+        timestamp: new Date().toISOString(),
+      });
+
+      // Get enhanced error information
+      const errorResult = mathErrorHandler.handleError(
+        error,
+        operation || 'unknown',
+        input || '',
+        { operation: operation || 'unknown', input: input || '', timestamp: new Date() }
+      );
+
       setError(error);
+      setErrorMetadata({
+        errorId,
+        category,
+        severity,
+        suggestedActions: errorResult.metadata?.suggestedActions || [],
+        userFriendlyMessage: errorResult.error,
+      });
+      setRetryCount(prev => prev + 1);
+    },
+    [toolName, retryCount]
+  );
+
+  const handleMathError = useCallback(
+    (error: Error, operation: string, input: string) => {
+      const result = mathErrorHandler.handleError(error, operation, input);
+      
+      setError(error);
+      setErrorMetadata({
+        operation,
+        input,
+        fallbackResult: result.result,
+        suggestedActions: result.metadata?.suggestedActions || [],
+        userFriendlyMessage: result.error,
+      });
+      setRetryCount(prev => prev + 1);
+
+      return result;
     },
     [toolName]
   );
 
+  const handleValidationError = useCallback(
+    (input: string, validationType: string, error: Error | string) => {
+      return mathErrorHandler.handleValidation(input, validationType, error);
+    },
+    []
+  );
+
+  const retryOperation = useCallback(
+    async <T>(operation: () => Promise<T> | T): Promise<T> => {
+      try {
+        const result = await operation();
+        resetError(); // Clear error on success
+        return result;
+      } catch (error) {
+        if (error instanceof Error) {
+          handleError(error);
+        }
+        throw error;
+      }
+    },
+    [handleError, resetError]
+  );
+
   useEffect(() => {
-    if (error) {
-      // Auto-reset error after 10 seconds
+    if (error && retryCount < 3) {
+      // Auto-reset error after delay (with exponential backoff)
+      const delay = Math.min(5000 * Math.pow(2, retryCount), 30000); // Max 30 seconds
       const timer = setTimeout(() => {
-        setError(null);
-      }, 10000);
+        resetError();
+      }, delay);
 
       return () => clearTimeout(timer);
     }
-  }, [error]);
+  }, [error, retryCount, resetError]);
 
-  return { error, handleError, resetError };
+  return { 
+    error, 
+    errorMetadata,
+    retryCount,
+    handleError, 
+    handleMathError,
+    handleValidationError,
+    retryOperation,
+    resetError,
+    canRetry: retryCount < 3,
+  };
 }

@@ -7,6 +7,7 @@ import {
 import { MathValidator } from './validation';
 import { getMathInstance } from './math-loader';
 import { createFallbackMath } from './fallback-math';
+import { mathErrorHandler } from './error-handler';
 
 /**
  * Pure calculator functions extracted from CalculatorDemo
@@ -22,18 +23,17 @@ export class Calculator {
     // Validate input
     const validation = MathValidator.validateExpression(expression);
     if (!validation.valid) {
-      return {
-        result: 0,
-        error: validation.error,
-      };
+      return mathErrorHandler.handleValidation(
+        expression,
+        'expression',
+        validation.error || 'Invalid expression'
+      );
     }
 
     const math = getMathInstance();
     if (!math) {
-      return {
-        result: 0,
-        error: 'Math library not loaded',
-      };
+      const error = new Error('Math library not loaded');
+      return mathErrorHandler.handleLibrary('math.js', error, 'evaluate');
     }
 
     try {
@@ -64,12 +64,16 @@ export class Calculator {
         },
       };
     } catch (error) {
-      const errorMsg =
-        error instanceof Error ? error.message : 'Invalid expression';
-      return {
-        result: 0,
-        error: `Calculation error: ${errorMsg}`,
-      };
+      if (error instanceof Error) {
+        return mathErrorHandler.handleError(error, 'evaluate', expression);
+      }
+
+      const fallbackError = new Error('Invalid expression');
+      return mathErrorHandler.handleError(
+        fallbackError,
+        'evaluate',
+        expression
+      );
     }
   }
 
@@ -260,10 +264,21 @@ export class Calculator {
   }
 
   /**
-   * Validates calculator input for safety
+   * Validates calculator input for safety with enhanced error handling
    */
   static validateCalculatorInput(input: string): ValidationResult {
-    return MathValidator.validateExpression(input);
+    try {
+      return MathValidator.validateExpression(input);
+    } catch (error) {
+      if (error instanceof Error) {
+        return mathErrorHandler.handleValidation(input, 'calculator', error);
+      }
+      return mathErrorHandler.handleValidation(
+        input,
+        'calculator',
+        'Validation failed'
+      );
+    }
   }
 
   /**

@@ -2,6 +2,7 @@ import { MathResult, SolutionStep, SolverType } from './types';
 import { MathValidator } from './validation';
 import { getMathInstance } from './math-loader';
 import { createFallbackMath } from './fallback-math';
+import { mathErrorHandler } from './error-handler';
 
 /**
  * Pure equation solving functions extracted from EquationSolverDemo
@@ -19,10 +20,11 @@ export class EquationSolver {
       // Validate input
       const validation = MathValidator.validateExpression(equation);
       if (!validation.valid) {
-        return {
-          result: '',
-          error: `Validation error: ${validation.error}`,
-        };
+        return mathErrorHandler.handleValidation(
+          equation,
+          'equation',
+          validation.error || 'Invalid equation'
+        );
       }
 
       // Always use fallback math implementation to avoid external dependencies
@@ -73,13 +75,12 @@ export class EquationSolver {
         },
       };
     } catch (error) {
-      const errorMsg =
-        error instanceof Error ? error.message : 'Unknown solving error';
-      console.error('Equation solver error:', error);
-      return {
-        result: '',
-        error: `Solving failed: ${errorMsg}`,
-      };
+      if (error instanceof Error) {
+        return mathErrorHandler.handleError(error, solverType, equation);
+      }
+
+      const fallbackError = new Error('Unknown solving error');
+      return mathErrorHandler.handleError(fallbackError, solverType, equation);
     }
   }
 

@@ -18,16 +18,27 @@ import {
   AngleMode,
 } from '../../../lib/math';
 import { useCalculatorWorker } from '../../../hooks/useMathWorker';
+import { useToolErrorHandler } from './ToolErrorBoundary';
+import { ErrorMessage, MathErrorMessage } from '../../../lib';
 
 export function Calculator() {
   const [expression, setExpression] = useState('');
   const [result, setResult] = useState('');
   const [history, setHistory] = useState<CalculationHistory[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showHistory, setShowHistory] = useState(false);
   const [memory, setMemory] = useState(0);
+
+  // Enhanced error handling
+  const {
+    error,
+    errorMetadata,
+    handleMathError,
+    handleValidationError,
+    resetError,
+    canRetry,
+  } = useToolErrorHandler('Calculator');
   const [showScientific, setShowScientific] = useState(false);
   const [angleMode, setAngleMode] = useState<AngleMode>('deg');
   const [lastCalculation, setLastCalculation] = useState<ToolResult | null>(
@@ -53,7 +64,9 @@ export function Calculator() {
         setError(result.error || 'Failed to load math library');
       }
     } catch (err) {
-      setError('Error loading calculator library');
+      if (err instanceof Error) {
+        handleMathError(err, 'library_load', 'calculator initialization');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -65,11 +78,16 @@ export function Calculator() {
       if (!expr.trim()) return;
 
       try {
+        // Reset any previous errors
+        resetError();
+
         // Use Web Worker for computation if available, otherwise fallback to main thread
         const workerResult = await evaluateWithWorker(expr, angleMode);
 
         if (workerResult.error) {
-          setResult(`Error: ${workerResult.error}`);
+          const error = new Error(workerResult.error);
+          const errorResult = handleMathError(error, 'evaluate', expr);
+          setResult(`Error: ${errorResult.error || workerResult.error}`);
           setLastCalculation(null);
           return null;
         }
@@ -95,9 +113,10 @@ export function Calculator() {
 
         return resultStr;
       } catch (error) {
-        const errorMsg =
-          error instanceof Error ? error.message : 'Calculation failed';
-        setResult(`Error: ${errorMsg}`);
+        const errorObj =
+          error instanceof Error ? error : new Error('Calculation failed');
+        const errorResult = handleMathError(errorObj, 'calculate', expr);
+        setResult(`Error: ${errorResult.error || errorObj.message}`);
         setLastCalculation(null);
         return null;
       }
@@ -346,11 +365,33 @@ export function Calculator() {
             </div>
           )}
 
-          {/* Error display */}
-          {(error || workerError) && (
-            <div className='p-3 bg-destructive/10 border border-destructive/20 rounded-md'>
-              <p className='text-destructive text-sm'>{error || workerError}</p>
-            </div>
+          {/* Enhanced Error display */}
+          {error && (
+            <MathErrorMessage
+              operation='calculation'
+              input={expression}
+              error={errorMetadata?.userFriendlyMessage || error.message}
+              fallbackResult={errorMetadata?.fallbackResult}
+              onRetry={canRetry ? () => calculate(expression) : undefined}
+              onDismiss={resetError}
+              compact
+            />
+          )}
+
+          {/* Worker Error display */}
+          {workerError && !error && (
+            <ErrorMessage
+              message={workerError}
+              title='Worker Error'
+              suggestedActions={[
+                'Try refreshing the page',
+                'Use simpler calculations',
+              ]}
+              onDismiss={() => {
+                /* Worker error handling */
+              }}
+              compact
+            />
           )}
 
           {/* Performance indicator */}

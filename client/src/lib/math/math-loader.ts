@@ -3,6 +3,7 @@
  */
 
 import { createFallbackMath } from './fallback-math';
+import { errorLogger } from '../errorLogging';
 
 export interface MathLoaderResult {
   loaded: boolean;
@@ -78,10 +79,18 @@ export class MathLoader {
         mathInstance: window.math,
       };
     } catch (error) {
-      const errorMessage =
+      const errorObj =
         error instanceof Error
-          ? error.message
-          : 'Unknown error loading math.js';
+          ? error
+          : new Error('Unknown error loading math.js');
+
+      // Log the library loading error
+      errorLogger.logLibraryError('math.js', errorObj, {
+        timestamp: new Date().toISOString(),
+        fallbackUsed: true,
+      });
+
+      const errorMessage = errorObj.message;
       return {
         loaded: false,
         error: errorMessage,

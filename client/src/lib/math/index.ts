@@ -6,3 +6,4 @@ export * from './function-grapher';
 export * from './validation';
 export * from './math-loader';
 export * from './fallback-math';
+export * from './error-handler';

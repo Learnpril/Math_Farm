@@ -7,7 +7,7 @@ export enum ErrorSeverity {
   LOW = 'low',
   MEDIUM = 'medium',
   HIGH = 'high',
-  CRITICAL = 'critical'
+  CRITICAL = 'critical',
 }
 
 /**
@@ -15,13 +15,16 @@ export enum ErrorSeverity {
  */
 export enum ErrorCategory {
   MATH_RENDERING = 'math_rendering',
+  MATH_OPERATION = 'math_operation',
   TOOL_DEMO = 'tool_demo',
   NETWORK = 'network',
   LIBRARY_LOADING = 'library_loading',
   USER_INTERACTION = 'user_interaction',
   PERFORMANCE = 'performance',
   ACCESSIBILITY = 'accessibility',
-  UNKNOWN = 'unknown'
+  VALIDATION = 'validation',
+  WORKER = 'worker',
+  UNKNOWN = 'unknown',
 }
 
 /**
@@ -99,7 +102,7 @@ export class ErrorLogger {
     additionalData?: Record<string, any>
   ): string {
     const errorObj = typeof error === 'string' ? new Error(error) : error;
-    
+
     const errorReport = this.createErrorReport(
       errorObj,
       category,
@@ -125,7 +128,7 @@ export class ErrorLogger {
     additionalData?: Record<string, any>
   ): string {
     const error = new Error(`Performance threshold exceeded: ${message}`);
-    
+
     return this.logGeneralError(
       error,
       ErrorCategory.PERFORMANCE,
@@ -134,7 +137,7 @@ export class ErrorLogger {
         metric,
         value,
         threshold,
-        ...additionalData
+        ...additionalData,
       }
     );
   }
@@ -153,7 +156,74 @@ export class ErrorLogger {
       ErrorSeverity.HIGH,
       {
         libraryName,
-        ...additionalData
+        ...additionalData,
+      }
+    );
+  }
+
+  /**
+   * Log a math operation error with specific context
+   */
+  logMathError(
+    operation: string,
+    input: string,
+    error: Error,
+    additionalData?: Record<string, any>
+  ): string {
+    return this.logGeneralError(
+      error,
+      ErrorCategory.MATH_OPERATION,
+      ErrorSeverity.MEDIUM,
+      {
+        operation,
+        input,
+        inputLength: input?.length || 0,
+        ...additionalData,
+      }
+    );
+  }
+
+  /**
+   * Log a validation error
+   */
+  logValidationError(
+    input: string,
+    validationType: string,
+    error: Error | string,
+    additionalData?: Record<string, any>
+  ): string {
+    const errorObj = typeof error === 'string' ? new Error(error) : error;
+
+    return this.logGeneralError(
+      errorObj,
+      ErrorCategory.VALIDATION,
+      ErrorSeverity.LOW,
+      {
+        input,
+        validationType,
+        inputLength: input?.length || 0,
+        ...additionalData,
+      }
+    );
+  }
+
+  /**
+   * Log a Web Worker error
+   */
+  logWorkerError(
+    workerType: string,
+    operation: string,
+    error: Error,
+    additionalData?: Record<string, any>
+  ): string {
+    return this.logGeneralError(
+      error,
+      ErrorCategory.WORKER,
+      ErrorSeverity.HIGH,
+      {
+        workerType,
+        operation,
+        ...additionalData,
       }
     );
   }
@@ -226,7 +296,7 @@ export class ErrorLogger {
 
   private addToQueue(errorReport: ErrorReport): void {
     this.errorQueue.push(errorReport);
-    
+
     // Keep queue size manageable
     if (this.errorQueue.length > this.maxQueueSize) {
       this.errorQueue.shift();
@@ -238,43 +308,46 @@ export class ErrorLogger {
       [ErrorSeverity.LOW]: '🟡',
       [ErrorSeverity.MEDIUM]: '🟠',
       [ErrorSeverity.HIGH]: '🔴',
-      [ErrorSeverity.CRITICAL]: '💥'
+      [ErrorSeverity.CRITICAL]: '💥',
     };
 
     const categoryEmoji = {
       [ErrorCategory.MATH_RENDERING]: '📐',
+      [ErrorCategory.MATH_OPERATION]: '🧮',
       [ErrorCategory.TOOL_DEMO]: '🔧',
       [ErrorCategory.NETWORK]: '🌐',
       [ErrorCategory.LIBRARY_LOADING]: '📚',
       [ErrorCategory.USER_INTERACTION]: '👆',
       [ErrorCategory.PERFORMANCE]: '⚡',
       [ErrorCategory.ACCESSIBILITY]: '♿',
-      [ErrorCategory.UNKNOWN]: '❓'
+      [ErrorCategory.VALIDATION]: '✅',
+      [ErrorCategory.WORKER]: '👷',
+      [ErrorCategory.UNKNOWN]: '❓',
     };
 
     console.group(
       `${severityEmoji[errorReport.severity]} ${categoryEmoji[errorReport.category]} Error Report [${errorReport.id}]`
     );
-    
+
     console.error('Message:', errorReport.message);
     console.error('Category:', errorReport.category);
     console.error('Severity:', errorReport.severity);
     console.error('Timestamp:', errorReport.timestamp);
-    
+
     if (errorReport.stack) {
       console.error('Stack Trace:', errorReport.stack);
     }
-    
+
     if (errorReport.componentStack) {
       console.error('Component Stack:', errorReport.componentStack);
     }
-    
+
     console.table(errorReport.context);
-    
+
     if (errorReport.context.additionalData) {
       console.error('Additional Data:', errorReport.context.additionalData);
     }
-    
+
     console.groupEnd();
   }
 
@@ -284,7 +357,9 @@ export class ErrorLogger {
 
   private getCurrentTheme(): string {
     try {
-      return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      return document.documentElement.classList.contains('dark')
+        ? 'dark'
+        : 'light';
     } catch {
       return 'unknown';
     }
@@ -301,61 +376,130 @@ export const errorLogger = ErrorLogger.getInstance();
  */
 export function categorizeError(error: Error): ErrorCategory {
   const message = error.message.toLowerCase();
-  
-  if (message.includes('mathjax') || message.includes('latex') || message.includes('math')) {
+
+  if (message.includes('mathjax') || message.includes('latex')) {
     return ErrorCategory.MATH_RENDERING;
   }
-  
-  if (message.includes('jsxgraph') || message.includes('tool') || message.includes('demo')) {
+
+  if (
+    message.includes('evaluate') ||
+    message.includes('calculate') ||
+    message.includes('solve') ||
+    message.includes('derivative') ||
+    message.includes('integral') ||
+    message.includes('expression')
+  ) {
+    return ErrorCategory.MATH_OPERATION;
+  }
+
+  if (
+    message.includes('jsxgraph') ||
+    message.includes('tool') ||
+    message.includes('demo')
+  ) {
     return ErrorCategory.TOOL_DEMO;
   }
-  
-  if (message.includes('network') || message.includes('fetch') || message.includes('xhr')) {
+
+  if (
+    message.includes('network') ||
+    message.includes('fetch') ||
+    message.includes('xhr')
+  ) {
     return ErrorCategory.NETWORK;
   }
-  
-  if (message.includes('load') || message.includes('import') || message.includes('module')) {
+
+  if (
+    message.includes('load') ||
+    message.includes('import') ||
+    message.includes('module')
+  ) {
     return ErrorCategory.LIBRARY_LOADING;
   }
-  
-  if (message.includes('click') || message.includes('touch') || message.includes('input')) {
+
+  if (
+    message.includes('click') ||
+    message.includes('touch') ||
+    message.includes('input')
+  ) {
     return ErrorCategory.USER_INTERACTION;
   }
-  
-  if (message.includes('performance') || message.includes('timeout') || message.includes('memory')) {
+
+  if (
+    message.includes('performance') ||
+    message.includes('timeout') ||
+    message.includes('memory')
+  ) {
     return ErrorCategory.PERFORMANCE;
   }
-  
-  if (message.includes('aria') || message.includes('accessibility') || message.includes('screen reader')) {
+
+  if (
+    message.includes('aria') ||
+    message.includes('accessibility') ||
+    message.includes('screen reader')
+  ) {
     return ErrorCategory.ACCESSIBILITY;
   }
-  
+
+  if (
+    message.includes('validation') ||
+    message.includes('invalid') ||
+    message.includes('sanitize')
+  ) {
+    return ErrorCategory.VALIDATION;
+  }
+
+  if (
+    message.includes('worker') ||
+    message.includes('postmessage') ||
+    message.includes('thread')
+  ) {
+    return ErrorCategory.WORKER;
+  }
+
   return ErrorCategory.UNKNOWN;
 }
 
 /**
  * Utility function to determine error severity based on error type
  */
-export function determineSeverity(error: Error, category: ErrorCategory): ErrorSeverity {
+export function determineSeverity(
+  error: Error,
+  category: ErrorCategory
+): ErrorSeverity {
   // Critical errors that break core functionality
-  if (category === ErrorCategory.LIBRARY_LOADING || error.message.includes('chunk load')) {
+  if (
+    category === ErrorCategory.LIBRARY_LOADING ||
+    error.message.includes('chunk load')
+  ) {
     return ErrorSeverity.CRITICAL;
   }
-  
-  // High severity for math rendering and tool demos
-  if (category === ErrorCategory.MATH_RENDERING || category === ErrorCategory.TOOL_DEMO) {
+
+  // High severity for math rendering, tool demos, and worker errors
+  if (
+    category === ErrorCategory.MATH_RENDERING ||
+    category === ErrorCategory.TOOL_DEMO ||
+    category === ErrorCategory.WORKER
+  ) {
     return ErrorSeverity.HIGH;
   }
-  
-  // Medium severity for network and performance issues
-  if (category === ErrorCategory.NETWORK || category === ErrorCategory.PERFORMANCE) {
+
+  // Medium severity for math operations, network and performance issues
+  if (
+    category === ErrorCategory.MATH_OPERATION ||
+    category === ErrorCategory.NETWORK ||
+    category === ErrorCategory.PERFORMANCE
+  ) {
     return ErrorSeverity.MEDIUM;
   }
-  
-  // Low severity for user interaction and accessibility issues
-  if (category === ErrorCategory.USER_INTERACTION || category === ErrorCategory.ACCESSIBILITY) {
+
+  // Low severity for user interaction, accessibility, and validation issues
+  if (
+    category === ErrorCategory.USER_INTERACTION ||
+    category === ErrorCategory.ACCESSIBILITY ||
+    category === ErrorCategory.VALIDATION
+  ) {
     return ErrorSeverity.LOW;
   }
-  
+
   return ErrorSeverity.MEDIUM;
 }
