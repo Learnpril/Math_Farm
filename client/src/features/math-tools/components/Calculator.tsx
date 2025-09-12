@@ -5,13 +5,19 @@ import { Label } from '../../../components/ui/label';
 import { Card } from '../../../components/ui/card';
 import { SaveShareButtons } from './SaveShareButtons';
 import { ToolResult } from '../../../lib/toolUtils';
-import { Calculator as CalculatorIcon, History, Trash2 } from 'lucide-react';
+import {
+  Calculator as CalculatorIcon,
+  History,
+  Trash2,
+  Loader2,
+} from 'lucide-react';
 import {
   calculatorUtils,
   loadMathJS,
   CalculationHistory,
   AngleMode,
 } from '../../../lib/math';
+import { useCalculatorWorker } from '../../../hooks/useMathWorker';
 
 export function Calculator() {
   const [expression, setExpression] = useState('');
@@ -27,6 +33,14 @@ export function Calculator() {
   const [lastCalculation, setLastCalculation] = useState<ToolResult | null>(
     null
   );
+
+  // Use Web Worker hook for calculator operations
+  const {
+    evaluate: evaluateWithWorker,
+    isLoading: workerLoading,
+    error: workerError,
+    isUsingWorkers,
+  } = useCalculatorWorker();
 
   // Load math.js library using utility
   const loadMathLibrary = useCallback(async () => {
@@ -45,41 +59,50 @@ export function Calculator() {
     }
   }, []);
 
-  // Calculate expression with angle mode support using utility
+  // Calculate expression with angle mode support using Web Worker
   const calculate = useCallback(
-    (expr: string) => {
+    async (expr: string) => {
       if (!expr.trim()) return;
 
-      const mathResult = calculatorUtils.evaluate(expr, angleMode);
+      try {
+        // Use Web Worker for computation if available, otherwise fallback to main thread
+        const workerResult = await evaluateWithWorker(expr, angleMode);
 
-      if (mathResult.error) {
-        setResult(`Error: ${mathResult.error}`);
+        if (workerResult.error) {
+          setResult(`Error: ${workerResult.error}`);
+          setLastCalculation(null);
+          return null;
+        }
+
+        const resultStr = workerResult.result;
+        setResult(resultStr);
+
+        // Add to history using utility
+        setHistory(prev =>
+          calculatorUtils.history.addToHistory(expr, resultStr, prev)
+        );
+
+        // Create tool result for saving/sharing
+        const toolResult: ToolResult = {
+          toolId: 'calculator',
+          toolName: 'Advanced Calculator',
+          input: { expression: expr, angleMode },
+          output: { result: resultStr },
+          timestamp: new Date(),
+        };
+
+        setLastCalculation(toolResult);
+
+        return resultStr;
+      } catch (error) {
+        const errorMsg =
+          error instanceof Error ? error.message : 'Calculation failed';
+        setResult(`Error: ${errorMsg}`);
         setLastCalculation(null);
         return null;
       }
-
-      const resultStr = mathResult.result.toString();
-      setResult(resultStr);
-
-      // Add to history using utility
-      setHistory(prev =>
-        calculatorUtils.history.addToHistory(expr, resultStr, prev)
-      );
-
-      // Create tool result for saving/sharing
-      const toolResult: ToolResult = {
-        toolId: 'calculator',
-        toolName: 'Advanced Calculator',
-        input: { expression: expr, angleMode },
-        output: { result: resultStr },
-        timestamp: new Date(),
-      };
-
-      setLastCalculation(toolResult);
-
-      return resultStr;
     },
-    [angleMode]
+    [angleMode, evaluateWithWorker]
   );
 
   // Memory functions using utilities
@@ -111,17 +134,23 @@ export function Calculator() {
     setMemory(newMemory);
   }, []);
 
-  // Handle expression change with real-time calculation using utility
+  // Handle expression change with real-time calculation
   const handleExpressionChange = useCallback(
-    (value: string) => {
+    async (value: string) => {
       setExpression(value);
 
-      // Real-time calculation using utility
-      const realTimeResult = calculatorUtils.evaluate(value, angleMode).result;
-      if (realTimeResult && !calculatorUtils.evaluate(value, angleMode).error) {
-        // Only show result if expression looks complete (no trailing operators)
-        if (!/[+\-*/^(]$/.test(value.trim())) {
-          setResult(realTimeResult.toString());
+      // For real-time calculation, use main thread to avoid worker overhead
+      // Only calculate if expression looks complete (no trailing operators)
+      if (!/[+\-*/^(]$/.test(value.trim()) && value.trim()) {
+        try {
+          const realTimeResult = calculatorUtils.evaluate(value, angleMode);
+          if (realTimeResult.result && !realTimeResult.error) {
+            setResult(realTimeResult.result.toString());
+          } else {
+            setResult('');
+          }
+        } catch (error) {
+          setResult('');
         }
       } else {
         setResult('');
@@ -306,7 +335,31 @@ export function Calculator() {
               aria-live='polite'
               aria-label={`Result: ${result}`}
             >
-              = {result}
+              {workerLoading ? (
+                <div className='flex items-center justify-end gap-2'>
+                  <Loader2 className='h-5 w-5 animate-spin' />
+                  <span className='text-lg'>Computing...</span>
+                </div>
+              ) : (
+                `= ${result}`
+              )}
+            </div>
+          )}
+
+          {/* Error display */}
+          {(error || workerError) && (
+            <div className='p-3 bg-destructive/10 border border-destructive/20 rounded-md'>
+              <p className='text-destructive text-sm'>{error || workerError}</p>
+            </div>
+          )}
+
+          {/* Performance indicator */}
+          {isUsingWorkers && (
+            <div className='p-2 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-md'>
+              <p className='text-green-700 dark:text-green-300 text-xs flex items-center gap-1'>
+                <span className='w-2 h-2 bg-green-500 rounded-full'></span>
+                Using Web Workers for complex calculations
+              </p>
             </div>
           )}
         </div>

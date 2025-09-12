@@ -1,23 +1,24 @@
-import React from "react";
-import { Router, Route, Redirect } from "wouter";
-import { ThemeProvider } from "./components/ThemeProvider";
-import { Layout } from "./components/layout/Layout";
-import { Home, NotFound, MathSymbolsPage } from "./pages";
-import { CommunityPage } from "./pages/CommunityPage";
+import React from 'react';
+import { Router, Route, Redirect } from 'wouter';
+import { ThemeProvider } from './components/ThemeProvider';
+import { Layout } from './components/layout/Layout';
+import { Home, NotFound, MathSymbolsPage } from './pages';
+import { CommunityPage } from './pages/CommunityPage';
 import {
   LazyTopicPage,
   LazyToolsPage,
   LazyLaTeXGuidePage,
   LazyMATLABGuidePage,
-} from "./components/LazyComponents";
-import { LazyWrapper } from "./components/LazyWrapper";
+} from './components/LazyComponents';
+import { LazyWrapper } from './components/LazyWrapper';
 import {
   ErrorBoundaryProvider,
   ErrorBoundaryTester,
-} from "./components/ErrorBoundaryProvider";
-import { preloadMathJax } from "./lib/mathJaxLoader";
-import { PerformanceDashboard } from "./components/PerformanceDashboard";
-import { installDOMErrorHandler } from "./lib/domErrorHandler";
+} from './components/ErrorBoundaryProvider';
+import { preloadMathJax } from './lib/mathJaxLoader';
+import { PerformanceDashboard } from './components/PerformanceDashboard';
+import { installDOMErrorHandler } from './lib/domErrorHandler';
+import { PerformanceMonitor } from './components/PerformanceMonitor';
 
 function App() {
   const handleGlobalError = (error: Error, errorId: string) => {
@@ -34,70 +35,70 @@ function App() {
   return (
     <ErrorBoundaryProvider
       onGlobalError={handleGlobalError}
-      isDevelopment={process.env.NODE_ENV === "development"}
+      isDevelopment={process.env.NODE_ENV === 'development'}
     >
       <ThemeProvider>
         <Router>
           <Layout>
-            <Route path="/" component={Home} />
+            <Route path='/' component={Home} />
             <Route
-              path="/topic/:id"
+              path='/topic/:id'
               component={() => (
                 <LazyWrapper
-                  fallback="skeleton"
-                  skeletonVariant="topic"
-                  loadingText="Loading topic..."
+                  fallback='skeleton'
+                  skeletonVariant='topic'
+                  loadingText='Loading topic...'
                 >
                   <LazyTopicPage />
                 </LazyWrapper>
               )}
             />
             {/* Tool redirects - redirect specific tool URLs to main tools page */}
-            <Route path="/tools/:toolId">
-              <Redirect to="/tools" />
+            <Route path='/tools/:toolId'>
+              <Redirect to='/tools' />
             </Route>
 
             <Route
-              path="/tools"
+              path='/tools'
               component={() => (
                 <LazyWrapper
-                  fallback="skeleton"
-                  skeletonVariant="page"
-                  loadingText="Loading tools..."
+                  fallback='skeleton'
+                  skeletonVariant='page'
+                  loadingText='Loading tools...'
                 >
                   <LazyToolsPage />
                 </LazyWrapper>
               )}
             />
             <Route
-              path="/latex-guide"
+              path='/latex-guide'
               component={() => (
                 <LazyWrapper
-                  fallback="skeleton"
-                  skeletonVariant="page"
-                  loadingText="Loading LaTeX guide..."
+                  fallback='skeleton'
+                  skeletonVariant='page'
+                  loadingText='Loading LaTeX guide...'
                 >
                   <LazyLaTeXGuidePage />
                 </LazyWrapper>
               )}
             />
             <Route
-              path="/matlab-guide"
+              path='/matlab-guide'
               component={() => (
                 <LazyWrapper
-                  fallback="skeleton"
-                  skeletonVariant="page"
-                  loadingText="Loading MATLAB guide..."
+                  fallback='skeleton'
+                  skeletonVariant='page'
+                  loadingText='Loading MATLAB guide...'
                 >
                   <LazyMATLABGuidePage />
                 </LazyWrapper>
               )}
             />
-            <Route path="/math-symbols" component={MathSymbolsPage} />
-            <Route path="/community" component={CommunityPage} />
+            <Route path='/math-symbols' component={MathSymbolsPage} />
+            <Route path='/community' component={CommunityPage} />
 
-            <Route path="*">
-              <Redirect to="/" />
+            <Route path='*'>
+              <Redirect to='/' />
             </Route>
           </Layout>
 
@@ -108,9 +109,12 @@ function App() {
         </Router>
 
         {/* Performance monitoring dashboard - temporarily disabled to fix infinite loop */}
-        {process.env.NODE_ENV === "development" && false && (
-          <PerformanceDashboard componentName="Math Farm App" />
+        {process.env.NODE_ENV === 'development' && false && (
+          <PerformanceDashboard componentName='Math Farm App' />
         )}
+
+        {/* Web Worker Performance Monitor */}
+        <PerformanceMonitor />
       </ThemeProvider>
     </ErrorBoundaryProvider>
   );
@@ -121,16 +125,16 @@ function App() {
  */
 function PlaceholderPage() {
   return (
-    <div className="container mx-auto px-4 py-16 text-center">
-      <h1 className="text-3xl font-bold text-foreground mb-4">
+    <div className='container mx-auto px-4 py-16 text-center'>
+      <h1 className='text-3xl font-bold text-foreground mb-4'>
         Coming Soon - TEST CHANGE
       </h1>
-      <p className="text-lg text-muted-foreground mb-8">
+      <p className='text-lg text-muted-foreground mb-8'>
         This page will be implemented in future development phases.
       </p>
       <button
         onClick={() => window.history.back()}
-        className="px-6 py-2 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        className='px-6 py-2 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2'
       >
         Go Back
       </button>

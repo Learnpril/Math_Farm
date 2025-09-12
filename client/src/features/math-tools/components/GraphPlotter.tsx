@@ -5,6 +5,8 @@ import { Label } from '../../../components/ui/label';
 import { Card } from '../../../components/ui/card';
 import { SaveShareButtons } from './SaveShareButtons';
 import { ToolResult } from '../../../lib/toolUtils';
+import { useFunctionGrapher } from '../../../hooks/useMathWorker';
+import { Loader2 } from 'lucide-react';
 
 // JSXGraph types - removed to prevent conflicts
 
@@ -17,9 +19,22 @@ export function GraphPlotter() {
   const [yMin, setYMin] = useState(-10);
   const [yMax, setYMax] = useState(10);
   const [functions, setFunctions] = useState<
-    Array<{ id: string; expression: string; color: string }>
+    Array<{
+      id: string;
+      expression: string;
+      color: string;
+      points?: Array<{ x: number; y: number }>;
+    }>
   >([]);
   const [lastPlot, setLastPlot] = useState<ToolResult | null>(null);
+
+  // Use Web Worker hook for function graphing
+  const {
+    generatePoints,
+    isLoading,
+    error: workerError,
+    isUsingWorkers,
+  } = useFunctionGrapher();
 
   // Initialize JSXGraph
   useEffect(() => {
@@ -76,7 +91,7 @@ export function GraphPlotter() {
     }
   };
 
-  const addFunction = () => {
+  const addFunction = async () => {
     if (!board || !functionInput.trim()) return;
 
     try {
@@ -91,50 +106,74 @@ export function GraphPlotter() {
       const color = colors[functions.length % colors.length];
       const id = `func_${Date.now()}`;
 
-      // Create the function curve
-      const curve = board.create(
-        'functiongraph',
-        [
-          (x: number) => {
-            try {
-              // Simple expression evaluator for basic functions
-              const expr = functionInput
-                .replace(/\^/g, '**')
-                .replace(/sin/g, 'Math.sin')
-                .replace(/cos/g, 'Math.cos')
-                .replace(/tan/g, 'Math.tan')
-                .replace(/log/g, 'Math.log')
-                .replace(/sqrt/g, 'Math.sqrt')
-                .replace(/abs/g, 'Math.abs')
-                .replace(/exp/g, 'Math.exp')
-                .replace(/pi/g, 'Math.PI')
-                .replace(/e/g, 'Math.E');
+      // Generate function points using Web Worker
+      const bounds = { xMin, xMax, yMin, yMax };
+      const points = await generatePoints(functionInput, bounds, 1000);
 
-              // Replace x with the actual value
-              const finalExpr = expr.replace(/x/g, `(${x})`);
-              return eval(finalExpr);
-            } catch (error) {
-              return NaN;
-            }
-          },
-          xMin,
-          xMax,
-        ],
-        {
-          strokeColor: color,
-          strokeWidth: 2,
-          name: functionInput,
-          withLabel: true,
-          label: {
-            position: 'top',
-            offset: [10, 10],
-          },
-        }
-      );
+      // Create the function curve using generated points
+      let curve;
+      if (points.length > 0) {
+        // Use spline interpolation for smooth curves
+        curve = board.create(
+          'spline',
+          [points.map(p => p.x), points.map(p => p.y)],
+          {
+            strokeColor: color,
+            strokeWidth: 2,
+            name: functionInput,
+            withLabel: true,
+            label: {
+              position: 'top',
+              offset: [10, 10],
+            },
+          }
+        );
+      } else {
+        // Fallback to function graph if no points generated
+        curve = board.create(
+          'functiongraph',
+          [
+            (x: number) => {
+              try {
+                // Simple expression evaluator for basic functions
+                const expr = functionInput
+                  .replace(/\^/g, '**')
+                  .replace(/sin/g, 'Math.sin')
+                  .replace(/cos/g, 'Math.cos')
+                  .replace(/tan/g, 'Math.tan')
+                  .replace(/log/g, 'Math.log')
+                  .replace(/sqrt/g, 'Math.sqrt')
+                  .replace(/abs/g, 'Math.abs')
+                  .replace(/exp/g, 'Math.exp')
+                  .replace(/pi/g, 'Math.PI')
+                  .replace(/e/g, 'Math.E');
+
+                // Replace x with the actual value
+                const finalExpr = expr.replace(/x/g, `(${x})`);
+                return eval(finalExpr);
+              } catch (error) {
+                return NaN;
+              }
+            },
+            xMin,
+            xMax,
+          ],
+          {
+            strokeColor: color,
+            strokeWidth: 2,
+            name: functionInput,
+            withLabel: true,
+            label: {
+              position: 'top',
+              offset: [10, 10],
+            },
+          }
+        );
+      }
 
       const newFunctions = [
         ...functions,
-        { id, expression: functionInput, color },
+        { id, expression: functionInput, color, points },
       ];
       setFunctions(newFunctions);
 
@@ -149,6 +188,7 @@ export function GraphPlotter() {
         output: {
           plotted: functionInput,
           totalFunctions: newFunctions.length,
+          pointsGenerated: points.length,
         },
         timestamp: new Date(),
       };
@@ -201,12 +241,37 @@ export function GraphPlotter() {
                     }
                   }}
                 />
-                <Button onClick={addFunction}>Plot</Button>
+                <Button onClick={addFunction} disabled={isLoading}>
+                  {isLoading ? (
+                    <>
+                      <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                      {isUsingWorkers ? 'Computing...' : 'Plotting...'}
+                    </>
+                  ) : (
+                    'Plot'
+                  )}
+                </Button>
               </div>
               <p className='text-xs text-muted-foreground'>
                 Supported: +, -, *, /, ^, sin, cos, tan, log, sqrt, abs, exp,
                 pi, e
               </p>
+
+              {workerError && (
+                <div className='p-2 bg-destructive/10 border border-destructive/20 rounded-md'>
+                  <p className='text-destructive text-xs'>{workerError}</p>
+                </div>
+              )}
+
+              {/* Performance indicator */}
+              {isUsingWorkers && (
+                <div className='p-2 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-md'>
+                  <p className='text-green-700 dark:text-green-300 text-xs flex items-center gap-1'>
+                    <span className='w-2 h-2 bg-green-500 rounded-full'></span>
+                    Using Web Workers for smooth graphing
+                  </p>
+                </div>
+              )}
             </div>
 
             <div className='space-y-2'>

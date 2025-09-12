@@ -36,7 +36,7 @@ export class FallbackMath {
       expr = expr.replace(/\^/g, '**');
 
       // Basic factorial implementation
-      expr = expr.replace(/(\d+)!/g, (match, num) => {
+      expr = expr.replace(/(\d+)!/g, (_, num) => {
         const n = parseInt(num);
         let result = 1;
         for (let i = 2; i <= n; i++) {
@@ -74,7 +74,7 @@ export class FallbackMath {
     const powerMatch = expression.match(
       new RegExp(`(\\d*)\\*?${variable}\\^(\\d+)`)
     );
-    if (powerMatch) {
+    if (powerMatch && powerMatch[2]) {
       const coeff = powerMatch[1] ? parseInt(powerMatch[1]) : 1;
       const power = parseInt(powerMatch[2]);
       const newCoeff = coeff * power;
@@ -130,7 +130,7 @@ export class FallbackMath {
   /**
    * Config method (no-op for fallback)
    */
-  static config(options: any): void {
+  static config(_options: any): void {
     // No-op for fallback implementation
   }
 }

@@ -14,6 +14,13 @@ export default defineConfig({
       brotliSize: true,
     }),
   ],
+  // Web Worker support
+  worker: {
+    format: 'es',
+    plugins: [
+      // Enable React plugin for workers if needed
+    ],
+  },
   root: 'client',
   build: {
     outDir: '../dist',
@@ -31,10 +38,6 @@ export default defineConfig({
         manualChunks: {
           // Vendor chunk for React and core libraries
           vendor: ['react', 'react-dom', 'wouter'],
-          // Math libraries chunk (lazy loaded)
-          math: ['mathjs', 'mathjax', 'better-react-mathjax'],
-          // Interactive math tools chunk (lazy loaded)
-          interactive: ['jsxgraph'],
           // UI components chunk
           ui: [
             '@radix-ui/react-accordion',
@@ -99,13 +102,6 @@ export default defineConfig({
       '@tanstack/react-query',
       'clsx',
       'tailwind-merge',
-    ],
-    exclude: [
-      // Exclude math libraries from pre-bundling for lazy loading
-      'mathjs',
-      'mathjax',
-      'better-react-mathjax',
-      'jsxgraph',
     ],
   },
   // Performance optimizations without minification

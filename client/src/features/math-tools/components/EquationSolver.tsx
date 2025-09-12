@@ -11,6 +11,8 @@ import { Badge } from '../../../components/ui/badge';
 import { SaveShareButtons } from './SaveShareButtons';
 import { ToolResult } from '../../../lib/toolUtils';
 import { MathExpression } from '../../../components/MathExpression';
+import { useEquationSolver } from '../../../hooks/useMathWorker';
+import { Loader2 } from 'lucide-react';
 
 interface SolutionStep {
   step: string;
@@ -30,6 +32,14 @@ export function EquationSolver() {
   const [steps, setSteps] = useState<SolutionStep[]>([]);
   const [error, setError] = useState<string>('');
   const [lastSolution, setLastSolution] = useState<ToolResult | null>(null);
+
+  // Use Web Worker hook for equation solving
+  const {
+    solve: solveWithWorker,
+    isLoading,
+    error: workerError,
+    isUsingWorkers,
+  } = useEquationSolver();
 
   // Convert mathematical expressions to LaTeX format
   const toLatex = (expression: string): string => {
@@ -78,111 +88,83 @@ export function EquationSolver() {
     }
 
     try {
-      let solution: any;
-      let solutionSteps: SolutionStep[] = [];
+      // Use Web Worker for computation if available, otherwise fallback to main thread
+      const workerResult = await solveWithWorker(
+        equation,
+        variable,
+        solverType as 'solve' | 'derivative' | 'simplify'
+      );
 
-      switch (solverType) {
-        case 'solve':
-          // For simple quadratic equations, provide step-by-step solution
-          if (equation.includes('x^2') && !equation.includes('x^3')) {
-            solutionSteps = solveQuadratic(equation);
-          } else {
-            // For other equations, try to evaluate at different points
-            solutionSteps.push({
-              step: '1',
-              explanation: 'Attempting to find roots numerically',
-              result: 'Checking various values...',
-            });
+      if (workerResult.error) {
+        setError(workerResult.error);
+        return;
+      }
 
-            // Simple root finding for basic equations
-            const roots = await findRootsNumerically(equation, variable);
-            solution =
-              roots.length > 0 ? roots.join(', ') : 'No real roots found';
+      // Process the result from worker
+      const solution = workerResult.result;
+      const solutionSteps: SolutionStep[] =
+        workerResult.steps?.map((step, index) => ({
+          step: (index + 1).toString(),
+          explanation: step,
+          result:
+            index === (workerResult.steps?.length || 1) - 1
+              ? solution.toString()
+              : step,
+          latex: toLatex(
+            index === (workerResult.steps?.length || 1) - 1
+              ? solution.toString()
+              : step
+          ),
+        })) || [];
+
+      // Handle evaluate case separately (not supported by worker yet)
+      if (solverType === 'evaluate') {
+        try {
+          const valueToUse = variable === 'x' ? 1 : 0;
+          const expr = equation.replace(
+            new RegExp(variable, 'g'),
+            valueToUse.toString()
+          );
+          const mathInstance = await getMathInstance();
+          if (!mathInstance.loaded) {
+            throw new Error('Math library not loaded');
           }
-          break;
+          const evalResult = mathInstance.math.evaluate(expr);
 
-        case 'derivative':
-          try {
-            // For basic derivatives, we'll implement simple rules
-            let derivative_result = '';
-            if (equation.includes('x^2')) {
-              derivative_result = equation.replace(/x\^2/g, '2*x');
-            } else if (equation.includes('x^3')) {
-              derivative_result = equation.replace(/x\^3/g, '3*x^2');
-            } else if (equation.includes('x^')) {
-              // Handle general power rule: x^n -> n*x^(n-1)
-              derivative_result = equation.replace(
-                /x\^(\d+)/g,
-                (match, power) => {
-                  const n = parseInt(power);
-                  if (n === 1) return '1';
-                  if (n === 2) return '2*x';
-                  return `${n}*x^${n - 1}`;
-                }
-              );
-            } else if (equation === 'x') {
-              derivative_result = '1';
-            } else if (!equation.includes('x')) {
-              derivative_result = '0';
-            } else {
-              derivative_result = 'd/dx(' + equation + ')';
-            }
-
-            solution = derivative_result;
-            solutionSteps.push({
-              step: '1',
-              explanation: `Taking the derivative of ${equation} with respect to ${variable}`,
-              result: solution,
-              latex: toLatex(solution),
-            });
-          } catch (err) {
-            throw new Error('Could not compute derivative');
-          }
-          break;
-
-        case 'simplify':
-          try {
-            const mathInstance = await getMathInstance();
-            if (!mathInstance.loaded) {
-              throw new Error('Math library not loaded');
-            }
-            const expr = mathInstance.math.parse(equation);
-            const simplified = mathInstance.math.simplify(expr);
-            solution = simplified.toString();
-            solutionSteps.push({
-              step: '1',
-              explanation: `Simplifying ${equation}`,
-              result: solution,
-              latex: toLatex(solution),
-            });
-          } catch (err) {
-            throw new Error('Could not simplify expression');
-          }
-          break;
-
-        case 'evaluate':
-          try {
-            // Replace variable with a default value for evaluation
-            const valueToUse = variable === 'x' ? 1 : 0;
-            const expr = equation.replace(
-              new RegExp(variable, 'g'),
-              valueToUse.toString()
-            );
-            const mathInstance = await getMathInstance();
-            if (!mathInstance.loaded) {
-              throw new Error('Math library not loaded');
-            }
-            solution = mathInstance.math.evaluate(expr);
-            solutionSteps.push({
+          setSteps([
+            {
               step: '1',
               explanation: `Evaluating ${equation} with ${variable} = ${valueToUse}`,
-              result: solution.toString(),
-              latex: solution.toString(),
-            });
-          } catch (err) {
-            throw new Error('Could not evaluate expression');
-          }
-          break;
+              result: evalResult.toString(),
+              latex: evalResult.toString(),
+            },
+          ]);
+
+          const resultStr = evalResult.toString();
+          const resultLatexStr = toLatex(resultStr);
+          setResult(resultStr);
+          setResultLatex(resultLatexStr);
+
+          const toolResult: ToolResult = {
+            toolId: 'solver',
+            toolName: 'Equation Solver',
+            input: { equation, variable, solverType },
+            output: { result: resultStr, latex: resultLatexStr },
+            timestamp: new Date(),
+            steps: [
+              {
+                step: '1',
+                explanation: `Evaluating ${equation} with ${variable} = ${valueToUse}`,
+                result: resultStr,
+                latex: resultLatexStr,
+              },
+            ],
+          };
+          setLastSolution(toolResult);
+          return;
+        } catch (err) {
+          throw new Error('Could not evaluate expression');
+        }
       }
 
       setSteps(solutionSteps);
@@ -432,19 +414,42 @@ export function EquationSolver() {
             </div>
           </div>
 
-          <Button onClick={solveEquation} className='w-full'>
-            {solverType === 'solve'
-              ? 'Solve'
-              : solverType === 'derivative'
-                ? 'Find Derivative'
-                : solverType === 'simplify'
-                  ? 'Simplify'
-                  : 'Evaluate'}
+          <Button
+            onClick={solveEquation}
+            className='w-full'
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                {isUsingWorkers ? 'Computing (Web Worker)...' : 'Computing...'}
+              </>
+            ) : (
+              <>
+                {solverType === 'solve'
+                  ? 'Solve'
+                  : solverType === 'derivative'
+                    ? 'Find Derivative'
+                    : solverType === 'simplify'
+                      ? 'Simplify'
+                      : 'Evaluate'}
+              </>
+            )}
           </Button>
 
-          {error && (
+          {(error || workerError) && (
             <div className='p-3 bg-destructive/10 border border-destructive/20 rounded-md'>
-              <p className='text-destructive text-sm'>{error}</p>
+              <p className='text-destructive text-sm'>{error || workerError}</p>
+            </div>
+          )}
+
+          {/* Performance indicator */}
+          {isUsingWorkers && (
+            <div className='p-2 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-md'>
+              <p className='text-green-700 dark:text-green-300 text-xs flex items-center gap-1'>
+                <span className='w-2 h-2 bg-green-500 rounded-full'></span>
+                Using Web Workers for enhanced performance
+              </p>
             </div>
           )}
         </div>
