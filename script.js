@@ -4,20 +4,22 @@ const mathTopics = [
   {
     id: 'arithmetic',
     title: 'Arithmetic',
-    description: 'Basic operations with numbers including addition, subtraction, multiplication, and division.',
+    description:
+      'Basic operations with numbers including addition, subtraction, multiplication, and division.',
     level: 'elementary',
     category: 'Basics',
     sampleExpression: '25 + 17 = 42',
-    sampleDescription: 'Basic addition'
+    sampleDescription: 'Basic addition',
   },
   {
     id: 'fractions',
     title: 'Fractions',
-    description: 'Understanding parts of a whole, equivalent fractions, and operations with fractions.',
+    description:
+      'Understanding parts of a whole, equivalent fractions, and operations with fractions.',
     level: 'elementary',
     category: 'Basics',
     sampleExpression: '$\\frac{3}{4} + \\frac{1}{2} = \\frac{5}{4}$',
-    sampleDescription: 'Adding fractions'
+    sampleDescription: 'Adding fractions',
   },
   {
     id: 'decimals',
@@ -26,7 +28,7 @@ const mathTopics = [
     level: 'elementary',
     category: 'Basics',
     sampleExpression: '12.5 × 2.4 = 30.0',
-    sampleDescription: 'Decimal multiplication'
+    sampleDescription: 'Decimal multiplication',
   },
   {
     id: 'percentages',
@@ -35,18 +37,19 @@ const mathTopics = [
     level: 'elementary',
     category: 'Basics',
     sampleExpression: '75% = 0.75 = $\\frac{3}{4}$',
-    sampleDescription: 'Percentage conversion'
+    sampleDescription: 'Percentage conversion',
   },
-  
+
   // Middle School
   {
     id: 'pre-algebra',
     title: 'Pre-Algebra',
-    description: 'Introduction to variables, expressions, and basic algebraic thinking.',
+    description:
+      'Introduction to variables, expressions, and basic algebraic thinking.',
     level: 'middle',
     category: 'Algebra',
     sampleExpression: '$3x + 7 = 22$',
-    sampleDescription: 'Solving simple equations'
+    sampleDescription: 'Solving simple equations',
   },
   {
     id: 'geometry-basics',
@@ -55,7 +58,7 @@ const mathTopics = [
     level: 'middle',
     category: 'Geometry',
     sampleExpression: '$A = l \\times w$',
-    sampleDescription: 'Rectangle area'
+    sampleDescription: 'Rectangle area',
   },
   {
     id: 'statistics-intro',
@@ -64,27 +67,29 @@ const mathTopics = [
     level: 'middle',
     category: 'Statistics',
     sampleExpression: '$\\bar{x} = \\frac{\\sum x_i}{n}$',
-    sampleDescription: 'Mean calculation'
+    sampleDescription: 'Mean calculation',
   },
-  
+
   // High School
   {
     id: 'algebra',
     title: 'Algebra',
-    description: 'Linear and quadratic equations, polynomials, and algebraic manipulation.',
+    description:
+      'Linear and quadratic equations, polynomials, and algebraic manipulation.',
     level: 'high',
     category: 'Algebra',
     sampleExpression: '$x = \\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}$',
-    sampleDescription: 'Quadratic formula'
+    sampleDescription: 'Quadratic formula',
   },
   {
     id: 'geometry',
     title: 'Geometry',
-    description: 'Proofs, coordinate geometry, and advanced geometric concepts.',
+    description:
+      'Proofs, coordinate geometry, and advanced geometric concepts.',
     level: 'high',
     category: 'Geometry',
     sampleExpression: '$c^2 = a^2 + b^2$',
-    sampleDescription: 'Pythagorean theorem'
+    sampleDescription: 'Pythagorean theorem',
   },
   {
     id: 'trigonometry',
@@ -93,7 +98,7 @@ const mathTopics = [
     level: 'high',
     category: 'Trigonometry',
     sampleExpression: '$\\sin^2(x) + \\cos^2(x) = 1$',
-    sampleDescription: 'Pythagorean identity'
+    sampleDescription: 'Pythagorean identity',
   },
   {
     id: 'precalculus',
@@ -102,9 +107,9 @@ const mathTopics = [
     level: 'high',
     category: 'Pre-Calculus',
     sampleExpression: '$\\lim_{x \\to a} f(x) = L$',
-    sampleDescription: 'Limit definition'
+    sampleDescription: 'Limit definition',
   },
-  
+
   // Advanced
   {
     id: 'calculus',
@@ -113,7 +118,7 @@ const mathTopics = [
     level: 'advanced',
     category: 'Calculus',
     sampleExpression: '$\\int_a^b f(x) dx = F(b) - F(a)$',
-    sampleDescription: 'Fundamental theorem'
+    sampleDescription: 'Fundamental theorem',
   },
   {
     id: 'linear-algebra',
@@ -122,27 +127,29 @@ const mathTopics = [
     level: 'advanced',
     category: 'Linear Algebra',
     sampleExpression: '$\\mathbf{A}\\mathbf{x} = \\lambda\\mathbf{x}$',
-    sampleDescription: 'Eigenvalue equation'
+    sampleDescription: 'Eigenvalue equation',
   },
   {
     id: 'differential-equations',
     title: 'Differential Equations',
-    description: 'Ordinary and partial differential equations and their solutions.',
+    description:
+      'Ordinary and partial differential equations and their solutions.',
     level: 'advanced',
     category: 'Differential Equations',
     sampleExpression: '$\\frac{dy}{dx} = f(x,y)$',
-    sampleDescription: 'General ODE form'
+    sampleDescription: 'General ODE form',
   },
-  
+
   // Beyond
   {
     id: 'game-design-math',
     title: 'Game Design Mathematics',
-    description: 'Mathematical concepts used in game development including vectors, physics, and algorithms.',
+    description:
+      'Mathematical concepts used in game development including vectors, physics, and algorithms.',
     level: 'beyond',
     category: 'Applied Math',
     sampleExpression: '$\\vec{v} = \\vec{v_0} + \\vec{a}t$',
-    sampleDescription: 'Physics motion'
+    sampleDescription: 'Physics motion',
   },
   {
     id: 'latex',
@@ -150,18 +157,20 @@ const mathTopics = [
     description: 'Mathematical typesetting and document preparation system.',
     level: 'beyond',
     category: 'Tools',
-    sampleExpression: '\\\\int_{-\\\\infty}^{\\\\infty} e^{-x^2} dx = \\\\sqrt{\\\\pi}',
-    sampleDescription: 'LaTeX markup'
+    sampleExpression:
+      '\\\\int_{-\\\\infty}^{\\\\infty} e^{-x^2} dx = \\\\sqrt{\\\\pi}',
+    sampleDescription: 'LaTeX markup',
   },
   {
     id: 'matlab',
     title: 'MATLAB',
-    description: 'Mathematical computing environment for numerical computation and visualization.',
+    description:
+      'Mathematical computing environment for numerical computation and visualization.',
     level: 'beyond',
     category: 'Tools',
     sampleExpression: 'plot(x, sin(x))',
-    sampleDescription: 'MATLAB plotting'
-  }
+    sampleDescription: 'MATLAB plotting',
+  },
 ];
 
 // Practice Problems Data
@@ -176,13 +185,13 @@ const practiceProblems = [
     steps: [
       'Factor the quadratic: $(x - 2)(x - 3) = 0$',
       'Set each factor equal to zero: $x - 2 = 0$ or $x - 3 = 0$',
-      'Solve for x: $x = 2$ or $x = 3$'
+      'Solve for x: $x = 2$ or $x = 3$',
     ],
     hints: [
       'Look for two numbers that multiply to 6 and add to -5',
-      'Try factoring the quadratic expression'
+      'Try factoring the quadratic expression',
     ],
-    category: 'Algebra'
+    category: 'Algebra',
   },
   {
     id: 'calculus-integration-1',
@@ -196,13 +205,13 @@ const practiceProblems = [
       'Let $u = x$ and $dv = e^x dx$',
       'Then $du = dx$ and $v = e^x$',
       'Apply the formula: $x e^x - \\int e^x dx$',
-      'Evaluate: $x e^x - e^x + C = e^x(x - 1) + C$'
+      'Evaluate: $x e^x - e^x + C = e^x(x - 1) + C$',
     ],
     hints: [
       'Choose u and dv using the LIATE rule',
-      'Remember that the integral of $e^x$ is $e^x$'
+      'Remember that the integral of $e^x$ is $e^x$',
     ],
-    category: 'Calculus'
+    category: 'Calculus',
   },
   {
     id: 'geometry-triangle-1',
@@ -214,13 +223,13 @@ const practiceProblems = [
     steps: [
       'Use the triangle area formula: $A = \\frac{1}{2} \\times \\text{base} \\times \\text{height}$',
       'Substitute the values: $A = \\frac{1}{2} \\times 12 \\times 8$',
-      'Calculate: $A = \\frac{1}{2} \\times 96 = 48 \\text{ cm}^2$'
+      'Calculate: $A = \\frac{1}{2} \\times 96 = 48 \\text{ cm}^2$',
     ],
     hints: [
       'Remember the formula for triangle area',
-      'Make sure to include units in your answer'
+      'Make sure to include units in your answer',
     ],
-    category: 'Geometry'
+    category: 'Geometry',
   },
   {
     id: 'trigonometry-identity-1',
@@ -233,32 +242,34 @@ const practiceProblems = [
       'Express in terms of sine and cosine: $\\frac{\\sin(x)}{\\cos(x)} + \\frac{\\cos(x)}{\\sin(x)}$',
       'Find common denominator: $\\frac{\\sin^2(x) + \\cos^2(x)}{\\sin(x)\\cos(x)}$',
       'Use Pythagorean identity: $\\frac{1}{\\sin(x)\\cos(x)}$',
-      'Separate fractions: $\\frac{1}{\\sin(x)} \\cdot \\frac{1}{\\cos(x)} = \\csc(x)\\sec(x)$'
+      'Separate fractions: $\\frac{1}{\\sin(x)} \\cdot \\frac{1}{\\cos(x)} = \\csc(x)\\sec(x)$',
     ],
     hints: [
       'Express all functions in terms of sine and cosine',
-      'Use the Pythagorean identity: $\\sin^2(x) + \\cos^2(x) = 1$'
+      'Use the Pythagorean identity: $\\sin^2(x) + \\cos^2(x) = 1$',
     ],
-    category: 'Trigonometry'
+    category: 'Trigonometry',
   },
   {
     id: 'game-design-vector-1',
     topicId: 'game-design-math',
     title: 'Vector Addition',
-    description: 'Calculate the resultant vector for player movement in a 2D game.',
-    problem: '\\text{A player moves with velocity } \\vec{v_1} = (3, 4) \\text{ and then applies boost } \\vec{v_2} = (2, -1). \\text{ Find the total velocity: } \\vec{v_{total}} = \\vec{v_1} + \\vec{v_2}',
+    description:
+      'Calculate the resultant vector for player movement in a 2D game.',
+    problem:
+      '\\text{A player moves with velocity } \\vec{v_1} = (3, 4) \\text{ and then applies boost } \\vec{v_2} = (2, -1). \\text{ Find the total velocity: } \\vec{v_{total}} = \\vec{v_1} + \\vec{v_2}',
     solution: '$\\vec{v_{total}} = (5, 3)$',
     steps: [
       'Add x-components: $3 + 2 = 5$',
       'Add y-components: $4 + (-1) = 3$',
-      'Combine: $\\vec{v_{total}} = (5, 3)$'
+      'Combine: $\\vec{v_{total}} = (5, 3)$',
     ],
     hints: [
       'Vector addition is done component-wise',
-      'Add x-components together, then y-components together'
+      'Add x-components together, then y-components together',
     ],
-    category: 'Game Design'
-  }
+    category: 'Game Design',
+  },
 ];
 
 // Level titles for curriculum
@@ -267,7 +278,7 @@ const levelTitles = {
   middle: 'Middle School',
   high: 'High School',
   advanced: 'Advanced',
-  beyond: 'Beyond'
+  beyond: 'Beyond',
 };
 
 // DOM Elements
@@ -276,14 +287,14 @@ const sections = document.querySelectorAll('.section');
 const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
 
 // Initialize the application
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   initializeIcons();
   setupEventListeners();
   populateSidebar();
   populateTopics();
   populatePracticeProblems();
   initializeTheme();
-  
+
   // Initialize MathJax after content is loaded
   setTimeout(() => {
     if (window.MathJax && window.MathJax.typesetPromise) {
@@ -302,30 +313,38 @@ function initializeIcons() {
 // Setup event listeners
 function setupEventListeners() {
   // Theme toggle
-  document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
-  
+  document
+    .getElementById('theme-toggle')
+    .addEventListener('click', toggleTheme);
+
   // Mobile menu
-  document.getElementById('mobile-menu-toggle').addEventListener('click', toggleMobileMenu);
-  document.getElementById('mobile-menu-close').addEventListener('click', closeMobileMenu);
-  document.getElementById('mobile-menu').addEventListener('click', function(e) {
-    if (e.target === this) closeMobileMenu();
-  });
-  
+  document
+    .getElementById('mobile-menu-toggle')
+    .addEventListener('click', toggleMobileMenu);
+  document
+    .getElementById('mobile-menu-close')
+    .addEventListener('click', closeMobileMenu);
+  document
+    .getElementById('mobile-menu')
+    .addEventListener('click', function (e) {
+      if (e.target === this) closeMobileMenu();
+    });
+
   // Navigation links
   navLinks.forEach(link => {
-    link.addEventListener('click', function(e) {
+    link.addEventListener('click', function (e) {
       e.preventDefault();
       const sectionId = this.getAttribute('href').substring(1);
       showSection(sectionId);
       closeMobileMenu();
     });
   });
-  
+
   // Close mobile menu when clicking outside
-  document.addEventListener('click', function(e) {
+  document.addEventListener('click', function (e) {
     const mobileMenu = document.getElementById('mobile-menu');
     const mobileToggle = document.getElementById('mobile-menu-toggle');
-    
+
     if (!mobileMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
       closeMobileMenu();
     }
@@ -358,13 +377,13 @@ function closeMobileMenu() {
 function showSection(sectionId) {
   // Hide all sections
   sections.forEach(section => section.classList.remove('active'));
-  
+
   // Show target section
   const targetSection = document.getElementById(sectionId);
   if (targetSection) {
     targetSection.classList.add('active');
     currentSection = sectionId;
-    
+
     // Update navigation active states
     navLinks.forEach(link => {
       link.classList.remove('active');
@@ -372,7 +391,7 @@ function showSection(sectionId) {
         link.classList.add('active');
       }
     });
-    
+
     // Retypeset math after section change
     setTimeout(() => {
       if (window.MathJax && window.MathJax.typesetPromise) {
@@ -386,31 +405,31 @@ function showSection(sectionId) {
 function populateSidebar() {
   const sectionsContainer = document.getElementById('curriculum-sections');
   const levels = ['elementary', 'middle', 'high', 'advanced', 'beyond'];
-  
+
   levels.forEach(level => {
     const levelTopics = mathTopics.filter(topic => topic.level === level);
-    
+
     if (levelTopics.length > 0) {
       const levelDiv = document.createElement('div');
       levelDiv.className = 'curriculum-level';
-      
+
       const levelTitle = document.createElement('h4');
       levelTitle.className = 'level-title';
       levelTitle.textContent = levelTitles[level];
       levelDiv.appendChild(levelTitle);
-      
+
       levelTopics.forEach(topic => {
         const topicLink = document.createElement('a');
         topicLink.href = '#';
         topicLink.className = 'topic-item';
         topicLink.textContent = topic.title;
-        topicLink.addEventListener('click', function(e) {
+        topicLink.addEventListener('click', function (e) {
           e.preventDefault();
           showTopicDetail(topic.id);
         });
         levelDiv.appendChild(topicLink);
       });
-      
+
       sectionsContainer.appendChild(levelDiv);
     }
   });
@@ -420,29 +439,29 @@ function populateSidebar() {
 function populateTopics() {
   const topicsContent = document.getElementById('topics-content');
   const levels = ['elementary', 'middle', 'high', 'advanced', 'beyond'];
-  
+
   levels.forEach(level => {
     const levelTopics = mathTopics.filter(topic => topic.level === level);
-    
+
     if (levelTopics.length > 0) {
       const levelSection = document.createElement('div');
       levelSection.className = 'level-section';
-      
+
       const levelTitle = document.createElement('h3');
       levelTitle.textContent = levelTitles[level];
       levelTitle.style.color = 'hsl(var(--accent))';
       levelTitle.style.marginBottom = '1.5rem';
       levelTitle.style.marginTop = '2rem';
       levelSection.appendChild(levelTitle);
-      
+
       const topicsGrid = document.createElement('div');
       topicsGrid.className = 'topics-grid';
-      
+
       levelTopics.forEach(topic => {
         const topicCard = document.createElement('div');
         topicCard.className = 'topic-card';
         topicCard.onclick = () => showTopicDetail(topic.id);
-        
+
         topicCard.innerHTML = `
           <div class="topic-header">
             <div class="topic-category">${topic.category}</div>
@@ -454,10 +473,10 @@ function populateTopics() {
             <div style="font-size: 0.9rem; color: hsl(var(--muted-foreground));">${topic.sampleDescription}</div>
           </div>
         `;
-        
+
         topicsGrid.appendChild(topicCard);
       });
-      
+
       levelSection.appendChild(topicsGrid);
       topicsContent.appendChild(levelSection);
     }
@@ -469,11 +488,11 @@ function populatePracticeProblems() {
   const practiceContent = document.getElementById('practice-content');
   const problemsGrid = document.createElement('div');
   problemsGrid.className = 'problems-grid';
-  
+
   practiceProblems.forEach(problem => {
     const problemCard = document.createElement('div');
     problemCard.className = 'problem-card';
-    
+
     problemCard.innerHTML = `
       <div class="problem-header">
         <div class="topic-category">${problem.category}</div>
@@ -506,10 +525,10 @@ function populatePracticeProblems() {
         </button>
       </div>
     `;
-    
+
     problemsGrid.appendChild(problemCard);
   });
-  
+
   practiceContent.appendChild(problemsGrid);
 }
 
@@ -517,7 +536,9 @@ function populatePracticeProblems() {
 function showTopicDetail(topicId) {
   const topic = mathTopics.find(t => t.id === topicId);
   if (topic) {
-    alert(`Topic: ${topic.title}\n\n${topic.description}\n\nThis would open a detailed page about ${topic.title}.`);
+    alert(
+      `Topic: ${topic.title}\n\n${topic.description}\n\nThis would open a detailed page about ${topic.title}.`
+    );
   }
 }
 
@@ -525,14 +546,14 @@ function showTopicDetail(topicId) {
 function toggleSolution(problemId) {
   const solutionArea = document.getElementById(`solution-${problemId}`);
   const button = event.target;
-  
+
   if (solutionArea.classList.contains('active')) {
     solutionArea.classList.remove('active');
     button.textContent = 'Show Solution';
   } else {
     solutionArea.classList.add('active');
     button.textContent = 'Hide Solution';
-    
+
     // Retypeset math in solution
     setTimeout(() => {
       if (window.MathJax && window.MathJax.typesetPromise) {
@@ -546,7 +567,7 @@ function toggleSolution(problemId) {
 function toggleHints(problemId) {
   const hintsArea = document.getElementById(`hints-${problemId}`);
   const button = event.target;
-  
+
   if (hintsArea.classList.contains('active')) {
     hintsArea.classList.remove('active');
     button.textContent = 'Show Hints';
@@ -560,16 +581,16 @@ function toggleHints(problemId) {
 function solveEquation() {
   const equation = document.getElementById('equation-input').value;
   const resultDiv = document.getElementById('equation-result');
-  
+
   if (!equation.trim()) {
     resultDiv.textContent = 'Please enter an equation';
     return;
   }
-  
+
   // Simple equation solver (basic implementation)
   try {
     let result = 'Solution steps would appear here.\n\n';
-    
+
     // Basic pattern matching for simple linear equations like ax + b = c
     const match = equation.match(/^(\d*)\s*x\s*([+-])\s*(\d+)\s*=\s*(\d+)$/);
     if (match) {
@@ -577,22 +598,23 @@ function solveEquation() {
       const operator = match[2];
       const b = parseInt(match[3]);
       const c = parseInt(match[4]);
-      
+
       let x;
       if (operator === '+') {
         x = (c - b) / a;
       } else {
         x = (c + b) / a;
       }
-      
+
       result = `Step 1: ${equation}\n`;
       result += `Step 2: ${a}x = ${c} ${operator === '+' ? '-' : '+'} ${b}\n`;
       result += `Step 3: ${a}x = ${operator === '+' ? c - b : c + b}\n`;
       result += `Step 4: x = ${x}`;
     } else {
-      result = 'This equation format is not yet supported.\nTry something like: 2x + 5 = 13';
+      result =
+        'This equation format is not yet supported.\nTry something like: 2x + 5 = 13';
     }
-    
+
     resultDiv.textContent = result;
   } catch (error) {
     resultDiv.textContent = 'Error solving equation. Please check your input.';
@@ -602,36 +624,41 @@ function solveEquation() {
 function evaluateExpression() {
   const expression = document.getElementById('expression-input').value;
   const resultDiv = document.getElementById('expression-result');
-  
+
   if (!expression.trim()) {
     resultDiv.textContent = 'Please enter an expression';
     return;
   }
-  
+
   try {
     // Basic expression evaluation (safe subset)
     let safeExpression = expression
-      .replace(/\\^/g, '**')  // Convert ^ to **
-      .replace(/[^0-9+\\-*/.()\\s]/g, ''); // Remove unsafe characters
-    
+      .replace(/\\^/g, '**') // Convert ^ to **
+      .replace(/[^0-9+\-*/.()\\s]/g, ''); // Remove unsafe characters
+
     if (safeExpression !== expression.replace(/\\^/g, '**')) {
       resultDiv.textContent = 'Expression contains invalid characters';
       return;
     }
-    
+
     const result = Function('"use strict"; return (' + safeExpression + ')')();
     resultDiv.textContent = `${expression} = ${result}`;
   } catch (error) {
-    resultDiv.textContent = 'Error evaluating expression. Please check your input.';
+    resultDiv.textContent =
+      'Error evaluating expression. Please check your input.';
   }
 }
 
 // Show guide (placeholder)
 function showGuide(guideType) {
   if (guideType === 'latex') {
-    alert('LaTeX Guide\\n\\nThis would open a comprehensive guide to LaTeX mathematical typesetting, including:\\n\\n• Basic syntax and commands\\n• Mathematical symbols and operators\\n• Fractions, integrals, and matrices\\n• Advanced formatting techniques');
+    alert(
+      'LaTeX Guide\\n\\nThis would open a comprehensive guide to LaTeX mathematical typesetting, including:\\n\\n• Basic syntax and commands\\n• Mathematical symbols and operators\\n• Fractions, integrals, and matrices\\n• Advanced formatting techniques'
+    );
   } else if (guideType === 'matlab') {
-    alert('MATLAB Guide\\n\\nThis would open a guide to MATLAB for mathematical computing, including:\\n\\n• Basic syntax and operations\\n• Plotting and visualization\\n• Matrix operations\\n• Numerical methods');
+    alert(
+      'MATLAB Guide\\n\\nThis would open a guide to MATLAB for mathematical computing, including:\\n\\n• Basic syntax and operations\\n• Plotting and visualization\\n• Matrix operations\\n• Numerical methods'
+    );
   }
 }
 

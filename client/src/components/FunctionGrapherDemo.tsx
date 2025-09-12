@@ -70,7 +70,7 @@ export const FunctionGrapherDemo: React.FC<FunctionGrapherDemoProps> = ({
         if (!window.math) return null;
 
         // Replace common mathematical notation
-        let expr = expression
+        const expr = expression
           .replace(/\^/g, "**")
           .replace(/sin/g, "Math.sin")
           .replace(/cos/g, "Math.cos")

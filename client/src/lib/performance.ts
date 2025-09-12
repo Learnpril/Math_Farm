@@ -23,7 +23,7 @@ export const PERFORMANCE_THRESHOLDS = {
 } as const;
 
 // Global performance data
-let performanceData: PerformanceMetrics = {};
+const performanceData: PerformanceMetrics = {};
 let performanceObserver: PerformanceObserver | null = null;
 
 /**
