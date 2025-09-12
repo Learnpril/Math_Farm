@@ -319,8 +319,16 @@ export function LaTeXGuidePage() {
 
       {/* Page Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-foreground mb-4">LaTeX Guide</h1>
-        <p className="text-lg text-muted-foreground max-w-2xl">
+        <h1
+          className="text-4xl font-bold text-foreground mb-4"
+          data-testid="latex-guide-heading"
+        >
+          LaTeX Guide
+        </h1>
+        <p
+          className="text-lg text-muted-foreground max-w-2xl"
+          data-testid="latex-guide-description"
+        >
           Master LaTeX mathematical notation to create beautiful equations and
           expressions. Perfect for academic writing, research papers, and
           mathematical documentation.
@@ -332,7 +340,10 @@ export function LaTeXGuidePage() {
         <div className="bg-card border rounded-lg overflow-hidden">
           <div className="flex items-center gap-2 p-4 border-b bg-muted/50">
             <Code className="w-5 h-5 text-primary" />
-            <h2 className="text-xl font-semibold text-foreground">
+            <h2
+              className="text-xl font-semibold text-foreground"
+              data-testid="latex-editor-heading"
+            >
               Interactive LaTeX Editor
             </h2>
           </div>

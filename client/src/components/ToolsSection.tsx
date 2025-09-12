@@ -70,10 +70,14 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
           <h2
             id="tools-section-title"
             className="text-3xl md:text-4xl font-bold text-foreground mb-4"
+            data-testid="tools-section-heading"
           >
             Interactive Tools
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
+          <p
+            className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6"
+            data-testid="tools-section-description"
+          >
             Experience our powerful mathematical tools with live demonstrations.
             Perform calculations, create graphs, and solve complex problems
             instantly.
@@ -364,10 +368,16 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
 
         {/* Call to Action */}
         <div className="text-center mt-12 p-6 bg-muted/50 rounded-lg">
-          <h3 className="text-xl font-semibold text-foreground mb-2">
+          <h3
+            className="text-xl font-semibold text-foreground mb-2"
+            data-testid="tools-cta-heading"
+          >
             Ready for More?
           </h3>
-          <p className="text-muted-foreground mb-4">
+          <p
+            className="text-muted-foreground mb-4"
+            data-testid="tools-cta-description"
+          >
             Access our complete suite of mathematical tools including equation
             solvers, matrix calculators, and specialized utilities.
           </p>
@@ -378,7 +388,7 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
               className="group"
               aria-label="Navigate to complete tools page"
             >
-              View All Tools
+              <span data-testid="tools-cta-button-text">View All Tools</span>
               <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>

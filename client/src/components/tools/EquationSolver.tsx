@@ -354,7 +354,10 @@ export function EquationSolver() {
     <div className="space-y-6">
       {/* Solver Type Selection */}
       <Card className="p-4">
-        <Label className="text-base font-semibold mb-3 block">
+        <Label
+          className="text-base font-semibold mb-3 block"
+          data-testid="equation-solver-type-label"
+        >
           Solver Type
         </Label>
         <div className="flex flex-wrap gap-2">
@@ -427,11 +430,19 @@ export function EquationSolver() {
       {/* Results */}
       {result && (
         <Card className="p-6">
-          <h3 className="font-semibold mb-3">Result</h3>
+          <h3
+            className="font-semibold mb-3"
+            data-testid="equation-solver-result-heading"
+          >
+            Result
+          </h3>
 
           {/* LaTeX Rendered Result */}
           <div className="mb-4">
-            <Label className="text-sm font-medium text-muted-foreground mb-2 block">
+            <Label
+              className="text-sm font-medium text-muted-foreground mb-2 block"
+              data-testid="equation-solver-formatted-label"
+            >
               Formatted Result
             </Label>
             <div className="p-4 bg-background border rounded-lg text-center">
@@ -441,7 +452,10 @@ export function EquationSolver() {
 
           {/* Plain Text Result */}
           <div>
-            <Label className="text-sm font-medium text-muted-foreground mb-2 block">
+            <Label
+              className="text-sm font-medium text-muted-foreground mb-2 block"
+              data-testid="equation-solver-plaintext-label"
+            >
               Plain Text
             </Label>
             <div className="p-4 bg-muted rounded-lg">

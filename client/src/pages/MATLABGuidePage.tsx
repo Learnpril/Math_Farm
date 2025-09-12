@@ -499,10 +499,16 @@ plot(x_vals, y_vals);`,
 
       {/* Page Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-foreground mb-4">
+        <h1
+          className="text-4xl font-bold text-foreground mb-4"
+          data-testid="matlab-guide-heading"
+        >
           MATLAB Guide
         </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl">
+        <p
+          className="text-lg text-muted-foreground max-w-2xl"
+          data-testid="matlab-guide-description"
+        >
           Learn MATLAB programming for mathematical computing, data analysis,
           and algorithm development. Perfect for engineering, scientific
           computing, and mathematical modeling.
@@ -514,7 +520,10 @@ plot(x_vals, y_vals);`,
         <div className="bg-card border rounded-lg overflow-hidden">
           <div className="flex items-center gap-2 p-4 border-b bg-muted/50">
             <Terminal className="w-5 h-5 text-primary" />
-            <h2 className="text-xl font-semibold text-foreground">
+            <h2
+              className="text-xl font-semibold text-foreground"
+              data-testid="matlab-console-heading"
+            >
               Interactive MATLAB Console Simulator
             </h2>
           </div>

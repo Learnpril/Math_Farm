@@ -439,7 +439,10 @@ export function TopicPage() {
                 <div className="flex-1">
                   {/* Title and Level Badge */}
                   <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
-                    <h1 className="text-3xl sm:text-4xl font-bold text-foreground">
+                    <h1
+                      className="text-3xl sm:text-4xl font-bold text-foreground"
+                      data-testid="topic-page-title"
+                    >
                       {topic.title}
                     </h1>
                     <Badge variant={topic.level as any} className="w-fit">
@@ -448,7 +451,10 @@ export function TopicPage() {
                     </Badge>
                   </div>
 
-                  <p className="text-lg text-muted-foreground mb-6">
+                  <p
+                    className="text-lg text-muted-foreground mb-6"
+                    data-testid="topic-page-description"
+                  >
                     {topic.description}
                   </p>
 

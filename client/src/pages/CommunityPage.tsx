@@ -200,10 +200,16 @@ export function CommunityPage() {
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-4">
+          <h1
+            className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-4"
+            data-testid="community-main-heading"
+          >
             Math Farm Community
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p
+            className="text-lg text-muted-foreground max-w-2xl mx-auto"
+            data-testid="community-main-description"
+          >
             Connect with fellow math enthusiasts, get help with problems, join
             study groups, and share your mathematical discoveries.
           </p>
@@ -214,8 +220,16 @@ export function CommunityPage() {
           <Card className="text-center">
             <CardContent className="pt-6">
               <Users className="h-8 w-8 mx-auto mb-2 text-primary" />
-              <div className="text-2xl font-bold">1,247</div>
-              <div className="text-sm text-muted-foreground">
+              <div
+                className="text-2xl font-bold"
+                data-testid="community-stats-members-count"
+              >
+                1,247
+              </div>
+              <div
+                className="text-sm text-muted-foreground"
+                data-testid="community-stats-members-label"
+              >
                 Active Members
               </div>
             </CardContent>
@@ -223,22 +237,50 @@ export function CommunityPage() {
           <Card className="text-center">
             <CardContent className="pt-6">
               <MessageSquare className="h-8 w-8 mx-auto mb-2 text-primary" />
-              <div className="text-2xl font-bold">3,891</div>
-              <div className="text-sm text-muted-foreground">Discussions</div>
+              <div
+                className="text-2xl font-bold"
+                data-testid="community-stats-discussions-count"
+              >
+                3,891
+              </div>
+              <div
+                className="text-sm text-muted-foreground"
+                data-testid="community-stats-discussions-label"
+              >
+                Discussions
+              </div>
             </CardContent>
           </Card>
           <Card className="text-center">
             <CardContent className="pt-6">
               <BookOpen className="h-8 w-8 mx-auto mb-2 text-primary" />
-              <div className="text-2xl font-bold">156</div>
-              <div className="text-sm text-muted-foreground">Study Groups</div>
+              <div
+                className="text-2xl font-bold"
+                data-testid="community-stats-groups-count"
+              >
+                156
+              </div>
+              <div
+                className="text-sm text-muted-foreground"
+                data-testid="community-stats-groups-label"
+              >
+                Study Groups
+              </div>
             </CardContent>
           </Card>
           <Card className="text-center">
             <CardContent className="pt-6">
               <Trophy className="h-8 w-8 mx-auto mb-2 text-primary" />
-              <div className="text-2xl font-bold">2,103</div>
-              <div className="text-sm text-muted-foreground">
+              <div
+                className="text-2xl font-bold"
+                data-testid="community-stats-solved-count"
+              >
+                2,103
+              </div>
+              <div
+                className="text-sm text-muted-foreground"
+                data-testid="community-stats-solved-label"
+              >
                 Problems Solved
               </div>
             </CardContent>

@@ -116,16 +116,22 @@ export function ToolsPage() {
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to Home
+          <span data-testid="tools-back-to-home-text">Back to Home</span>
         </Link>
       </div>
 
       {/* Page Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-foreground mb-4">
+        <h1
+          className="text-4xl font-bold text-foreground mb-4"
+          data-testid="tools-page-heading"
+        >
           Mathematical Tools
         </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl">
+        <p
+          className="text-lg text-muted-foreground max-w-2xl"
+          data-testid="tools-page-description"
+        >
           Interactive tools to help you solve problems, visualize concepts, and
           explore mathematics. Click on any tool to open it in a modal
           interface.
@@ -160,7 +166,10 @@ export function ToolsPage() {
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-2">
-                        <h3 className="font-semibold text-foreground">
+                        <h3
+                          className="font-semibold text-foreground"
+                          data-testid={`tool-card-${tool.id}-title`}
+                        >
                           {tool.title}
                         </h3>
                         <Badge
@@ -171,11 +180,17 @@ export function ToolsPage() {
                         </Badge>
                       </div>
 
-                      <p className="text-sm text-muted-foreground mb-3">
+                      <p
+                        className="text-sm text-muted-foreground mb-3"
+                        data-testid={`tool-card-${tool.id}-description`}
+                      >
                         {tool.description}
                       </p>
 
-                      <p className="text-xs text-muted-foreground bg-muted/50 p-2 rounded">
+                      <p
+                        className="text-xs text-muted-foreground bg-muted/50 p-2 rounded"
+                        data-testid={`tool-card-${tool.id}-preview`}
+                      >
                         {tool.preview}
                       </p>
 

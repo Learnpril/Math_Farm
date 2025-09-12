@@ -54,13 +54,22 @@ export function HeroSection({ className = "" }: HeroSectionProps) {
 
           {/* Main heading */}
           <div className="space-y-4">
-            <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-tight">
+            <h1
+              className="text-4xl md:text-6xl font-bold text-foreground leading-tight"
+              data-testid="hero-main-heading"
+            >
               Welcome to{" "}
-              <span className="text-primary bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              <span
+                className="text-primary bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
+                data-testid="hero-brand-name"
+              >
                 Math Farm
               </span>
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            <p
+              className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
+              data-testid="hero-description"
+            >
               Your comprehensive mathematics learning platform. From elementary
               arithmetic to advanced calculus, learn at your own pace with
               interactive tools and step-by-step guidance.
@@ -81,10 +90,16 @@ export function HeroSection({ className = "" }: HeroSectionProps) {
                 <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
                   <div className="w-6 h-6 bg-primary/20 rounded-full"></div>
                 </div>
-                <h3 className="text-lg font-semibold text-foreground">
+                <h3
+                  className="text-lg font-semibold text-foreground"
+                  data-testid="hero-feature-interactive-title"
+                >
                   Interactive Learning
                 </h3>
-                <p className="text-sm text-muted-foreground text-center">
+                <p
+                  className="text-sm text-muted-foreground text-center"
+                  data-testid="hero-feature-interactive-description"
+                >
                   Engage with dynamic problems and real-time feedback
                 </p>
               </div>
@@ -93,10 +108,16 @@ export function HeroSection({ className = "" }: HeroSectionProps) {
                 <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center">
                   <div className="w-6 h-6 bg-accent/20 rounded-full"></div>
                 </div>
-                <h3 className="text-lg font-semibold text-foreground">
+                <h3
+                  className="text-lg font-semibold text-foreground"
+                  data-testid="hero-feature-selfpaced-title"
+                >
                   Self-Paced
                 </h3>
-                <p className="text-sm text-muted-foreground text-center">
+                <p
+                  className="text-sm text-muted-foreground text-center"
+                  data-testid="hero-feature-selfpaced-description"
+                >
                   Learn at your own speed with personalized progress tracking
                 </p>
               </div>
@@ -105,10 +126,16 @@ export function HeroSection({ className = "" }: HeroSectionProps) {
                 <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
                   <div className="w-6 h-6 bg-primary/20 rounded-full"></div>
                 </div>
-                <h3 className="text-lg font-semibold text-foreground">
+                <h3
+                  className="text-lg font-semibold text-foreground"
+                  data-testid="hero-feature-privacy-title"
+                >
                   Privacy-Focused
                 </h3>
-                <p className="text-sm text-muted-foreground text-center">
+                <p
+                  className="text-sm text-muted-foreground text-center"
+                  data-testid="hero-feature-privacy-description"
+                >
                   All data stays local with complete privacy protection
                 </p>
               </div>

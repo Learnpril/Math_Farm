@@ -167,7 +167,12 @@ export function Header({ className = "" }: HeaderProps) {
                 aria-label="Go back to previous page"
               >
                 <ArrowLeft className="h-5 w-5" aria-hidden="true" />
-                <span className="hidden sm:inline text-sm">Back</span>
+                <span
+                  className="hidden sm:inline text-sm"
+                  data-testid="header-back-text"
+                >
+                  Back
+                </span>
               </button>
             )}
             <Link
@@ -191,7 +196,10 @@ export function Header({ className = "" }: HeaderProps) {
                 className="h-8 w-8 text-primary transition-transform group-hover:scale-110"
                 aria-hidden="true"
               />
-              <span className="text-xl font-bold text-foreground">
+              <span
+                className="text-xl font-bold text-foreground"
+                data-testid="header-logo-text"
+              >
                 Math Farm
               </span>
             </Link>
@@ -218,7 +226,13 @@ export function Header({ className = "" }: HeaderProps) {
                   }`}
                   aria-current={isActiveLink(item.href) ? "page" : undefined}
                 >
-                  {item.label}
+                  <span
+                    data-testid={`desktop-nav-${item.label
+                      .toLowerCase()
+                      .replace(/\s+/g, "-")}-text`}
+                  >
+                    {item.label}
+                  </span>
                 </Link>
               ) : (
                 <Link
@@ -231,7 +245,13 @@ export function Header({ className = "" }: HeaderProps) {
                   }`}
                   aria-current={isActiveLink(item.href) ? "page" : undefined}
                 >
-                  {item.label}
+                  <span
+                    data-testid={`desktop-nav-${item.label
+                      .toLowerCase()
+                      .replace(/\s+/g, "-")}-text`}
+                  >
+                    {item.label}
+                  </span>
                 </Link>
               )
             )}
@@ -362,7 +382,13 @@ export function Header({ className = "" }: HeaderProps) {
                     }`}
                     aria-current={isActiveLink(item.href) ? "page" : undefined}
                   >
-                    {item.label}
+                    <span
+                      data-testid={`mobile-nav-${item.label
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}-text`}
+                    >
+                      {item.label}
+                    </span>
                   </Link>
                 ) : (
                   <Link
@@ -376,7 +402,13 @@ export function Header({ className = "" }: HeaderProps) {
                     }`}
                     aria-current={isActiveLink(item.href) ? "page" : undefined}
                   >
-                    {item.label}
+                    <span
+                      data-testid={`mobile-nav-${item.label
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}-text`}
+                    >
+                      {item.label}
+                    </span>
                   </Link>
                 )
               )}
