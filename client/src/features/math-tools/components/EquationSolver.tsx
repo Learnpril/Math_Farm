@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
 import {
@@ -12,6 +12,10 @@ import { SaveShareButtons } from './SaveShareButtons';
 import { ToolResult } from '../../../lib/toolUtils';
 import { MathExpression } from '../../../components/MathExpression';
 import { useEquationSolver } from '../../../hooks/useMathWorker';
+import {
+  useMathOperationTracker,
+  useRenderTracker,
+} from '../../../hooks/usePerformanceMonitor';
 import { Loader2 } from 'lucide-react';
 
 interface SolutionStep {
@@ -21,7 +25,7 @@ interface SolutionStep {
   latex?: string;
 }
 
-export function EquationSolver() {
+const EquationSolver = React.memo(function EquationSolver() {
   const [equation, setEquation] = useState('x^2 - 4');
   const [variable, setVariable] = useState('x');
   const [solverType, setSolverType] = useState<
@@ -32,6 +36,10 @@ export function EquationSolver() {
   const [steps, setSteps] = useState<SolutionStep[]>([]);
   const [error, setError] = useState<string>('');
   const [lastSolution, setLastSolution] = useState<ToolResult | null>(null);
+
+  // Performance tracking
+  const { trackOperation } = useMathOperationTracker();
+  const { startRender, endRender } = useRenderTracker('EquationSolver');
 
   // Use Web Worker hook for equation solving
   const {
@@ -76,7 +84,7 @@ export function EquationSolver() {
     return latex;
   };
 
-  const solveEquation = async () => {
+  const solveEquation = useCallback(async () => {
     setError('');
     setResult('');
     setSteps([]);
@@ -87,6 +95,14 @@ export function EquationSolver() {
       return;
     }
 
+    const tracker = trackOperation(`equation-${solverType}`, 'EquationSolver', {
+      equation,
+      variable,
+      solverType,
+      isUsingWorkers,
+    });
+    tracker.start();
+
     try {
       // Use Web Worker for computation if available, otherwise fallback to main thread
       const workerResult = await solveWithWorker(
@@ -96,6 +112,7 @@ export function EquationSolver() {
       );
 
       if (workerResult.error) {
+        tracker.end(false, workerResult.error);
         setError(workerResult.error);
         return;
       }
@@ -161,8 +178,10 @@ export function EquationSolver() {
             ],
           };
           setLastSolution(toolResult);
+          tracker.end(true);
           return;
         } catch (err) {
+          tracker.end(false, 'Could not evaluate expression');
           throw new Error('Could not evaluate expression');
         }
       }
@@ -192,11 +211,20 @@ export function EquationSolver() {
         };
 
         setLastSolution(toolResult);
+        tracker.end(true);
       }
     } catch (err: any) {
+      tracker.end(false, err.message || 'An error occurred while solving');
       setError(err.message || 'An error occurred while solving');
     }
-  };
+  }, [
+    equation,
+    variable,
+    solverType,
+    solveWithWorker,
+    trackOperation,
+    isUsingWorkers,
+  ]);
 
   const solveQuadratic = (eq: string): SolutionStep[] => {
     const steps: SolutionStep[] = [];
@@ -326,34 +354,55 @@ export function EquationSolver() {
     return roots;
   };
 
-  const examples = [
-    { type: 'solve', equation: 'x^2 - 4', description: 'Quadratic equation' },
-    {
-      type: 'solve',
-      equation: 'x^2 + 2*x - 3',
-      description: 'Quadratic with linear term',
-    },
-    {
-      type: 'derivative',
-      equation: 'x^3 + 2*x^2 + x',
-      description: 'Polynomial derivative',
-    },
-    {
-      type: 'derivative',
-      equation: 'sin(x)',
-      description: 'Trigonometric derivative',
-    },
-    {
-      type: 'simplify',
-      equation: '(x + 2)^2',
-      description: 'Expand expression',
-    },
-    {
-      type: 'simplify',
-      equation: 'x^2 + 2*x + 1',
-      description: 'Factor expression',
-    },
-  ];
+  // Memoized examples to prevent unnecessary re-renders
+  const examples = useMemo(
+    () => [
+      { type: 'solve', equation: 'x^2 - 4', description: 'Quadratic equation' },
+      {
+        type: 'solve',
+        equation: 'x^2 + 2*x - 3',
+        description: 'Quadratic with linear term',
+      },
+      {
+        type: 'derivative',
+        equation: 'x^3 + 2*x^2 + x',
+        description: 'Polynomial derivative',
+      },
+      {
+        type: 'derivative',
+        equation: 'sin(x)',
+        description: 'Trigonometric derivative',
+      },
+      {
+        type: 'simplify',
+        equation: '(x + 2)^2',
+        description: 'Expand expression',
+      },
+      {
+        type: 'simplify',
+        equation: 'x^2 + 2*x + 1',
+        description: 'Factor expression',
+      },
+    ],
+    []
+  );
+
+  // Memoized solver type options
+  const solverTypes = useMemo(
+    () => [
+      { key: 'solve', label: 'Solve Equation' },
+      { key: 'derivative', label: 'Find Derivative' },
+      { key: 'simplify', label: 'Simplify' },
+      { key: 'evaluate', label: 'Evaluate' },
+    ],
+    []
+  );
+
+  // Track render performance
+  React.useEffect(() => {
+    startRender();
+    endRender({ equation, variable, solverType, result });
+  }, [startRender, endRender, equation, variable, solverType, result]);
 
   return (
     <div className='space-y-6'>
@@ -366,12 +415,7 @@ export function EquationSolver() {
           Solver Type
         </Label>
         <div className='flex flex-wrap gap-2'>
-          {[
-            { key: 'solve', label: 'Solve Equation' },
-            { key: 'derivative', label: 'Find Derivative' },
-            { key: 'simplify', label: 'Simplify' },
-            { key: 'evaluate', label: 'Evaluate' },
-          ].map(type => (
+          {solverTypes.map(type => (
             <Badge
               key={type.key}
               variant={solverType === type.key ? 'default' : 'outline'}
@@ -579,4 +623,6 @@ export function EquationSolver() {
       )}
     </div>
   );
-}
+});
+
+export { EquationSolver };

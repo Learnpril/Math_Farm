@@ -16,7 +16,7 @@ import {
   ErrorBoundaryTester,
 } from './components/ErrorBoundaryProvider';
 import { preloadMathJax } from './lib/mathJaxLoader';
-import { PerformanceDashboard } from './components/PerformanceDashboard';
+// import { PerformanceDashboard } from './components/PerformanceDashboard';
 import { installDOMErrorHandler } from './lib/domErrorHandler';
 import { PerformanceMonitor } from './components/PerformanceMonitor';
 
@@ -109,9 +109,9 @@ function App() {
         </Router>
 
         {/* Performance monitoring dashboard - temporarily disabled to fix infinite loop */}
-        {process.env.NODE_ENV === 'development' && false && (
+        {/* {process.env.NODE_ENV === 'development' && false && (
           <PerformanceDashboard componentName='Math Farm App' />
-        )}
+        )} */}
 
         {/* Web Worker Performance Monitor */}
         <PerformanceMonitor />

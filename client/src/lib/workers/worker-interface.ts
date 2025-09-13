@@ -46,8 +46,16 @@ export class MathWorkerManager {
       resolve: (value: any) => void;
       reject: (error: Error) => void;
       timeout: number;
+      startTime: number;
+      operation: string;
     }
   >();
+  private performanceMetrics: Array<{
+    operation: string;
+    duration: number;
+    success: boolean;
+    timestamp: number;
+  }> = [];
 
   constructor() {
     this.initializeWorkers();
@@ -94,8 +102,22 @@ export class MathWorkerManager {
     const operation = this.pendingOperations.get(id);
 
     if (operation) {
+      const duration = performance.now() - operation.startTime;
       clearTimeout(operation.timeout);
       this.pendingOperations.delete(id);
+
+      // Record performance metric
+      this.performanceMetrics.push({
+        operation: operation.operation,
+        duration,
+        success,
+        timestamp: Date.now(),
+      });
+
+      // Keep only recent metrics
+      if (this.performanceMetrics.length > 100) {
+        this.performanceMetrics.shift();
+      }
 
       if (success) {
         operation.resolve(result);
@@ -143,13 +165,30 @@ export class MathWorkerManager {
       }
 
       const id = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      const startTime = performance.now();
 
       const timeout = setTimeout(() => {
+        const operation = this.pendingOperations.get(id);
+        if (operation) {
+          const duration = performance.now() - operation.startTime;
+          this.performanceMetrics.push({
+            operation: operation.operation,
+            duration,
+            success: false,
+            timestamp: Date.now(),
+          });
+        }
         this.pendingOperations.delete(id);
         reject(new Error('Worker operation timed out'));
       }, timeoutMs) as unknown as number;
 
-      this.pendingOperations.set(id, { resolve, reject, timeout });
+      this.pendingOperations.set(id, {
+        resolve,
+        reject,
+        timeout,
+        startTime,
+        operation: type,
+      });
 
       const message: WorkerMessage = { id, type, payload };
       worker.postMessage(message);
@@ -267,6 +306,25 @@ export class MathWorkerManager {
    */
   isAvailable(): boolean {
     return this.workers.length > 0;
+  }
+
+  /**
+   * Get performance metrics
+   */
+  getPerformanceMetrics(): Array<{
+    operation: string;
+    duration: number;
+    success: boolean;
+    timestamp: number;
+  }> {
+    return [...this.performanceMetrics];
+  }
+
+  /**
+   * Clear performance metrics
+   */
+  clearPerformanceMetrics(): void {
+    this.performanceMetrics = [];
   }
 }
 

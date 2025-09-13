@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
 import { Label } from '../../../components/ui/label';
@@ -18,10 +18,19 @@ import {
   AngleMode,
 } from '../../../lib/math';
 import { useCalculatorWorker } from '../../../hooks/useMathWorker';
+// import {
+//   useMathOperationTracker,
+//   useRenderTracker,
+// } from '../../../hooks/usePerformanceMonitor';
+// import {
+//   CalculatorButton,
+//   ExampleButton,
+//   HistoryItem,
+// } from '../../../components/OptimizedComponents';
 import { useToolErrorHandler } from './ToolErrorBoundary';
 import { ErrorMessage, MathErrorMessage } from '../../../lib';
 
-export function Calculator() {
+const Calculator = React.memo(function Calculator() {
   const [expression, setExpression] = useState('');
   const [result, setResult] = useState('');
   const [history, setHistory] = useState<CalculationHistory[]>([]);
@@ -29,6 +38,10 @@ export function Calculator() {
   const [isLoading, setIsLoading] = useState(true);
   const [showHistory, setShowHistory] = useState(false);
   const [memory, setMemory] = useState(0);
+
+  // Performance tracking (temporarily disabled)
+  // const { trackOperation } = useMathOperationTracker();
+  // const { startRender, endRender } = useRenderTracker('Calculator');
 
   // Enhanced error handling
   const {
@@ -77,6 +90,13 @@ export function Calculator() {
     async (expr: string) => {
       if (!expr.trim()) return;
 
+      // const tracker = trackOperation('calculator-evaluate', 'Calculator', {
+      //   expression: expr,
+      //   angleMode,
+      //   isUsingWorkers,
+      // });
+      // tracker.start();
+
       try {
         // Reset any previous errors
         resetError();
@@ -85,6 +105,7 @@ export function Calculator() {
         const workerResult = await evaluateWithWorker(expr, angleMode);
 
         if (workerResult.error) {
+          // tracker.end(false, workerResult.error);
           const error = new Error(workerResult.error);
           const errorResult = handleMathError(error, 'evaluate', expr);
           setResult(`Error: ${errorResult.error || workerResult.error}`);
@@ -110,6 +131,7 @@ export function Calculator() {
         };
 
         setLastCalculation(toolResult);
+        // tracker.end(true);
 
         return resultStr;
       } catch (error) {
@@ -118,10 +140,18 @@ export function Calculator() {
         const errorResult = handleMathError(errorObj, 'calculate', expr);
         setResult(`Error: ${errorResult.error || errorObj.message}`);
         setLastCalculation(null);
+        // tracker.end(false, errorObj.message);
         return null;
       }
     },
-    [angleMode, evaluateWithWorker]
+    [
+      angleMode,
+      evaluateWithWorker,
+      // trackOperation,
+      isUsingWorkers,
+      resetError,
+      handleMathError,
+    ]
   );
 
   // Memory functions using utilities
@@ -266,34 +296,44 @@ export function Calculator() {
     setHistory([]);
   }, []);
 
-  // Preset examples from utility
-  const examples = calculatorUtils.getExamples();
+  // Preset examples from utility (memoized)
+  const examples = useMemo(() => calculatorUtils.getExamples(), []);
+
+  // Memoized button configurations
+  const basicButtons = useMemo(
+    () => [
+      ['C', '⌫', '(', ')'],
+      ['1', '2', '3', '/'],
+      ['4', '5', '6', '*'],
+      ['7', '8', '9', '-'],
+      ['0', '.', '=', '+'],
+    ],
+    []
+  );
+
+  const scientificButtons = useMemo(
+    () => [
+      ['sin', 'cos', 'tan', 'π'],
+      ['sin⁻¹', 'cos⁻¹', 'tan⁻¹', 'e'],
+      ['sinh', 'cosh', 'tanh', 'x²'],
+      ['ln', 'log', '√', 'x³'],
+      ['x^y', '1/x', 'x!', '∛'],
+    ],
+    []
+  );
+
+  const memoryButtons = useMemo(() => ['MC', 'MR', 'M+', 'M-'], []);
+
+  // Track render performance (temporarily disabled)
+  // useEffect(() => {
+  //   startRender();
+  //   endRender({ expression, result, angleMode, showScientific });
+  // }, [startRender, endRender, expression, result, angleMode, showScientific]);
 
   // Load math.js on mount
   useEffect(() => {
     loadMathLibrary();
   }, [loadMathLibrary]);
-
-  // Basic calculator buttons
-  const basicButtons = [
-    ['C', '⌫', '(', ')'],
-    ['1', '2', '3', '/'],
-    ['4', '5', '6', '*'],
-    ['7', '8', '9', '-'],
-    ['0', '.', '=', '+'],
-  ];
-
-  // Scientific calculator buttons
-  const scientificButtons = [
-    ['sin', 'cos', 'tan', 'π'],
-    ['sin⁻¹', 'cos⁻¹', 'tan⁻¹', 'e'],
-    ['sinh', 'cosh', 'tanh', 'x²'],
-    ['ln', 'log', '√', 'x³'],
-    ['x^y', '1/x', 'x!', '∛'],
-  ];
-
-  // Memory buttons
-  const memoryButtons = ['MC', 'MR', 'M+', 'M-'];
 
   if (isLoading) {
     return (
@@ -495,7 +535,6 @@ export function Calculator() {
           {basicButtons.flat().map(btn => {
             const isEquals = btn === '=';
             const isClear = btn === 'C' || btn === '⌫';
-            const isOperator = ['+', '-', '*', '/'].includes(btn);
 
             return (
               <Button
@@ -618,4 +657,6 @@ export function Calculator() {
       )}
     </div>
   );
-}
+});
+
+export { Calculator };
