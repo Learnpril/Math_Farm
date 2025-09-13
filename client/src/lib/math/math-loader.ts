@@ -110,25 +110,45 @@ export class MathLoader {
         };
       }
 
-      // For now, use fallback implementation to avoid Node.js compatibility issues
-      console.warn(
-        'Using fallback math implementation to avoid Node.js compatibility issues with mathjs'
-      );
+      // Try to dynamically import mathjs first
+      try {
+        const mathModule = await import('mathjs');
+        const mathjs = mathModule.default || mathModule;
 
-      // Set up a fallback math object
-      const fallbackMath = createFallbackMath();
-      this.mathInstance = fallbackMath;
-      this.isLoaded = true;
+        this.mathInstance = mathjs;
+        this.isLoaded = true;
 
-      // Also make it available globally for compatibility
-      if (typeof window !== 'undefined') {
-        window.math = fallbackMath;
+        // Also make it available globally for compatibility
+        if (typeof window !== 'undefined') {
+          window.math = mathjs;
+        }
+
+        console.log('Successfully loaded mathjs via dynamic import');
+        return {
+          loaded: true,
+          mathInstance: mathjs,
+        };
+      } catch (importError) {
+        console.warn(
+          'Failed to dynamically import mathjs, using fallback:',
+          importError
+        );
+
+        // Fall back to our custom implementation
+        const fallbackMath = createFallbackMath();
+        this.mathInstance = fallbackMath;
+        this.isLoaded = true;
+
+        // Also make it available globally for compatibility
+        if (typeof window !== 'undefined') {
+          window.math = fallbackMath;
+        }
+
+        return {
+          loaded: true,
+          mathInstance: fallbackMath,
+        };
       }
-
-      return {
-        loaded: true,
-        mathInstance: fallbackMath,
-      };
     } catch (error) {
       const errorObj =
         error instanceof Error

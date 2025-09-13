@@ -71,11 +71,14 @@ export default defineConfig({
         assetFileNames: assetInfo => {
           const info = assetInfo.name?.split('.') || [];
           const ext = info[info.length - 1];
-          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext || '')) {
+          if (/png|jpe?g|svg|gif|tiff|bmp|ico|webp|avif/i.test(ext || '')) {
             return `images/[name]-[hash][extname]`;
           }
           if (/css/i.test(ext || '')) {
             return `css/[name]-[hash][extname]`;
+          }
+          if (/woff2?|ttf|eot/i.test(ext || '')) {
+            return `fonts/[name]-[hash][extname]`;
           }
           return `assets/[name]-[hash][extname]`;
         },
@@ -121,6 +124,8 @@ export default defineConfig({
       'jsxgraph',
     ],
   },
+  // Asset optimization
+  assetsInclude: ['**/*.woff2', '**/*.woff', '**/*.ttf'],
   // Performance optimizations without minification
   esbuild: {
     // Remove unused imports and optimize for production
