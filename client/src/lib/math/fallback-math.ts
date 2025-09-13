@@ -1,43 +1,127 @@
 /**
  * Fallback math implementation for basic operations when math.js fails to load
+ * Enhanced with security validation
  */
 
 export class FallbackMath {
   /**
-   * Basic expression evaluator for simple mathematical expressions
+   * Basic expression evaluator for simple mathematical expressions with security validation
    */
   static evaluate(
     expression: string,
     scope: Record<string, number> = {}
   ): number {
     try {
-      // Replace variables with their values
-      let expr = expression;
+      // Basic security validation (inline to avoid circular dependency)
+      if (!expression || typeof expression !== 'string') {
+        throw new Error('Expression must be a non-empty string');
+      }
+
+      // Check for dangerous patterns
+      const dangerousPatterns = [
+        /eval\s*\(/i,
+        /function\s*\(/i,
+        /constructor/i,
+        /prototype/i,
+        /__proto__/i,
+        /import\s*\(/i,
+        /require\s*\(/i,
+        /process\./i,
+        /global\./i,
+        /window\./i,
+        /document\./i,
+        /alert\s*\(/i,
+        /console\./i,
+        /setTimeout/i,
+        /setInterval/i,
+        /script\s*>/i,
+        /<\s*script/i,
+        /javascript\s*:/i,
+        /[;&|`${}\\]/,
+      ];
+
+      for (const pattern of dangerousPatterns) {
+        if (pattern.test(expression)) {
+          throw new Error('Expression contains potentially dangerous code');
+        }
+      }
+
+      // Use the expression after basic validation
+      let expr = expression.trim();
+
+      // Validate scope variables
       for (const [variable, value] of Object.entries(scope)) {
+        if (typeof value !== 'number' || !isFinite(value)) {
+          throw new Error(
+            `Invalid scope variable '${variable}': must be a finite number`
+          );
+        }
+
+        // Validate variable name
+        if (!/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(variable)) {
+          throw new Error(
+            `Invalid variable name '${variable}': must be a valid identifier`
+          );
+        }
+      }
+
+      // Replace variables with their values (with validation)
+      for (const [variable, value] of Object.entries(scope)) {
+        const safeValue = this.sanitizeNumber(value);
         expr = expr.replace(
           new RegExp(`\\b${variable}\\b`, 'g'),
-          value.toString()
+          safeValue.toString()
         );
       }
 
-      // Replace mathematical functions with JavaScript equivalents
-      expr = expr.replace(/\bsin\(/g, 'Math.sin(');
-      expr = expr.replace(/\bcos\(/g, 'Math.cos(');
-      expr = expr.replace(/\btan\(/g, 'Math.tan(');
-      expr = expr.replace(/\bsqrt\(/g, 'Math.sqrt(');
-      expr = expr.replace(/\babs\(/g, 'Math.abs(');
-      expr = expr.replace(/\blog\(/g, 'Math.log(');
-      expr = expr.replace(/\blog10\(/g, 'Math.log10(');
-      expr = expr.replace(/\bexp\(/g, 'Math.exp(');
+      // Replace mathematical functions with JavaScript equivalents (whitelist approach)
+      const functionReplacements: Record<string, string> = {
+        'sin(': 'Math.sin(',
+        'cos(': 'Math.cos(',
+        'tan(': 'Math.tan(',
+        'asin(': 'Math.asin(',
+        'acos(': 'Math.acos(',
+        'atan(': 'Math.atan(',
+        'sinh(': 'Math.sinh(',
+        'cosh(': 'Math.cosh(',
+        'tanh(': 'Math.tanh(',
+        'sqrt(': 'Math.sqrt(',
+        'cbrt(': 'Math.cbrt(',
+        'abs(': 'Math.abs(',
+        'log(': 'Math.log(',
+        'log10(': 'Math.log10(',
+        'log2(': 'Math.log2(',
+        'exp(': 'Math.exp(',
+        'ceil(': 'Math.ceil(',
+        'floor(': 'Math.floor(',
+        'round(': 'Math.round(',
+        'max(': 'Math.max(',
+        'min(': 'Math.min(',
+        'pow(': 'Math.pow(',
+        'sign(': 'Math.sign(',
+      };
+
+      for (const [mathFunc, jsFunc] of Object.entries(functionReplacements)) {
+        expr = expr.replace(new RegExp(`\\b${mathFunc}`, 'g'), jsFunc);
+      }
+
+      // Replace constants
       expr = expr.replace(/\bpi\b/g, 'Math.PI');
       expr = expr.replace(/\be\b/g, 'Math.E');
 
-      // Replace ^ with ** for exponentiation
+      // Replace ^ with ** for exponentiation (with validation)
       expr = expr.replace(/\^/g, '**');
 
-      // Basic factorial implementation
+      // Basic factorial implementation (with limits for security)
       expr = expr.replace(/(\d+)!/g, (_, num) => {
         const n = parseInt(num);
+        if (n < 0) {
+          throw new Error('Factorial of negative number is undefined');
+        }
+        if (n > 170) {
+          throw new Error('Factorial too large (would cause overflow)');
+        }
+
         let result = 1;
         for (let i = 2; i <= n; i++) {
           result *= i;
@@ -45,11 +129,84 @@ export class FallbackMath {
         return result.toString();
       });
 
-      // Evaluate the expression safely
-      return Function(`"use strict"; return (${expr})`)();
+      // Validate the final expression before evaluation
+      if (this.containsUnsafePatterns(expr)) {
+        throw new Error('Expression contains unsafe patterns after processing');
+      }
+
+      // Evaluate the expression safely with restricted context
+      const result = this.safeEvaluate(expr);
+
+      // Validate the result
+      if (!isFinite(result)) {
+        throw new Error('Result is not a finite number');
+      }
+
+      return result;
     } catch (error) {
-      throw new Error(`Cannot evaluate expression: ${expression}`);
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
+      throw new Error(`Cannot evaluate expression: ${errorMessage}`);
     }
+  }
+
+  /**
+   * Safe evaluation with restricted context
+   */
+  private static safeEvaluate(expr: string): number {
+    // Create a restricted context for evaluation
+    const safeContext = {
+      Math: Math,
+      Infinity: Infinity,
+      NaN: NaN,
+    };
+
+    // Use Function constructor with restricted context
+    const func = new Function(
+      'Math',
+      'Infinity',
+      'NaN',
+      `"use strict"; return (${expr});`
+    );
+
+    return func(safeContext.Math, safeContext.Infinity, safeContext.NaN);
+  }
+
+  /**
+   * Check for unsafe patterns in processed expression
+   */
+  private static containsUnsafePatterns(expr: string): boolean {
+    const unsafePatterns = [
+      /\b(constructor|prototype|__proto__|eval|Function|Object|Array|String|Number|Boolean|Date|RegExp|Error)\b/i,
+      /\[\s*["'`]/, // Property access with strings
+      /\.\s*constructor/i,
+      /\.\s*prototype/i,
+      /\.\s*__proto__/i,
+      /this\s*\./,
+      /window\s*\./,
+      /global\s*\./,
+      /process\s*\./,
+      /require\s*\(/,
+      /import\s*\(/,
+    ];
+
+    return unsafePatterns.some(pattern => pattern.test(expr));
+  }
+
+  /**
+   * Sanitize number values to prevent injection
+   */
+  private static sanitizeNumber(value: number): number {
+    if (!isFinite(value)) {
+      throw new Error('Number must be finite');
+    }
+
+    // Prevent extremely large numbers that could cause issues
+    if (Math.abs(value) > Number.MAX_SAFE_INTEGER) {
+      throw new Error('Number too large for safe computation');
+    }
+
+    return value;
   }
 
   /**
