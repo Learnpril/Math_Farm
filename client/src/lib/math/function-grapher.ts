@@ -4,11 +4,32 @@ import { getMathInstance } from './math-loader';
 import { createFallbackMath } from './fallback-math';
 
 /**
- * Pure function graphing utilities extracted from FunctionGrapherDemo
+ * Pure function graphing utilities extracted from FunctionGrapherDemo.
+ * Provides comprehensive function evaluation, graph generation, and visualization
+ * capabilities with support for multiple functions, custom bounds, and critical point analysis.
+ *
+ * @example
+ * ```typescript
+ * const points = FunctionGrapher.generateFunctionPoints('x^2', { xMin: -5, xMax: 5, yMin: -1, yMax: 25 });
+ * const criticalPoints = FunctionGrapher.findCriticalPoints('x^3 - 3*x', bounds);
+ * ```
  */
 export class FunctionGrapher {
   /**
-   * Evaluates a mathematical function at a given x value
+   * Evaluates a mathematical function at a given x value with error handling.
+   * Validates the expression and safely evaluates it using math.js,
+   * returning null for invalid or undefined results.
+   *
+   * @param expression - The mathematical function expression (must contain variable 'x')
+   * @param x - The x-value at which to evaluate the function
+   * @returns The function value at x, or null if evaluation fails or result is invalid
+   *
+   * @example
+   * ```typescript
+   * FunctionGrapher.evaluateFunction('x^2', 3); // 9
+   * FunctionGrapher.evaluateFunction('sin(x)', Math.PI/2); // 1
+   * FunctionGrapher.evaluateFunction('1/x', 0); // null (division by zero)
+   * ```
    */
   static evaluateFunction(expression: string, x: number): number | null {
     // Validate the expression
@@ -32,7 +53,21 @@ export class FunctionGrapher {
   }
 
   /**
-   * Generates function data points for graphing
+   * Generates function data points for graphing within specified bounds.
+   * Creates an array of coordinate points by evaluating the function
+   * at regular intervals across the specified x-range.
+   *
+   * @param expression - The mathematical function expression to graph
+   * @param bounds - The graphing bounds (xMin, xMax, yMin, yMax)
+   * @param resolution - Number of points to generate (default: 1000)
+   * @returns Array of {x, y} coordinate points for the function
+   *
+   * @example
+   * ```typescript
+   * const bounds = { xMin: -5, xMax: 5, yMin: -10, yMax: 10 };
+   * const points = FunctionGrapher.generateFunctionPoints('x^2', bounds, 500);
+   * // Returns 500 points from x=-5 to x=5
+   * ```
    */
   static generateFunctionPoints(
     expression: string,
@@ -54,7 +89,23 @@ export class FunctionGrapher {
   }
 
   /**
-   * Draws a function graph on a canvas
+   * Draws a complete function graph on an HTML5 canvas element.
+   * Renders multiple functions with grid, axes, labels, and proper scaling
+   * within the specified bounds with theme-aware styling.
+   *
+   * @param canvas - The HTML5 canvas element to draw on
+   * @param functions - Array of function data objects to render
+   * @param bounds - The viewing bounds for the graph
+   *
+   * @example
+   * ```typescript
+   * const canvas = document.getElementById('graph') as HTMLCanvasElement;
+   * const functions = [
+   *   { id: '1', expression: 'x^2', color: 'blue', visible: true },
+   *   { id: '2', expression: 'sin(x)', color: 'red', visible: true }
+   * ];
+   * FunctionGrapher.drawGraph(canvas, functions, bounds);
+   * ```
    */
   static drawGraph(
     canvas: HTMLCanvasElement,
@@ -96,7 +147,18 @@ export class FunctionGrapher {
   }
 
   /**
-   * Draws the coordinate grid
+   * Draws the coordinate grid on the canvas.
+   * Creates vertical and horizontal grid lines at integer coordinates
+   * to provide visual reference for the graph.
+   *
+   * @param ctx - The 2D rendering context of the canvas
+   * @param bounds - The viewing bounds for the graph
+   * @param width - Canvas width in pixels
+   * @param height - Canvas height in pixels
+   * @param toCanvasX - Function to convert graph x-coordinates to canvas coordinates
+   * @param toCanvasY - Function to convert graph y-coordinates to canvas coordinates
+   *
+   * @private
    */
   private static drawGrid(
     ctx: CanvasRenderingContext2D,
@@ -131,7 +193,17 @@ export class FunctionGrapher {
   }
 
   /**
-   * Draws the coordinate axes
+   * Draws the coordinate axes (x-axis and y-axis) on the canvas.
+   * Only draws axes that are visible within the current viewing bounds.
+   *
+   * @param ctx - The 2D rendering context of the canvas
+   * @param bounds - The viewing bounds for the graph
+   * @param width - Canvas width in pixels
+   * @param height - Canvas height in pixels
+   * @param toCanvasX - Function to convert graph x-coordinates to canvas coordinates
+   * @param toCanvasY - Function to convert graph y-coordinates to canvas coordinates
+   *
+   * @private
    */
   private static drawAxes(
     ctx: CanvasRenderingContext2D,
@@ -166,7 +238,18 @@ export class FunctionGrapher {
   }
 
   /**
-   * Draws a single function
+   * Draws a single function curve on the canvas.
+   * Evaluates the function at high resolution and connects points
+   * with smooth curves, handling discontinuities appropriately.
+   *
+   * @param ctx - The 2D rendering context of the canvas
+   * @param func - The function data object containing expression and styling
+   * @param bounds - The viewing bounds for the graph
+   * @param width - Canvas width in pixels
+   * @param toCanvasX - Function to convert graph x-coordinates to canvas coordinates
+   * @param toCanvasY - Function to convert graph y-coordinates to canvas coordinates
+   *
+   * @private
    */
   private static drawFunction(
     ctx: CanvasRenderingContext2D,
@@ -207,7 +290,18 @@ export class FunctionGrapher {
   }
 
   /**
-   * Draws axis labels
+   * Draws numeric labels on the coordinate axes.
+   * Places labels at integer coordinates with theme-aware text color
+   * and proper positioning relative to the axes.
+   *
+   * @param ctx - The 2D rendering context of the canvas
+   * @param bounds - The viewing bounds for the graph
+   * @param toCanvasX - Function to convert graph x-coordinates to canvas coordinates
+   * @param toCanvasY - Function to convert graph y-coordinates to canvas coordinates
+   * @param width - Canvas width in pixels
+   * @param height - Canvas height in pixels
+   *
+   * @private
    */
   private static drawAxisLabels(
     ctx: CanvasRenderingContext2D,
@@ -246,7 +340,20 @@ export class FunctionGrapher {
   }
 
   /**
-   * Creates a new function data object
+   * Creates a new function data object with unique ID and styling.
+   * Generates a function object suitable for use in the graphing system
+   * with automatic color assignment if not specified.
+   *
+   * @param expression - The mathematical function expression
+   * @param color - Optional color for the function curve (auto-generated if not provided)
+   * @param visible - Whether the function should be visible initially (default: true)
+   * @returns FunctionData object with unique ID and specified properties
+   *
+   * @example
+   * ```typescript
+   * const func1 = FunctionGrapher.createFunction('x^2', 'blue');
+   * const func2 = FunctionGrapher.createFunction('sin(x)'); // Auto-generated color
+   * ```
    */
   static createFunction(
     expression: string,
@@ -262,7 +369,11 @@ export class FunctionGrapher {
   }
 
   /**
-   * Generates a random color for functions
+   * Generates a random HSL color for function curves.
+   * Creates visually distinct colors with consistent saturation and lightness
+   * for optimal visibility on both light and dark themes.
+   *
+   * @returns HSL color string in format "hsl(hue, 70%, 50%)"
    */
   static generateRandomColor(): string {
     const hue = Math.random() * 360;
@@ -270,7 +381,18 @@ export class FunctionGrapher {
   }
 
   /**
-   * Validates a function expression
+   * Validates a function expression for graphing suitability.
+   * Checks that the expression is non-empty, contains the variable 'x',
+   * and passes general mathematical expression validation.
+   *
+   * @param expression - The function expression to validate
+   * @returns ValidationResult indicating if the expression is valid for graphing
+   *
+   * @example
+   * ```typescript
+   * FunctionGrapher.validateFunction('x^2'); // { valid: true }
+   * FunctionGrapher.validateFunction('2 + 3'); // { valid: false, error: 'Function must contain variable "x"' }
+   * ```
    */
   static validateFunction(expression: string): ValidationResult {
     if (!expression.trim()) {
@@ -286,7 +408,17 @@ export class FunctionGrapher {
   }
 
   /**
-   * Gets preset function examples
+   * Gets preset function examples for demonstration and testing.
+   * Provides a variety of mathematical functions showcasing different
+   * types of curves and mathematical concepts.
+   *
+   * @returns Array of example function expressions
+   *
+   * @example
+   * ```typescript
+   * const presets = FunctionGrapher.getPresetFunctions();
+   * console.log(presets[0]); // "x^2"
+   * ```
    */
   static getPresetFunctions(): string[] {
     return [
@@ -309,7 +441,20 @@ export class FunctionGrapher {
   }
 
   /**
-   * Calculates optimal bounds for a set of functions
+   * Calculates optimal viewing bounds for a set of functions.
+   * Analyzes function behavior by sampling points and determines
+   * appropriate y-range with padding for optimal visualization.
+   *
+   * @param functions - Array of function data objects to analyze
+   * @param samplePoints - Number of sample points to use for analysis (default: 100)
+   * @returns GraphBounds object with optimal xMin, xMax, yMin, yMax values
+   *
+   * @example
+   * ```typescript
+   * const functions = [FunctionGrapher.createFunction('x^2')];
+   * const bounds = FunctionGrapher.calculateOptimalBounds(functions);
+   * // Returns bounds that nicely frame the parabola
+   * ```
    */
   static calculateOptimalBounds(
     functions: FunctionData[],
@@ -351,7 +496,21 @@ export class FunctionGrapher {
   }
 
   /**
-   * Finds critical points of a function (approximate)
+   * Finds critical points of a function using numerical approximation.
+   * Identifies local maxima, minima, and inflection points by analyzing
+   * function behavior at sample points within the specified bounds.
+   *
+   * @param expression - The function expression to analyze
+   * @param bounds - The bounds within which to search for critical points
+   * @param tolerance - Minimum difference threshold for identifying critical points (default: 0.01)
+   * @returns Array of critical point objects with coordinates and type classification
+   *
+   * @example
+   * ```typescript
+   * const bounds = { xMin: -5, xMax: 5, yMin: -10, yMax: 10 };
+   * const critical = FunctionGrapher.findCriticalPoints('x^3 - 3*x', bounds);
+   * // Returns points like [{ x: -1, y: 2, type: 'max' }, { x: 1, y: -2, type: 'min' }]
+   * ```
    */
   static findCriticalPoints(
     expression: string,
@@ -398,18 +557,38 @@ export class FunctionGrapher {
 }
 
 /**
- * Convenience functions for function graphing
+ * Convenience functions for function graphing operations.
+ * Provides a simplified API for common function graphing tasks
+ * with direct access to FunctionGrapher class methods.
+ *
+ * @example
+ * ```typescript
+ * import { functionGrapher } from './function-grapher';
+ *
+ * const points = functionGrapher.generatePoints('x^2', bounds);
+ * const func = functionGrapher.createFunction('sin(x)', 'red');
+ * functionGrapher.drawGraph(canvas, [func], bounds);
+ * ```
  */
 export const functionGrapher = {
   /**
-   * Evaluates a function at a point
+   * Evaluates a mathematical function at a specific x-value.
+   *
+   * @param expression - The function expression to evaluate
+   * @param x - The x-value at which to evaluate the function
+   * @returns The function value at x, or null if evaluation fails
    */
   evaluate: (expression: string, x: number): number | null => {
     return FunctionGrapher.evaluateFunction(expression, x);
   },
 
   /**
-   * Generates points for graphing
+   * Generates coordinate points for graphing a function.
+   *
+   * @param expression - The function expression to graph
+   * @param bounds - The viewing bounds for point generation
+   * @param resolution - Number of points to generate (optional)
+   * @returns Array of {x, y} coordinate points
    */
   generatePoints: (
     expression: string,
@@ -424,7 +603,11 @@ export const functionGrapher = {
   },
 
   /**
-   * Draws a complete graph
+   * Draws a complete function graph on a canvas element.
+   *
+   * @param canvas - The HTML5 canvas element to draw on
+   * @param functions - Array of function data objects to render
+   * @param bounds - The viewing bounds for the graph
    */
   drawGraph: (
     canvas: HTMLCanvasElement,
@@ -435,7 +618,12 @@ export const functionGrapher = {
   },
 
   /**
-   * Creates a new function
+   * Creates a new function data object with styling.
+   *
+   * @param expression - The mathematical function expression
+   * @param color - Optional color for the function curve
+   * @param visible - Whether the function should be visible initially
+   * @returns FunctionData object ready for graphing
    */
   createFunction: (
     expression: string,
@@ -446,19 +634,28 @@ export const functionGrapher = {
   },
 
   /**
-   * Validates function expression
+   * Validates a function expression for graphing suitability.
+   *
+   * @param expression - The function expression to validate
+   * @returns ValidationResult indicating if expression is valid
    */
   validateFunction: (expression: string): ValidationResult => {
     return FunctionGrapher.validateFunction(expression);
   },
 
   /**
-   * Gets preset functions
+   * Gets preset function examples for demonstration.
+   *
+   * @returns Array of example function expressions
    */
   getPresets: (): string[] => FunctionGrapher.getPresetFunctions(),
 
   /**
-   * Calculates optimal viewing bounds
+   * Calculates optimal viewing bounds for a set of functions.
+   *
+   * @param functions - Array of function data objects to analyze
+   * @param samplePoints - Number of sample points for analysis (optional)
+   * @returns GraphBounds with optimal viewing area
    */
   calculateBounds: (
     functions: FunctionData[],
@@ -468,7 +665,12 @@ export const functionGrapher = {
   },
 
   /**
-   * Finds critical points
+   * Finds critical points (maxima, minima) of a function.
+   *
+   * @param expression - The function expression to analyze
+   * @param bounds - The bounds within which to search
+   * @param tolerance - Minimum difference threshold for critical points
+   * @returns Array of critical point objects with coordinates and types
    */
   findCriticalPoints: (
     expression: string,
@@ -479,7 +681,9 @@ export const functionGrapher = {
   },
 
   /**
-   * Generates random color
+   * Generates a random HSL color for function curves.
+   *
+   * @returns Random HSL color string
    */
   randomColor: (): string => FunctionGrapher.generateRandomColor(),
 };

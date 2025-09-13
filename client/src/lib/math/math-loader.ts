@@ -1,5 +1,16 @@
 /**
- * Math library loader utility for dynamically loading math.js
+ * Math library loader utility for dynamically loading math.js.
+ * Provides singleton-based loading with fallback mechanisms, error handling,
+ * and configuration support for mathematical computations.
+ *
+ * @example
+ * ```typescript
+ * const result = await loadMathJS();
+ * if (result.loaded) {
+ *   const math = getMathInstance();
+ *   console.log(math.evaluate('2 + 3')); // 5
+ * }
+ * ```
  */
 
 import { createFallbackMath } from './fallback-math';
@@ -17,14 +28,35 @@ export interface MathLoaderResult {
   mathInstance?: any; // Using any since we'll load dynamically
 }
 
+/**
+ * Singleton class for managing math.js library loading and configuration.
+ * Handles dynamic loading, caching, error recovery, and provides fallback
+ * implementations when the main library is unavailable.
+ *
+ * @example
+ * ```typescript
+ * const loader = MathLoader.getInstance();
+ * const result = await loader.loadMathJS();
+ * const mathInstance = loader.getMathInstance();
+ * ```
+ */
 export class MathLoader {
   private static instance: MathLoader;
   private loadPromise: Promise<MathLoaderResult> | null = null;
   private isLoaded = false;
   private mathInstance: any = null;
 
+  /**
+   * Private constructor to enforce singleton pattern.
+   */
   private constructor() {}
 
+  /**
+   * Gets the singleton instance of MathLoader.
+   * Creates a new instance if one doesn't exist.
+   *
+   * @returns The singleton MathLoader instance
+   */
   static getInstance(): MathLoader {
     if (!MathLoader.instance) {
       MathLoader.instance = new MathLoader();
@@ -33,7 +65,21 @@ export class MathLoader {
   }
 
   /**
-   * Loads math.js library dynamically
+   * Loads math.js library dynamically with fallback support.
+   * Returns cached result if already loaded, or creates new loading promise.
+   * Uses fallback implementation to avoid Node.js compatibility issues.
+   *
+   * @returns Promise resolving to MathLoaderResult with loading status and instance
+   *
+   * @example
+   * ```typescript
+   * const result = await loader.loadMathJS();
+   * if (result.loaded) {
+   *   console.log('Math.js loaded successfully');
+   * } else {
+   *   console.error('Loading failed:', result.error);
+   * }
+   * ```
    */
   async loadMathJS(): Promise<MathLoaderResult> {
     // Return existing promise if already loading
@@ -165,7 +211,18 @@ export class MathLoader {
 }
 
 /**
- * Convenience function to load math.js
+ * Convenience function to load math.js library.
+ * Provides a simple interface to the MathLoader singleton for loading the math library.
+ *
+ * @returns Promise resolving to MathLoaderResult with loading status and math instance
+ *
+ * @example
+ * ```typescript
+ * const result = await loadMathJS();
+ * if (result.loaded) {
+ *   console.log('Math library ready for use');
+ * }
+ * ```
  */
 export const loadMathJS = async (): Promise<MathLoaderResult> => {
   const loader = MathLoader.getInstance();
@@ -173,7 +230,17 @@ export const loadMathJS = async (): Promise<MathLoaderResult> => {
 };
 
 /**
- * Convenience function to get math.js instance
+ * Convenience function to get the loaded math.js instance.
+ * Returns the math instance if available, or creates a fallback implementation
+ * to ensure mathematical operations can continue even if the main library fails.
+ *
+ * @returns Math.js instance or fallback implementation
+ *
+ * @example
+ * ```typescript
+ * const math = getMathInstance();
+ * const result = math.evaluate('2 + 3 * 4'); // Works with either real or fallback math
+ * ```
  */
 export const getMathInstance = (): any => {
   const loader = MathLoader.getInstance();
@@ -189,7 +256,19 @@ export const getMathInstance = (): any => {
 };
 
 /**
- * Convenience function to check if math.js is loaded
+ * Convenience function to check if math.js is loaded and available.
+ * Useful for conditional logic based on library availability.
+ *
+ * @returns True if math.js is loaded and ready, false otherwise
+ *
+ * @example
+ * ```typescript
+ * if (isMathLoaded()) {
+ *   // Use advanced math.js features
+ * } else {
+ *   // Use fallback or simpler operations
+ * }
+ * ```
  */
 export const isMathLoaded = (): boolean => {
   const loader = MathLoader.getInstance();

@@ -2,7 +2,19 @@ import { ValidationResult } from './types';
 import { errorLogger, ErrorSeverity } from '../errorLogging';
 
 /**
- * Validates and sanitizes mathematical expressions for safe evaluation
+ * Validates and sanitizes mathematical expressions for safe evaluation.
+ * Provides comprehensive security validation, input sanitization, and mathematical
+ * data structure validation to prevent code injection and ensure safe computation.
+ *
+ * @example
+ * ```typescript
+ * const result = MathValidator.validateExpression('2 + 3 * x');
+ * if (result.valid) {
+ *   console.log('Safe expression:', result.sanitized);
+ * } else {
+ *   console.error('Validation error:', result.error);
+ * }
+ * ```
  */
 export class MathValidator {
   // Dangerous patterns that should be blocked for security
@@ -219,7 +231,29 @@ export class MathValidator {
   ];
 
   /**
-   * Validates a mathematical expression for safety and correctness with enhanced security
+   * Validates a mathematical expression for safety and correctness with enhanced security.
+   * Performs comprehensive validation including security threat detection, character validation,
+   * syntax checking, and input sanitization to ensure safe mathematical evaluation.
+   *
+   * @param input - The mathematical expression string to validate
+   * @returns ValidationResult object indicating validity, errors, and sanitized expression
+   *
+   * @example
+   * ```typescript
+   * // Valid expression
+   * MathValidator.validateExpression('sin(x) + cos(y)');
+   * // Returns: { valid: true, sanitized: 'sin(x) + cos(y)' }
+   *
+   * // Invalid/dangerous expression
+   * MathValidator.validateExpression('eval(alert("xss"))');
+   * // Returns: { valid: false, error: 'Expression contains potentially dangerous code' }
+   *
+   * // Expression with syntax errors
+   * MathValidator.validateExpression('2 + + 3');
+   * // Returns: { valid: false, error: 'Invalid syntax' }
+   * ```
+   *
+   * @throws Never throws - all errors are captured and returned in the result object
    */
   static validateExpression(input: string): ValidationResult {
     try {

@@ -6,11 +6,41 @@ import { createFallbackMath } from './fallback-math';
 import { mathErrorHandler } from './error-handler';
 
 /**
- * Pure equation solving functions extracted from EquationSolverDemo
+ * Pure equation solving functions extracted from EquationSolverDemo.
+ * Provides comprehensive equation solving capabilities including algebraic equations,
+ * derivatives, and expression simplification with step-by-step solutions.
+ *
+ * @example
+ * ```typescript
+ * const result = EquationSolver.solve('x^2 - 4', 'x', 'solve');
+ * console.log(result.result); // "x = 2, -2"
+ * console.log(result.steps); // Array of solution steps
+ * ```
  */
 export class EquationSolver {
   /**
-   * Solves equations based on the specified type
+   * Solves equations based on the specified type with comprehensive error handling.
+   * Supports algebraic solving, differentiation, and expression simplification
+   * with detailed step-by-step solutions.
+   *
+   * @param equation - The mathematical equation or expression to solve
+   * @param variable - The variable to solve for (default: 'x')
+   * @param solverType - The type of operation: 'solve', 'derivative', or 'simplify'
+   * @returns MathResult with solution, steps, and metadata
+   *
+   * @example
+   * ```typescript
+   * // Solve algebraic equation
+   * EquationSolver.solve('x^2 - 4', 'x', 'solve');
+   *
+   * // Find derivative
+   * EquationSolver.solve('x^3 + 2*x', 'x', 'derivative');
+   *
+   * // Simplify expression
+   * EquationSolver.solve('(x + 2)^2', 'x', 'simplify');
+   * ```
+   *
+   * @throws Never throws - all errors are captured and returned in the result object
    */
   static solve(
     equation: string,
@@ -89,7 +119,15 @@ export class EquationSolver {
   }
 
   /**
-   * Synchronous wrapper for equation solving (falls back to numerical if symbolic fails)
+   * Synchronous wrapper for equation solving with fallback mechanisms.
+   * Attempts symbolic solving first using nerdamer, then falls back to
+   * numerical methods if symbolic solving fails.
+   *
+   * @param equation - The equation to solve
+   * @param variable - The variable to solve for
+   * @returns Object containing the solution result and step-by-step explanation
+   *
+   * @private
    */
   private static solveEquationSync(
     equation: string,
@@ -141,7 +179,15 @@ export class EquationSolver {
   }
 
   /**
-   * Solves algebraic equations using nerdamer for symbolic solving
+   * Solves algebraic equations using nerdamer for symbolic solving.
+   * Provides exact symbolic solutions when possible, with fallback
+   * to numerical methods if symbolic solving fails.
+   *
+   * @param equation - The algebraic equation to solve
+   * @param variable - The variable to solve for
+   * @returns Promise resolving to solution result and steps
+   *
+   * @private
    */
   private static async solveEquationSymbolic(
     equation: string,
@@ -199,7 +245,16 @@ export class EquationSolver {
   }
 
   /**
-   * Solves algebraic equations using numerical methods
+   * Solves algebraic equations using numerical methods as a fallback.
+   * Implements simple root-finding algorithms and special handling
+   * for quadratic equations with detailed step explanations.
+   *
+   * @param equation - The equation to solve numerically
+   * @param variable - The variable to solve for
+   * @param existingSteps - Any existing solution steps to append to
+   * @returns Object containing numerical solution and steps
+   *
+   * @private
    */
   private static solveEquationNumerical(
     equation: string,
@@ -279,7 +334,19 @@ export class EquationSolver {
   }
 
   /**
-   * Solves quadratic equations with detailed steps
+   * Solves quadratic equations using the quadratic formula with detailed steps.
+   * Provides complete step-by-step solutions including coefficient identification,
+   * discriminant calculation, and root computation with LaTeX formatting.
+   *
+   * @param equation - The quadratic equation to solve (e.g., "x^2 + 2*x - 3")
+   * @param variable - The variable to solve for (default: 'x')
+   * @returns Object containing solution and detailed step-by-step explanation
+   *
+   * @example
+   * ```typescript
+   * const result = EquationSolver.solveQuadratic('x^2 - 4', 'x');
+   * // Returns solutions x = 2, x = -2 with full steps
+   * ```
    */
   static solveQuadratic(
     equation: string,
@@ -353,7 +420,14 @@ export class EquationSolver {
   }
 
   /**
-   * Parses coefficients from a quadratic equation
+   * Parses coefficients from a quadratic equation string.
+   * Extracts the coefficients a, b, and c from equations in the form ax² + bx + c = 0.
+   *
+   * @param equation - The quadratic equation string
+   * @param variable - The variable name to parse for
+   * @returns Object containing the coefficients a, b, and c
+   *
+   * @private
    */
   private static parseQuadraticCoefficients(
     equation: string,
@@ -397,7 +471,15 @@ export class EquationSolver {
   }
 
   /**
-   * Finds the derivative of an expression using nerdamer for symbolic differentiation
+   * Finds the derivative of an expression using symbolic differentiation.
+   * Attempts to use nerdamer for exact symbolic derivatives, with fallback
+   * to math.js or basic derivative rules for common functions.
+   *
+   * @param expression - The mathematical expression to differentiate
+   * @param variable - The variable to differentiate with respect to
+   * @returns Object containing the derivative and step-by-step explanation
+   *
+   * @private
    */
   private static findDerivative(
     expression: string,
@@ -465,7 +547,14 @@ export class EquationSolver {
   }
 
   /**
-   * Simplifies mathematical expressions using nerdamer for symbolic simplification
+   * Simplifies mathematical expressions using symbolic computation.
+   * Attempts to use nerdamer for advanced symbolic simplification,
+   * with fallback to math.js simplification methods.
+   *
+   * @param expression - The mathematical expression to simplify
+   * @returns Object containing the simplified expression and steps
+   *
+   * @private
    */
   private static simplifyExpression(expression: string): {
     result: string;
@@ -536,7 +625,18 @@ export class EquationSolver {
   }
 
   /**
-   * Converts mathematical expressions to LaTeX format
+   * Converts mathematical expressions to LaTeX format for rendering.
+   * Transforms common mathematical notation into LaTeX syntax for
+   * proper mathematical display in documentation and UI components.
+   *
+   * @param expression - The mathematical expression to convert
+   * @returns LaTeX-formatted string suitable for MathJax rendering
+   *
+   * @example
+   * ```typescript
+   * EquationSolver.toLatex('x^2 + 2*x + 1'); // "x^{2} + 2x + 1"
+   * EquationSolver.toLatex('sqrt(x)'); // "\\sqrt{x}"
+   * ```
    */
   static toLatex(expression: string): string {
     let latex = expression;
@@ -594,7 +694,16 @@ export class EquationSolver {
   }
 
   /**
-   * Basic derivative calculation for simple cases when math.js derivative is not available
+   * Basic derivative calculation for simple cases using fundamental rules.
+   * Implements power rule, constant rule, and basic function derivatives
+   * when advanced symbolic differentiation is not available.
+   *
+   * @param expression - The expression to differentiate
+   * @param variable - The variable to differentiate with respect to
+   * @param existingSteps - Any existing solution steps to append to
+   * @returns Object containing the derivative and explanation steps
+   *
+   * @private
    */
   private static basicDerivative(
     expression: string,
@@ -675,7 +784,17 @@ export class EquationSolver {
   }
 
   /**
-   * Gets preset equation examples
+   * Gets preset equation examples for demonstration and testing.
+   * Provides a variety of equations showcasing different solver capabilities
+   * including algebraic equations, derivatives, and simplification examples.
+   *
+   * @returns Array of example objects with type, equation, and description
+   *
+   * @example
+   * ```typescript
+   * const examples = EquationSolver.getExamples();
+   * console.log(examples[0]); // { type: 'solve', equation: 'x^2 - 4', description: 'Simple quadratic' }
+   * ```
    */
   static getExamples(): Array<{
     type: SolverType;
@@ -714,11 +833,27 @@ export class EquationSolver {
 }
 
 /**
- * Convenience functions for equation solving
+ * Convenience functions for equation solving operations.
+ * Provides a simplified API for common equation solving tasks
+ * with direct access to EquationSolver class methods.
+ *
+ * @example
+ * ```typescript
+ * import { equationSolver } from './equation-solver';
+ *
+ * const result = equationSolver.solve('x^2 - 4', 'x', 'solve');
+ * const quadratic = equationSolver.solveQuadratic('x^2 + 2*x - 3');
+ * const latex = equationSolver.toLatex('x^2 + 1');
+ * ```
  */
 export const equationSolver = {
   /**
-   * Solves an equation
+   * Solves equations with comprehensive error handling and step-by-step solutions.
+   *
+   * @param equation - The mathematical equation to solve
+   * @param variable - The variable to solve for (default: 'x')
+   * @param type - The solver type: 'solve', 'derivative', or 'simplify' (default: 'solve')
+   * @returns MathResult with solution, steps, and metadata
    */
   solve: (
     equation: string,
@@ -729,26 +864,39 @@ export const equationSolver = {
   },
 
   /**
-   * Solves quadratic equations specifically
+   * Solves quadratic equations specifically using the quadratic formula.
+   * Provides detailed step-by-step solutions with discriminant analysis.
+   *
+   * @param equation - The quadratic equation to solve
+   * @param variable - The variable to solve for (default: 'x')
+   * @returns Object with solution and detailed steps
    */
   solveQuadratic: (equation: string, variable: string = 'x') => {
     return EquationSolver.solveQuadratic(equation, variable);
   },
 
   /**
-   * Converts expression to LaTeX
+   * Converts mathematical expressions to LaTeX format for rendering.
+   *
+   * @param expression - The mathematical expression to convert
+   * @returns LaTeX-formatted string
    */
   toLatex: (expression: string): string => {
     return EquationSolver.toLatex(expression);
   },
 
   /**
-   * Gets example equations
+   * Gets preset equation examples for demonstration and testing.
+   *
+   * @returns Array of example equation objects
    */
   getExamples: () => EquationSolver.getExamples(),
 
   /**
-   * Validates equation input
+   * Validates equation input for safety and correctness.
+   *
+   * @param equation - The equation to validate
+   * @returns ValidationResult indicating if equation is safe and valid
    */
   validateInput: (equation: string) =>
     MathValidator.validateExpression(equation),

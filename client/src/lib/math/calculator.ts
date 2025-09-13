@@ -10,11 +10,38 @@ import { createFallbackMath } from './fallback-math';
 import { mathErrorHandler } from './error-handler';
 
 /**
- * Pure calculator functions extracted from CalculatorDemo
+ * Pure calculator functions extracted from CalculatorDemo.
+ * Provides safe mathematical expression evaluation with comprehensive error handling,
+ * input validation, and support for various mathematical operations.
+ *
+ * @example
+ * ```typescript
+ * const result = Calculator.evaluate('2 + 3 * 4', 'deg');
+ * console.log(result.result); // "14"
+ * ```
  */
 export class Calculator {
   /**
-   * Evaluates a mathematical expression with angle mode support
+   * Evaluates a mathematical expression with angle mode support.
+   * Validates input for security, sanitizes expressions, and handles errors gracefully.
+   *
+   * @param expression - The mathematical expression to evaluate (e.g., "sin(pi/2)", "2^3")
+   * @param angleMode - The angle mode for trigonometric functions ('deg' or 'rad')
+   * @returns A MathResult object containing the result, error information, and metadata
+   *
+   * @example
+   * ```typescript
+   * // Basic arithmetic
+   * Calculator.evaluate('2 + 3 * 4'); // { result: "14", metadata: {...} }
+   *
+   * // Trigonometric functions
+   * Calculator.evaluate('sin(90)', 'deg'); // { result: "1", metadata: {...} }
+   *
+   * // Error handling
+   * Calculator.evaluate('invalid'); // { result: "", error: "Invalid expression" }
+   * ```
+   *
+   * @throws Never throws - all errors are captured and returned in the result object
    */
   static evaluate(
     expression: string,
@@ -78,7 +105,20 @@ export class Calculator {
   }
 
   /**
-   * Formats calculation results consistently
+   * Formats calculation results consistently for display.
+   * Handles special values (null, undefined, Infinity, NaN) and applies
+   * appropriate precision formatting for numeric results.
+   *
+   * @param result - The raw calculation result from math.js evaluation
+   * @returns A formatted string representation of the result
+   *
+   * @example
+   * ```typescript
+   * Calculator.formatResult(3.14159265); // "3.14159265"
+   * Calculator.formatResult(Infinity); // "Infinity"
+   * Calculator.formatResult(null); // "null"
+   * Calculator.formatResult(1e-12); // "0" (very small numbers)
+   * ```
    */
   static formatResult(result: any): string {
     if (result === null) {
@@ -112,7 +152,20 @@ export class Calculator {
   }
 
   /**
-   * Performs real-time calculation for simple expressions
+   * Performs real-time calculation for simple expressions during user input.
+   * Only evaluates expressions that appear complete (no trailing operators)
+   * to provide live feedback without errors.
+   *
+   * @param expression - The mathematical expression being typed
+   * @param angleMode - The angle mode for trigonometric functions
+   * @returns The calculated result as a string, or empty string if incomplete/invalid
+   *
+   * @example
+   * ```typescript
+   * Calculator.evaluateRealTime('2 + 3'); // "5"
+   * Calculator.evaluateRealTime('2 +'); // "" (incomplete)
+   * Calculator.evaluateRealTime(''); // "" (empty)
+   * ```
    */
   static evaluateRealTime(
     expression: string,
@@ -132,7 +185,25 @@ export class Calculator {
   }
 
   /**
-   * Button input processing
+   * Processes calculator button input and updates the calculator state.
+   * Handles special buttons (equals, clear, memory operations) and mathematical
+   * functions while maintaining proper expression syntax.
+   *
+   * @param button - The button pressed (e.g., '=', 'C', '⌫', 'sin', '+', '1')
+   * @param currentExpression - The current mathematical expression
+   * @param currentResult - The current displayed result
+   * @param memory - The current memory value
+   * @param angleMode - The angle mode for trigonometric functions
+   * @returns Updated calculator state with new expression, result, memory, and calculation flag
+   *
+   * @example
+   * ```typescript
+   * const state = Calculator.processButtonInput('5', '2+', '', 0, 'deg');
+   * // Returns: { expression: '2+5', result: '', memory: 0, shouldCalculate: false }
+   *
+   * const equalState = Calculator.processButtonInput('=', '2+3', '', 0, 'deg');
+   * // Returns: { expression: '2+3', result: '', memory: 0, shouldCalculate: true }
+   * ```
    */
   static processButtonInput(
     button: string,
@@ -272,7 +343,18 @@ export class Calculator {
   }
 
   /**
-   * Validates calculator input for safety with enhanced error handling
+   * Validates calculator input for safety with enhanced error handling.
+   * Uses the MathValidator to check for dangerous patterns, invalid syntax,
+   * and security threats before evaluation.
+   *
+   * @param input - The mathematical expression to validate
+   * @returns ValidationResult indicating if the input is safe and valid
+   *
+   * @example
+   * ```typescript
+   * Calculator.validateCalculatorInput('2 + 3'); // { valid: true, sanitized: '2 + 3' }
+   * Calculator.validateCalculatorInput('eval(alert())'); // { valid: false, error: '...' }
+   * ```
    */
   static validateCalculatorInput(input: string): ValidationResult {
     try {
@@ -290,7 +372,17 @@ export class Calculator {
   }
 
   /**
-   * Gets preset calculator examples
+   * Gets preset calculator examples for demonstration and testing.
+   * Provides a variety of mathematical expressions showcasing different
+   * calculator capabilities and functions.
+   *
+   * @returns Array of example mathematical expressions
+   *
+   * @example
+   * ```typescript
+   * const examples = Calculator.getExamples();
+   * console.log(examples[0]); // "sqrt(16)"
+   * ```
    */
   static getExamples(): string[] {
     return [
@@ -311,11 +403,27 @@ export class Calculator {
 }
 
 /**
- * Memory operations utility class
+ * Memory operations utility class for calculator memory functions.
+ * Provides persistent memory storage for mathematical calculations
+ * with add, subtract, recall, clear, and store operations.
+ *
+ * @example
+ * ```typescript
+ * MemoryOperations.store(42);
+ * MemoryOperations.add(8); // Memory now contains 50
+ * const value = MemoryOperations.recall(); // 50
+ * ```
  */
 class MemoryOperations {
   private static memory = 0;
 
+  /**
+   * Adds a value to the current memory content.
+   * Only adds finite numbers to prevent memory corruption.
+   *
+   * @param value - The number to add to memory
+   * @returns The new memory value after addition
+   */
   static add(value: number): number {
     if (isFinite(value)) {
       this.memory += value;
@@ -323,6 +431,13 @@ class MemoryOperations {
     return this.memory;
   }
 
+  /**
+   * Subtracts a value from the current memory content.
+   * Only subtracts finite numbers to prevent memory corruption.
+   *
+   * @param value - The number to subtract from memory
+   * @returns The new memory value after subtraction
+   */
   static subtract(value: number): number {
     if (isFinite(value)) {
       this.memory -= value;
@@ -330,15 +445,32 @@ class MemoryOperations {
     return this.memory;
   }
 
+  /**
+   * Recalls the current value stored in memory.
+   *
+   * @returns The current memory value
+   */
   static recall(): number {
     return this.memory;
   }
 
+  /**
+   * Clears the memory by setting it to zero.
+   *
+   * @returns The cleared memory value (always 0)
+   */
   static clear(): number {
     this.memory = 0;
     return this.memory;
   }
 
+  /**
+   * Stores a new value in memory, replacing the current content.
+   * Only stores finite numbers to prevent memory corruption.
+   *
+   * @param value - The number to store in memory
+   * @returns The stored memory value
+   */
   static store(value: number): number {
     if (isFinite(value)) {
       this.memory = value;
@@ -346,17 +478,40 @@ class MemoryOperations {
     return this.memory;
   }
 
+  /**
+   * Gets the current memory value (alias for recall).
+   *
+   * @returns The current memory value
+   */
   static getValue(): number {
     return this.memory;
   }
 }
 
 /**
- * History management utility class
+ * History management utility class for calculator calculation history.
+ * Maintains a limited history of calculations with timestamps and provides
+ * methods for adding, clearing, and formatting history entries.
+ *
+ * @example
+ * ```typescript
+ * const history = HistoryManager.addToHistory('2+3', '5', []);
+ * const formatted = HistoryManager.formatHistoryEntry(history[0]); // "2+3 = 5"
+ * ```
  */
 class HistoryManager {
+  /** Maximum number of history entries to maintain */
   private static readonly MAX_HISTORY = 20;
 
+  /**
+   * Adds a new calculation to the history.
+   * Maintains a maximum of MAX_HISTORY entries by removing oldest entries.
+   *
+   * @param expression - The mathematical expression that was calculated
+   * @param result - The result of the calculation
+   * @param currentHistory - The existing history array
+   * @returns Updated history array with the new entry at the beginning
+   */
   static addToHistory(
     expression: string,
     result: string,
@@ -371,35 +526,71 @@ class HistoryManager {
     return [newEntry, ...currentHistory.slice(0, this.MAX_HISTORY - 1)];
   }
 
+  /**
+   * Clears all calculation history.
+   *
+   * @returns Empty history array
+   */
   static clearHistory(): CalculationHistory[] {
     return [];
   }
 
+  /**
+   * Formats a history entry for display.
+   *
+   * @param entry - The history entry to format
+   * @returns Formatted string in "expression = result" format
+   */
   static formatHistoryEntry(entry: CalculationHistory): string {
     return `${entry.expression} = ${entry.result}`;
   }
 }
 
 /**
- * Convenience functions for calculator operations
+ * Convenience functions for calculator operations.
+ * Provides a simplified API for common calculator functionality
+ * with direct access to Calculator class methods and utilities.
+ *
+ * @example
+ * ```typescript
+ * import { calculatorUtils } from './calculator';
+ *
+ * const result = calculatorUtils.evaluate('2 + 3');
+ * const formatted = calculatorUtils.formatResult(result.result);
+ * calculatorUtils.memory.store(42);
+ * ```
  */
 export const calculatorUtils = {
   /**
-   * Evaluates an expression safely
+   * Evaluates a mathematical expression safely with validation and error handling.
+   *
+   * @param expression - The mathematical expression to evaluate
+   * @param angleMode - The angle mode for trigonometric functions (default: 'deg')
+   * @returns MathResult object with result, error information, and metadata
    */
   evaluate: (expression: string, angleMode: AngleMode = 'deg'): MathResult => {
     return Calculator.evaluate(expression, angleMode);
   },
 
   /**
-   * Formats a number result
+   * Formats a calculation result for consistent display.
+   *
+   * @param result - The raw calculation result to format
+   * @returns Formatted string representation of the result
    */
   formatResult: (result: any): string => {
     return Calculator.formatResult(result);
   },
 
   /**
-   * Processes button input
+   * Processes calculator button input and updates calculator state.
+   *
+   * @param button - The button that was pressed
+   * @param expression - Current mathematical expression
+   * @param result - Current displayed result
+   * @param memory - Current memory value
+   * @param angleMode - Angle mode for trigonometric functions (default: 'deg')
+   * @returns Updated calculator state object
    */
   processButton: (
     button: string,
@@ -418,22 +609,29 @@ export const calculatorUtils = {
   },
 
   /**
-   * Memory operations
+   * Memory operations utility for calculator memory functions.
+   * Provides add, subtract, recall, clear, store, and getValue methods.
    */
   memory: MemoryOperations,
 
   /**
-   * History management
+   * History management utility for calculation history.
+   * Provides addToHistory, clearHistory, and formatHistoryEntry methods.
    */
   history: HistoryManager,
 
   /**
-   * Get example expressions
+   * Gets preset calculator examples for demonstration and testing.
+   *
+   * @returns Array of example mathematical expressions
    */
   getExamples: (): string[] => Calculator.getExamples(),
 
   /**
-   * Validate input
+   * Validates calculator input for safety and correctness.
+   *
+   * @param input - The mathematical expression to validate
+   * @returns ValidationResult indicating if input is safe and valid
    */
   validateInput: (input: string): ValidationResult =>
     Calculator.validateCalculatorInput(input),
