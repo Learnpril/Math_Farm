@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -55,7 +55,6 @@
 
     <!-- Performance and Security -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <meta http-equiv="X-Frame-Options" content="DENY" />
     <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
 
     <!-- Preconnect for performance -->
@@ -74,26 +73,26 @@
     <script>
       window.MathJax = {
         tex: {
-          inlineMath: [["\\(", "\\)"]],
-          displayMath: [["\\[", "\\]"]],
+          inlineMath: [['\\(', '\\)']],
+          displayMath: [['\\[', '\\]']],
           processEscapes: true,
           processEnvironments: true,
         },
         options: {
           skipHtmlTags: [
-            "script",
-            "noscript",
-            "style",
-            "textarea",
-            "pre",
-            "code",
+            'script',
+            'noscript',
+            'style',
+            'textarea',
+            'pre',
+            'code',
           ],
-          ignoreHtmlClass: "tex2jax_ignore",
-          processHtmlClass: "tex2jax_process",
+          ignoreHtmlClass: 'tex2jax_ignore',
+          processHtmlClass: 'tex2jax_process',
         },
         startup: {
           ready: () => {
-            console.log("MathJax is loaded and ready.");
+            console.log('MathJax is loaded and ready.');
             MathJax.startup.defaultReady();
             // Add a global flag for easier checking
             window.mathJaxReady = true;
@@ -163,16 +162,16 @@
       }
 
       /* Style adjustments for better layout */
-      input[placeholder*="answer"] {
+      input[placeholder*='answer'] {
         order: 1;
       }
 
-      button:has-text("Submit") {
+      button:has-text('Submit') {
         order: 2;
         margin-top: 12px;
       }
 
-      button:has-text("Show Hint") {
+      button:has-text('Show Hint') {
         order: 3;
         margin-top: 8px;
       }
