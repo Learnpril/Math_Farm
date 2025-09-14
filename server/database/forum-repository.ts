@@ -54,6 +54,46 @@ export class ForumRepository {
     return (result as any).insertId;
   }
 
+  async updateCategory(
+    id: number,
+    updates: Partial<Omit<ForumCategory, 'id' | 'createdAt' | 'updatedAt'>>
+  ): Promise<void> {
+    const fields: string[] = [];
+    const values: any[] = [];
+
+    if (updates.name !== undefined) {
+      fields.push('name = ?');
+      values.push(updates.name);
+    }
+    if (updates.description !== undefined) {
+      fields.push('description = ?');
+      values.push(updates.description);
+    }
+    if (updates.parentId !== undefined) {
+      fields.push('parent_id = ?');
+      values.push(updates.parentId);
+    }
+    if (updates.sortOrder !== undefined) {
+      fields.push('sort_order = ?');
+      values.push(updates.sortOrder);
+    }
+
+    if (fields.length === 0) {
+      return; // No updates to perform
+    }
+
+    values.push(id);
+
+    await query(
+      `UPDATE forum_categories SET ${fields.join(', ')}, updated_at = NOW() WHERE id = ?`,
+      values
+    );
+  }
+
+  async deleteCategory(id: number): Promise<void> {
+    await query('DELETE FROM forum_categories WHERE id = ?', [id]);
+  }
+
   // Thread operations
   async getThreadsByCategory(
     categoryId: number,
@@ -108,6 +148,46 @@ export class ForumRepository {
     );
 
     return (result as any).insertId;
+  }
+
+  async updateThread(
+    id: number,
+    updates: Partial<Omit<ForumThread, 'id' | 'createdAt' | 'updatedAt'>>
+  ): Promise<void> {
+    const fields: string[] = [];
+    const values: any[] = [];
+
+    if (updates.title !== undefined) {
+      fields.push('title = ?');
+      values.push(updates.title);
+    }
+    if (updates.categoryId !== undefined) {
+      fields.push('category_id = ?');
+      values.push(updates.categoryId);
+    }
+    if (updates.isPinned !== undefined) {
+      fields.push('is_pinned = ?');
+      values.push(updates.isPinned);
+    }
+    if (updates.isLocked !== undefined) {
+      fields.push('is_locked = ?');
+      values.push(updates.isLocked);
+    }
+
+    if (fields.length === 0) {
+      return; // No updates to perform
+    }
+
+    values.push(id);
+
+    await query(
+      `UPDATE forum_threads SET ${fields.join(', ')}, updated_at = NOW() WHERE id = ?`,
+      values
+    );
+  }
+
+  async deleteThread(id: number): Promise<void> {
+    await query('DELETE FROM forum_threads WHERE id = ?', [id]);
   }
 
   // Post operations
@@ -189,6 +269,101 @@ export class ForumRepository {
 
       return postId;
     });
+  }
+
+  async updatePost(
+    id: number,
+    updates: Partial<Omit<ForumPost, 'id' | 'createdAt' | 'updatedAt'>>
+  ): Promise<void> {
+    const fields: string[] = [];
+    const values: any[] = [];
+
+    if (updates.content !== undefined) {
+      fields.push('content = ?');
+      values.push(updates.content);
+    }
+    if (updates.mathExpressions !== undefined) {
+      fields.push('math_expressions = ?');
+      values.push(JSON.stringify(updates.mathExpressions));
+    }
+    if (updates.isEdited !== undefined) {
+      fields.push('is_edited = ?');
+      values.push(updates.isEdited);
+    }
+    if (updates.editedAt !== undefined) {
+      fields.push('edited_at = ?');
+      values.push(updates.editedAt);
+    }
+
+    if (fields.length === 0) {
+      return; // No updates to perform
+    }
+
+    values.push(id);
+
+    await query(
+      `UPDATE forum_posts SET ${fields.join(', ')}, updated_at = NOW() WHERE id = ?`,
+      values
+    );
+  }
+
+  async deletePost(id: number): Promise<void> {
+    await transaction(async connection => {
+      // Get post info before deletion
+      const [postRows] = await connection.execute(
+        'SELECT thread_id, author_id FROM forum_posts WHERE id = ?',
+        [id]
+      );
+
+      if ((postRows as any[]).length === 0) {
+        return; // Post doesn't exist
+      }
+
+      const post = (postRows as any[])[0];
+
+      // Delete the post (cascades to replies)
+      await connection.execute('DELETE FROM forum_posts WHERE id = ?', [id]);
+
+      // Update thread post count
+      await connection.execute(
+        `
+        UPDATE forum_threads 
+        SET post_count = (SELECT COUNT(*) FROM forum_posts WHERE thread_id = ?),
+            last_post_at = (SELECT MAX(created_at) FROM forum_posts WHERE thread_id = ?)
+        WHERE id = ?
+      `,
+        [post.thread_id, post.thread_id, post.thread_id]
+      );
+
+      // Update user post count
+      await connection.execute(
+        `
+        UPDATE users 
+        SET forum_post_count = GREATEST(0, forum_post_count - 1)
+        WHERE id = ?
+      `,
+        [post.author_id]
+      );
+    });
+  }
+
+  async getPostReplies(
+    parentPostId: number,
+    limit = 20,
+    offset = 0
+  ): Promise<ForumPost[]> {
+    return await query<ForumPost>(
+      `
+      SELECT id, thread_id as threadId, author_id as authorId, parent_post_id as parentPostId,
+             content, math_expressions as mathExpressions, is_edited as isEdited,
+             edited_at as editedAt, created_at as createdAt, updated_at as updatedAt
+      FROM forum_posts 
+      WHERE parent_post_id = ?
+      ORDER BY created_at ASC
+      LIMIT ? OFFSET ?
+    `,
+      [parentPostId, limit, offset]
+    );
   }
 
   // User operations

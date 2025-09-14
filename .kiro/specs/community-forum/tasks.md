@@ -22,22 +22,22 @@
     - Write integration tests for authentication flows
     - _Requirements: 1.1, 5.1, 5.3, 5.5_
 
-- [ ] 3. Build core forum API endpoints
-  - [ ] 3.1 Implement category management API
+- [x] 3. Build core forum API endpoints
+  - [x] 3.1 Implement category management API
     - Create CRUD operations for forum categories with proper validation
     - Add hierarchical category support with parent-child relationships
     - Implement category sorting and organization endpoints
     - Write API tests for category operations
     - _Requirements: 2.1, 2.2_
 
-  - [ ] 3.2 Implement thread management API
+  - [x] 3.2 Implement thread management API
     - Create thread CRUD operations with proper authorization checks
     - Add thread pagination and sorting functionality
     - Implement thread pinning and locking features for moderators
     - Write comprehensive API tests for thread operations
     - _Requirements: 2.2, 2.3, 5.1, 5.2_
 
-  - [ ] 3.3 Build post management API
+  - [x] 3.3 Build post management API
     - Create post CRUD operations with nested reply support
     - Implement content sanitization using DOMPurify for security
     - Add MathJax expression validation and processing

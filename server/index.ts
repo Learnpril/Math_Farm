@@ -29,10 +29,16 @@ const staticPath =
 
 app.use(express.static(staticPath));
 
-// API routes will be added here
+// Import forum routes
+import forumRoutes from './routes/forum/index.js';
+
+// API routes
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
+
+// Mount forum routes
+app.use('/api/forum', forumRoutes);
 
 // Serve React app for all other routes
 app.get('*', (_req, res) => {
