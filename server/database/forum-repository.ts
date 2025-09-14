@@ -412,6 +412,183 @@ export class ForumRepository {
     );
   }
 
+  async createDefaultAvatar(userId: number): Promise<void> {
+    const defaultConfig = {
+      layers: [
+        {
+          itemId: 'bg-chalkboard',
+          position: { x: 0, y: 0 },
+          scale: 1,
+          rotation: 0,
+          visible: true,
+        },
+        {
+          itemId: 'body-default',
+          position: { x: 50, y: 60 },
+          scale: 1,
+          rotation: 0,
+          color: '#FFE4C4',
+          visible: true,
+        },
+        {
+          itemId: 'pose-standing',
+          position: { x: 50, y: 60 },
+          scale: 1,
+          rotation: 0,
+          visible: true,
+        },
+        {
+          itemId: 'hair-messy-brown',
+          position: { x: 50, y: 30 },
+          scale: 1,
+          rotation: 0,
+          color: '#8B4513',
+          visible: true,
+        },
+        {
+          itemId: 'eyes-curious',
+          position: { x: 50, y: 45 },
+          scale: 1,
+          rotation: 0,
+          color: '#4A90E2',
+          visible: true,
+        },
+        {
+          itemId: 'expression-happy',
+          position: { x: 50, y: 50 },
+          scale: 1,
+          rotation: 0,
+          visible: true,
+        },
+        {
+          itemId: 'shirt-basic-tee',
+          position: { x: 50, y: 65 },
+          scale: 1,
+          rotation: 0,
+          color: '#FFFFFF',
+          visible: true,
+        },
+      ],
+      backgroundColor: '#F0F8FF',
+      size: 'medium',
+      pose: 'standing',
+      expression: 'happy',
+    };
+
+    const defaultUnlockedItems = [
+      'bg-chalkboard',
+      'body-default',
+      'pose-standing',
+      'hair-messy-brown',
+      'eyes-curious',
+      'expression-happy',
+      'shirt-basic-tee',
+    ];
+
+    await this.saveUserAvatar(userId, defaultConfig, defaultUnlockedItems);
+  }
+
+  async unlockAvatarItem(userId: number, itemId: string): Promise<boolean> {
+    const avatar = await this.getUserAvatar(userId);
+    if (!avatar) {
+      await this.createDefaultAvatar(userId);
+      return await this.unlockAvatarItem(userId, itemId);
+    }
+
+    const unlockedItems = Array.isArray(avatar.unlockedItems)
+      ? avatar.unlockedItems
+      : JSON.parse(avatar.unlockedItems || '[]');
+
+    if (!unlockedItems.includes(itemId)) {
+      unlockedItems.push(itemId);
+      await query(
+        `
+        UPDATE user_avatars 
+        SET unlocked_items = ?, updated_at = NOW()
+        WHERE user_id = ?
+      `,
+        [JSON.stringify(unlockedItems), userId]
+      );
+      return true;
+    }
+    return false;
+  }
+
+  async unlockMultipleAvatarItems(
+    userId: number,
+    itemIds: string[]
+  ): Promise<string[]> {
+    const avatar = await this.getUserAvatar(userId);
+    if (!avatar) {
+      await this.createDefaultAvatar(userId);
+      return await this.unlockMultipleAvatarItems(userId, itemIds);
+    }
+
+    const unlockedItems = Array.isArray(avatar.unlockedItems)
+      ? avatar.unlockedItems
+      : JSON.parse(avatar.unlockedItems || '[]');
+
+    const newlyUnlocked: string[] = [];
+
+    itemIds.forEach(itemId => {
+      if (!unlockedItems.includes(itemId)) {
+        unlockedItems.push(itemId);
+        newlyUnlocked.push(itemId);
+      }
+    });
+
+    if (newlyUnlocked.length > 0) {
+      await query(
+        `
+        UPDATE user_avatars 
+        SET unlocked_items = ?, updated_at = NOW()
+        WHERE user_id = ?
+      `,
+        [JSON.stringify(unlockedItems), userId]
+      );
+    }
+
+    return newlyUnlocked;
+  }
+
+  async getUserForumStats(userId: number): Promise<any> {
+    return await queryOne(
+      `
+      SELECT 
+        u.id as userId,
+        u.forum_post_count as posts,
+        COALESCE(best_answers.count, 0) as bestAnswers,
+        COALESCE(help_count.count, 0) as helpCount,
+        0 as streak,
+        COALESCE(calculations.count, 0) as calculations,
+        0 as eventParticipation,
+        u.created_at as joinedAt,
+        '[]' as achievements
+      FROM users u
+      LEFT JOIN (
+        SELECT author_id, COUNT(*) as count 
+        FROM forum_posts 
+        WHERE content LIKE '%[BEST ANSWER]%' 
+        GROUP BY author_id
+      ) best_answers ON u.id = best_answers.author_id
+      LEFT JOIN (
+        SELECT author_id, COUNT(*) as count 
+        FROM forum_posts 
+        WHERE content LIKE '%helping%' OR content LIKE '%solution%'
+        GROUP BY author_id
+      ) help_count ON u.id = help_count.author_id
+      LEFT JOIN (
+        SELECT author_id, COUNT(*) as count 
+        FROM forum_posts 
+        WHERE math_expressions IS NOT NULL AND JSON_LENGTH(math_expressions) > 0
+        GROUP BY author_id
+      ) calculations ON u.id = calculations.author_id
+      WHERE u.id = ?
+    `,
+      [userId]
+    );
+  }
+
   // Search operations
   async searchPosts(
     searchQuery: string,

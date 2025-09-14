@@ -72,9 +72,16 @@ export interface ForumUser {
 }
 
 export interface AvatarConfig {
+  id?: string;
+  userId: number;
+  name?: string;
   layers: AvatarLayer[];
   backgroundColor: string;
   size: 'small' | 'medium' | 'large';
+  pose: string;
+  expression: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface AvatarLayer {
@@ -83,6 +90,8 @@ export interface AvatarLayer {
   scale: number;
   rotation: number;
   color?: string;
+  opacity?: number;
+  visible: boolean;
 }
 
 export interface ForumReport {
@@ -137,3 +146,20 @@ export interface UserPermissions {
   userId: number;
   permissions: ForumPermission[];
 }
+// Re-export avatar types for convenience
+export type {
+  AvatarItemCategory,
+  AvatarItemRarity,
+  AvatarUnlockCondition,
+  AvatarItem,
+  AvatarInventory,
+  AvatarAchievement,
+  AvatarPreset,
+  AvatarRenderOptions,
+  AvatarEffect,
+  AvatarEditorState,
+  AvatarItemCollection,
+  AvatarStats,
+  AvatarApiResponse,
+  AvatarValidationResult,
+} from './types/avatar';
