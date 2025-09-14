@@ -15,7 +15,12 @@ import {
   Edit,
   Quote,
   MoreHorizontal,
+  History,
 } from 'lucide-react';
+import { PostEditor } from './PostEditor';
+import { PostReportDialog } from './PostReportDialog';
+import { MathJaxPreview } from './MathJaxPreview';
+import { useModeration } from '../hooks/useModeration';
 import { cn } from '../../../lib/utils';
 
 interface ForumPost {
@@ -44,7 +49,11 @@ interface PostItemProps {
   onReport?: (postId: number) => void;
   onShare?: (postId: number) => void;
   onQuote?: (postId: number) => void;
-  onEdit?: (postId: number) => void;
+  onEdit?: (
+    postId: number,
+    content?: any,
+    editReason?: string
+  ) => Promise<void>;
   currentUserId?: number;
   isThreadLocked?: boolean;
   className?: string;
@@ -70,10 +79,14 @@ export function PostItem({
   className = '',
 }: PostItemProps) {
   const [showActions, setShowActions] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [showEditHistory, setShowEditHistory] = useState(false);
   const isExpanded = expandedPosts.has(post.id);
   const hasReplies = post.replies && post.replies.length > 0;
   const isAuthor = currentUserId === post.authorId;
   const maxNestingLevel = 3; // Limit nesting depth for readability
+
+  const { submitReport, getEditHistory } = useModeration();
 
   const formatTimeAgo = (date: Date) => {
     const now = new Date();
@@ -198,16 +211,30 @@ export function PostItem({
                         )}
 
                         {isAuthor && (
-                          <button
-                            onClick={() => {
-                              onEdit?.(post.id);
-                              setShowActions(false);
-                            }}
-                            className='flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground'
-                          >
-                            <Edit className='h-3 w-3' />
-                            Edit
-                          </button>
+                          <>
+                            <button
+                              onClick={() => {
+                                setIsEditing(true);
+                                setShowActions(false);
+                              }}
+                              className='flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground'
+                            >
+                              <Edit className='h-3 w-3' />
+                              Edit
+                            </button>
+                            {post.isEdited && (
+                              <button
+                                onClick={() => {
+                                  setShowEditHistory(true);
+                                  setShowActions(false);
+                                }}
+                                className='flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground'
+                              >
+                                <History className='h-3 w-3' />
+                                Edit History
+                              </button>
+                            )}
+                          </>
                         )}
 
                         <button
@@ -222,16 +249,19 @@ export function PostItem({
                         </button>
 
                         {!isAuthor && (
-                          <button
-                            onClick={() => {
-                              onReport?.(post.id);
-                              setShowActions(false);
-                            }}
-                            className='flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground text-destructive'
-                          >
-                            <Flag className='h-3 w-3' />
-                            Report
-                          </button>
+                          <PostReportDialog
+                            postId={post.id}
+                            onSubmitReport={submitReport}
+                            trigger={
+                              <button
+                                onClick={() => setShowActions(false)}
+                                className='flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground text-destructive'
+                              >
+                                <Flag className='h-3 w-3' />
+                                Report
+                              </button>
+                            }
+                          />
                         )}
                       </div>
                     </div>
@@ -239,30 +269,25 @@ export function PostItem({
                 </div>
               </div>
 
-              {/* Post content */}
-              <div className='prose prose-sm max-w-none mb-4'>
-                <div
-                  className='text-foreground whitespace-pre-wrap break-words'
-                  dangerouslySetInnerHTML={{ __html: post.content }}
-                />
-
-                {/* Math expressions would be rendered here with MathJax */}
-                {post.mathExpressions && post.mathExpressions.length > 0 && (
-                  <div className='mt-3 p-3 bg-muted/50 rounded-md'>
-                    <div className='text-xs text-muted-foreground mb-2'>
-                      Mathematical expressions:
-                    </div>
-                    {/* MathJax rendering would go here */}
-                    <div className='font-mono text-sm'>
-                      {post.mathExpressions.map((expr, index) => (
-                        <div key={index} className='mb-1'>
-                          {JSON.stringify(expr)}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
+              {/* Post content or editor */}
+              {isEditing ? (
+                <div className='mb-4'>
+                  <PostEditor
+                    post={post}
+                    onSave={async (content, editReason) => {
+                      // Handle post update
+                      await onEdit?.(post.id, content, editReason);
+                      setIsEditing(false);
+                    }}
+                    onCancel={() => setIsEditing(false)}
+                    canViewHistory={isAuthor}
+                  />
+                </div>
+              ) : (
+                <div className='prose prose-sm max-w-none mb-4'>
+                  <MathJaxPreview content={post.content} />
+                </div>
+              )}
 
               {/* Post interaction buttons */}
               <div className='flex items-center justify-between'>
