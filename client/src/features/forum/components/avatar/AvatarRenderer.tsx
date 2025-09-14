@@ -35,15 +35,19 @@ interface AvatarRendererProps {
 export interface AvatarRendererRef {
   exportAsImage: (format?: 'png' | 'jpeg', quality?: number) => string;
   getCanvas: () => HTMLCanvasElement | null;
+  generateThumbnail: (size: number) => Promise<string>;
+  clearCache: () => void;
 }
 
 // Cache for loaded SVG images
 const imageCache = new Map<string, HTMLImageElement>();
 
-// Load SVG as image with caching
-const loadSVGImage = async (svgPath: string): Promise<HTMLImageElement> => {
-  if (imageCache.has(svgPath)) {
-    return imageCache.get(svgPath)!;
+// Load image (SVG or PNG) with caching
+const loadAvatarImage = async (
+  imagePath: string
+): Promise<HTMLImageElement> => {
+  if (imageCache.has(imagePath)) {
+    return imageCache.get(imagePath)!;
   }
 
   return new Promise((resolve, reject) => {
@@ -51,12 +55,12 @@ const loadSVGImage = async (svgPath: string): Promise<HTMLImageElement> => {
     img.crossOrigin = 'anonymous';
 
     img.onload = () => {
-      imageCache.set(svgPath, img);
+      imageCache.set(imagePath, img);
       resolve(img);
     };
 
     img.onerror = () => {
-      console.warn(`Failed to load avatar asset: ${svgPath}`);
+      console.warn(`Failed to load avatar asset: ${imagePath}`);
       // Create a fallback placeholder image
       const canvas = document.createElement('canvas');
       canvas.width = 64;
@@ -77,7 +81,7 @@ const loadSVGImage = async (svgPath: string): Promise<HTMLImageElement> => {
           const fallbackImg = new Image();
           fallbackImg.onload = () => {
             URL.revokeObjectURL(url);
-            imageCache.set(svgPath, fallbackImg);
+            imageCache.set(imagePath, fallbackImg);
             resolve(fallbackImg);
           };
           fallbackImg.src = url;
@@ -88,7 +92,7 @@ const loadSVGImage = async (svgPath: string): Promise<HTMLImageElement> => {
     };
 
     // For development, use placeholder paths
-    if (svgPath.startsWith('/assets/avatar/')) {
+    if (imagePath.startsWith('/assets/avatar/')) {
       // Create a colored rectangle as placeholder for development
       const canvas = document.createElement('canvas');
       canvas.width = 64;
@@ -96,7 +100,7 @@ const loadSVGImage = async (svgPath: string): Promise<HTMLImageElement> => {
       const ctx = canvas.getContext('2d')!;
 
       // Generate a color based on the path
-      const hash = svgPath.split('').reduce((a, b) => {
+      const hash = imagePath.split('').reduce((a, b) => {
         a = (a << 5) - a + b.charCodeAt(0);
         return a & a;
       }, 0);
@@ -109,7 +113,11 @@ const loadSVGImage = async (svgPath: string): Promise<HTMLImageElement> => {
       ctx.fillStyle = '#333';
       ctx.font = '8px sans-serif';
       ctx.textAlign = 'center';
-      const filename = svgPath.split('/').pop()?.replace('.svg', '') || '?';
+      const filename =
+        imagePath
+          .split('/')
+          .pop()
+          ?.replace(/\.(svg|png|jpg)$/, '') || '?';
       ctx.fillText(filename.slice(0, 8), 32, 32);
 
       canvas.toBlob(blob => {
@@ -119,7 +127,7 @@ const loadSVGImage = async (svgPath: string): Promise<HTMLImageElement> => {
         }
       });
     } else {
-      img.src = svgPath;
+      img.src = imagePath;
     }
   });
 };
@@ -160,6 +168,24 @@ export const AvatarRenderer = forwardRef<
         return '';
       },
       getCanvas: () => canvasRef.current,
+      generateThumbnail: async (thumbnailSize: number) => {
+        const canvas = canvasRef.current;
+        if (!canvas) return '';
+
+        // Create a temporary canvas for thumbnail generation
+        const thumbCanvas = document.createElement('canvas');
+        thumbCanvas.width = thumbnailSize;
+        thumbCanvas.height = thumbnailSize;
+        const thumbCtx = thumbCanvas.getContext('2d');
+        if (!thumbCtx) return '';
+
+        // Draw the main canvas scaled down to thumbnail size
+        thumbCtx.drawImage(canvas, 0, 0, thumbnailSize, thumbnailSize);
+        return thumbCanvas.toDataURL('image/png', 0.8);
+      },
+      clearCache: () => {
+        imageCache.clear();
+      },
     }));
 
     // Load all required images
@@ -174,7 +200,7 @@ export const AvatarRenderer = forwardRef<
         for (const layer of visibleLayers) {
           const item = getItemById(layer.itemId);
           if (item && !imagePromises.has(item.svgPath)) {
-            imagePromises.set(item.svgPath, loadSVGImage(item.svgPath));
+            imagePromises.set(item.svgPath, loadAvatarImage(item.svgPath));
           }
         }
 

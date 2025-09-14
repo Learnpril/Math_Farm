@@ -145,6 +145,55 @@ export function ForumHome() {
 
   const sidebar = (
     <div className='space-y-6'>
+      {/* Forum Navigation */}
+      <Card>
+        <CardHeader>
+          <CardTitle className='text-lg'>Forum Features</CardTitle>
+        </CardHeader>
+        <CardContent className='space-y-3'>
+          <Link
+            href='/forum/avatar-demo'
+            className='flex items-center gap-3 p-3 rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors group'
+          >
+            <div className='w-8 h-8 rounded-full bg-gradient-to-r from-purple-400 to-pink-500 flex items-center justify-center text-white text-sm font-bold group-hover:scale-110 transition-transform'>
+              🎭
+            </div>
+            <div className='flex-1'>
+              <div className='font-medium'>Avatar System</div>
+              <div className='text-xs text-muted-foreground'>
+                Customize your chibi avatar
+              </div>
+            </div>
+          </Link>
+
+          <Link
+            href='/forum/achievements'
+            className='flex items-center gap-3 p-3 rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors group opacity-60'
+          >
+            <div className='w-8 h-8 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 flex items-center justify-center text-white text-sm font-bold'>
+              🏆
+            </div>
+            <div className='flex-1'>
+              <div className='font-medium'>Achievements</div>
+              <div className='text-xs text-muted-foreground'>Coming soon</div>
+            </div>
+          </Link>
+
+          <Link
+            href='/forum/leaderboard'
+            className='flex items-center gap-3 p-3 rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors group opacity-60'
+          >
+            <div className='w-8 h-8 rounded-full bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center text-white text-sm font-bold'>
+              📊
+            </div>
+            <div className='flex-1'>
+              <div className='font-medium'>Leaderboard</div>
+              <div className='text-xs text-muted-foreground'>Coming soon</div>
+            </div>
+          </Link>
+        </CardContent>
+      </Card>
+
       {/* Forum stats */}
       <Card>
         <CardHeader>
@@ -219,12 +268,20 @@ export function ForumHome() {
         title='Math Farm Forum'
         description='Connect with fellow math enthusiasts, ask questions, and share knowledge'
         actions={
-          <Button asChild>
-            <Link href='/forum/new-thread'>
-              <Plus className='h-4 w-4 mr-2' />
-              New Thread
-            </Link>
-          </Button>
+          <div className='flex gap-2'>
+            <Button variant='outline' asChild>
+              <Link href='/forum/avatar-demo'>
+                <span className='mr-2'>🎭</span>
+                Avatar System
+              </Link>
+            </Button>
+            <Button asChild>
+              <Link href='/forum/new-thread'>
+                <Plus className='h-4 w-4 mr-2' />
+                New Thread
+              </Link>
+            </Button>
+          </div>
         }
       />
 

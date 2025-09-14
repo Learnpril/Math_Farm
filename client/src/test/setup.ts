@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { expect } from 'vitest';
+import { expect, vi } from 'vitest';
 import { toHaveNoViolations } from 'jest-axe';
 
 // Extend Vitest matchers with jest-axe
@@ -72,7 +72,7 @@ const localStorageMock = {
   clear: vi.fn(),
 };
 Object.defineProperty(window, 'localStorage', {
-  value: localStorageMock
+  value: localStorageMock,
 });
 
 // Mock window.location

@@ -12,6 +12,23 @@ import type {
 // Base chibi character templates
 export const CHIBI_BASE_TEMPLATES: AvatarItem[] = [
   {
+    id: 'chibi-base-default',
+    name: 'Default Chibi Character',
+    category: 'body',
+    rarity: 'common',
+    description: 'Adorable chibi character base with tank top and shorts',
+    svgPath: '/assets/avatar/base/chibi-default.png',
+    zIndex: 1,
+    unlockCondition: {
+      type: 'posts',
+      threshold: 0,
+      description: 'Available from the start',
+    },
+    colorCustomizable: false,
+    mathThemed: false,
+    tags: ['basic', 'starter', 'chibi', 'cute'],
+  },
+  {
     id: 'body-default',
     name: 'Default Chibi Body',
     category: 'body',
@@ -504,6 +521,23 @@ export const CHIBI_POSES: AvatarItem[] = [
 
 // Background themes
 export const CHIBI_BACKGROUNDS: AvatarItem[] = [
+  {
+    id: 'bg-transparent',
+    name: 'Transparent Background',
+    category: 'background',
+    rarity: 'common',
+    description: 'Clean transparent background for focus on the character',
+    svgPath: '/assets/avatar/backgrounds/transparent.svg',
+    zIndex: 0,
+    unlockCondition: {
+      type: 'posts',
+      threshold: 0,
+      description: 'Available from the start',
+    },
+    colorCustomizable: false,
+    mathThemed: false,
+    tags: ['transparent', 'clean', 'minimal'],
+  },
   {
     id: 'bg-chalkboard',
     name: 'Chalkboard Background',

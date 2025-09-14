@@ -12,6 +12,7 @@ import {
 import { ForumHome } from './features/forum/pages/ForumHome';
 import { CategoryPage } from './features/forum/pages/CategoryPage';
 import { ThreadPage } from './features/forum/pages/ThreadPage';
+import { AvatarSystemDemo } from './features/forum/pages/AvatarSystemDemo';
 import { LazyWrapper } from './components/LazyWrapper';
 import {
   ErrorBoundaryProvider,
@@ -106,6 +107,7 @@ function App() {
               component={CategoryPage}
             />
             <Route path='/forum/thread/:threadId' component={ThreadPage} />
+            <Route path='/forum/avatar-demo' component={AvatarSystemDemo} />
 
             <Route path='*'>
               <Redirect to='/' />

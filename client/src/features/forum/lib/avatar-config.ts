@@ -16,63 +16,24 @@ import { getItemById, ALL_AVATAR_ITEMS } from '../data/avatar-items';
 export const DEFAULT_AVATAR_CONFIG: Omit<AvatarConfig, 'id' | 'userId'> = {
   layers: [
     {
-      itemId: 'bg-chalkboard',
+      itemId: 'bg-transparent',
       position: { x: 0, y: 0 },
       scale: 1,
       rotation: 0,
       visible: true,
     },
     {
-      itemId: 'body-default',
-      position: { x: 50, y: 60 },
-      scale: 1,
-      rotation: 0,
-      color: '#FFE4C4',
-      visible: true,
-    },
-    {
-      itemId: 'pose-standing',
-      position: { x: 50, y: 60 },
-      scale: 1,
-      rotation: 0,
-      visible: true,
-    },
-    {
-      itemId: 'hair-messy-brown',
-      position: { x: 50, y: 30 },
-      scale: 1,
-      rotation: 0,
-      color: '#8B4513',
-      visible: true,
-    },
-    {
-      itemId: 'eyes-curious',
-      position: { x: 50, y: 45 },
-      scale: 1,
-      rotation: 0,
-      color: '#4A90E2',
-      visible: true,
-    },
-    {
-      itemId: 'expression-happy',
+      itemId: 'chibi-base-default',
       position: { x: 50, y: 50 },
       scale: 1,
       rotation: 0,
       visible: true,
     },
-    {
-      itemId: 'shirt-basic-tee',
-      position: { x: 50, y: 65 },
-      scale: 1,
-      rotation: 0,
-      color: '#FFFFFF',
-      visible: true,
-    },
   ],
-  backgroundColor: '#F0F8FF',
+  backgroundColor: 'transparent',
   size: 'medium',
   pose: 'standing',
-  expression: 'happy',
+  expression: 'neutral',
 };
 
 // Avatar configuration validator

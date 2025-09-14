@@ -20,8 +20,10 @@ import {
 import { PostEditor } from './PostEditor';
 import { PostReportDialog } from './PostReportDialog';
 import { MathJaxPreview } from './MathJaxPreview';
+import { ForumAvatarDisplay } from './avatar/ForumAvatarDisplay';
 import { useModeration } from '../hooks/useModeration';
 import { cn } from '../../../lib/utils';
+import type { AvatarConfig } from '../types/avatar';
 
 interface ForumPost {
   id: number;
@@ -37,6 +39,16 @@ interface ForumPost {
   likeCount?: number;
   isLiked?: boolean;
   replies?: ForumPost[];
+  // Avatar and user data
+  authorAvatar?: AvatarConfig;
+  authorAchievements?: string[];
+  authorStats?: {
+    posts: number;
+    likes: number;
+    helpfulAnswers: number;
+    joinDate: Date;
+    lastActive: Date;
+  };
 }
 
 interface PostItemProps {
@@ -104,23 +116,10 @@ export function PostItem({
     return `${diffInMonths}mo ago`;
   };
 
-  const getAvatarColor = (authorName: string) => {
-    // Generate consistent color based on author name
-    const colors = [
-      'bg-red-500',
-      'bg-blue-500',
-      'bg-green-500',
-      'bg-yellow-500',
-      'bg-purple-500',
-      'bg-pink-500',
-      'bg-indigo-500',
-      'bg-teal-500',
-    ];
-    const hash = authorName.split('').reduce((a, b) => {
-      a = (a << 5) - a + b.charCodeAt(0);
-      return a & a;
-    }, 0);
-    return colors[Math.abs(hash) % colors.length];
+  // Handle avatar click to view user profile
+  const handleAvatarClick = () => {
+    // Navigate to user profile page
+    window.location.href = `/forum/user/${post.authorId}`;
   };
 
   return (
@@ -138,15 +137,18 @@ export function PostItem({
           <div className='flex gap-4'>
             {/* User avatar */}
             <div className='flex-shrink-0'>
-              <div
-                className={cn(
-                  'w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold text-sm',
-                  getAvatarColor(post.authorName)
-                )}
-                aria-label={`${post.authorName}'s avatar`}
-              >
-                {post.authorName.charAt(0).toUpperCase()}
-              </div>
+              <ForumAvatarDisplay
+                config={post.authorAvatar}
+                username={post.authorName}
+                userId={post.authorId}
+                size='xl'
+                showUsername={false}
+                showAchievements={true}
+                showHoverCard={true}
+                achievements={post.authorAchievements}
+                userStats={post.authorStats}
+                onClick={handleAvatarClick}
+              />
             </div>
 
             {/* Post content */}
