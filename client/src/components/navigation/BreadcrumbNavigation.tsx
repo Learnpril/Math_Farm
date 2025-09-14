@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
-import { useLocation } from "wouter";
-import { Home } from "lucide-react";
+import React, { useRef } from 'react';
+import { useLocation } from 'wouter';
+import { Home } from 'lucide-react';
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -8,7 +8,7 @@ import {
   BreadcrumbLink,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "../ui/breadcrumb";
+} from '../ui/breadcrumb';
 
 interface BreadcrumbItem {
   label: string;
@@ -27,7 +27,7 @@ interface BreadcrumbNavigationProps {
  */
 export function BreadcrumbNavigation({
   items,
-  className = "",
+  className = '',
 }: BreadcrumbNavigationProps) {
   const [location] = useLocation();
   const breadcrumbRef = useRef<HTMLDivElement>(null);
@@ -36,7 +36,7 @@ export function BreadcrumbNavigation({
   const breadcrumbItems = items || generateBreadcrumbs(location);
 
   // Don't show breadcrumbs on home page
-  if (location === "/" || breadcrumbItems.length <= 1) {
+  if (location === '/' || breadcrumbItems.length <= 1) {
     return null;
   }
 
@@ -44,29 +44,29 @@ export function BreadcrumbNavigation({
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (!breadcrumbRef.current) return;
 
-    const links = breadcrumbRef.current.querySelectorAll("a[href]");
+    const links = breadcrumbRef.current.querySelectorAll('a[href]');
     const currentIndex = Array.from(links).findIndex(
-      (link) => link === event.target
+      link => link === event.target
     );
 
     switch (event.key) {
-      case "ArrowLeft":
+      case 'ArrowLeft':
         event.preventDefault();
         if (currentIndex > 0) {
           (links[currentIndex - 1] as HTMLElement).focus();
         }
         break;
-      case "ArrowRight":
+      case 'ArrowRight':
         event.preventDefault();
         if (currentIndex < links.length - 1) {
           (links[currentIndex + 1] as HTMLElement).focus();
         }
         break;
-      case "Home":
+      case 'Home':
         event.preventDefault();
         (links[0] as HTMLElement).focus();
         break;
-      case "End":
+      case 'End':
         event.preventDefault();
         (links[links.length - 1] as HTMLElement).focus();
         break;
@@ -78,16 +78,16 @@ export function BreadcrumbNavigation({
       ref={breadcrumbRef}
       className={`py-4 ${className}`}
       onKeyDown={handleKeyDown}
-      role="navigation"
-      aria-label="Breadcrumb navigation"
+      role='navigation'
+      aria-label='Breadcrumb navigation'
     >
       <Breadcrumb>
         <BreadcrumbList>
           {/* Always start with Home */}
           <BreadcrumbItem>
-            <BreadcrumbLink href="/" aria-label="Go to home page" tabIndex={0}>
-              <Home className="h-4 w-4" />
-              <span className="sr-only">Home</span>
+            <BreadcrumbLink href='/' aria-label='Go to home page' tabIndex={0}>
+              <Home className='h-4 w-4' />
+              <span className='sr-only'>Home</span>
             </BreadcrumbLink>
           </BreadcrumbItem>
 
@@ -99,7 +99,7 @@ export function BreadcrumbNavigation({
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
                   {isLast || !item.href ? (
-                    <BreadcrumbPage aria-current="page">
+                    <BreadcrumbPage aria-current='page'>
                       {item.label}
                     </BreadcrumbPage>
                   ) : (
@@ -125,35 +125,54 @@ export function BreadcrumbNavigation({
  * Generate breadcrumb items based on the current location
  */
 function generateBreadcrumbs(location: string): BreadcrumbItem[] {
-  const segments = location.split("/").filter(Boolean);
+  const segments = location.split('/').filter(Boolean);
   const breadcrumbs: BreadcrumbItem[] = [];
 
   // Handle specific routes
-  if (segments[0] === "topic" && segments[1]) {
+  if (segments[0] === 'topic' && segments[1]) {
     breadcrumbs.push(
-      { label: "Topics", href: "/#topics" },
+      { label: 'Topics', href: '/#topics' },
       { label: getTopicTitle(segments[1]), isActive: true }
     );
-  } else if (segments[0] === "tools") {
+  } else if (segments[0] === 'tools') {
     if (segments[1]) {
       breadcrumbs.push(
-        { label: "Tools", href: "/tools" },
+        { label: 'Tools', href: '/tools' },
         { label: getToolTitle(segments[1]), isActive: true }
       );
     } else {
-      breadcrumbs.push({ label: "Tools", isActive: true });
+      breadcrumbs.push({ label: 'Tools', isActive: true });
     }
-  } else if (location === "/latex-guide") {
-    breadcrumbs.push({ label: "LaTeX Guide", isActive: true });
-  } else if (location === "/matlab-guide") {
-    breadcrumbs.push({ label: "MATLAB Guide", isActive: true });
-  } else if (location === "/math-symbols") {
-    breadcrumbs.push({ label: "Math Symbols", isActive: true });
-  } else if (location === "/community") {
-    breadcrumbs.push({ label: "Community", isActive: true });
+  } else if (location === '/latex-guide') {
+    breadcrumbs.push({ label: 'LaTeX Guide', isActive: true });
+  } else if (location === '/matlab-guide') {
+    breadcrumbs.push({ label: 'MATLAB Guide', isActive: true });
+  } else if (location === '/math-symbols') {
+    breadcrumbs.push({ label: 'Math Symbols', isActive: true });
+  } else if (location === '/community') {
+    breadcrumbs.push({ label: 'Forum', isActive: true });
+  } else if (location.startsWith('/forum')) {
+    // Handle forum routes
+    const segments = location.split('/').filter(Boolean);
+    if (segments.length === 1) {
+      // /forum
+      breadcrumbs.push({ label: 'Forum', isActive: true });
+    } else if (segments[1] === 'category' && segments[2]) {
+      // /forum/category/:id
+      breadcrumbs.push(
+        { label: 'Forum', href: '/community' },
+        { label: 'Category', isActive: true }
+      );
+    } else if (segments[1] === 'thread' && segments[2]) {
+      // /forum/thread/:id
+      breadcrumbs.push(
+        { label: 'Forum', href: '/community' },
+        { label: 'Thread', isActive: true }
+      );
+    }
   } else {
     // Generic breadcrumb generation for other routes
-    let currentPath = "";
+    let currentPath = '';
     segments.forEach((segment, index) => {
       currentPath += `/${segment}`;
       const isLast = index === segments.length - 1;
@@ -174,15 +193,15 @@ function generateBreadcrumbs(location: string): BreadcrumbItem[] {
  */
 function getTopicTitle(topicId: string): string {
   const topicTitles: Record<string, string> = {
-    arithmetic: "Arithmetic",
-    algebra: "Algebra",
-    geometry: "Geometry",
-    calculus: "Calculus",
-    statistics: "Statistics",
-    trigonometry: "Trigonometry",
-    "linear-algebra": "Linear Algebra",
-    "differential-equations": "Differential Equations",
-    "game-design-math": "Game Design Math",
+    arithmetic: 'Arithmetic',
+    algebra: 'Algebra',
+    geometry: 'Geometry',
+    calculus: 'Calculus',
+    statistics: 'Statistics',
+    trigonometry: 'Trigonometry',
+    'linear-algebra': 'Linear Algebra',
+    'differential-equations': 'Differential Equations',
+    'game-design-math': 'Game Design Math',
   };
 
   return topicTitles[topicId] || formatSegmentLabel(topicId);
@@ -193,12 +212,12 @@ function getTopicTitle(topicId: string): string {
  */
 function getToolTitle(toolId: string): string {
   const toolTitles: Record<string, string> = {
-    calculator: "Calculator",
-    graphing: "Graphing Tool",
-    solver: "Equation Solver",
-    matrix: "Matrix Calculator",
-    derivative: "Derivative Calculator",
-    integral: "Integral Calculator",
+    calculator: 'Calculator',
+    graphing: 'Graphing Tool',
+    solver: 'Equation Solver',
+    matrix: 'Matrix Calculator',
+    derivative: 'Derivative Calculator',
+    integral: 'Integral Calculator',
   };
 
   return toolTitles[toolId] || formatSegmentLabel(toolId);
@@ -209,7 +228,7 @@ function getToolTitle(toolId: string): string {
  */
 function formatSegmentLabel(segment: string): string {
   return segment
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 }

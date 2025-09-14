@@ -3,13 +3,15 @@ import { Router, Route, Redirect } from 'wouter';
 import { ThemeProvider } from './components/ThemeProvider';
 import { Layout } from './components/layout/Layout';
 import { Home, NotFound, MathSymbolsPage } from './pages';
-import { CommunityPage } from './pages/CommunityPage';
 import {
   LazyTopicPage,
   LazyToolsPage,
   LazyLaTeXGuidePage,
   LazyMATLABGuidePage,
 } from './components/LazyComponents';
+import { ForumHome } from './features/forum/pages/ForumHome';
+import { CategoryPage } from './features/forum/pages/CategoryPage';
+import { ThreadPage } from './features/forum/pages/ThreadPage';
 import { LazyWrapper } from './components/LazyWrapper';
 import {
   ErrorBoundaryProvider,
@@ -95,7 +97,15 @@ function App() {
               )}
             />
             <Route path='/math-symbols' component={MathSymbolsPage} />
-            <Route path='/community' component={CommunityPage} />
+
+            {/* Forum routes - replacing community */}
+            <Route path='/community' component={ForumHome} />
+            <Route path='/forum' component={ForumHome} />
+            <Route
+              path='/forum/category/:categoryId'
+              component={CategoryPage}
+            />
+            <Route path='/forum/thread/:threadId' component={ThreadPage} />
 
             <Route path='*'>
               <Redirect to='/' />
