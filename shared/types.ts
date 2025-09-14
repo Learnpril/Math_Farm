@@ -19,3 +19,18 @@ export interface SuggestedTopic {
   difficulty: number;
   prerequisites?: string[];
 }
+
+// Base User interface (to be extended by forum)
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  passwordHash: string;
+  createdAt: Date;
+  updatedAt: Date;
+  // Forum-specific fields (added by forum schema)
+  forumRole?: 'guest' | 'member' | 'moderator' | 'admin';
+  forumPostCount?: number;
+  forumBannedUntil?: Date;
+  forumBanReason?: string;
+}
