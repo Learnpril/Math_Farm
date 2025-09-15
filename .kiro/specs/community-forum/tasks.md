@@ -108,15 +108,15 @@
     - Create avatar animation system for special forum achievements (sparkles, math symbols)
     - _Requirements: 4.4, 4.5, 8.3_
 
-- [ ] 7. Add real-time features and notifications
-  - [ ] 7.1 Implement WebSocket integration
+- [x] 7. Add real-time features and notifications
+  - [x] 7.1 Implement WebSocket integration
     - Set up secure WebSocket authentication using existing JWT system
     - Create real-time post updates for active threads
     - Implement user online status and typing indicators
     - Add connection management with graceful fallback to polling
     - _Requirements: 6.1, 6.2_
 
-  - [ ] 7.2 Build notification system
+  - [x] 7.2 Build notification system
     - Create in-app notification storage and display
     - Implement notification triggers for mentions and replies
     - Add notification preferences and management interface

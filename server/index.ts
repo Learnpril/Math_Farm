@@ -1,12 +1,17 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { createServer } from 'http';
+import { initializeWebSocket } from './websocket/websocket-manager.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Create HTTP server for WebSocket integration
+const server = createServer(app);
 
 // Security middleware
 app.use((_req, res, next) => {
@@ -49,9 +54,15 @@ app.get('*', (_req, res) => {
   res.sendFile(indexPath);
 });
 
+// Initialize WebSocket server
+const wsServer = initializeWebSocket(server);
+
 // Start HTTP server (proxy handles SSL)
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(
     `Math Farm server running on port ${PORT} (${process.env.NODE_ENV || 'development'} mode)`
+  );
+  console.log(
+    `WebSocket server initialized at ws://localhost:${PORT}/ws/forum`
   );
 });

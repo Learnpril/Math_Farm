@@ -9,6 +9,7 @@ import {
   AuthenticatedRequest,
 } from '../../middleware/auth.js';
 import { ForumThread } from '../../../shared/forum-types.js';
+import { broadcastThreadLock } from '../../websocket/websocket-manager.js';
 
 const router = Router();
 
@@ -265,6 +266,11 @@ router.put(
       await forumRepository.updateThread(threadId, updates);
       const updatedThread = await forumRepository.getThreadById(threadId);
 
+      // Broadcast thread lock status change if it was updated
+      if (isLocked !== undefined && isModerator) {
+        broadcastThreadLock(threadId.toString(), isLocked);
+      }
+
       res.json(updatedThread);
     } catch (error) {
       console.error('Error updating thread:', error);
@@ -404,6 +410,9 @@ router.post(
 
       await forumRepository.updateThread(threadId, { isLocked: locked });
       const updatedThread = await forumRepository.getThreadById(threadId);
+
+      // Broadcast thread lock status change
+      broadcastThreadLock(threadId.toString(), locked);
 
       res.json(updatedThread);
     } catch (error) {

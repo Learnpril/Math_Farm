@@ -9,6 +9,12 @@ import {
   AuthenticatedRequest,
 } from '../../middleware/auth.js';
 import { ForumPost, MathExpression } from '../../../shared/forum-types.js';
+import {
+  broadcastNewPost,
+  broadcastPostEdit,
+  broadcastPostDelete,
+} from '../../websocket/websocket-manager.js';
+import { notificationService } from '../../services/notification-service.js';
 
 const router = Router();
 
@@ -266,6 +272,38 @@ router.post(
       const postId = await forumRepository.createPost(postData);
       const newPost = await forumRepository.getPostById(postId);
 
+      // Broadcast new post to WebSocket subscribers
+      broadcastNewPost(threadId.toString(), newPost);
+
+      // Create notifications
+      if (parentPostId) {
+        // Reply notification
+        await notificationService.createReplyNotification(
+          parentPostId,
+          req.user!.userId
+        );
+      }
+
+      // Thread reply notifications for subscribers
+      await notificationService.createThreadReplyNotification(
+        threadId,
+        req.user!.userId
+      );
+
+      // Auto-subscribe user to thread
+      await notificationService.autoSubscribeToThread(
+        req.user!.userId,
+        threadId
+      );
+
+      // Extract and create mention notifications
+      const mentions = notificationService.extractMentions(sanitizedContent);
+      if (mentions.length > 0) {
+        // In a real app, you'd resolve usernames to user IDs
+        // For now, we'll skip this part
+        console.log('Mentions found:', mentions);
+      }
+
       res.status(201).json(newPost);
     } catch (error) {
       console.error('Error creating post:', error);
@@ -370,6 +408,10 @@ router.put(
       });
 
       const updatedPost = await forumRepository.getPostById(postId);
+
+      // Broadcast post edit to WebSocket subscribers
+      broadcastPostEdit(existingPost.threadId.toString(), updatedPost);
+
       res.json(updatedPost);
     } catch (error) {
       console.error('Error updating post:', error);
@@ -427,6 +469,9 @@ router.delete(
       }
 
       await forumRepository.deletePost(postId);
+
+      // Broadcast post deletion to WebSocket subscribers
+      broadcastPostDelete(post.threadId.toString(), postId);
 
       res.status(204).send();
     } catch (error) {

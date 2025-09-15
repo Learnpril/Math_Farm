@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '../../../components/ui/button';
 import { Textarea } from '../../../components/ui/textarea';
 import { Label } from '../../../components/ui/label';
@@ -41,6 +41,8 @@ export interface PostComposerProps {
   isReply?: boolean;
   isEditing?: boolean;
   className?: string;
+  onStartTyping?: () => void;
+  onStopTyping?: () => void;
 }
 
 const MATH_SYNTAX_HELP = [
@@ -68,6 +70,8 @@ export function PostComposer({
   isReply = false,
   isEditing = false,
   className,
+  onStartTyping,
+  onStopTyping,
 }: PostComposerProps) {
   const [showPreview, setShowPreview] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -93,9 +97,46 @@ export function PostComposer({
     autoSaveDrafts: !isEditing,
   });
 
-  // Handle content change
+  // Cleanup typing indicators on unmount
+  useEffect(() => {
+    return () => {
+      if (typingTimeoutRef.current) {
+        clearTimeout(typingTimeoutRef.current);
+      }
+      if (isTypingRef.current && onStopTyping) {
+        onStopTyping();
+      }
+    };
+  }, [onStopTyping]);
+
+  // Handle content change with typing indicators
+  const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const isTypingRef = useRef(false);
+
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
+
+    // Handle typing indicators
+    if (onStartTyping && onStopTyping) {
+      // Start typing if not already
+      if (!isTypingRef.current) {
+        isTypingRef.current = true;
+        onStartTyping();
+      }
+
+      // Clear existing timeout
+      if (typingTimeoutRef.current) {
+        clearTimeout(typingTimeoutRef.current);
+      }
+
+      // Set timeout to stop typing after 2 seconds of inactivity
+      typingTimeoutRef.current = setTimeout(() => {
+        if (isTypingRef.current) {
+          isTypingRef.current = false;
+          onStopTyping();
+        }
+      }, 2000);
+    }
   };
 
   // Handle submit

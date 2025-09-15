@@ -69,6 +69,8 @@ interface PostItemProps {
   currentUserId?: number;
   isThreadLocked?: boolean;
   className?: string;
+  onStartTyping?: () => void;
+  onStopTyping?: () => void;
 }
 
 /**

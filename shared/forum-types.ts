@@ -142,3 +142,47 @@ export interface ForumSearchFilters {
   dateTo?: Date;
   hasMath?: boolean;
 }
+
+// Notification Types
+export interface ForumNotification {
+  id: number;
+  userId: number;
+  type:
+    | 'mention'
+    | 'reply'
+    | 'thread_reply'
+    | 'thread_locked'
+    | 'post_liked'
+    | 'achievement';
+  title: string;
+  message: string;
+  data?: any;
+  isRead: boolean;
+  createdAt: Date;
+  readAt?: Date;
+  expiresAt?: Date;
+}
+
+export interface NotificationPreferences {
+  id: number;
+  userId: number;
+  mentionsEnabled: boolean;
+  repliesEnabled: boolean;
+  threadRepliesEnabled: boolean;
+  threadUpdatesEnabled: boolean;
+  likesEnabled: boolean;
+  achievementsEnabled: boolean;
+  emailNotifications: boolean;
+  digestFrequency: 'none' | 'daily' | 'weekly';
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface NotificationSubscription {
+  id: number;
+  userId: number;
+  subscriptionType: 'thread' | 'category' | 'user';
+  targetId: number;
+  isActive: boolean;
+  createdAt: Date;
+}
