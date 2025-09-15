@@ -28,7 +28,8 @@ import { useCalculatorWorker } from '../../../hooks/useMathWorker';
 //   HistoryItem,
 // } from '../../../components/OptimizedComponents';
 import { useToolErrorHandler } from './ToolErrorBoundary';
-import { ErrorMessage, MathErrorMessage } from '../../../lib';
+// Temporarily simplified error handling
+// import { ErrorMessage, MathErrorMessage } from '../../../lib';
 
 const Calculator = React.memo(function Calculator() {
   const [expression, setExpression] = useState('');
@@ -43,15 +44,13 @@ const Calculator = React.memo(function Calculator() {
   // const { trackOperation } = useMathOperationTracker();
   // const { startRender, endRender } = useRenderTracker('Calculator');
 
-  // Enhanced error handling
-  const {
-    error,
-    errorMetadata,
-    handleMathError,
-    handleValidationError,
-    resetError,
-    canRetry,
-  } = useToolErrorHandler('Calculator');
+  // Simplified error handling
+  const [error, setError] = useState<string>('');
+  const resetError = () => setError('');
+  const handleMathError = (err: Error) => {
+    setError(err.message);
+    return { error: err.message };
+  };
   const [showScientific, setShowScientific] = useState(false);
   const [angleMode, setAngleMode] = useState<AngleMode>('deg');
   const [lastCalculation, setLastCalculation] = useState<ToolResult | null>(
@@ -106,9 +105,8 @@ const Calculator = React.memo(function Calculator() {
 
         if (workerResult.error) {
           // tracker.end(false, workerResult.error);
-          const error = new Error(workerResult.error);
-          const errorResult = handleMathError(error, 'evaluate', expr);
-          setResult(`Error: ${errorResult.error || workerResult.error}`);
+          setError(workerResult.error);
+          setResult(`Error: ${workerResult.error}`);
           setLastCalculation(null);
           return null;
         }
@@ -137,8 +135,8 @@ const Calculator = React.memo(function Calculator() {
       } catch (error) {
         const errorObj =
           error instanceof Error ? error : new Error('Calculation failed');
-        const errorResult = handleMathError(errorObj, 'calculate', expr);
-        setResult(`Error: ${errorResult.error || errorObj.message}`);
+        setError(errorObj.message);
+        setResult(`Error: ${errorObj.message}`);
         setLastCalculation(null);
         // tracker.end(false, errorObj.message);
         return null;
@@ -407,31 +405,25 @@ const Calculator = React.memo(function Calculator() {
 
           {/* Enhanced Error display */}
           {error && (
-            <MathErrorMessage
-              operation='calculation'
-              input={expression}
-              error={errorMetadata?.userFriendlyMessage || error.message}
-              fallbackResult={errorMetadata?.fallbackResult}
-              onRetry={canRetry ? () => calculate(expression) : undefined}
-              onDismiss={resetError}
-              compact
-            />
+            <div className='p-3 bg-destructive/10 border border-destructive/20 rounded-md'>
+              <p className='text-destructive text-sm'>{error}</p>
+              <button
+                onClick={() => calculate(expression)}
+                className='mt-2 text-xs text-destructive underline'
+              >
+                Try Again
+              </button>
+            </div>
           )}
 
           {/* Worker Error display */}
           {workerError && !error && (
-            <ErrorMessage
-              message={workerError}
-              title='Worker Error'
-              suggestedActions={[
-                'Try refreshing the page',
-                'Use simpler calculations',
-              ]}
-              onDismiss={() => {
-                /* Worker error handling */
-              }}
-              compact
-            />
+            <div className='p-3 bg-destructive/10 border border-destructive/20 rounded-md'>
+              <p className='text-destructive text-sm'>{workerError}</p>
+              <p className='text-xs text-muted-foreground mt-1'>
+                Try refreshing the page or use simpler calculations
+              </p>
+            </div>
           )}
 
           {/* Performance indicator */}

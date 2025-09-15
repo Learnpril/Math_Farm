@@ -7,7 +7,8 @@ import {
   downloadResult,
   shareResult,
 } from '../../../lib/toolUtils';
-import { MathToolShareDialog } from '../../forum/components/MathToolShareDialog';
+// Temporarily disabled to fix calculator
+// import { MathToolShareDialog } from '../../forum/components/MathToolShareDialog';
 
 interface SaveShareButtonsProps {
   result: ToolResult;
@@ -125,21 +126,16 @@ export function SaveShareButtons({
       </Button>
 
       {showForumShare && (
-        <MathToolShareDialog
-          toolResult={result}
-          onShared={onForumShared}
-          trigger={
-            <Button
-              disabled={disabled}
-              variant='outline'
-              size='sm'
-              className='flex items-center gap-2'
-            >
-              <MessageSquare className='h-4 w-4' />
-              Forum
-            </Button>
-          }
-        />
+        <Button
+          disabled={true}
+          variant='outline'
+          size='sm'
+          className='flex items-center gap-2'
+          title='Forum sharing temporarily disabled'
+        >
+          <MessageSquare className='h-4 w-4' />
+          Forum
+        </Button>
       )}
     </div>
   );
