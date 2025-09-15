@@ -37,6 +37,7 @@ import { BadgeSystem } from '../components/BadgeSystem';
 import { SuccessAnimation } from '../components/SuccessAnimation';
 import { RelatedTopicsSuggestions } from '../components/RelatedTopicsSuggestions';
 import { ErrorBoundary } from '../components/ErrorBoundary';
+import { TopicForumSection } from '../features/forum/components/TopicForumSection';
 // JSXGraph demos temporarily disabled to prevent DOM manipulation errors
 // import {
 //   JSXGraphDemo,
@@ -625,6 +626,16 @@ export function TopicPage() {
                 topicId={topic?.id || ''}
                 onBadgeEarned={handleBadgeEarned}
                 showBadgeModal={false}
+              />
+            )}
+
+            {/* Topic Forum Integration */}
+            {topic && (
+              <TopicForumSection
+                topicId={topic.id}
+                topicTitle={topic.title}
+                userProgress={[]} // TODO: Convert userProgress to CurriculumProgress format
+                className='mb-8'
               />
             )}
 

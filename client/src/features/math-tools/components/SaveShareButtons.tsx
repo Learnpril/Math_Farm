@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Download, Share2, Save, Check } from 'lucide-react';
+import { Download, Share2, Save, Check, MessageSquare } from 'lucide-react';
 import { Button } from '../../../components/ui/button';
 import {
   ToolResult,
@@ -7,17 +7,22 @@ import {
   downloadResult,
   shareResult,
 } from '../../../lib/toolUtils';
+import { MathToolShareDialog } from '../../forum/components/MathToolShareDialog';
 
 interface SaveShareButtonsProps {
   result: ToolResult;
   disabled?: boolean;
   className?: string;
+  showForumShare?: boolean;
+  onForumShared?: (threadId: string) => void;
 }
 
 export function SaveShareButtons({
   result,
   disabled = false,
   className = '',
+  showForumShare = true,
+  onForumShared,
 }: SaveShareButtonsProps) {
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved'>(
     'idle'
@@ -118,6 +123,24 @@ export function SaveShareButtons({
             ? 'Shared!'
             : 'Share'}
       </Button>
+
+      {showForumShare && (
+        <MathToolShareDialog
+          toolResult={result}
+          onShared={onForumShared}
+          trigger={
+            <Button
+              disabled={disabled}
+              variant='outline'
+              size='sm'
+              className='flex items-center gap-2'
+            >
+              <MessageSquare className='h-4 w-4' />
+              Forum
+            </Button>
+          }
+        />
+      )}
     </div>
   );
 }

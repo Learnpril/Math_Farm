@@ -20,6 +20,7 @@ import {
 import { PostEditor } from './PostEditor';
 import { PostReportDialog } from './PostReportDialog';
 import { MathJaxPreview } from './MathJaxPreview';
+import { PostContentRenderer } from './PostContentRenderer';
 import { ForumAvatarDisplay } from './avatar/ForumAvatarDisplay';
 import { useModeration } from '../hooks/useModeration';
 import { cn } from '../../../lib/utils';
@@ -288,8 +289,12 @@ export function PostItem({
                   />
                 </div>
               ) : (
-                <div className='prose prose-sm max-w-none mb-4'>
-                  <MathJaxPreview content={post.content} />
+                <div className='mb-4'>
+                  <PostContentRenderer
+                    content={post.content}
+                    showEmbeddedContent={true}
+                    compactEmbeds={false}
+                  />
                 </div>
               )}
 

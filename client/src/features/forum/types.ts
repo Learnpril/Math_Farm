@@ -59,6 +59,11 @@ export interface MathExpression {
   displayMode?: boolean;
 }
 
+export interface PostContent {
+  text: string;
+  mathExpressions?: MathExpression[];
+}
+
 export interface ForumUser {
   id: number;
   username: string;

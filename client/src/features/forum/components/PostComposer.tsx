@@ -20,6 +20,10 @@ import { cn } from '../../../lib/utils';
 import { usePostComposer } from '../hooks/usePostComposer';
 import { MathJaxPreview } from './MathJaxPreview';
 import { PostContent, MathExpression } from '../types';
+import {
+  createMathResultEmbed,
+  createMathLinkEmbed,
+} from '../lib/math-content-parser';
 
 export interface Attachment {
   id: string;

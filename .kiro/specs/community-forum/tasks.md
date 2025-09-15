@@ -138,15 +138,15 @@
     - Build appeals system for moderation actions
     - _Requirements: 5.1, 5.4, 5.5_
 
-- [ ] 9. Integrate with existing Math Farm features
-  - [ ] 9.1 Add math tool integration
+- [x] 9. Integrate with existing Math Farm features
+  - [x] 9.1 Add math tool integration
     - Create sharing functionality from math tools to forum
     - Implement calculation result embedding in posts
     - Add graph and equation sharing from existing tools
     - Create deep links between forum discussions and math topics
     - _Requirements: 9.1, 9.2_
 
-  - [ ] 9.2 Implement curriculum integration
+  - [x] 9.2 Implement curriculum integration
     - Link forum categories to existing Math Farm topic structure
     - Add topic-specific discussion areas
     - Create study group functionality tied to curriculum sections
