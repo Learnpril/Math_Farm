@@ -39,6 +39,7 @@ import {
 } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { ForumPost, ForumThread, ForumReport } from '../types';
+import { useModeration } from '../hooks/useModeration';
 
 export interface ModerationAction {
   type:
@@ -89,6 +90,14 @@ export function ModerationTools({
   const [actionDuration, setActionDuration] = useState<number>(24);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const {
+    performModerationAction,
+    resolveReport,
+    isLoading,
+    error,
+    clearError,
+  } = useModeration();
+
   // Check if user has moderation permissions
   const canModerate = userRole === 'moderator' || userRole === 'admin';
   const canAdmin = userRole === 'admin';
@@ -107,6 +116,7 @@ export function ModerationTools({
     }
 
     setIsSubmitting(true);
+    clearError();
 
     try {
       const action: ModerationAction = {
@@ -119,7 +129,13 @@ export function ModerationTools({
         targetType: post ? 'post' : 'thread',
       };
 
-      await onModerationAction(action);
+      // Use the hook's method for API integration
+      await performModerationAction(action);
+
+      // Also call the parent callback if provided
+      if (onModerationAction) {
+        await onModerationAction(action);
+      }
 
       // Reset form
       setSelectedAction(null);
@@ -127,7 +143,11 @@ export function ModerationTools({
       setActionDuration(24);
     } catch (error) {
       console.error('Moderation action failed:', error);
-      alert('Failed to perform moderation action');
+      alert(
+        error instanceof Error
+          ? error.message
+          : 'Failed to perform moderation action'
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -139,10 +159,18 @@ export function ModerationTools({
     action: 'resolved' | 'dismissed'
   ) => {
     try {
-      await onResolveReport(reportId, action);
+      // Use the hook's method for API integration
+      await resolveReport(reportId, action);
+
+      // Also call the parent callback if provided
+      if (onResolveReport) {
+        await onResolveReport(reportId, action);
+      }
     } catch (error) {
       console.error('Failed to resolve report:', error);
-      alert('Failed to resolve report');
+      alert(
+        error instanceof Error ? error.message : 'Failed to resolve report'
+      );
     }
   };
 

@@ -1,10 +1,35 @@
 import { useState, useCallback } from 'react';
-import {
-  ModerationAction,
-  ReportSubmission,
-} from '../components/ModerationTools';
 import { PostEditHistory } from '../components/PostEditor';
 import { ForumReport } from '../types';
+
+export interface ModerationAction {
+  type:
+    | 'delete'
+    | 'hide'
+    | 'lock'
+    | 'unlock'
+    | 'pin'
+    | 'unpin'
+    | 'warn'
+    | 'ban';
+  reason: string;
+  targetId: number;
+  targetType: 'post' | 'thread' | 'user';
+  duration?: number; // in hours
+}
+
+export interface ReportSubmission {
+  postId: number;
+  reason: string;
+  category:
+    | 'spam'
+    | 'harassment'
+    | 'inappropriate_content'
+    | 'misinformation'
+    | 'copyright'
+    | 'other';
+  details?: string;
+}
 
 export interface ModerationApiResponse {
   success: boolean;
