@@ -19,6 +19,8 @@ import {
 } from 'lucide-react';
 import { ForumLayout, ForumPageHeader } from '../components/ForumLayout';
 import { ThreadView } from '../components/ThreadView';
+import { useForumPerformanceMonitor } from '../hooks/useForumPerformance';
+import { preloadForRoute } from '../lib/forum-code-splitting';
 
 // Mock data - in real app this would come from API
 const mockThread = {
@@ -141,14 +143,29 @@ export function ThreadPage() {
   const [loading, setLoading] = useState(false);
   const [viewCount] = useState(127); // Mock view count
 
+  // Performance monitoring
+  const { startRenderTracking, endRenderTracking, logPerformanceReport } =
+    useForumPerformanceMonitor('ThreadPage');
+
   useEffect(() => {
+    startRenderTracking();
+
+    // Preload related components
+    preloadForRoute('/forum/thread');
+
     // In real app, fetch thread and posts data
     setLoading(true);
     // Simulate API call
     setTimeout(() => {
       setLoading(false);
+      endRenderTracking();
+
+      // Log performance report in development
+      if (process.env.NODE_ENV === 'development') {
+        setTimeout(logPerformanceReport, 1000);
+      }
     }, 500);
-  }, [threadId]);
+  }, [threadId, startRenderTracking, endRenderTracking, logPerformanceReport]);
 
   const breadcrumbs = [
     { label: 'Forum', href: '/community' },
@@ -312,7 +329,7 @@ export function ThreadPage() {
           </Button>
         </div>
 
-        {/* Thread view */}
+        {/* Thread view with performance optimizations */}
         <ThreadView
           thread={thread}
           posts={posts}
@@ -320,7 +337,12 @@ export function ThreadPage() {
           onLike={handleLike}
           onReport={handleReport}
           onShare={handleShare}
+          onQuote={postId => console.log('Quote post:', postId)}
+          onEdit={async (postId, content, editReason) => {
+            console.log('Edit post:', postId, content, editReason);
+          }}
           currentUserId={1} // Mock current user ID
+          enableVirtualization={posts.length > 20} // Enable for long threads
         />
       </div>
     </ForumLayout>

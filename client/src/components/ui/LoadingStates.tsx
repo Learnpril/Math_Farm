@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { cn } from '../../lib/utils';
-import { Loader2, Calculator, Function, BarChart3 } from 'lucide-react';
+import { Loader2, Calculator, Sigma, BarChart3 } from 'lucide-react';
 
 // Base skeleton component
 export interface SkeletonProps {
@@ -253,7 +253,7 @@ export const EquationLoadingState: React.FC<{ className?: string }> = ({
 }) => {
   return (
     <LoadingState
-      icon={<Function className='h-12 w-12 text-primary animate-pulse' />}
+      icon={<Sigma className='h-12 w-12 text-primary animate-pulse' />}
       title='Loading Equation Solver'
       description='Preparing symbolic math capabilities...'
       className={className}

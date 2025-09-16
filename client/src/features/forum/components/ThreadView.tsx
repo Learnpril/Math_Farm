@@ -5,6 +5,10 @@ import { Badge } from '../../../components/ui/badge';
 import { Pin, Lock, MessageSquare, Share2, Reply } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { PostItem } from './PostItem';
+import {
+  VirtualizedPostList,
+  usePostListVirtualization,
+} from './VirtualizedPostList';
 import { useRealTimeUpdates } from '../hooks/useRealTimeUpdates';
 import { TypingIndicator } from './TypingIndicator';
 import { WebSocketStatus } from './WebSocketStatus';
@@ -34,9 +38,16 @@ interface ThreadViewProps {
   onLike?: (postId: number) => void;
   onReport?: (postId: number) => void;
   onShare?: (postId: number) => void;
+  onQuote?: (postId: number) => void;
+  onEdit?: (
+    postId: number,
+    content?: any,
+    editReason?: string
+  ) => Promise<void>;
   currentUserId?: number;
   authToken?: string;
   onPostsUpdate?: (posts: ForumPost[]) => void;
+  enableVirtualization?: boolean;
 }
 
 /**
@@ -51,9 +62,12 @@ export function ThreadView({
   onLike,
   onReport,
   onShare,
+  onQuote,
+  onEdit,
   currentUserId,
   authToken,
   onPostsUpdate,
+  enableVirtualization = true,
 }: ThreadViewProps) {
   const [expandedPosts, setExpandedPosts] = useState<Set<number>>(new Set());
   const [sortBy, setSortBy] = useState<'chronological' | 'popular'>(
@@ -156,6 +170,12 @@ export function ThreadView({
   };
 
   const nestedPosts = buildPostTree(localPosts);
+
+  // Virtualization settings
+  const virtualizationSettings = usePostListVirtualization(nestedPosts, {
+    enableVirtualization,
+    containerHeight: 800,
+  });
 
   const togglePostExpansion = (postId: number) => {
     const newExpanded = new Set(expandedPosts);
@@ -275,26 +295,45 @@ export function ThreadView({
         <TypingIndicator userNames={typingUserNames} />
       )}
 
-      {/* Posts */}
-      <div className='space-y-4' role='list' aria-label='Forum posts'>
-        {sortPosts(nestedPosts).map(post => (
-          <PostItem
-            key={post.id}
-            post={post}
-            level={0}
-            expandedPosts={expandedPosts}
-            onToggleExpansion={togglePostExpansion}
-            onReply={onReply}
-            onLike={onLike}
-            onReport={onReport}
-            onShare={onShare}
-            currentUserId={currentUserId}
-            isThreadLocked={isThreadLocked}
-            onStartTyping={() => startTyping(thread.id.toString())}
-            onStopTyping={() => stopTyping(thread.id.toString())}
-          />
-        ))}
-      </div>
+      {/* Posts - use virtualization for better performance */}
+      {virtualizationSettings.shouldVirtualize ? (
+        <VirtualizedPostList
+          posts={sortPosts(nestedPosts)}
+          containerHeight={virtualizationSettings.containerHeight}
+          itemHeight={virtualizationSettings.itemHeight}
+          currentUserId={currentUserId}
+          isThreadLocked={isThreadLocked}
+          onReply={onReply}
+          onLike={onLike}
+          onReport={onReport}
+          onShare={onShare}
+          onQuote={onQuote}
+          onEdit={onEdit}
+          enableVirtualization={enableVirtualization}
+        />
+      ) : (
+        <div className='space-y-4' role='list' aria-label='Forum posts'>
+          {sortPosts(nestedPosts).map(post => (
+            <PostItem
+              key={post.id}
+              post={post}
+              level={0}
+              expandedPosts={expandedPosts}
+              onToggleExpansion={togglePostExpansion}
+              onReply={onReply}
+              onLike={onLike}
+              onReport={onReport}
+              onShare={onShare}
+              onQuote={onQuote}
+              onEdit={onEdit}
+              currentUserId={currentUserId}
+              isThreadLocked={isThreadLocked}
+              onStartTyping={() => startTyping(thread.id.toString())}
+              onStopTyping={() => stopTyping(thread.id.toString())}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Empty state */}
       {localPosts.length === 0 && (

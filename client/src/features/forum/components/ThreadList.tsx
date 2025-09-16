@@ -16,6 +16,10 @@ import {
   Calendar,
 } from 'lucide-react';
 import { cn } from '../../../lib/utils';
+import {
+  VirtualizedThreadList,
+  useVirtualizedThreadList,
+} from './VirtualizedThreadList';
 
 interface ForumThread {
   id: number;
@@ -40,6 +44,8 @@ interface ThreadListProps {
   onPageChange?: (page: number) => void;
   sortBy?: 'recent' | 'popular' | 'oldest' | 'title';
   onSortChange?: (sort: 'recent' | 'popular' | 'oldest' | 'title') => void;
+  enableVirtualization?: boolean;
+  containerHeight?: number;
 }
 
 /**
@@ -55,8 +61,16 @@ export function ThreadList({
   onPageChange,
   sortBy = 'recent',
   onSortChange,
+  enableVirtualization = true,
+  containerHeight = 600,
 }: ThreadListProps) {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+
+  // Use virtualization settings
+  const virtualizationSettings = useVirtualizedThreadList(threads, {
+    containerHeight,
+    enableVirtualization,
+  });
 
   const formatTimeAgo = (date: Date) => {
     const now = new Date();
@@ -226,56 +240,74 @@ export function ThreadList({
         </div>
       </div>
 
-      {/* Thread list */}
-      <div className='space-y-3' role='list' aria-label='Forum threads'>
-        {/* Pinned threads */}
-        {pinnedThreads.length > 0 && (
-          <div className='space-y-3'>
-            <div className='flex items-center gap-2'>
-              <Pin className='h-4 w-4 text-primary' />
-              <Badge variant='secondary' className='text-xs'>
-                Pinned Threads
-              </Badge>
-            </div>
-            {pinnedThreads.map(thread => (
-              <div key={thread.id} role='listitem'>
-                <ThreadItem thread={thread} />
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Regular threads */}
-        {regularThreads.length > 0 && (
-          <div className='space-y-3'>
-            {pinnedThreads.length > 0 && (
-              <div className='border-t border-border pt-4'>
-                <Badge variant='outline' className='text-xs'>
-                  All Threads
+      {/* Thread list - use virtualization for better performance */}
+      {virtualizationSettings.shouldVirtualize ? (
+        <VirtualizedThreadList
+          threads={threads}
+          containerHeight={virtualizationSettings.containerHeight}
+          itemHeight={virtualizationSettings.itemHeight}
+          onThreadClick={threadId => {
+            // Navigate to thread
+            window.location.href = `/forum/thread/${threadId}`;
+          }}
+          onAuthorClick={authorId => {
+            // Navigate to user profile
+            window.location.href = `/forum/user/${authorId}`;
+          }}
+          showPinnedSeparately={true}
+          className='min-h-[400px]'
+        />
+      ) : (
+        <div className='space-y-3' role='list' aria-label='Forum threads'>
+          {/* Pinned threads */}
+          {pinnedThreads.length > 0 && (
+            <div className='space-y-3'>
+              <div className='flex items-center gap-2'>
+                <Pin className='h-4 w-4 text-primary' />
+                <Badge variant='secondary' className='text-xs'>
+                  Pinned Threads
                 </Badge>
               </div>
-            )}
-            {regularThreads.map(thread => (
-              <div key={thread.id} role='listitem'>
-                <ThreadItem thread={thread} />
-              </div>
-            ))}
-          </div>
-        )}
+              {pinnedThreads.map(thread => (
+                <div key={thread.id} role='listitem'>
+                  <ThreadItem thread={thread} />
+                </div>
+              ))}
+            </div>
+          )}
 
-        {/* Empty state */}
-        {threads.length === 0 && (
-          <Card>
-            <CardContent className='p-8 text-center'>
-              <MessageSquare className='h-12 w-12 mx-auto mb-4 text-muted-foreground' />
-              <h3 className='text-lg font-semibold mb-2'>No threads found</h3>
-              <p className='text-muted-foreground'>
-                Be the first to start a discussion in this category!
-              </p>
-            </CardContent>
-          </Card>
-        )}
-      </div>
+          {/* Regular threads */}
+          {regularThreads.length > 0 && (
+            <div className='space-y-3'>
+              {pinnedThreads.length > 0 && (
+                <div className='border-t border-border pt-4'>
+                  <Badge variant='outline' className='text-xs'>
+                    All Threads
+                  </Badge>
+                </div>
+              )}
+              {regularThreads.map(thread => (
+                <div key={thread.id} role='listitem'>
+                  <ThreadItem thread={thread} />
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Empty state */}
+          {threads.length === 0 && (
+            <Card>
+              <CardContent className='p-8 text-center'>
+                <MessageSquare className='h-12 w-12 mx-auto mb-4 text-muted-foreground' />
+                <h3 className='text-lg font-semibold mb-2'>No threads found</h3>
+                <p className='text-muted-foreground'>
+                  Be the first to start a discussion in this category!
+                </p>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      )}
 
       {/* Pagination */}
       {showPagination && totalPages > 1 && (
