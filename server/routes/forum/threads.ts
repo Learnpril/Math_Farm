@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { forumRepository } from '../../database/forum-repository.js';
+import { optimizedForumRepository as forumRepository } from '../../database/optimized-forum-repository.js';
 import {
   authenticateToken,
   optionalAuth,

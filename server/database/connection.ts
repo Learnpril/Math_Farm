@@ -1,6 +1,6 @@
 import mysql from 'mysql2/promise';
 
-// Database connection configuration
+// Database connection configuration with optimized pooling
 const dbConfig = {
   host: process.env.DB_HOST || 'localhost',
   port: parseInt(process.env.DB_PORT || '3306'),
@@ -9,12 +9,33 @@ const dbConfig = {
   database: process.env.DB_NAME || 'mathfarm',
   charset: 'utf8mb4',
   timezone: '+00:00',
-  acquireTimeout: 60000,
-  timeout: 60000,
+
+  // Optimized connection timeouts
+  acquireTimeout: 30000, // Reduced from 60s to 30s
+  timeout: 30000, // Reduced from 60s to 30s
   reconnect: true,
-  // Connection pool settings
-  connectionLimit: 10,
-  queueLimit: 0,
+
+  // Optimized connection pool settings for performance
+  connectionLimit: parseInt(process.env.DB_CONNECTION_LIMIT || '20'), // Increased from 10 to 20
+  queueLimit: parseInt(process.env.DB_QUEUE_LIMIT || '50'), // Added queue limit
+
+  // Connection pool optimization
+  idleTimeout: 300000, // 5 minutes idle timeout
+  maxReconnects: 3,
+  reconnectDelay: 2000,
+
+  // Query optimization settings
+  multipleStatements: false, // Security: disable multiple statements
+  dateStrings: false, // Performance: use Date objects
+  supportBigNumbers: true,
+  bigNumberStrings: false,
+
+  // Performance tuning
+  flags: [
+    'COMPRESS', // Enable compression for better network performance
+    'FOUND_ROWS', // Enable SQL_CALC_FOUND_ROWS optimization
+  ],
+
   // SSL configuration for production
   ssl:
     process.env.NODE_ENV === 'production'
@@ -41,16 +62,36 @@ export async function testConnection(): Promise<boolean> {
   }
 }
 
-// Execute a single query
+// Execute a single query with performance tracking
 export async function query<T = any>(
   sql: string,
   params: any[] = []
 ): Promise<T[]> {
+  const startTime = Date.now();
   try {
     const [rows] = await pool.execute(sql, params);
+
+    // Track query performance
+    const executionTime = Date.now() - startTime;
+    if (process.env.NODE_ENV === 'development' || executionTime > 1000) {
+      // Import performance service dynamically to avoid circular dependencies
+      import('../services/performance-service.js')
+        .then(({ performanceService }) => {
+          performanceService.recordQuery(sql, executionTime, params);
+        })
+        .catch(() => {
+          // Ignore import errors in case performance service is not available
+        });
+    }
+
     return rows as T[];
   } catch (error) {
-    console.error('Database query error:', error);
+    const executionTime = Date.now() - startTime;
+    console.error('Database query error:', {
+      sql: sql.substring(0, 200) + (sql.length > 200 ? '...' : ''),
+      executionTime,
+      error: error instanceof Error ? error.message : error,
+    });
     throw error;
   }
 }
