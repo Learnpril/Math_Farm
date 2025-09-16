@@ -8,6 +8,8 @@ export interface Topic {
   estimatedTime: number;
   difficulty: number;
   prerequisites?: string[];
+  icon?: string;
+  mathExpression?: string;
 }
 
 export interface SuggestedTopic {

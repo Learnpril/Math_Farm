@@ -1,6 +1,7 @@
 import React from 'react';
 import { Router, Route, Redirect } from 'wouter';
 import { ThemeProvider } from './components/ThemeProvider';
+import { ToolModalProvider } from './components/ToolModalProvider';
 import { Layout } from './components/layout/Layout';
 import { Home, NotFound, MathSymbolsPage } from './pages';
 import {
@@ -41,92 +42,140 @@ function App() {
       isDevelopment={process.env.NODE_ENV === 'development'}
     >
       <ThemeProvider>
-        <Router>
-          <Layout>
-            <Route path='/' component={Home} />
-            <Route
-              path='/topic/:id'
-              component={() => (
-                <LazyWrapper
-                  fallback='skeleton'
-                  skeletonVariant='topic'
-                  loadingText='Loading topic...'
-                >
-                  <LazyTopicPage />
-                </LazyWrapper>
-              )}
-            />
-            {/* Tool redirects - redirect specific tool URLs to main tools page */}
-            <Route path='/tools/:toolId'>
-              <Redirect to='/tools' />
-            </Route>
+        <ToolModalProvider>
+          <Router>
+            <Layout>
+              <Route path='/' component={Home} />
+              <Route
+                path='/topic/:id'
+                component={() => (
+                  <LazyWrapper
+                    fallback='skeleton'
+                    skeletonVariant='topic'
+                    loadingText='Loading topic...'
+                  >
+                    <LazyTopicPage />
+                  </LazyWrapper>
+                )}
+              />
+              {/* Individual tool routes */}
+              <Route
+                path='/tools/calculator'
+                component={() => (
+                  <LazyWrapper
+                    fallback='skeleton'
+                    skeletonVariant='page'
+                    loadingText='Loading calculator...'
+                  >
+                    <LazyToolsPage initialTool='calculator' />
+                  </LazyWrapper>
+                )}
+              />
+              <Route
+                path='/tools/function-grapher'
+                component={() => (
+                  <LazyWrapper
+                    fallback='skeleton'
+                    skeletonVariant='page'
+                    loadingText='Loading function grapher...'
+                  >
+                    <LazyToolsPage initialTool='graphing' />
+                  </LazyWrapper>
+                )}
+              />
+              <Route
+                path='/tools/unit-converter'
+                component={() => (
+                  <LazyWrapper
+                    fallback='skeleton'
+                    skeletonVariant='page'
+                    loadingText='Loading unit converter...'
+                  >
+                    <LazyToolsPage initialTool='converter' />
+                  </LazyWrapper>
+                )}
+              />
+              <Route
+                path='/tools/equation-solver'
+                component={() => (
+                  <LazyWrapper
+                    fallback='skeleton'
+                    skeletonVariant='page'
+                    loadingText='Loading equation solver...'
+                  >
+                    <LazyToolsPage initialTool='solver' />
+                  </LazyWrapper>
+                )}
+              />
 
-            <Route
-              path='/tools'
-              component={() => (
-                <LazyWrapper
-                  fallback='skeleton'
-                  skeletonVariant='page'
-                  loadingText='Loading tools...'
-                >
-                  <LazyToolsPage />
-                </LazyWrapper>
-              )}
-            />
-            <Route
-              path='/latex-guide'
-              component={() => (
-                <LazyWrapper
-                  fallback='skeleton'
-                  skeletonVariant='page'
-                  loadingText='Loading LaTeX guide...'
-                >
-                  <LazyLaTeXGuidePage />
-                </LazyWrapper>
-              )}
-            />
-            <Route
-              path='/matlab-guide'
-              component={() => (
-                <LazyWrapper
-                  fallback='skeleton'
-                  skeletonVariant='page'
-                  loadingText='Loading MATLAB guide...'
-                >
-                  <LazyMATLABGuidePage />
-                </LazyWrapper>
-              )}
-            />
-            <Route path='/math-symbols' component={MathSymbolsPage} />
+              <Route
+                path='/tools'
+                component={() => (
+                  <LazyWrapper
+                    fallback='skeleton'
+                    skeletonVariant='page'
+                    loadingText='Loading tools...'
+                  >
+                    <LazyToolsPage />
+                  </LazyWrapper>
+                )}
+              />
+              <Route
+                path='/latex-guide'
+                component={() => (
+                  <LazyWrapper
+                    fallback='skeleton'
+                    skeletonVariant='page'
+                    loadingText='Loading LaTeX guide...'
+                  >
+                    <LazyLaTeXGuidePage />
+                  </LazyWrapper>
+                )}
+              />
+              <Route
+                path='/matlab-guide'
+                component={() => (
+                  <LazyWrapper
+                    fallback='skeleton'
+                    skeletonVariant='page'
+                    loadingText='Loading MATLAB guide...'
+                  >
+                    <LazyMATLABGuidePage />
+                  </LazyWrapper>
+                )}
+              />
+              <Route path='/math-symbols' component={MathSymbolsPage} />
 
-            {/* Forum routes - replacing community */}
-            <Route path='/community' component={ForumHome} />
-            <Route path='/forum' component={ForumHome} />
-            <Route
-              path='/forum/category/:categoryId'
-              component={CategoryPage}
-            />
-            <Route path='/forum/thread/:threadId' component={ThreadPage} />
-            <Route path='/forum/avatar-demo' component={AvatarSystemDemo} />
+              {/* Forum routes - replacing community */}
+              <Route path='/community' component={ForumHome} />
+              <Route path='/forum' component={ForumHome} />
+              <Route
+                path='/forum/category/:categoryId'
+                component={CategoryPage}
+              />
+              <Route path='/forum/thread/:threadId' component={ThreadPage} />
+              <Route path='/forum/avatar-demo' component={AvatarSystemDemo} />
 
-            <Route path='*'>
+              {/* Temporarily disabled catch-all route for debugging */}
+              {/* <Route path='*'>
               <Redirect to='/' />
-            </Route>
-          </Layout>
+            </Route> */}
+            </Layout>
 
-          {/* Development-only error testing component */}
-          <ErrorBoundaryTester>
-            <></>
-          </ErrorBoundaryTester>
-        </Router>
+            {/* Development-only error testing component */}
+            <ErrorBoundaryTester>
+              <></>
+            </ErrorBoundaryTester>
+          </Router>
 
-        {/* Performance monitoring dashboard - temporarily disabled to fix infinite loop */}
-        {/* {process.env.NODE_ENV === 'development' && false && (
+          {/* Performance monitoring dashboard - temporarily disabled to fix infinite loop */}
+          {/* {process.env.NODE_ENV === 'development' && false && (
           <PerformanceDashboard componentName='Math Farm App' />
         )} */}
 
-        {/* Web Worker Performance Monitor */}
-        <PerformanceMonitor />
+          {/* Web Worker Performance Monitor */}
+          <PerformanceMonitor />
+        </ToolModalProvider>
       </ThemeProvider>
     </ErrorBoundaryProvider>
   );

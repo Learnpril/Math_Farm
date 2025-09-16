@@ -22,48 +22,7 @@ export function Home() {
       {/* Hero Section */}
       <HeroSection />
 
-      {/* Topics Section */}
-      <Section
-        id='topics'
-        ariaLabel='Mathematics topics'
-        className='bg-background'
-      >
-        <PageContainer>
-          <div className='text-center space-y-6'>
-            <h2
-              className='text-3xl md:text-4xl font-bold text-foreground'
-              data-testid='home-topics-heading'
-            >
-              Explore Mathematics Topics
-            </h2>
-            <p
-              className='text-lg text-muted-foreground max-w-2xl mx-auto'
-              data-testid='home-topics-description'
-            >
-              Discover a comprehensive curriculum covering everything from basic
-              arithmetic to advanced mathematical concepts.
-            </p>
-
-            {/* Topics Grid with actual topic cards */}
-            <div className='mt-12'>
-              <TopicsGrid
-                onTopicClick={topicId => {
-                  setLocation(`/topic/${topicId}`);
-                }}
-              />
-            </div>
-          </div>
-        </PageContainer>
-      </Section>
-
-      {/* Tools Section */}
-      <Section
-        id='tools'
-        ariaLabel='Mathematical tools'
-        className='bg-muted/50'
-      >
-        <ToolsSection />
-      </Section>
+      {/* Topics and Tools sections are now in sidebars, so we hide them on home page */}
 
       {/* Features Section */}
       <FeaturesSection className='bg-muted/50' />

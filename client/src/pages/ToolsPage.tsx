@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'wouter';
 import {
   Calculator,
   TrendingUp,
@@ -36,8 +37,13 @@ interface Tool {
   preview: string;
 }
 
-export function ToolsPage() {
+interface ToolsPageProps {
+  initialTool?: string;
+}
+
+export function ToolsPage({ initialTool }: ToolsPageProps = {}) {
   const [selectedTool, setSelectedTool] = useState<Tool | null>(null);
+  const [, setLocation] = useLocation();
 
   const tools: Tool[] = [
     {
@@ -84,6 +90,16 @@ export function ToolsPage() {
         'Solve equations, find derivatives, simplify expressions with step-by-step solutions.',
     },
   ];
+
+  // Set initial tool if provided
+  useEffect(() => {
+    if (initialTool && !selectedTool) {
+      const tool = tools.find(t => t.id === initialTool);
+      if (tool) {
+        setSelectedTool(tool);
+      }
+    }
+  }, [initialTool, selectedTool, tools]);
 
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -145,7 +161,19 @@ export function ToolsPage() {
           const ToolComponent = tool.component;
 
           return (
-            <Dialog key={tool.id}>
+            <Dialog
+              key={tool.id}
+              open={selectedTool?.id === tool.id}
+              onOpenChange={open => {
+                if (!open) {
+                  setSelectedTool(null);
+                  // Navigate back to general tools page when closing
+                  if (initialTool) {
+                    setLocation('/tools');
+                  }
+                }
+              }}
+            >
               <DialogTrigger asChild>
                 <div
                   className='bg-card border rounded-lg p-6 hover:bg-muted/50 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2'
