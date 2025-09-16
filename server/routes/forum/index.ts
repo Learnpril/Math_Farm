@@ -5,6 +5,8 @@ import postsRouter from './posts.js';
 import notificationsRouter from './notifications.js';
 import moderationRouter from './moderation.js';
 import userManagementRouter from './user-management.js';
+import searchRouter from './search.js';
+import discoveryRouter from './discovery.js';
 
 const router = Router();
 
@@ -15,6 +17,8 @@ router.use('/posts', postsRouter);
 router.use('/notifications', notificationsRouter);
 router.use('/moderation', moderationRouter);
 router.use('/user-management', userManagementRouter);
+router.use('/discovery', discoveryRouter);
+router.use('/', searchRouter);
 
 // Forum health check
 router.get('/health', (_req, res) => {

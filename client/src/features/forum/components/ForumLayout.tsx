@@ -1,5 +1,8 @@
 import React from 'react';
+import { useLocation } from 'wouter';
 import { cn } from '../../../lib/utils';
+import { ForumSearch } from './ForumSearch';
+import type { SearchResult } from '../../../../shared/forum-types';
 
 interface BreadcrumbItem {
   label: string;
@@ -12,6 +15,7 @@ interface ForumLayoutProps {
   sidebar?: React.ReactNode;
   breadcrumbs?: BreadcrumbItem[];
   className?: string;
+  showSearch?: boolean;
 }
 
 /**
@@ -23,9 +27,27 @@ export function ForumLayout({
   sidebar,
   breadcrumbs,
   className = '',
+  showSearch = true,
 }: ForumLayoutProps) {
+  const [, setLocation] = useLocation();
+
+  const handleSearchResultSelect = (result: SearchResult) => {
+    setLocation(`/forum/threads/${result.thread.id}#post-${result.id}`);
+  };
   return (
     <div className={cn('min-h-screen bg-background', className)}>
+      {/* Forum search bar */}
+      {showSearch && (
+        <div className='border-b border-border bg-muted/30'>
+          <div className='container mx-auto px-4 py-4'>
+            <ForumSearch
+              onResultSelect={handleSearchResultSelect}
+              className='max-w-2xl mx-auto'
+            />
+          </div>
+        </div>
+      )}
+
       {/* Forum breadcrumbs */}
       {breadcrumbs && breadcrumbs.length > 0 && (
         <div className='border-b border-border bg-muted/30'>

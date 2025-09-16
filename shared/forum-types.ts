@@ -123,6 +123,64 @@ export interface ForumStats {
 }
 
 // Search Types
+export interface SearchQuery {
+  q: string;
+  category?: string;
+  author?: string;
+  dateFrom?: string;
+  dateTo?: string;
+  sortBy: 'relevance' | 'date' | 'replies';
+  page: number;
+  limit: number;
+  includeMath: boolean;
+}
+
+export interface SearchResult {
+  id: number;
+  type: 'post';
+  title: string;
+  content: string;
+  excerpt: string;
+  author: {
+    id: number;
+    username: string;
+  };
+  thread: {
+    id: number;
+    title: string;
+    category: {
+      id: number;
+      name: string;
+    };
+  };
+  createdAt: string;
+  relevanceScore: number;
+  mathContent?: MathExpression[] | null;
+}
+
+export interface SearchSuggestion {
+  text: string;
+  type: 'thread' | 'category' | 'term';
+  count: number;
+}
+
+export interface SearchFilters {
+  categories: Array<{
+    id: number;
+    name: string;
+    postCount: number;
+  }>;
+  authors: Array<{
+    id: number;
+    username: string;
+    postCount: number;
+  }>;
+  dateRanges: Array<{
+    label: string;
+    value: string;
+  }>;
+}
+
 export interface ForumSearchResult {
   type: 'thread' | 'post';
   id: number;
@@ -185,4 +243,100 @@ export interface NotificationSubscription {
   targetId: number;
   isActive: boolean;
   createdAt: Date;
+}
+
+// Discovery Types
+export interface TrendingTopic {
+  id: number;
+  title: string;
+  category: {
+    id: number;
+    name: string;
+  };
+  author: {
+    id: number;
+    username: string;
+  };
+  postCount: number;
+  recentActivity: number;
+  trendScore: number;
+  tags: string[];
+  createdAt: string;
+  lastPostAt: string;
+}
+
+export interface PopularDiscussion {
+  id: number;
+  title: string;
+  category: {
+    id: number;
+    name: string;
+  };
+  author: {
+    id: number;
+    username: string;
+  };
+  postCount: number;
+  viewCount: number;
+  likeCount: number;
+  popularityScore: number;
+  tags: string[];
+  createdAt: string;
+  lastPostAt: string;
+}
+
+export interface ActivityFeedItem {
+  id: number;
+  type: 'post' | 'thread';
+  title: string;
+  content: string;
+  author: {
+    id: number;
+    username: string;
+  };
+  thread?: {
+    id: number;
+    title: string;
+    category: {
+      id: number;
+      name: string;
+    };
+  };
+  createdAt: string;
+  isFollowing: boolean;
+}
+
+export interface RelatedThread {
+  id: number;
+  title: string;
+  category: {
+    id: number;
+    name: string;
+  };
+  author: {
+    id: number;
+    username: string;
+  };
+  postCount: number;
+  similarityScore: number;
+  tags: string[];
+  createdAt: string;
+  lastPostAt: string;
+}
+
+export interface ForumTag {
+  id: number;
+  name: string;
+  description?: string;
+  color?: string;
+  threadCount: number;
+  postCount: number;
+  createdAt: string;
+}
+
+export interface UserFollow {
+  id: number;
+  followerId: number;
+  followingId: number;
+  createdAt: string;
 }

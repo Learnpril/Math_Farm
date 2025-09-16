@@ -153,15 +153,15 @@
     - Implement progress sharing and discussion features
     - _Requirements: 9.2, 9.4_
 
-- [ ] 10. Add search and discovery features
-  - [ ] 10.1 Implement forum search functionality
+- [x] 10. Add search and discovery features
+  - [x] 10.1 Implement forum search functionality
     - Create full-text search using MariaDB's search capabilities
     - Add advanced search filters (author, date, category, math content)
     - Implement search result highlighting and pagination
     - Create search suggestions and autocomplete
     - _Requirements: 2.3_
 
-  - [ ] 10.2 Build content discovery features
+  - [x] 10.2 Build content discovery features
     - Add trending topics and popular discussions
     - Create user activity feeds and following system
     - Implement tag-based content organization

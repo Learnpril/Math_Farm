@@ -180,3 +180,77 @@ ALTER TABLE users ADD COLUMN IF NOT EXISTS forum_ban_reason TEXT NULL;
 -- Add indexes for forum-related user fields
 ALTER TABLE users ADD INDEX IF NOT EXISTS idx_forum_role (forum_role);
 ALTER TABLE users ADD INDEX IF NOT EXISTS idx_forum_banned (forum_banned_until);
+
+-- Forum Tags Table
+CREATE TABLE forum_tags (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50) NOT NULL UNIQUE,
+  description TEXT,
+  color VARCHAR(7) DEFAULT '#6366f1',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  
+  INDEX idx_name (name)
+);
+
+-- Forum Thread Tags Junction Table
+CREATE TABLE forum_thread_tags (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  thread_id INT NOT NULL,
+  tag_id INT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  
+  UNIQUE KEY unique_thread_tag (thread_id, tag_id),
+  INDEX idx_thread_id (thread_id),
+  INDEX idx_tag_id (tag_id),
+  
+  FOREIGN KEY (thread_id) REFERENCES forum_threads(id) ON DELETE CASCADE,
+  FOREIGN KEY (tag_id) REFERENCES forum_tags(id) ON DELETE CASCADE
+);
+
+-- User Follows Table
+CREATE TABLE forum_user_follows (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  follower_id INT NOT NULL,
+  following_id INT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  
+  UNIQUE KEY unique_follow (follower_id, following_id),
+  INDEX idx_follower_id (follower_id),
+  INDEX idx_following_id (following_id),
+  
+  FOREIGN KEY (follower_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (following_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Thread Views Table (for tracking popularity)
+CREATE TABLE forum_thread_views (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  thread_id INT NOT NULL,
+  user_id INT NULL,
+  ip_address VARCHAR(45),
+  user_agent TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  
+  INDEX idx_thread_id (thread_id),
+  INDEX idx_user_id (user_id),
+  INDEX idx_created_at (created_at),
+  
+  FOREIGN KEY (thread_id) REFERENCES forum_threads(id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+);
+
+-- Post Likes Table (for tracking engagement)
+CREATE TABLE forum_post_likes (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  post_id INT NOT NULL,
+  user_id INT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  
+  UNIQUE KEY unique_post_like (post_id, user_id),
+  INDEX idx_post_id (post_id),
+  INDEX idx_user_id (user_id),
+  INDEX idx_created_at (created_at),
+  
+  FOREIGN KEY (post_id) REFERENCES forum_posts(id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
