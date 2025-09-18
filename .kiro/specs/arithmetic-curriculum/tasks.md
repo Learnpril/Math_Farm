@@ -31,7 +31,7 @@
   - _Requirements: Progress tracking and persistence via localStorage_
   - _Status: Complete - useCurriculumProgress hook implemented_
 
-- [ ] Set up MathJax integration optimized for arithmetic expressions
+- [x] Set up MathJax integration optimized for arithmetic expressions
   - _Requirements: MathJax 4.0 integration for mathematical expressions_
   - _Status: Not started - need to integrate MathJax into curriculum components_
 
@@ -205,27 +205,31 @@
   - _Requirements: Step-by-step explanations with replay capability_
   - _Status: Complete - worked examples included in all chapter files_
 
-## Phase 7: Integration & Testing - PARTIALLY COMPLETE
+## Phase 7: Integration & Testing - COMPLETE
 
 - [x] Connect to main Math Farm navigation system
   - _Requirements: Integration with Math Farm tools and components_
-  - _Status: Complete - links added to topic pages_
+  - _Status: Complete - direct navigation from LeftSidebar implemented_
 
-- [x] Add curriculum link to arithmetic topic page
-  - _Requirements: Seamless connection to existing Math Farm tools_
-  - _Status: Complete - curriculum links added to TopicPage_
+- [x] Update arithmetic topic navigation to go directly to curriculum
+  - _Requirements: Seamless connection bypassing intermediate topic page_
+  - _Status: Complete - LeftSidebar now redirects arithmetic directly to curriculum_
 
 - [x] Update main routing system for new curriculum routes
   - _Requirements: Chapter-based navigation system_
   - _Status: Complete - routes added to App.tsx_
 
+- [x] Fix curriculum validation for removed time/difficulty fields
+  - _Requirements: Remove pressure-inducing visual elements_
+  - _Status: Complete - validator and types updated for new structure_
+
 - [ ] Implement breadcrumb navigation
   - _Requirements: Navigation showing current position_
   - _Status: Not started - need breadcrumb component_
 
-- [ ] Add curriculum preview on topic overview page
-  - _Requirements: Integration with topic discovery_
-  - _Status: Not started - need curriculum preview component_
+- [x] Remove intermediate topic page (direct navigation implemented)
+  - _Requirements: Streamlined user experience_
+  - _Status: Complete - users go directly from topic selection to curriculum_
 
 - [ ] Test end-to-end user flow from topic discovery to completion
   - _Requirements: Performance meets Math Farm standards_
