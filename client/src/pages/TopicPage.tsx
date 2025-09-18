@@ -29,10 +29,7 @@ import { MathExpression } from '../components/MathExpression';
 import { Badge } from '../components/ui/badge';
 import { LessonContent } from '../components/LessonContent';
 import { TopicPracticeSection } from '../features/practice/components/TopicPracticeSection';
-import {
-  ProgressTracker,
-  TimeChallengeMode,
-} from '../features/practice/components';
+import { ProgressTracker } from '../features/practice/components';
 import { BadgeSystem } from '../components/BadgeSystem';
 import { SuccessAnimation } from '../components/SuccessAnimation';
 import { RelatedTopicsSuggestions } from '../components/RelatedTopicsSuggestions';
@@ -65,7 +62,7 @@ export function TopicPage() {
     'problem' | 'section' | 'topic' | 'badge' | 'streak'
   >('problem');
   const [successMessage, setSuccessMessage] = useState('');
-  const [isChallengeMode, setIsChallengeMode] = useState(false);
+
   const sessionInitialized = useRef(false);
 
   // Use the new progress tracking hook
@@ -100,14 +97,6 @@ export function TopicPage() {
   // Gamification handlers
   const handleBadgeEarned = (badge: any) => {
     // Don't show success animation for badges, let BadgeSystem handle it
-  };
-
-  const handleChallengeComplete = (success: boolean, timeSpent: number) => {
-    if (success) {
-      setSuccessAnimationType('streak');
-      setSuccessMessage('Time Challenge Completed!');
-      setShowSuccessAnimation(true);
-    }
   };
 
   const handleSectionComplete = (sectionId: string) => {
@@ -510,19 +499,6 @@ export function TopicPage() {
                       </Badge>
                     </div>
 
-                    {/* Challenge Mode Toggle */}
-                    <button
-                      onClick={() => setIsChallengeMode(!isChallengeMode)}
-                      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                        isChallengeMode
-                          ? 'bg-yellow-100 text-yellow-800 border border-yellow-200'
-                          : 'bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground'
-                      }`}
-                    >
-                      <Zap className='w-4 h-4' />
-                      {isChallengeMode ? 'Challenge Active' : 'Start Challenge'}
-                    </button>
-
                     {/* Curriculum Link for Arithmetic */}
                     {topic.id === 'arithmetic' && (
                       <Link
@@ -607,14 +583,6 @@ export function TopicPage() {
 
           {/* Sidebar - Progress and Related Topics */}
           <div className='lg:col-span-1 space-y-6'>
-            {/* Time Challenge Mode */}
-            <TimeChallengeMode
-              estimatedTime={topic.estimatedTime}
-              topicId={topic.id}
-              onChallengeComplete={handleChallengeComplete}
-              isActive={isChallengeMode}
-            />
-
             {/* Enhanced Progress Section */}
             <ProgressTracker
               topicId={topic.id}

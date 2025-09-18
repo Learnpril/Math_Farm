@@ -64,12 +64,6 @@ const LazyProgressTracker = lazy(() =>
   }))
 );
 
-const LazyTimeChallengeMode = lazy(() =>
-  import('../features/practice/components/TimeChallengeMode').then(module => ({
-    default: module.TimeChallengeMode,
-  }))
-);
-
 const LazyRelatedTopicsSuggestions = lazy(() =>
   import('../components/RelatedTopicsSuggestions').then(module => ({
     default: module.RelatedTopicsSuggestions,
@@ -84,7 +78,7 @@ export function OptimizedTopicPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [focusAnnouncement, setFocusAnnouncement] = useState('');
-  const [isChallengeMode, setIsChallengeMode] = useState(false);
+
   const sessionInitialized = useRef(false);
 
   // Use the progress tracking hook
@@ -123,11 +117,6 @@ export function OptimizedTopicPage() {
   };
 
   // Gamification handlers
-  const handleChallengeComplete = (success: boolean, timeSpent: number) => {
-    if (success) {
-      console.log('Challenge completed successfully!');
-    }
-  };
 
   const handleSectionComplete = (sectionId: string) => {
     markLessonSectionCompleted(topicId || '', sectionId);
@@ -370,8 +359,6 @@ export function OptimizedTopicPage() {
             <ProgressiveLoader priority='high'>
               <TopicHeader
                 topic={topic}
-                isChallengeMode={isChallengeMode}
-                setIsChallengeMode={setIsChallengeMode}
                 getPrerequisiteProgress={getPrerequisiteProgress}
                 isTopicCompleted={isTopicCompleted}
               />
@@ -402,18 +389,6 @@ export function OptimizedTopicPage() {
 
           {/* Sidebar - Progress and Related Topics */}
           <div className='lg:col-span-1 space-y-6'>
-            {/* Time Challenge Mode */}
-            <ProgressiveLoader priority='normal' delay={200}>
-              <LazyWrapper fallback='skeleton' skeletonVariant='card'>
-                <LazyTimeChallengeMode
-                  estimatedTime={topic.estimatedTime}
-                  topicId={topic.id}
-                  onChallengeComplete={handleChallengeComplete}
-                  isActive={isChallengeMode}
-                />
-              </LazyWrapper>
-            </ProgressiveLoader>
-
             {/* Enhanced Progress Section */}
             <ProgressiveLoader priority='normal' delay={300}>
               <LazyWrapper fallback='skeleton' skeletonVariant='card'>
@@ -456,16 +431,12 @@ export function OptimizedTopicPage() {
 // Optimized Topic Header Component
 interface TopicHeaderProps {
   topic: Topic;
-  isChallengeMode: boolean;
-  setIsChallengeMode: (mode: boolean) => void;
   getPrerequisiteProgress: (prereqId: string) => any;
   isTopicCompleted: (topicId: string) => boolean;
 }
 
 function TopicHeader({
   topic,
-  isChallengeMode,
-  setIsChallengeMode,
   getPrerequisiteProgress,
   isTopicCompleted,
 }: TopicHeaderProps) {
@@ -525,19 +496,6 @@ function TopicHeader({
                 </div>
               </Badge>
             </div>
-
-            {/* Challenge Mode Toggle */}
-            <button
-              onClick={() => setIsChallengeMode(!isChallengeMode)}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                isChallengeMode
-                  ? 'bg-yellow-100 text-yellow-800 border border-yellow-200'
-                  : 'bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              <Zap className='w-4 h-4' />
-              {isChallengeMode ? 'Challenge Active' : 'Start Challenge'}
-            </button>
 
             {/* Curriculum Link for Arithmetic */}
             {topic.id === 'arithmetic' && (
