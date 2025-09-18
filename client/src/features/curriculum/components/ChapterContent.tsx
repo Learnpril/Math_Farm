@@ -99,7 +99,12 @@ export function ChapterContent({
         );
 
       case 'theory':
-        return <TheorySection concepts={chapter.theory.concepts} />;
+        return (
+          <TheorySection
+            concepts={chapter.theory.concepts}
+            chapterNumber={currentChapter}
+          />
+        );
 
       case 'examples':
         return <WorkedExamples examples={chapter.examples} />;
