@@ -1,0 +1,82 @@
+{
+  "id": "chapter-02",
+  "title": "Addition and Subtraction",
+  "duration": 3,
+  "objectives": [
+    "Perform addition and subtraction with multi-digit numbers",
+    "Understand regrouping (carrying and borrowing)",
+    "Apply addition and subtraction to solve word problems",
+    "Recognize the relationship between addition and subtraction"
+  ],
+  "prerequisites": ["chapter-01"],
+  "introduction": {
+    "context": "Addition and subtraction are fundamental operations used daily - from calculating change at the store to measuring ingredients in cooking. Mastering these operations with regrouping is essential for all future math.",
+    "connection": "This chapter builds on your understanding of place value from Chapter 1, using that knowledge to perform calculations with larger numbers."
+  },
+  "theory": {
+    "concepts": [
+      {
+        "title": "Addition with Regrouping",
+        "content": "When adding numbers, sometimes the sum in a column exceeds 9. We 'carry over' the extra value to the next column. This is called regrouping or carrying.",
+        "latex": "47 + 38 = (40 + 7) + (30 + 8) = 70 + 15 = 85",
+        "visuals": ["addition-algorithm", "base-10-blocks"]
+      },
+      {
+        "title": "Subtraction with Regrouping",
+        "content": "When subtracting, if the top digit is smaller than the bottom digit, we 'borrow' from the next column. This is regrouping in subtraction.",
+        "latex": "52 - 27 = 52 - 27 = 25",
+        "visuals": ["subtraction-algorithm", "borrowing-demonstration"]
+      }
+    ]
+  },
+  "examples": [
+    {
+      "problem": "Calculate 156 + 287",
+      "solution": "156 + 287 = 443",
+      "steps": [
+        "Add the ones: 6 + 7 = 13. Write 3, carry 1",
+        "Add the tens: 5 + 8 + 1 = 14. Write 4, carry 1",
+        "Add the hundreds: 1 + 2 + 1 = 4",
+        "The answer is 443"
+      ],
+      "commonErrors": [
+        "Forgetting to carry the regrouped amount",
+        "Adding the carried amount to the wrong column"
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "id": "p2-1",
+      "type": "multiple-choice",
+      "problem": "What is 45 + 37?",
+      "options": ["72", "82", "92", "102"],
+      "correct": 1,
+      "hints": [
+        "Add the ones place first: 5 + 7",
+        "Remember to carry when the sum is greater than 9",
+        "Then add the tens place including any carried amount"
+      ],
+      "explanation": "5 + 7 = 12, write 2 and carry 1. Then 4 + 3 + 1 = 8. Answer: 82",
+      "difficulty": 2
+    },
+    {
+      "id": "p2-2",
+      "type": "fill-in",
+      "problem": "Calculate: 234 + 178 = ?",
+      "correct": "412",
+      "hints": [
+        "Start with the ones place: 4 + 8",
+        "Don't forget to carry when needed",
+        "Work column by column from right to left"
+      ],
+      "explanation": "4 + 8 = 12 (write 2, carry 1), 3 + 7 + 1 = 11 (write 1, carry 1), 2 + 1 + 1 = 4. Answer: 412",
+      "difficulty": 3
+    }
+  ],
+  "tools": ["calculator", "addition-subtraction-practice"],
+  "assessment": {
+    "masteryThreshold": 0.8,
+    "requiredProblems": 5
+  }
+}

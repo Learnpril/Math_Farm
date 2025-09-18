@@ -522,6 +522,17 @@ export function TopicPage() {
                       <Zap className='w-4 h-4' />
                       {isChallengeMode ? 'Challenge Active' : 'Start Challenge'}
                     </button>
+
+                    {/* Curriculum Link for Arithmetic */}
+                    {topic.id === 'arithmetic' && (
+                      <Link
+                        href={`/topic/arithmetic/curriculum/1`}
+                        className='flex items-center gap-2 px-3 py-2 bg-purple-100 hover:bg-purple-200 text-purple-800 rounded-lg text-sm font-medium transition-colors border border-purple-200'
+                      >
+                        <BookOpen className='w-4 h-4' />
+                        Start Curriculum
+                      </Link>
+                    )}
                   </div>
 
                   {/* Prerequisites Section */}

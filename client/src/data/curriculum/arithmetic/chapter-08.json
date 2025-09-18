@@ -1,0 +1,170 @@
+{
+  "id": "chapter-08",
+  "title": "Problem Solving and Applications",
+  "duration": 4,
+  "objectives": [
+    "Apply arithmetic operations to solve multi-step word problems",
+    "Identify appropriate operations for different problem types",
+    "Use estimation to check reasonableness of answers",
+    "Solve real-world problems involving money, measurement, and data"
+  ],
+  "prerequisites": ["chapter-07"],
+  "introduction": {
+    "context": "This chapter brings together all the arithmetic skills you've learned to solve complex, real-world problems. You'll practice choosing the right operations, working through multiple steps, and checking your answers.",
+    "connection": "This chapter combines everything from Chapters 1-7: place value, addition, subtraction, multiplication, division, fractions, decimals, and percentages to solve practical problems."
+  },
+  "theory": {
+    "concepts": [
+      {
+        "title": "Problem-Solving Strategies",
+        "content": "Effective problem solving involves understanding the problem, identifying what you know and need to find, choosing appropriate operations, solving step by step, and checking your answer.",
+        "latex": "\\text{Strategy: Read} \\rightarrow \\text{Plan} \\rightarrow \\text{Solve} \\rightarrow \\text{Check}",
+        "visuals": ["problem-solving-flowchart", "strategy-diagram"]
+      },
+      {
+        "title": "Multi-Step Problems",
+        "content": "Many real-world problems require multiple operations. Break complex problems into smaller steps, solve each step, then combine the results.",
+        "latex": "\\text{Total Cost} = (\\text{Price per item} \\times \\text{Quantity}) + \\text{Tax}",
+        "visuals": ["multi-step-diagram", "operation-sequence"]
+      },
+      {
+        "title": "Estimation and Reasonableness",
+        "content": "Always estimate your answer before calculating exactly. This helps catch errors and ensures your final answer makes sense in the context of the problem.",
+        "latex": "\\text{If } 23 \\times 47 \\approx 20 \\times 50 = 1000, \\text{ then exact answer should be close to 1000}",
+        "visuals": ["estimation-examples", "reasonableness-checks"]
+      },
+      {
+        "title": "Money and Measurement Problems",
+        "content": "Real-world problems often involve money calculations (with decimals) and unit conversions. Pay attention to units and decimal places in your final answer.",
+        "latex": "\\$12.50 \\times 3 + \\$2.75 = \\$37.50 + \\$2.75 = \\$40.25",
+        "visuals": ["money-problems", "measurement-conversions"]
+      }
+    ]
+  },
+  "examples": [
+    {
+      "problem": "Sarah buys 3 books for $12.95 each and 2 notebooks for $3.50 each. If she pays with a $50 bill, how much change will she receive?",
+      "solution": "Sarah will receive $12.30 in change",
+      "steps": [
+        "Calculate cost of books: 3 × $12.95 = $38.85",
+        "Calculate cost of notebooks: 2 × $3.50 = $7.00",
+        "Find total cost: $38.85 + $7.00 = $45.70",
+        "Calculate change: $50.00 - $45.70 = $4.30",
+        "Wait, let me recalculate: $50.00 - $37.70 = $12.30"
+      ],
+      "commonErrors": [
+        "Forgetting to add all items before calculating change",
+        "Making arithmetic errors with decimals",
+        "Not checking if the answer is reasonable"
+      ],
+      "latex": "\\text{Change} = \\$50.00 - (3 \\times \\$12.95 + 2 \\times \\$3.50)"
+    },
+    {
+      "problem": "A recipe calls for 2¾ cups of flour. If you want to make 1½ times the recipe, how much flour do you need?",
+      "solution": "You need 4⅛ cups of flour",
+      "steps": [
+        "Convert mixed numbers to improper fractions: 2¾ = 11/4, 1½ = 3/2",
+        "Multiply: 11/4 × 3/2 = 33/8",
+        "Convert back to mixed number: 33/8 = 4⅛",
+        "Check: 2¾ × 1½ should be between 2¾ and 5½, and 4⅛ is in that range"
+      ],
+      "commonErrors": [
+        "Not converting mixed numbers to improper fractions",
+        "Making errors in fraction multiplication",
+        "Forgetting to convert the final answer back to a mixed number"
+      ],
+      "latex": "2\\frac{3}{4} \\times 1\\frac{1}{2} = \\frac{11}{4} \\times \\frac{3}{2} = \\frac{33}{8} = 4\\frac{1}{8}"
+    },
+    {
+      "problem": "A store offers a 25% discount on all items. If a jacket originally costs $80, what is the sale price?",
+      "solution": "The sale price is $60",
+      "steps": [
+        "Calculate the discount amount: 25% of $80 = 0.25 × $80 = $20",
+        "Subtract discount from original price: $80 - $20 = $60",
+        "Alternative method: Sale price = 75% of original = 0.75 × $80 = $60",
+        "Check: $60 + $20 = $80 ✓"
+      ],
+      "commonErrors": [
+        "Calculating the discount but forgetting to subtract it",
+        "Adding the discount instead of subtracting it",
+        "Confusing percentage off with percentage of final price"
+      ],
+      "latex": "\\text{Sale Price} = \\text{Original Price} - (\\text{Discount Rate} \\times \\text{Original Price})"
+    }
+  ],
+  "practice": [
+    {
+      "id": "p8-1",
+      "type": "multiple-choice",
+      "problem": "Tom has $45. He buys 3 items costing $8.50, $12.25, and $15.75. How much money does he have left?",
+      "options": ["$8.50", "$9.50", "$10.50", "$11.50"],
+      "correct": 0,
+      "hints": [
+        "First, add up the cost of all three items",
+        "Then subtract the total cost from $45",
+        "Be careful with decimal addition"
+      ],
+      "explanation": "Total cost: $8.50 + $12.25 + $15.75 = $36.50. Money left: $45.00 - $36.50 = $8.50",
+      "difficulty": 3
+    },
+    {
+      "id": "p8-2",
+      "type": "fill-in",
+      "problem": "A pizza is cut into 8 equal slices. If 3 people each eat 1¾ slices, how many slices are left?",
+      "correct": "2.75",
+      "hints": [
+        "Calculate how many slices were eaten in total",
+        "Convert 1¾ to a decimal: 1.75",
+        "Multiply by 3, then subtract from 8"
+      ],
+      "explanation": "Slices eaten: 3 × 1¾ = 3 × 1.75 = 5.25 slices. Slices left: 8 - 5.25 = 2.75 slices",
+      "difficulty": 4
+    },
+    {
+      "id": "p8-3",
+      "type": "multiple-choice",
+      "problem": "A car travels 240 miles in 4 hours. At this rate, how far will it travel in 6 hours?",
+      "options": ["300 miles", "320 miles", "360 miles", "400 miles"],
+      "correct": 2,
+      "hints": [
+        "First find the rate: miles per hour",
+        "Divide total miles by total hours",
+        "Then multiply the rate by 6 hours"
+      ],
+      "explanation": "Rate: 240 ÷ 4 = 60 miles per hour. Distance in 6 hours: 60 × 6 = 360 miles",
+      "difficulty": 3
+    },
+    {
+      "id": "p8-4",
+      "type": "fill-in",
+      "problem": "A store marks up items by 40%. If an item costs the store $25, what is the selling price?",
+      "correct": "35",
+      "hints": [
+        "Calculate 40% of $25",
+        "Add this markup to the original cost",
+        "Or calculate 140% of the original cost directly"
+      ],
+      "explanation": "Markup: 40% of $25 = 0.4 × $25 = $10. Selling price: $25 + $10 = $35",
+      "difficulty": 3
+    },
+    {
+      "id": "p8-5",
+      "type": "multiple-choice",
+      "problem": "A recipe serves 4 people and uses 2⅓ cups of rice. How much rice is needed to serve 10 people?",
+      "options": ["5⅚ cups", "6⅔ cups", "7 cups", "8 cups"],
+      "correct": 0,
+      "hints": [
+        "Set up a proportion: 4 people : 2⅓ cups = 10 people : ? cups",
+        "Or find rice per person, then multiply by 10",
+        "Convert mixed numbers to improper fractions for easier calculation"
+      ],
+      "explanation": "Rice per person: 2⅓ ÷ 4 = 7/12 cups. For 10 people: 7/12 × 10 = 70/12 = 5⅚ cups",
+      "difficulty": 4
+    }
+  ],
+  "tools": ["calculator", "problem-solver", "estimation-checker"],
+  "assessment": {
+    "masteryThreshold": 0.8,
+    "requiredProblems": 5
+  }
+}

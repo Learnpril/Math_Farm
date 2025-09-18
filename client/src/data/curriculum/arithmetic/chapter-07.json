@@ -1,0 +1,82 @@
+{
+  "id": "chapter-07",
+  "title": "Percentages and Ratios",
+  "duration": 3,
+  "objectives": [
+    "Understand percentages as parts per 100",
+    "Convert between fractions, decimals, and percentages",
+    "Calculate percentages of numbers",
+    "Solve ratio and proportion problems"
+  ],
+  "prerequisites": ["chapter-06"],
+  "introduction": {
+    "context": "Percentages and ratios are used constantly in real life - from calculating tips and discounts to understanding statistics, comparing quantities, and analyzing data.",
+    "connection": "Percentages build on decimals and fractions from previous chapters. 50% = 0.5 = 1/2."
+  },
+  "theory": {
+    "concepts": [
+      {
+        "title": "Understanding Percentages",
+        "content": "Percent means 'per hundred.' 25% means 25 out of 100, or 25/100, which equals 0.25 as a decimal.",
+        "latex": "25\\% = \\frac{25}{100} = 0.25",
+        "visuals": ["percentage-grids", "percent-circles"]
+      },
+      {
+        "title": "Ratios and Proportions",
+        "content": "A ratio compares two quantities. A proportion states that two ratios are equal. We can use cross-multiplication to solve proportions.",
+        "latex": "\\frac{2}{3} = \\frac{4}{6} \\text{ because } 2 \\times 6 = 3 \\times 4",
+        "visuals": ["ratio-bars", "proportion-models"]
+      }
+    ]
+  },
+  "examples": [
+    {
+      "problem": "What is 25% of 80?",
+      "solution": "25% of 80 = 20",
+      "steps": [
+        "Convert 25% to decimal: 25% = 0.25",
+        "Multiply: 0.25 × 80",
+        "0.25 × 80 = 20",
+        "The answer is 20"
+      ],
+      "commonErrors": [
+        "Forgetting to convert percentage to decimal",
+        "Confusing 'of' with addition instead of multiplication"
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "id": "p7-1",
+      "type": "multiple-choice",
+      "problem": "What is 50% as a fraction in lowest terms?",
+      "options": ["50/100", "5/10", "1/2", "2/4"],
+      "correct": 2,
+      "hints": [
+        "50% means 50 out of 100",
+        "Write this as a fraction: 50/100",
+        "Simplify by dividing both parts by their greatest common factor"
+      ],
+      "explanation": "50% = 50/100 = 1/2 when simplified by dividing both numerator and denominator by 50.",
+      "difficulty": 2
+    },
+    {
+      "id": "p7-2",
+      "type": "fill-in",
+      "problem": "Calculate: 20% of 150 = ?",
+      "correct": "30",
+      "hints": [
+        "Convert 20% to decimal first",
+        "20% = 0.20 = 0.2",
+        "Then multiply: 0.2 × 150"
+      ],
+      "explanation": "20% = 0.2, so 0.2 × 150 = 30",
+      "difficulty": 3
+    }
+  ],
+  "tools": ["calculator", "percentage-calculator", "ratio-solver"],
+  "assessment": {
+    "masteryThreshold": 0.8,
+    "requiredProblems": 5
+  }
+}

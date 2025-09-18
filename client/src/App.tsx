@@ -23,6 +23,7 @@ import { preloadMathJax } from './lib/mathJaxLoader';
 // import { PerformanceDashboard } from './components/PerformanceDashboard';
 import { installDOMErrorHandler } from './lib/domErrorHandler';
 import { PerformanceMonitor } from './components/PerformanceMonitor';
+import { ArithmeticCurriculumPage } from './features/curriculum/components/ArithmeticCurriculumPage';
 
 function App() {
   const handleGlobalError = (error: Error, errorId: string) => {
@@ -145,6 +146,20 @@ function App() {
                 )}
               />
               <Route path='/math-symbols' component={MathSymbolsPage} />
+
+              {/* Curriculum routes */}
+              <Route
+                path='/topic/arithmetic/curriculum/:chapter?'
+                component={() => (
+                  <LazyWrapper
+                    fallback='skeleton'
+                    skeletonVariant='page'
+                    loadingText='Loading curriculum...'
+                  >
+                    <ArithmeticCurriculumPage />
+                  </LazyWrapper>
+                )}
+              />
 
               {/* Forum routes - replacing community */}
               <Route path='/community' component={ForumHome} />

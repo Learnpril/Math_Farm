@@ -1,0 +1,83 @@
+{
+  "id": "chapter-04",
+  "title": "Division Basics",
+  "duration": 3,
+  "objectives": [
+    "Understand division as sharing or grouping",
+    "Perform long division with whole numbers",
+    "Handle remainders appropriately in different contexts",
+    "Recognize division as the inverse of multiplication"
+  ],
+  "prerequisites": ["chapter-03"],
+  "introduction": {
+    "context": "Division helps us share things equally or find how many groups we can make. It's used in everyday situations like splitting a bill, distributing items, or calculating rates and averages.",
+    "connection": "Division is the opposite of multiplication from Chapter 3. If 6 × 4 = 24, then 24 ÷ 4 = 6."
+  },
+  "theory": {
+    "concepts": [
+      {
+        "title": "Division as Sharing",
+        "content": "Division splits a total into equal groups. 12 ÷ 3 asks 'how many groups of 3 can we make from 12?' or 'if we share 12 items among 3 people, how many does each get?'",
+        "latex": "12 \\div 3 = 4 \\text{ because } 3 \\times 4 = 12",
+        "visuals": ["division-sharing", "equal-groups"]
+      },
+      {
+        "title": "Long Division Algorithm",
+        "content": "For larger numbers, we use long division: divide, multiply, subtract, bring down. This process repeats until we've divided all digits.",
+        "latex": "156 \\div 4 = 39 \\text{ because } 4 \\times 39 = 156",
+        "visuals": ["long-division-steps", "division-algorithm"]
+      }
+    ]
+  },
+  "examples": [
+    {
+      "problem": "Calculate 84 ÷ 3",
+      "solution": "84 ÷ 3 = 28",
+      "steps": [
+        "8 ÷ 3 = 2 remainder 2. Write 2",
+        "Bring down the 4 to make 24",
+        "24 ÷ 3 = 8. Write 8",
+        "The answer is 28"
+      ],
+      "commonErrors": [
+        "Forgetting to bring down the next digit",
+        "Making errors in the multiplication check",
+        "Mishandling remainders"
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "id": "p4-1",
+      "type": "multiple-choice",
+      "problem": "What is 72 ÷ 8?",
+      "options": ["8", "9", "10", "11"],
+      "correct": 1,
+      "hints": [
+        "Think: what number times 8 equals 72?",
+        "You can use the multiplication table for 8",
+        "8 × ? = 72"
+      ],
+      "explanation": "72 ÷ 8 = 9 because 8 × 9 = 72",
+      "difficulty": 2
+    },
+    {
+      "id": "p4-2",
+      "type": "fill-in",
+      "problem": "Calculate: 156 ÷ 6 = ?",
+      "correct": "26",
+      "hints": [
+        "Start with 15 ÷ 6",
+        "Use long division step by step",
+        "Don't forget to bring down digits"
+      ],
+      "explanation": "15 ÷ 6 = 2 R3, bring down 6 to make 36, 36 ÷ 6 = 6. Answer: 26",
+      "difficulty": 3
+    }
+  ],
+  "tools": ["calculator", "division-practice", "multiplication-check"],
+  "assessment": {
+    "masteryThreshold": 0.8,
+    "requiredProblems": 5
+  }
+}

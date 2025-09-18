@@ -1,0 +1,81 @@
+{
+  "id": "chapter-03",
+  "title": "Multiplication Basics",
+  "duration": 3,
+  "objectives": [
+    "Master single-digit multiplication facts (times tables)",
+    "Understand multiplication as repeated addition",
+    "Multiply multi-digit numbers using the standard algorithm",
+    "Apply multiplication to solve real-world problems"
+  ],
+  "prerequisites": ["chapter-02"],
+  "introduction": {
+    "context": "Multiplication helps us calculate quickly when we have equal groups - like finding the total number of items in several boxes, calculating area, or determining costs for multiple items.",
+    "connection": "Multiplication builds on your addition skills from Chapter 2, using repeated addition as the foundation for understanding this new operation."
+  },
+  "theory": {
+    "concepts": [
+      {
+        "title": "Multiplication as Repeated Addition",
+        "content": "Multiplication is a shortcut for adding the same number multiple times. 4 × 3 means adding 4 three times.",
+        "latex": "4 \\times 3 = 4 + 4 + 4 = 12",
+        "visuals": ["multiplication-arrays", "repeated-addition-model"]
+      },
+      {
+        "title": "The Standard Multiplication Algorithm",
+        "content": "For larger numbers, we use the standard algorithm with partial products, multiplying each digit and adding the results.",
+        "latex": "23 \\times 4 = (20 \\times 4) + (3 \\times 4) = 80 + 12 = 92",
+        "visuals": ["multiplication-algorithm", "partial-products"]
+      }
+    ]
+  },
+  "examples": [
+    {
+      "problem": "Calculate 26 × 3",
+      "solution": "26 × 3 = 78",
+      "steps": [
+        "Multiply the ones: 6 × 3 = 18. Write 8, carry 1",
+        "Multiply the tens: 2 × 3 = 6, plus carried 1 = 7",
+        "The answer is 78"
+      ],
+      "commonErrors": [
+        "Forgetting to carry when multiplying",
+        "Misaligning partial products in multi-digit multiplication"
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "id": "p3-1",
+      "type": "multiple-choice",
+      "problem": "What is 7 × 8?",
+      "options": ["54", "56", "58", "64"],
+      "correct": 1,
+      "hints": [
+        "Think of this as 7 groups of 8",
+        "Or 8 groups of 7",
+        "You can also think: 7 × 8 = 7 × (10 - 2) = 70 - 14"
+      ],
+      "explanation": "7 × 8 = 56. This is a basic multiplication fact that should be memorized.",
+      "difficulty": 2
+    },
+    {
+      "id": "p3-2",
+      "type": "fill-in",
+      "problem": "Calculate: 34 × 5 = ?",
+      "correct": "170",
+      "hints": [
+        "Multiply 4 × 5 first",
+        "Then multiply 30 × 5",
+        "Add the partial products together"
+      ],
+      "explanation": "4 × 5 = 20 (write 0, carry 2), 3 × 5 = 15, plus carried 2 = 17. Answer: 170",
+      "difficulty": 3
+    }
+  ],
+  "tools": ["calculator", "multiplication-practice", "times-table-chart"],
+  "assessment": {
+    "masteryThreshold": 0.8,
+    "requiredProblems": 5
+  }
+}

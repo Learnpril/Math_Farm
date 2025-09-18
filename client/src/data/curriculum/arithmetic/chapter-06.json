@@ -1,0 +1,83 @@
+{
+  "id": "chapter-06",
+  "title": "Decimals",
+  "duration": 3,
+  "objectives": [
+    "Read and write decimal numbers",
+    "Understand decimal place values (tenths, hundredths, thousandths)",
+    "Add, subtract, multiply, and divide decimals",
+    "Convert between fractions and decimals"
+  ],
+  "prerequisites": ["chapter-05"],
+  "introduction": {
+    "context": "Decimals are used everywhere in real life - money ($3.45), measurements (2.5 meters), and scientific data. They're another way to represent parts of wholes, just like fractions.",
+    "connection": "Decimals are closely related to fractions from Chapter 5. For example, 0.5 = 1/2 and 0.25 = 1/4."
+  },
+  "theory": {
+    "concepts": [
+      {
+        "title": "Decimal Place Values",
+        "content": "Decimal places continue the place value system to the right of the decimal point: tenths, hundredths, thousandths, and so on.",
+        "latex": "3.456 = 3 + 0.4 + 0.05 + 0.006",
+        "visuals": ["decimal-place-value-chart", "decimal-grids"]
+      },
+      {
+        "title": "Adding and Subtracting Decimals",
+        "content": "To add or subtract decimals, line up the decimal points and add or subtract as with whole numbers. The decimal point in the answer goes directly below the others.",
+        "latex": "2.45 + 1.3 = 2.45 + 1.30 = 3.75",
+        "visuals": ["decimal-addition-alignment", "decimal-subtraction-model"]
+      }
+    ]
+  },
+  "examples": [
+    {
+      "problem": "Add 3.7 + 2.45",
+      "solution": "3.7 + 2.45 = 6.15",
+      "steps": [
+        "Line up the decimal points: 3.70 + 2.45",
+        "Add the hundredths: 0 + 5 = 5",
+        "Add the tenths: 7 + 4 = 11, write 1 carry 1",
+        "Add the ones: 3 + 2 + 1 = 6",
+        "The answer is 6.15"
+      ],
+      "commonErrors": [
+        "Not lining up decimal points",
+        "Forgetting to add zeros as placeholders"
+      ]
+    }
+  ],
+  "practice": [
+    {
+      "id": "p6-1",
+      "type": "multiple-choice",
+      "problem": "What is 0.3 + 0.4?",
+      "options": ["0.6", "0.7", "0.8", "0.9"],
+      "correct": 1,
+      "hints": [
+        "Add the tenths place: 3 + 4",
+        "Both numbers have the same place value",
+        "No regrouping needed here"
+      ],
+      "explanation": "0.3 + 0.4 = 0.7. Add the tenths: 3 + 4 = 7 tenths.",
+      "difficulty": 1
+    },
+    {
+      "id": "p6-2",
+      "type": "fill-in",
+      "problem": "Calculate: 5.6 - 2.3 = ?",
+      "correct": "3.3",
+      "hints": [
+        "Line up the decimal points",
+        "Subtract column by column",
+        "No borrowing needed for this problem"
+      ],
+      "explanation": "5.6 - 2.3 = 3.3. Subtract tenths: 6 - 3 = 3, subtract ones: 5 - 2 = 3.",
+      "difficulty": 2
+    }
+  ],
+  "tools": ["calculator", "decimal-grids", "place-value-chart"],
+  "assessment": {
+    "masteryThreshold": 0.8,
+    "requiredProblems": 5
+  }
+}
