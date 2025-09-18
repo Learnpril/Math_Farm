@@ -4,6 +4,7 @@ import { useLocation } from 'wouter';
 import { AlertCircle, BookOpen, Clock } from 'lucide-react';
 import { CurriculumNavigation } from './CurriculumNavigation';
 import { ChapterContent } from './ChapterContent';
+import { MathJaxProvider } from './MathExpression';
 import { useCurriculumProgress } from '../hooks/useCurriculumProgress';
 import {
   loadCurriculumMetadata,
@@ -30,7 +31,6 @@ export function ArithmeticCurriculumPage() {
     return {
       id: data.id,
       title: data.title,
-      duration: data.duration,
       objectives: data.objectives,
       prerequisites: data.prerequisites,
       introduction: data.introduction,
@@ -159,87 +159,89 @@ export function ArithmeticCurriculumPage() {
   }
 
   return (
-    <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
-      {/* Header */}
-      <header className='bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700'>
-        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4'>
-          <div className='flex items-center justify-between'>
-            <div className='flex items-center space-x-3'>
-              <BookOpen className='w-8 h-8 text-purple-500' />
-              <div>
-                <h1 className='text-2xl font-bold text-gray-900 dark:text-white'>
-                  {metadata.title}
-                </h1>
-                <p className='text-sm text-gray-600 dark:text-gray-400'>
-                  Chapter {currentChapterNumber}:{' '}
-                  {currentChapter?.title || 'Loading...'}
-                </p>
-              </div>
-            </div>
-
-            <div className='flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400'>
-              <div className='flex items-center space-x-1'>
-                <Clock className='w-4 h-4' />
-                <span>{metadata.estimatedHours}h total</span>
-              </div>
-              <div className='px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-xs font-medium'>
-                {metadata.difficulty}
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6'>
-        <div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
-          {/* Navigation Sidebar */}
-          <div className='lg:col-span-1'>
-            <div className='sticky top-6'>
-              <CurriculumNavigation
-                metadata={metadata}
-                progress={progress}
-                currentChapter={currentChapterNumber}
-                onChapterSelect={handleChapterSelect}
-              />
-            </div>
-          </div>
-
-          {/* Chapter Content */}
-          <div className='lg:col-span-3'>
-            {currentChapter ? (
-              <ChapterContent
-                chapter={currentChapter}
-                progress={progress.chapterProgress[currentChapter.id]}
-                currentChapter={currentChapterNumber}
-                totalChapters={metadata.chapters}
-                onNext={() => {
-                  if (currentChapterNumber < metadata.chapters) {
-                    handleChapterSelect(currentChapterNumber + 1);
-                  }
-                }}
-                onPrevious={() => {
-                  if (currentChapterNumber > 1) {
-                    handleChapterSelect(currentChapterNumber - 1);
-                  }
-                }}
-              />
-            ) : (
-              <div className='bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8 text-center'>
-                <div className='animate-pulse'>
-                  <div className='h-8 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mx-auto mb-4'></div>
-                  <div className='h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mx-auto mb-8'></div>
-                  <div className='space-y-3'>
-                    <div className='h-4 bg-gray-200 dark:bg-gray-700 rounded'></div>
-                    <div className='h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6'></div>
-                    <div className='h-4 bg-gray-200 dark:bg-gray-700 rounded w-4/6'></div>
-                  </div>
+    <MathJaxProvider>
+      <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
+        {/* Header */}
+        <header className='bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700'>
+          <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4'>
+            <div className='flex items-center justify-between'>
+              <div className='flex items-center space-x-3'>
+                <BookOpen className='w-8 h-8 text-purple-500' />
+                <div>
+                  <h1 className='text-2xl font-bold text-gray-900 dark:text-white'>
+                    {metadata.title}
+                  </h1>
+                  <p className='text-sm text-gray-600 dark:text-gray-400'>
+                    Chapter {currentChapterNumber}:{' '}
+                    {currentChapter?.title || 'Loading...'}
+                  </p>
                 </div>
               </div>
-            )}
+
+              <div className='flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400'>
+                <div className='flex items-center space-x-1'>
+                  <Clock className='w-4 h-4' />
+                  <span>{metadata.estimatedHours}h total</span>
+                </div>
+                <div className='px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-xs font-medium'>
+                  {metadata.difficulty}
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Main Content */}
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6'>
+          <div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
+            {/* Navigation Sidebar */}
+            <div className='lg:col-span-1'>
+              <div className='sticky top-6'>
+                <CurriculumNavigation
+                  metadata={metadata}
+                  progress={progress}
+                  currentChapter={currentChapterNumber}
+                  onChapterSelect={handleChapterSelect}
+                />
+              </div>
+            </div>
+
+            {/* Chapter Content */}
+            <div className='lg:col-span-3'>
+              {currentChapter ? (
+                <ChapterContent
+                  chapter={currentChapter}
+                  progress={progress.chapterProgress[currentChapter.id]}
+                  currentChapter={currentChapterNumber}
+                  totalChapters={metadata.chapters}
+                  onNext={() => {
+                    if (currentChapterNumber < metadata.chapters) {
+                      handleChapterSelect(currentChapterNumber + 1);
+                    }
+                  }}
+                  onPrevious={() => {
+                    if (currentChapterNumber > 1) {
+                      handleChapterSelect(currentChapterNumber - 1);
+                    }
+                  }}
+                />
+              ) : (
+                <div className='bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8 text-center'>
+                  <div className='animate-pulse'>
+                    <div className='h-8 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mx-auto mb-4'></div>
+                    <div className='h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mx-auto mb-8'></div>
+                    <div className='space-y-3'>
+                      <div className='h-4 bg-gray-200 dark:bg-gray-700 rounded'></div>
+                      <div className='h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6'></div>
+                      <div className='h-4 bg-gray-200 dark:bg-gray-700 rounded w-4/6'></div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </MathJaxProvider>
   );
 }

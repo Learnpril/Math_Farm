@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Check, X, HelpCircle, RotateCcw } from 'lucide-react';
 import { PracticeProblem, ChapterProgress } from '../types';
+import { MathExpression } from './MathExpression';
 import { useCurriculumProgress } from '../hooks/useCurriculumProgress';
 
 interface PracticeProblemsProps {
@@ -167,11 +168,10 @@ export function PracticeProblems({
           </p>
 
           {problem.latex && (
-            <div className='bg-gray-50 dark:bg-gray-700 p-4 rounded border text-center mb-4'>
-              <div className='font-mono text-sm'>{problem.latex}</div>
-              <div className='text-xs text-gray-500 mt-1'>
-                (LaTeX rendering will be added in next phase)
-              </div>
+            <div className='bg-gray-50 dark:bg-gray-700 p-4 rounded border mb-4'>
+              <MathExpression inline={false} className='text-lg'>
+                {problem.latex}
+              </MathExpression>
             </div>
           )}
         </div>

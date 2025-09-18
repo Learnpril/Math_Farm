@@ -2,15 +2,8 @@
 export interface CurriculumMetadata {
   topic: string;
   title: string;
-  difficulty:
-    | 'elementary'
-    | 'middle-school'
-    | 'high-school'
-    | 'advanced'
-    | 'specialized';
   prerequisites: string[];
   objectives: string[];
-  estimatedHours: number;
   chapters: number;
   tools: string[];
   chapterFiles: string[];
@@ -19,7 +12,6 @@ export interface CurriculumMetadata {
 export interface ChapterContent {
   id: string;
   title: string;
-  duration: number;
   objectives: string[];
   prerequisites: string[];
   introduction: {

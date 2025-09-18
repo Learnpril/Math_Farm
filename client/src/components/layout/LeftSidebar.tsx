@@ -45,6 +45,13 @@ export function LeftSidebar() {
   };
 
   const isActiveLink = (href: string) => {
+    // Special case: highlight arithmetic when in curriculum
+    if (
+      href === '/topic/arithmetic' &&
+      location.startsWith('/topic/arithmetic/curriculum')
+    ) {
+      return true;
+    }
     return location === href;
   };
 
@@ -94,6 +101,18 @@ export function LeftSidebar() {
                     title={isCollapsed ? topic.title : undefined}
                     onClick={() => {
                       console.log(`Navigating to topic: ${topic.id}`);
+
+                      // Special case: Arithmetic goes directly to curriculum
+                      if (topic.id === 'arithmetic') {
+                        const curriculumPath = `/topic/arithmetic/curriculum/1`;
+                        console.log(
+                          'Redirecting arithmetic to curriculum:',
+                          curriculumPath
+                        );
+                        window.location.href = curriculumPath;
+                        return;
+                      }
+
                       const newPath = `/topic/${topic.id}`;
                       console.log('Attempting navigation to:', newPath);
 

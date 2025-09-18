@@ -20,7 +20,7 @@ export function validateCurriculumMetadata(data: any): ValidationResult {
   const errors: CurriculumValidationError[] = [];
 
   // Required string fields
-  const requiredStringFields = ['topic', 'title', 'difficulty'];
+  const requiredStringFields = ['topic', 'title'];
   for (const field of requiredStringFields) {
     if (!data[field] || typeof data[field] !== 'string') {
       errors.push({
@@ -29,22 +29,6 @@ export function validateCurriculumMetadata(data: any): ValidationResult {
         value: data[field],
       });
     }
-  }
-
-  // Validate difficulty enum
-  const validDifficulties = [
-    'elementary',
-    'middle-school',
-    'high-school',
-    'advanced',
-    'specialized',
-  ];
-  if (data.difficulty && !validDifficulties.includes(data.difficulty)) {
-    errors.push({
-      field: 'difficulty',
-      message: `difficulty must be one of: ${validDifficulties.join(', ')}`,
-      value: data.difficulty,
-    });
   }
 
   // Required array fields
@@ -65,7 +49,7 @@ export function validateCurriculumMetadata(data: any): ValidationResult {
   }
 
   // Required number fields
-  const requiredNumberFields = ['estimatedHours', 'chapters'];
+  const requiredNumberFields = ['chapters'];
   for (const field of requiredNumberFields) {
     if (typeof data[field] !== 'number' || data[field] <= 0) {
       errors.push({
@@ -302,15 +286,6 @@ export function validateChapterData(data: any): ValidationResult {
         value: data[field],
       });
     }
-  }
-
-  // Required number field
-  if (typeof data.duration !== 'number' || data.duration <= 0) {
-    errors.push({
-      field: 'duration',
-      message: 'duration is required and must be a positive number',
-      value: data.duration,
-    });
   }
 
   // Required array fields
