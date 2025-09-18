@@ -160,19 +160,6 @@ export function PracticeProblems({
             <h4 className='text-lg font-medium'>
               Problem {currentProblem + 1}
             </h4>
-            <div className='flex items-center space-x-2'>
-              <span
-                className={`px-2 py-1 rounded text-xs font-medium ${
-                  problem.difficulty <= 2
-                    ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300'
-                    : problem.difficulty <= 4
-                      ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300'
-                      : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300'
-                }`}
-              >
-                Difficulty: {problem.difficulty}/5
-              </span>
-            </div>
           </div>
 
           <p className='text-gray-900 dark:text-white text-lg mb-4'>

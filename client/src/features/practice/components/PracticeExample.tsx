@@ -111,32 +111,6 @@ export function PracticeExample({
     }
   };
 
-  const getDifficultyColor = (difficulty: number) => {
-    switch (difficulty) {
-      case 1:
-        return 'text-green-600 dark:text-green-400';
-      case 2:
-        return 'text-yellow-600 dark:text-yellow-400';
-      case 3:
-        return 'text-red-600 dark:text-red-400';
-      default:
-        return 'text-gray-600 dark:text-gray-400';
-    }
-  };
-
-  const getDifficultyLabel = (difficulty: number) => {
-    switch (difficulty) {
-      case 1:
-        return 'Easy';
-      case 2:
-        return 'Medium';
-      case 3:
-        return 'Hard';
-      default:
-        return 'Unknown';
-    }
-  };
-
   return (
     <div
       className={`bg-card border border-border rounded-lg p-6 space-y-6 ${className}`}
@@ -150,13 +124,6 @@ export function PracticeExample({
             </h3>
             <span className='text-xs px-2 py-1 rounded-full bg-muted text-muted-foreground'>
               {question.topic}
-            </span>
-            <span
-              className={`text-xs font-medium ${getDifficultyColor(
-                question.difficulty
-              )}`}
-            >
-              {getDifficultyLabel(question.difficulty)}
             </span>
           </div>
         </div>

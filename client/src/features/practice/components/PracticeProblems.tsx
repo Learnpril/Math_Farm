@@ -380,23 +380,6 @@ export function PracticeProblems({
     return normalized;
   };
 
-  const getDifficultyColor = (difficulty: number) => {
-    switch (difficulty) {
-      case 1:
-        return 'bg-primary/10 text-primary border-primary/20';
-      case 2:
-        return 'bg-blue-100 text-blue-800 border-blue-200';
-      case 3:
-        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 4:
-        return 'bg-orange-100 text-orange-800 border-orange-200';
-      case 5:
-        return 'bg-red-100 text-red-800 border-red-200';
-      default:
-        return 'bg-muted text-muted-foreground border-border';
-    }
-  };
-
   const getCompletionStats = () => {
     const completed = problems.filter(p =>
       completedProblems.includes(p.id)
@@ -518,15 +501,6 @@ export function PracticeProblems({
                         <MathExpression expression={problem.mathExpression} />
                       </div>
                     )}
-                  </div>
-
-                  <div className='flex items-center gap-2'>
-                    <Badge
-                      variant='outline'
-                      className={getDifficultyColor(problem.difficulty)}
-                    >
-                      Level {problem.difficulty}
-                    </Badge>
                   </div>
                 </div>
               </CardHeader>

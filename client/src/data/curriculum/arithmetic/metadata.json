@@ -1,7 +1,7 @@
 {
   "topic": "arithmetic",
   "title": "Arithmetic Fundamentals",
-  "difficulty": "elementary",
+
   "prerequisites": [],
   "objectives": [
     "Master basic arithmetic operations with whole numbers, fractions, and decimals",
@@ -9,7 +9,6 @@
     "Develop number sense and computational fluency",
     "Use mathematical tools and notation accurately"
   ],
-  "estimatedHours": 25,
   "chapters": 8,
   "tools": ["calculator", "fraction-visualizer", "place-value-chart"],
   "chapterFiles": [

@@ -81,7 +81,7 @@ export function ChapterContent({
               <div className='flex items-center justify-between'>
                 <div>
                   <h4 className='font-medium text-blue-900 dark:text-blue-100'>
-                    Estimated Time: {chapter.duration} hours
+                    Learn at Your Own Pace
                   </h4>
                   <p className='text-sm text-blue-700 dark:text-blue-300'>
                     Take your time and work at your own pace
@@ -127,9 +127,6 @@ export function ChapterContent({
             <h2 className='text-2xl font-bold text-gray-900 dark:text-white'>
               {chapter.title}
             </h2>
-            <p className='text-gray-600 dark:text-gray-400 mt-1'>
-              Duration: {chapter.duration} hours
-            </p>
           </div>
 
           {progress && (

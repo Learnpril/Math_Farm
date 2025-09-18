@@ -3,7 +3,6 @@ import { useParams, Link } from 'wouter';
 import { useEffect, useRef, useState } from 'react';
 import {
   ArrowLeft,
-  Clock,
   Star,
   BookOpen,
   CheckCircle,
@@ -341,9 +340,6 @@ export function TopicPage() {
                         <Badge variant='outline' className='text-xs'>
                           {suggestedTopic.level}
                         </Badge>
-                        <span className='text-muted-foreground'>
-                          {suggestedTopic.estimatedTime} min
-                        </span>
                       </div>
                     </div>
                   </div>
@@ -359,7 +355,7 @@ export function TopicPage() {
                 href='/#topics'
                 className='text-primary hover:text-primary/80 font-medium mx-1'
               >
-                difficulty level
+                learning approach
               </Link>
               or check out our
               <Link
@@ -452,43 +448,6 @@ export function TopicPage() {
 
                   {/* Enhanced Topic Metadata */}
                   <div className='flex flex-wrap items-center gap-4 mb-6'>
-                    {/* Estimated Time */}
-                    <div className='flex items-center gap-2 px-3 py-2 bg-muted rounded-lg'>
-                      <Clock className='w-4 h-4 text-muted-foreground' />
-                      <span className='text-sm font-medium'>
-                        {topic.estimatedTime} min
-                      </span>
-                    </div>
-
-                    {/* Difficulty Badge with Visual Indicators */}
-                    <div className='flex items-center gap-2'>
-                      <TrendingUp className='w-4 h-4 text-muted-foreground' />
-                      <Badge
-                        variant={`difficulty${topic.difficulty}` as any}
-                        className='flex items-center gap-1'
-                      >
-                        <span>Difficulty {topic.difficulty}/5</span>
-                        <div className='flex gap-0.5 ml-1'>
-                          {[1, 2, 3, 4, 5].map(level => (
-                            <div
-                              key={level}
-                              className={`w-1.5 h-1.5 rounded-full ${
-                                level <= topic.difficulty
-                                  ? level <= 2
-                                    ? 'bg-green-500'
-                                    : level <= 3
-                                      ? 'bg-yellow-500'
-                                      : level <= 4
-                                        ? 'bg-orange-500'
-                                        : 'bg-red-500'
-                                  : 'bg-muted-foreground/30'
-                              }`}
-                            />
-                          ))}
-                        </div>
-                      </Badge>
-                    </div>
-
                     {/* Level Badge */}
                     <div className='flex items-center gap-2'>
                       <BookOpen className='w-4 h-4 text-muted-foreground' />
