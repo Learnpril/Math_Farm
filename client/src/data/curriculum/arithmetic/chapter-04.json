@@ -2,81 +2,198 @@
   "id": "chapter-04",
   "title": "Division Basics",
   "objectives": [
-    "Understand division as sharing or grouping",
-    "Perform long division with whole numbers",
-    "Handle remainders appropriately in different contexts",
-    "Recognize division as the inverse of multiplication"
+    "Understand division as partitioning into equal groups",
+    "Master basic division facts as inverse of multiplication",
+    "Perform long division with single and multi-digit divisors",
+    "Interpret remainders in real-world contexts"
   ],
-  "prerequisites": ["chapter-03"],
+  "prerequisites": ["chapter-01", "chapter-02", "chapter-03"],
   "introduction": {
-    "context": "Division helps us share things equally or find how many groups we can make. It's used in everyday situations like splitting a bill, distributing items, or calculating rates and averages.",
-    "connection": "Division is the opposite of multiplication from Chapter 3. If 6 × 4 = 24, then 24 ÷ 4 = 6."
+    "context": "Division is essential for sharing quantities equally, calculating rates and ratios, and solving problems involving measurement and time. It's the inverse operation of multiplication and appears in everyday situations like splitting bills, measuring portions, and determining speeds.",
+    "connection": "Building on multiplication facts, division helps us work backwards from products to factors and introduces concepts of remainders and fractional parts."
   },
   "theory": {
     "concepts": [
       {
-        "title": "Division as Sharing",
-        "content": "Division splits a total into equal groups. 12 ÷ 3 asks 'how many groups of 3 can we make from 12?' or 'if we share 12 items among 3 people, how many does each get?'",
-        "latex": "12 \\div 3 = 4 \\text{ because } 3 \\times 4 = 12",
-        "visuals": ["division-sharing", "equal-groups"]
+        "title": "Understanding Division",
+        "content": "Division partitions into equal groups (a ÷ b or a / b), inverse of multiplication. Components: dividend ÷ divisor = quotient, possible remainder R (if not even). Long division: e.g., 456 ÷ 4: 4 into 4=1, subtract 0; into 5=1 (remainder 1), into 16=4. Notation: ÷, /, or fraction bar. Remainder < divisor. Real-world: sharing costs, measuring portions.",
+        "latex": "456 \\div 4 = 114 \\text{ (exactly)}",
+        "visuals": ["equal-groups", "long-division-steps"]
+      },
+      {
+        "title": "Division with Remainders",
+        "content": "When numbers don't divide evenly, we have a remainder. The remainder must always be less than the divisor. In real-world problems, we need to interpret what the remainder means.",
+        "latex": "17 \\div 5 = 3 \\text{ R } 2 \\text{ because } 3 \\times 5 + 2 = 17",
+        "visuals": ["remainder-model", "sharing-with-leftovers"]
       },
       {
         "title": "Long Division Algorithm",
-        "content": "For larger numbers, we use long division: divide, multiply, subtract, bring down. This process repeats until we've divided all digits.",
-        "latex": "156 \\div 4 = 39 \\text{ because } 4 \\times 39 = 156",
-        "visuals": ["long-division-steps", "division-algorithm"]
+        "content": "For larger numbers, we use the long division algorithm: divide, multiply, subtract, bring down. This process repeats until we've used all digits in the dividend.",
+        "latex": "789 \\div 23 = 34 \\text{ R } 7",
+        "visuals": ["long-division-algorithm", "step-by-step-process"]
       }
     ]
   },
   "examples": [
     {
-      "problem": "Calculate 84 ÷ 3",
-      "solution": "84 ÷ 3 = 28",
+      "problem": "Calculate 12 ÷ 3",
+      "solution": "3 groups of 4 = 12, quotient 4",
       "steps": [
-        "8 ÷ 3 = 2 remainder 2. Write 2",
-        "Bring down the 4 to make 24",
-        "24 ÷ 3 = 8. Write 8",
-        "The answer is 28"
+        "Think: what number times 3 equals 12?",
+        "3 × 4 = 12, so 12 ÷ 3 = 4",
+        "Check: 4 × 3 = 12 ✓"
       ],
       "commonErrors": [
-        "Forgetting to bring down the next digit",
-        "Making errors in the multiplication check",
-        "Mishandling remainders"
-      ]
+        "Confusing dividend and divisor",
+        "Not checking the answer"
+      ],
+      "latex": "12 \\div 3 = 4 \\text{ because } 4 \\times 3 = 12"
+    },
+    {
+      "problem": "Find 456 ÷ 4",
+      "solution": "4 into 4=1 (4), subtract 0; bring 5, 4 into 5=1 (4), subtract 1; bring 6, 4 into 16=4. Quotient 114",
+      "steps": [
+        "4 goes into 4 exactly 1 time, write 1",
+        "4 goes into 5 once with remainder 1, write 1",
+        "Bring down 6 to make 16",
+        "4 goes into 16 exactly 4 times, write 4",
+        "Final answer: 114"
+      ],
+      "commonErrors": ["Bringing down wrong digits", "Subtraction errors"],
+      "latex": "456 \\div 4 = 114"
+    },
+    {
+      "problem": "Calculate 789 ÷ 23 with remainder",
+      "solution": "23 into 78=3 (69), subtract 9; bring 9=99, 23 into 99=4 (92), subtract 7. Quotient 34 R7",
+      "steps": [
+        "23 goes into 78 three times (3 × 23 = 69)",
+        "78 - 69 = 9, bring down the 9 to make 99",
+        "23 goes into 99 four times (4 × 23 = 92)",
+        "99 - 92 = 7, which is less than 23",
+        "Final answer: 34 R7"
+      ],
+      "commonErrors": [
+        "Wrong trial multipliers",
+        "Arithmetic errors in subtraction"
+      ],
+      "latex": "789 \\div 23 = 34 \\text{ R } 7"
     }
   ],
   "practice": [
     {
-      "id": "p4-1",
-      "type": "multiple-choice",
-      "problem": "What is 72 ÷ 8?",
-      "options": ["8", "9", "10", "11"],
-      "correct": 1,
+      "id": "div-basic-1",
+      "type": "fill-in",
+      "problem": "Calculate 15 ÷ 5",
+      "correct": "3",
       "hints": [
-        "Think: what number times 8 equals 72?",
-        "You can use the multiplication table for 8",
-        "8 × ? = 72"
+        "Think of equal groups: how many groups of 5 make 15?",
+        "Use the inverse: what times 5 equals 15?",
+        "5 × 3 = 15, so 15 ÷ 5 = 3"
       ],
-      "explanation": "72 ÷ 8 = 9 because 8 × 9 = 72",
+      "explanation": "15 ÷ 5 = 3. This is a basic division fact that relates to the multiplication table.",
+      "difficulty": 1
+    },
+    {
+      "id": "div-basic-2",
+      "type": "fill-in",
+      "problem": "Find 24 ÷ 4",
+      "correct": "6",
+      "hints": [
+        "Think of sharing 24 items equally among 4 groups",
+        "Draw 24 dots and circle groups of 4",
+        "Check: 6 × 4 = 24"
+      ],
+      "explanation": "24 ÷ 4 = 6. Visualizing division as sharing helps understand the concept.",
+      "difficulty": 1
+    },
+    {
+      "id": "div-powers-1",
+      "type": "fill-in",
+      "problem": "Calculate 100 ÷ 25",
+      "correct": "4",
+      "hints": [
+        "Think about quarters: how many 25s make 100?",
+        "25 × 4 = 100",
+        "Pattern: dividing by 25 is like finding how many quarters"
+      ],
+      "explanation": "100 ÷ 25 = 4. Recognizing patterns with common numbers makes division easier.",
       "difficulty": 2
     },
     {
-      "id": "p4-2",
+      "id": "div-long-1",
       "type": "fill-in",
-      "problem": "Calculate: 156 ÷ 6 = ?",
-      "correct": "26",
+      "problem": "Find 567 ÷ 3",
+      "correct": "189",
       "hints": [
-        "Start with 15 ÷ 6",
-        "Use long division step by step",
-        "Don't forget to bring down digits"
+        "Use long division: 3 into 5 goes 1 time",
+        "3 into 26 goes 8 times (remainder 2)",
+        "3 into 27 goes 9 times exactly"
       ],
-      "explanation": "15 ÷ 6 = 2 R3, bring down 6 to make 36, 36 ÷ 6 = 6. Answer: 26",
+      "explanation": "567 ÷ 3 = 189. This demonstrates long division with no remainder.",
       "difficulty": 3
+    },
+    {
+      "id": "div-remainder-1",
+      "type": "multiple-choice",
+      "problem": "Share 45 candies among 7 kids. How many does each get and how many are left?",
+      "options": [
+        "6 each, 3 left",
+        "7 each, 1 left",
+        "5 each, 10 left",
+        "6 each, 2 left"
+      ],
+      "correct": 0,
+      "hints": [
+        "Calculate 45 ÷ 7",
+        "7 × 6 = 42, so 6 each with some left over",
+        "45 - 42 = 3 candies left"
+      ],
+      "explanation": "45 ÷ 7 = 6 R3, so each child gets 6 candies and 3 are left over.",
+      "difficulty": 3
+    },
+    {
+      "id": "div-large-1",
+      "type": "fill-in",
+      "problem": "Calculate 1,234 ÷ 12",
+      "correct": "102",
+      "hints": [
+        "Use long division with a two-digit divisor",
+        "12 goes into 123 about 10 times",
+        "Continue the process carefully"
+      ],
+      "explanation": "1,234 ÷ 12 = 102 R10. Multi-digit divisors require careful estimation.",
+      "difficulty": 4
+    },
+    {
+      "id": "div-pattern-1",
+      "type": "fill-in",
+      "problem": "Find 999 ÷ 9",
+      "correct": "111",
+      "hints": [
+        "Look for patterns with 9",
+        "Each digit in 999 is divisible by 9",
+        "9 + 9 + 9 = 27, and 2 + 7 = 9 (divisibility rule)"
+      ],
+      "explanation": "999 ÷ 9 = 111. The divisibility rule for 9 helps: if digits sum to a multiple of 9, the number is divisible by 9.",
+      "difficulty": 4
+    },
+    {
+      "id": "div-word-1",
+      "type": "fill-in",
+      "problem": "A car travels 560km in 8 hours. What is the average speed in km/h?",
+      "correct": "70",
+      "hints": [
+        "Speed = distance ÷ time",
+        "Calculate 560 ÷ 8",
+        "560 ÷ 8 = 70 km/h"
+      ],
+      "explanation": "560 ÷ 8 = 70 km/h. Division is used to find rates like speed, where we divide total distance by total time.",
+      "difficulty": 5
     }
   ],
-  "tools": ["calculator", "division-practice", "multiplication-check"],
+  "tools": ["calculator", "long-division-helper"],
   "assessment": {
     "masteryThreshold": 0.8,
-    "requiredProblems": 5
+    "requiredProblems": 6
   }
 }

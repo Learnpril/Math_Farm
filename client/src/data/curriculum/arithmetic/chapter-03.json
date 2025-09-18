@@ -2,79 +2,189 @@
   "id": "chapter-03",
   "title": "Multiplication Basics",
   "objectives": [
-    "Master single-digit multiplication facts (times tables)",
-    "Understand multiplication as repeated addition",
-    "Multiply multi-digit numbers using the standard algorithm",
-    "Apply multiplication to solve real-world problems"
+    "Understand multiplication as repeated addition and scaling",
+    "Master basic multiplication facts (times tables)",
+    "Apply the distributive property for multi-digit multiplication",
+    "Solve real-world problems involving multiplication"
   ],
-  "prerequisites": ["chapter-02"],
+  "prerequisites": ["chapter-01", "chapter-02"],
   "introduction": {
-    "context": "Multiplication helps us calculate quickly when we have equal groups - like finding the total number of items in several boxes, calculating area, or determining costs for multiple items.",
-    "connection": "Multiplication builds on your addition skills from Chapter 2, using repeated addition as the foundation for understanding this new operation."
+    "context": "Multiplication is fundamental for calculating areas, scaling recipes, determining costs for multiple items, and understanding patterns in mathematics. It's the foundation for more advanced topics like division, fractions, and algebra.",
+    "connection": "Building on addition skills, multiplication provides a faster way to add equal groups and opens the door to understanding mathematical relationships and proportional thinking."
   },
   "theory": {
     "concepts": [
       {
-        "title": "Multiplication as Repeated Addition",
-        "content": "Multiplication is a shortcut for adding the same number multiple times. 4 × 3 means adding 4 three times.",
-        "latex": "4 \\times 3 = 4 + 4 + 4 = 12",
-        "visuals": ["multiplication-arrays", "repeated-addition-model"]
+        "title": "Understanding Multiplication",
+        "content": "Multiplication is repeated addition or scaling (a × b = a + a + ... b times). For basics, use times tables (e.g., 5×6=30) and extend to multi-digit via partial products or standard algorithm. Arrays visualize (3×4 as 3 rows of 4). Notation: × or ⋅. Commutative (a × b = b × a). Real-world: area (l × w), scaling recipes.",
+        "latex": "5 \\times 6 = 5 + 5 + 5 + 5 + 5 + 5 = 30",
+        "visuals": ["array-model", "repeated-addition"]
       },
       {
-        "title": "The Standard Multiplication Algorithm",
-        "content": "For larger numbers, we use the standard algorithm with partial products, multiplying each digit and adding the results.",
-        "latex": "23 \\times 4 = (20 \\times 4) + (3 \\times 4) = 80 + 12 = 92",
-        "visuals": ["multiplication-algorithm", "partial-products"]
+        "title": "Distributive Property",
+        "content": "The distributive property allows us to break apart numbers to make multiplication easier. We can multiply each part separately and then add the results together.",
+        "latex": "23 \\times 4 = (20 + 3) \\times 4 = 20 \\times 4 + 3 \\times 4 = 80 + 12 = 92",
+        "visuals": ["area-model", "partial-products"]
+      },
+      {
+        "title": "Multi-digit Multiplication",
+        "content": "For larger numbers, we use the standard algorithm or break numbers into place values. Each digit is multiplied by each digit in the other number, keeping track of place values.",
+        "latex": "56 \\times 78 = 56 \\times 70 + 56 \\times 8 = 3,920 + 448 = 4,368",
+        "visuals": ["standard-algorithm", "place-value-chart"]
       }
     ]
   },
   "examples": [
     {
-      "problem": "Calculate 26 × 3",
-      "solution": "26 × 3 = 78",
+      "problem": "Multiply 4 × 3",
+      "solution": "4 groups of 3 = 12",
       "steps": [
-        "Multiply the ones: 6 × 3 = 18. Write 8, carry 1",
-        "Multiply the tens: 2 × 3 = 6, plus carried 1 = 7",
-        "The answer is 78"
+        "Think of 4 × 3 as 4 groups of 3",
+        "Add: 3 + 3 + 3 + 3 = 12",
+        "Or recall from times table: 4 × 3 = 12"
+      ],
+      "commonErrors": ["Confusing with addition", "Mixing up the order"],
+      "latex": "4 \\times 3 = 3 + 3 + 3 + 3 = 12"
+    },
+    {
+      "problem": "Calculate 23 × 4",
+      "solution": "Break as (20 + 3) × 4 = 80 + 12 = 92",
+      "steps": [
+        "Break 23 into 20 + 3",
+        "Multiply each part: 20 × 4 = 80, 3 × 4 = 12",
+        "Add the results: 80 + 12 = 92"
       ],
       "commonErrors": [
-        "Forgetting to carry when multiplying",
-        "Misaligning partial products in multi-digit multiplication"
-      ]
+        "Not carrying in partial products",
+        "Misaligning place values"
+      ],
+      "latex": "23 \\times 4 = (20 + 3) \\times 4 = 80 + 12 = 92"
+    },
+    {
+      "problem": "Find 56 × 78",
+      "solution": "56 × 70 = 3,920; 56 × 8 = 448; total 4,368",
+      "steps": [
+        "Break 78 into 70 + 8",
+        "Calculate 56 × 70 = 3,920",
+        "Calculate 56 × 8 = 448",
+        "Add: 3,920 + 448 = 4,368"
+      ],
+      "commonErrors": [
+        "Misaligning partial products",
+        "Addition errors in final step"
+      ],
+      "latex": "56 \\times 78 = 56 \\times (70 + 8) = 3,920 + 448 = 4,368"
     }
   ],
   "practice": [
     {
-      "id": "p3-1",
-      "type": "multiple-choice",
-      "problem": "What is 7 × 8?",
-      "options": ["54", "56", "58", "64"],
-      "correct": 1,
+      "id": "mult-basic-1",
+      "type": "fill-in",
+      "problem": "Calculate 5 × 6",
+      "correct": "30",
       "hints": [
-        "Think of this as 7 groups of 8",
-        "Or 8 groups of 7",
-        "You can also think: 7 × 8 = 7 × (10 - 2) = 70 - 14"
+        "Think of repeated addition: 5 + 5 + 5 + 5 + 5 + 5",
+        "Or recall from times table",
+        "Visualize as an array: 5 rows of 6 dots"
       ],
-      "explanation": "7 × 8 = 56. This is a basic multiplication fact that should be memorized.",
+      "explanation": "5 × 6 = 30. This is a basic multiplication fact that should be memorized.",
+      "difficulty": 1
+    },
+    {
+      "id": "mult-basic-2",
+      "type": "fill-in",
+      "problem": "Find 7 × 8",
+      "correct": "56",
+      "hints": [
+        "Skip count by 7s: 7, 14, 21, 28, 35, 42, 49, 56",
+        "Or skip count by 8s: 8, 16, 24, 32, 40, 48, 56",
+        "Draw a 7×8 grid to visualize"
+      ],
+      "explanation": "7 × 8 = 56. This is an important times table fact to memorize.",
+      "difficulty": 1
+    },
+    {
+      "id": "mult-distribute-1",
+      "type": "fill-in",
+      "problem": "Calculate 12 × 5 using the distributive property",
+      "correct": "60",
+      "hints": [
+        "Break 12 into 10 + 2",
+        "Calculate (10 + 2) × 5 = 10 × 5 + 2 × 5",
+        "Add the parts: 50 + 10 = 60"
+      ],
+      "explanation": "12 × 5 = (10 + 2) × 5 = 50 + 10 = 60. The distributive property makes larger multiplications easier.",
       "difficulty": 2
     },
     {
-      "id": "p3-2",
+      "id": "mult-two-digit-1",
       "type": "fill-in",
-      "problem": "Calculate: 34 × 5 = ?",
-      "correct": "170",
+      "problem": "Find 34 × 2",
+      "correct": "68",
       "hints": [
-        "Multiply 4 × 5 first",
-        "Then multiply 30 × 5",
-        "Add the partial products together"
+        "Use the standard algorithm or partial products",
+        "34 × 2 = (30 + 4) × 2 = 60 + 8",
+        "Check: 30 × 2 = 60, 4 × 2 = 8"
       ],
-      "explanation": "4 × 5 = 20 (write 0, carry 2), 3 × 5 = 15, plus carried 2 = 17. Answer: 170",
+      "explanation": "34 × 2 = 68. This introduces multi-digit multiplication with a single-digit multiplier.",
+      "difficulty": 2
+    },
+    {
+      "id": "mult-area-1",
+      "type": "fill-in",
+      "problem": "Find the area of a rectangle that is 15m by 4m",
+      "correct": "60",
+      "hints": [
+        "Area = length × width",
+        "Break 15 into easier parts: 15 = 10 + 5",
+        "Calculate: (10 + 5) × 4 = 40 + 20 = 60"
+      ],
+      "explanation": "Area = 15 × 4 = 60 m². This shows a real-world application of multiplication.",
       "difficulty": 3
+    },
+    {
+      "id": "mult-large-1",
+      "type": "fill-in",
+      "problem": "Calculate 45 × 67",
+      "correct": "3015",
+      "hints": [
+        "Use long multiplication or break into parts",
+        "45 × 67 = 45 × (60 + 7) = 45 × 60 + 45 × 7",
+        "Calculate: 2700 + 315 = 3015"
+      ],
+      "explanation": "45 × 67 = 3,015. This requires careful attention to place values and partial products.",
+      "difficulty": 4
+    },
+    {
+      "id": "mult-pattern-1",
+      "type": "fill-in",
+      "problem": "Find 99 × 10",
+      "correct": "990",
+      "hints": [
+        "Look for patterns when multiplying by 10",
+        "Think of 99 as (100 - 1)",
+        "99 × 10 = (100 - 1) × 10 = 1000 - 10 = 990"
+      ],
+      "explanation": "99 × 10 = 990. Multiplying by 10 adds a zero, and recognizing patterns makes calculation easier.",
+      "difficulty": 4
+    },
+    {
+      "id": "mult-word-1",
+      "type": "fill-in",
+      "problem": "A library has 25 shelves with 36 books on each shelf. How many books total?",
+      "correct": "900",
+      "hints": [
+        "This is 25 × 36",
+        "Estimate first: 25 × 40 = 1000, so answer should be close",
+        "Calculate: 25 × 36 = 25 × (30 + 6) = 750 + 150 = 900"
+      ],
+      "explanation": "25 × 36 = 900 books. Always estimate first to check if your answer is reasonable.",
+      "difficulty": 5
     }
   ],
-  "tools": ["calculator", "multiplication-practice", "times-table-chart"],
+  "tools": ["calculator", "array-visualizer"],
   "assessment": {
     "masteryThreshold": 0.8,
-    "requiredProblems": 5
+    "requiredProblems": 6
   }
 }

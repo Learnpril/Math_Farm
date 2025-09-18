@@ -2,81 +2,192 @@
   "id": "chapter-06",
   "title": "Decimals",
   "objectives": [
-    "Read and write decimal numbers",
-    "Understand decimal place values (tenths, hundredths, thousandths)",
-    "Add, subtract, multiply, and divide decimals",
-    "Convert between fractions and decimals"
+    "Understand decimal place value and notation",
+    "Add and subtract decimals with proper alignment",
+    "Multiply and divide decimals using place value rules",
+    "Convert between decimals, fractions, and percentages"
   ],
-  "prerequisites": ["chapter-05"],
+  "prerequisites": ["chapter-01", "chapter-02", "chapter-05"],
   "introduction": {
-    "context": "Decimals are used everywhere in real life - money ($3.45), measurements (2.5 meters), and scientific data. They're another way to represent parts of wholes, just like fractions.",
-    "connection": "Decimals are closely related to fractions from Chapter 5. For example, 0.5 = 1/2 and 0.25 = 1/4."
+    "context": "Decimals are everywhere in daily life: money ($1.50), measurements (2.5 meters), and statistics (3.14159). They extend our number system beyond whole numbers and provide a way to express parts of wholes that's often more convenient than fractions.",
+    "connection": "Building on place value concepts and fractions, decimals provide another way to represent parts of wholes using the base-10 system we already know."
   },
   "theory": {
     "concepts": [
       {
-        "title": "Decimal Place Values",
-        "content": "Decimal places continue the place value system to the right of the decimal point: tenths, hundredths, thousandths, and so on.",
-        "latex": "3.456 = 3 + 0.4 + 0.05 + 0.006",
-        "visuals": ["decimal-place-value-chart", "decimal-grids"]
+        "title": "Decimal Place Value",
+        "content": "Decimals extend place value right of the decimal point: tenths (10^-1), hundredths (10^-2), thousandths (10^-3). Each place is 1/10 the value of the place to its left. For example, 0.25 = 2/10 + 5/100 = 25/100 = 1/4.",
+        "latex": "0.25 = \\frac{2}{10} + \\frac{5}{100} = \\frac{25}{100} = \\frac{1}{4}",
+        "visuals": ["decimal-place-chart", "base-10-blocks"]
       },
       {
-        "title": "Adding and Subtracting Decimals",
-        "content": "To add or subtract decimals, line up the decimal points and add or subtract as with whole numbers. The decimal point in the answer goes directly below the others.",
-        "latex": "2.45 + 1.3 = 2.45 + 1.30 = 3.75",
-        "visuals": ["decimal-addition-alignment", "decimal-subtraction-model"]
+        "title": "Operations with Decimals",
+        "content": "Add/subtract: align decimal points, add zeros if needed. Multiply: ignore points initially, count total decimal places in factors, place point in product. Divide: move decimal points to make divisor whole, then divide normally.",
+        "latex": "2.5 \\times 3 = 7.5 \\text{ (1 decimal place)}",
+        "visuals": ["decimal-alignment", "decimal-multiplication"]
+      },
+      {
+        "title": "Converting Decimals",
+        "content": "Decimals, fractions, and percentages are different ways to express the same values. 0.25 = 25/100 = 1/4 = 25%. Understanding these connections helps in problem-solving and real-world applications.",
+        "latex": "0.75 = \\frac{75}{100} = \\frac{3}{4} = 75\\%",
+        "visuals": ["conversion-chart", "equivalent-representations"]
       }
     ]
   },
   "examples": [
     {
-      "problem": "Add 3.7 + 2.45",
-      "solution": "3.7 + 2.45 = 6.15",
+      "problem": "Add 0.3 + 0.4",
+      "solution": "Align decimals: 0.3 + 0.4 = 0.7",
       "steps": [
-        "Line up the decimal points: 3.70 + 2.45",
-        "Add the hundredths: 0 + 5 = 5",
-        "Add the tenths: 7 + 4 = 11, write 1 carry 1",
-        "Add the ones: 3 + 2 + 1 = 6",
-        "The answer is 6.15"
+        "Write the numbers with decimal points aligned",
+        "Add as you would whole numbers: 3 + 4 = 7",
+        "Place the decimal point in the same position: 0.7"
       ],
       "commonErrors": [
-        "Not lining up decimal points",
-        "Forgetting to add zeros as placeholders"
-      ]
+        "Not aligning decimal points",
+        "Forgetting the decimal point in the answer"
+      ],
+      "latex": "0.3 + 0.4 = 0.7"
+    },
+    {
+      "problem": "Multiply 2.5 × 3",
+      "solution": "Ignore decimal: 25 × 3 = 75, place decimal one place back: 7.5",
+      "steps": [
+        "Multiply as if they were whole numbers: 25 × 3 = 75",
+        "Count decimal places in the factors: 2.5 has 1 decimal place",
+        "Place the decimal point 1 place from the right: 7.5"
+      ],
+      "commonErrors": [
+        "Wrong decimal place count",
+        "Forgetting to place the decimal point"
+      ],
+      "latex": "2.5 \\times 3 = 7.5"
+    },
+    {
+      "problem": "Divide 4.56 ÷ 0.2",
+      "solution": "Move decimals: 45.6 ÷ 2 = 22.8",
+      "steps": [
+        "Move decimal point in divisor to make it whole: 0.2 → 2",
+        "Move decimal point same number of places in dividend: 4.56 → 45.6",
+        "Divide: 45.6 ÷ 2 = 22.8"
+      ],
+      "commonErrors": [
+        "Moving decimal in wrong direction",
+        "Not moving both decimal points"
+      ],
+      "latex": "4.56 \\div 0.2 = 45.6 \\div 2 = 22.8"
     }
   ],
   "practice": [
     {
-      "id": "p6-1",
-      "type": "multiple-choice",
-      "problem": "What is 0.3 + 0.4?",
-      "options": ["0.6", "0.7", "0.8", "0.9"],
-      "correct": 1,
+      "id": "dec-convert-1",
+      "type": "fill-in",
+      "problem": "Write 0.75 as a fraction in lowest terms",
+      "correct": "3/4",
       "hints": [
-        "Add the tenths place: 3 + 4",
-        "Both numbers have the same place value",
-        "No regrouping needed here"
+        "0.75 = 75/100",
+        "Find the GCD of 75 and 100",
+        "75 ÷ 25 = 3, 100 ÷ 25 = 4"
       ],
-      "explanation": "0.3 + 0.4 = 0.7. Add the tenths: 3 + 4 = 7 tenths.",
+      "explanation": "0.75 = 75/100 = 3/4 after reducing by dividing both numerator and denominator by 25.",
       "difficulty": 1
     },
     {
-      "id": "p6-2",
-      "type": "fill-in",
-      "problem": "Calculate: 5.6 - 2.3 = ?",
-      "correct": "3.3",
+      "id": "dec-compare-1",
+      "type": "multiple-choice",
+      "problem": "Which is larger: 0.6 or 0.59?",
+      "options": ["0.6", "0.59", "They are equal"],
+      "correct": 0,
       "hints": [
-        "Line up the decimal points",
-        "Subtract column by column",
-        "No borrowing needed for this problem"
+        "Add a zero to make comparison easier: 0.60 vs 0.59",
+        "Compare digit by digit from left to right",
+        "In the hundredths place: 0 vs 9, but 6 > 5 in tenths place"
       ],
-      "explanation": "5.6 - 2.3 = 3.3. Subtract tenths: 6 - 3 = 3, subtract ones: 5 - 2 = 3.",
+      "explanation": "0.6 = 0.60 > 0.59. When comparing decimals, align the decimal points and compare place by place.",
       "difficulty": 2
+    },
+    {
+      "id": "dec-add-1",
+      "type": "fill-in",
+      "problem": "Calculate 1.23 + 4.56",
+      "correct": "5.79",
+      "hints": [
+        "Align the decimal points vertically",
+        "Add column by column: 3+6=9, 2+5=7, 1+4=5",
+        "Keep the decimal point in the same position"
+      ],
+      "explanation": "1.23 + 4.56 = 5.79. Always align decimal points when adding or subtracting decimals.",
+      "difficulty": 2
+    },
+    {
+      "id": "dec-mult-1",
+      "type": "fill-in",
+      "problem": "Find 0.4 × 0.5",
+      "correct": "0.2",
+      "hints": [
+        "Multiply as whole numbers: 4 × 5 = 20",
+        "Count total decimal places: 0.4 (1) + 0.5 (1) = 2 places",
+        "Place decimal: 0.20 = 0.2"
+      ],
+      "explanation": "0.4 × 0.5 = 0.2. Count the total decimal places in both factors to place the decimal in the product.",
+      "difficulty": 3
+    },
+    {
+      "id": "dec-money-1",
+      "type": "fill-in",
+      "problem": "Add $3.45 + $2.78",
+      "correct": "6.23",
+      "hints": [
+        "Treat as decimal addition",
+        "Align decimal points: $3.45 + $2.78",
+        "Add: 5+8=13 (carry 1), 4+7+1=12 (carry 1), 3+2+1=6"
+      ],
+      "explanation": "$3.45 + $2.78 = $6.23. Money calculations are decimal operations with carrying when needed.",
+      "difficulty": 3
+    },
+    {
+      "id": "dec-div-1",
+      "type": "fill-in",
+      "problem": "Calculate 6.3 ÷ 0.9",
+      "correct": "7",
+      "hints": [
+        "Move decimal points to make divisor whole: 63 ÷ 9",
+        "Divide: 63 ÷ 9 = 7",
+        "Check: 7 × 0.9 = 6.3 ✓"
+      ],
+      "explanation": "6.3 ÷ 0.9 = 7. Move both decimal points the same number of places to make the divisor a whole number.",
+      "difficulty": 4
+    },
+    {
+      "id": "dec-percent-1",
+      "type": "fill-in",
+      "problem": "Convert 0.25 to a percentage",
+      "correct": "25",
+      "hints": [
+        "To convert decimal to percent, multiply by 100",
+        "0.25 × 100 = 25",
+        "Add the percent symbol: 25%"
+      ],
+      "explanation": "0.25 = 25%. To convert decimal to percent, multiply by 100 and add the % symbol.",
+      "difficulty": 4
+    },
+    {
+      "id": "dec-word-1",
+      "type": "fill-in",
+      "problem": "A board is 12.34m long. How many 2.5m pieces can be cut from it?",
+      "correct": "4",
+      "hints": [
+        "Divide: 12.34 ÷ 2.5",
+        "Move decimals: 123.4 ÷ 25 = 4.936",
+        "Since we need whole pieces, the answer is 4"
+      ],
+      "explanation": "12.34 ÷ 2.5 = 4.936, but since we can only cut whole pieces, the answer is 4 pieces with some wood left over.",
+      "difficulty": 5
     }
   ],
-  "tools": ["calculator", "decimal-grids", "place-value-chart"],
+  "tools": ["decimal-calculator", "place-value-chart"],
   "assessment": {
     "masteryThreshold": 0.8,
-    "requiredProblems": 5
+    "requiredProblems": 6
   }
 }

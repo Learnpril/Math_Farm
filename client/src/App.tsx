@@ -31,10 +31,10 @@ function App() {
     console.warn(`Global error caught [${errorId}]:`, error);
   };
 
-  // Preload MathJax and install DOM error handler when app starts
+  // Install DOM error handler when app starts
   React.useEffect(() => {
     installDOMErrorHandler();
-    preloadMathJax();
+    // Disabled preloadMathJax() to avoid conflicts with direct MathJax implementation
   }, []);
 
   return (
