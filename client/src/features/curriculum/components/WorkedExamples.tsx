@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronDown, ChevronRight, AlertTriangle } from 'lucide-react';
 import { WorkedExample } from '../types';
-import { MathExpression } from '../../../components/MathExpression';
 
 interface WorkedExamplesProps {
   examples: WorkedExample[];
@@ -41,8 +40,11 @@ export function WorkedExamples({ examples }: WorkedExamplesProps) {
                 {example.problem}
               </p>
               {example.latex && (
-                <div className='mt-2 text-center'>
-                  <MathExpression expression={example.latex} />
+                <div className='mt-2 text-center font-mono text-sm bg-gray-100 dark:bg-gray-700 p-2 rounded'>
+                  {example.latex}
+                  <div className='text-xs text-gray-500 mt-1'>
+                    (LaTeX rendering will be added in next phase)
+                  </div>
                 </div>
               )}
             </div>

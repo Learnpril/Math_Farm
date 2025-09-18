@@ -1,6 +1,4 @@
-import React from 'react';
 import { TheoryConcept } from '../types';
-import { MathExpression } from '../../../components/MathExpression';
 
 interface TheorySectionProps {
   concepts: TheoryConcept[];
@@ -27,8 +25,11 @@ export function TheorySection({ concepts }: TheorySectionProps) {
 
             {concept.latex && (
               <div className='bg-white dark:bg-gray-800 p-4 rounded border-l-4 border-purple-500 mb-4'>
-                <div className='text-center text-lg'>
-                  <MathExpression expression={concept.latex} />
+                <div className='text-center text-lg font-mono'>
+                  {concept.latex}
+                </div>
+                <div className='text-xs text-gray-500 text-center mt-2'>
+                  (LaTeX rendering will be added in next phase)
                 </div>
               </div>
             )}

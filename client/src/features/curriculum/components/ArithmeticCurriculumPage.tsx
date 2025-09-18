@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'wouter';
 import { useLocation } from 'wouter';
 import { AlertCircle, BookOpen, Clock } from 'lucide-react';
@@ -7,12 +7,10 @@ import { ChapterContent } from './ChapterContent';
 import { useCurriculumProgress } from '../hooks/useCurriculumProgress';
 import {
   loadCurriculumMetadata,
-  loadChapterContent,
+  loadChapterData,
 } from '../lib/curriculum-data-loader';
-import {
-  CurriculumMetadata,
-  ChapterContent as ChapterContentType,
-} from '../types';
+import type { CurriculumMetadata, ChapterData } from '../types/curriculum';
+import type { ChapterContent as ChapterContentType } from '../types';
 
 export function ArithmeticCurriculumPage() {
   const { chapter: chapterParam } = useParams<{ chapter?: string }>();
@@ -26,6 +24,50 @@ export function ArithmeticCurriculumPage() {
 
   const currentChapterNumber = chapterParam ? parseInt(chapterParam) : 1;
   const { progress, loading: progressLoading } = useCurriculumProgress();
+
+  // Convert ChapterData to ChapterContentType
+  const convertChapterData = (data: ChapterData): ChapterContentType => {
+    return {
+      id: data.id,
+      title: data.title,
+      duration: data.duration,
+      objectives: data.objectives,
+      prerequisites: data.prerequisites,
+      introduction: data.introduction,
+      theory: {
+        concepts: data.theory.concepts.map(concept => ({
+          title: concept.title,
+          content: concept.content,
+          latex: concept.latex,
+          visuals: concept.visuals || [],
+        })),
+      },
+      examples: data.examples.map(example => ({
+        problem: example.problem,
+        solution: example.solution,
+        steps: example.steps,
+        commonErrors: example.commonErrors || [],
+        latex: example.latex,
+      })),
+      practice: data.practice.map(question => ({
+        id: question.id,
+        type: question.type as
+          | 'multiple-choice'
+          | 'fill-in'
+          | 'step-by-step'
+          | 'drag-drop',
+        problem: question.problem,
+        options: question.options,
+        correct: question.correct,
+        hints: question.hints,
+        explanation: question.explanation,
+        latex: question.latex,
+        difficulty: question.difficulty as 1 | 2 | 3 | 4 | 5,
+      })),
+      tools: data.tools,
+      assessment: data.assessment,
+    };
+  };
 
   // Load curriculum metadata on mount
   useEffect(() => {
@@ -59,9 +101,10 @@ export function ArithmeticCurriculumPage() {
 
       try {
         setLoading(true);
-        const chapterFile = `chapter-${currentChapterNumber.toString().padStart(2, '0')}.json`;
-        const chapterData = await loadChapterContent('arithmetic', chapterFile);
-        setCurrentChapter(chapterData);
+        const chapterId = `chapter-${currentChapterNumber.toString().padStart(2, '0')}`;
+        const chapterData = await loadChapterData('arithmetic', chapterId);
+        const convertedChapter = convertChapterData(chapterData);
+        setCurrentChapter(convertedChapter);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load chapter');
       } finally {
