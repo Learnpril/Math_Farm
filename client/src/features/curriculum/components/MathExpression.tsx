@@ -6,12 +6,6 @@ interface MathExpressionProps {
   className?: string;
 }
 
-declare global {
-  interface Window {
-    MathJax: any;
-  }
-}
-
 /**
  * Direct MathJax implementation without wrapper library
  */

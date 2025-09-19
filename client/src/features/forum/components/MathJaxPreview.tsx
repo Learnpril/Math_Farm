@@ -3,9 +3,9 @@ import { useMathJax } from '../../../hooks/useMathJax';
 import { cn } from '../../../lib/utils';
 import DOMPurify from 'dompurify';
 
-export interface MathJaxPreviewProps {
-  content: string;
-  className?: string;
+import type { MathJaxPreviewProps } from '../../../types/mathjax';
+
+interface ExtendedMathJaxPreviewProps extends MathJaxPreviewProps {
   onRenderComplete?: () => void;
   onRenderError?: (error: Error) => void;
 }
@@ -19,7 +19,7 @@ export function MathJaxPreview({
   className,
   onRenderComplete,
   onRenderError,
-}: MathJaxPreviewProps) {
+}: ExtendedMathJaxPreviewProps) {
   const previewRef = useRef<HTMLDivElement>(null);
   const {
     isLoaded: mathJaxLoaded,

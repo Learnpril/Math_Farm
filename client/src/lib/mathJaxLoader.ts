@@ -1,53 +1,20 @@
 // Optimized MathJax loader with performance improvements
+import type { MathJaxConfig } from '../types/mathjax';
+
 let mathJaxPromise: Promise<void> | null = null;
 let isLoaded = false;
-
-interface MathJaxConfig {
-  tex: {
-    inlineMath: string[][];
-    displayMath: string[][];
-    processEscapes: boolean;
-    processEnvironments: boolean;
-    packages: string[];
-  };
-  svg: {
-    fontCache: string;
-    scale: number;
-    minScale: number;
-    matchFontHeight: boolean;
-  };
-  options: {
-    menuOptions: {
-      settings: {
-        assistiveMml: boolean;
-        collapsible: boolean;
-        autocollapse: boolean;
-      };
-    };
-    renderActions: {
-      addMenu: number[];
-    };
-  };
-  loader: {
-    load: string[];
-  };
-  startup: {
-    ready: () => void;
-    typeset: boolean;
-  };
-}
 
 // Optimized MathJax configuration for performance
 const mathJaxConfig: MathJaxConfig = {
   tex: {
-    inlineMath: [["\\(", "\\)"]],
-    displayMath: [["\\[", "\\]"]],
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']],
     processEscapes: true,
     processEnvironments: true,
-    packages: ["base", "ams"],
+    packages: ['base', 'ams'],
   },
   svg: {
-    fontCache: "local",
+    fontCache: 'local',
     scale: 1,
     minScale: 0.5,
   },
@@ -60,11 +27,11 @@ const mathJaxConfig: MathJaxConfig = {
       },
     },
     renderActions: {
-      addMenu: [0, "", ""],
+      addMenu: [0, '', ''],
     },
   },
   loader: {
-    load: ["[tex]/ams"],
+    load: ['[tex]/ams'],
   },
   startup: {
     ready: () => {
@@ -82,7 +49,7 @@ export function loadMathJax(): Promise<void> {
     return mathJaxPromise;
   }
 
-  if (typeof window === "undefined") {
+  if (typeof window === 'undefined') {
     return Promise.resolve();
   }
 
@@ -97,8 +64,8 @@ export function loadMathJax(): Promise<void> {
     (window as any).MathJax = mathJaxConfig;
 
     // Create script element with optimizations
-    const script = document.createElement("script");
-    script.src = "https://cdn.jsdelivr.net/npm/mathjax@4.0.0-beta.6/tex-svg.js";
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.0.0-beta.6/tex-svg.js';
     script.async = true;
     script.defer = true;
 
@@ -121,7 +88,7 @@ export function loadMathJax(): Promise<void> {
     };
 
     script.onerror = () => {
-      reject(new Error("Failed to load MathJax"));
+      reject(new Error('Failed to load MathJax'));
     };
 
     // Add to head with high priority
@@ -167,7 +134,7 @@ export async function typesetMath(
         await MathJax.typesetPromise(typesetQueue);
       }
     } catch (error) {
-      console.warn("MathJax typeset error:", error);
+      console.warn('MathJax typeset error:', error);
     } finally {
       typesetQueue = [];
       typesetTimeout = null;
@@ -201,10 +168,10 @@ export async function progressiveTypesetMath(
 
       // Small delay to prevent blocking the main thread
       if (i + batchSize < elements.length) {
-        await new Promise((resolve) => setTimeout(resolve, 10));
+        await new Promise(resolve => setTimeout(resolve, 10));
       }
     } catch (error) {
-      console.warn("Progressive typeset error:", error);
+      console.warn('Progressive typeset error:', error);
     }
   }
 }
@@ -212,7 +179,7 @@ export async function progressiveTypesetMath(
 // Preload MathJax when user is likely to need it
 export function preloadMathJax(): void {
   // Use requestIdleCallback for non-blocking preload
-  if ("requestIdleCallback" in window) {
+  if ('requestIdleCallback' in window) {
     requestIdleCallback(() => {
       loadMathJax().catch(console.warn);
     });
@@ -233,22 +200,22 @@ export function clearMathJaxCache(): void {
     }
 
     // Also clear any MathJax-created DOM elements that might be orphaned
-    if (typeof document !== "undefined") {
+    if (typeof document !== 'undefined') {
       const mathJaxElements = document.querySelectorAll(
-        "mjx-container, .MathJax, .MathJax_Display"
+        'mjx-container, .MathJax, .MathJax_Display'
       );
-      mathJaxElements.forEach((element) => {
+      mathJaxElements.forEach(element => {
         try {
           if (element.parentNode) {
             element.parentNode.removeChild(element);
           }
         } catch (error) {
           // Silently handle removal errors
-          console.debug("MathJax element cleanup handled:", error);
+          console.debug('MathJax element cleanup handled:', error);
         }
       });
     }
   } catch (error) {
-    console.warn("Error clearing MathJax cache:", error);
+    console.warn('Error clearing MathJax cache:', error);
   }
 }

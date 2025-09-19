@@ -1,17 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-
-export interface UseMathJaxReturn {
-  isLoaded: boolean;
-  renderMath: (expression: string, element: HTMLElement) => Promise<void>;
-  error: string | null;
-  isLoading: boolean;
-}
-
-declare global {
-  interface Window {
-    MathJax?: any;
-  }
-}
+import type { UseMathJaxReturn } from '../types/mathjax';
 
 /**
  * Custom hook for MathJax integration with lazy loading and error handling
@@ -29,8 +17,14 @@ export function useMathJax(): UseMathJaxReturn {
 
     (window as any).MathJax = {
       tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        inlineMath: [
+          ['$', '$'],
+          ['\\(', '\\)'],
+        ],
+        displayMath: [
+          ['$$', '$$'],
+          ['\\[', '\\]'],
+        ],
         processEscapes: true,
         processEnvironments: true,
       },
@@ -60,7 +54,8 @@ export function useMathJax(): UseMathJaxReturn {
 
         // Create script element for MathJax
         const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.0.0-beta.6/tex-svg.js';
+        script.src =
+          'https://cdn.jsdelivr.net/npm/mathjax@4.0.0-beta.6/tex-svg.js';
         script.async = true;
         script.id = 'mathjax-script';
 
@@ -96,36 +91,39 @@ export function useMathJax(): UseMathJaxReturn {
   }, [isLoaded, configureMathJax]);
 
   // Render mathematical expression in a specific element
-  const renderMath = useCallback(async (expression: string, element: HTMLElement): Promise<void> => {
-    try {
-      // Ensure MathJax is loaded
-      if (!isLoaded) {
-        await loadMathJax();
+  const renderMath = useCallback(
+    async (expression: string, element: HTMLElement): Promise<void> => {
+      try {
+        // Ensure MathJax is loaded
+        if (!isLoaded) {
+          await loadMathJax();
+        }
+
+        if (!window.MathJax?.typesetPromise) {
+          throw new Error('MathJax typeset function not available');
+        }
+
+        // Clear previous content and set new expression
+        element.innerHTML = `$${expression}$`;
+
+        // Typeset the element
+        await window.MathJax.typesetPromise([element]);
+      } catch (err) {
+        const errorMsg = `Math rendering failed: ${err instanceof Error ? err.message : 'Unknown error'}`;
+        setError(errorMsg);
+
+        // Fallback to plain text
+        element.innerHTML = `[Math Expression: ${expression}]`;
+        throw new Error(errorMsg);
       }
-
-      if (!window.MathJax?.typesetPromise) {
-        throw new Error('MathJax typeset function not available');
-      }
-
-      // Clear previous content and set new expression
-      element.innerHTML = `$${expression}$`;
-
-      // Typeset the element
-      await window.MathJax.typesetPromise([element]);
-    } catch (err) {
-      const errorMsg = `Math rendering failed: ${err instanceof Error ? err.message : 'Unknown error'}`;
-      setError(errorMsg);
-      
-      // Fallback to plain text
-      element.innerHTML = `[Math Expression: ${expression}]`;
-      throw new Error(errorMsg);
-    }
-  }, [isLoaded, loadMathJax]);
+    },
+    [isLoaded, loadMathJax]
+  );
 
   // Auto-load MathJax on mount if not already loaded
   useEffect(() => {
     if (!isLoaded && !isLoading && !loadingPromiseRef.current) {
-      loadMathJax().catch((err) => {
+      loadMathJax().catch(err => {
         console.error('Failed to auto-load MathJax:', err);
       });
     }
