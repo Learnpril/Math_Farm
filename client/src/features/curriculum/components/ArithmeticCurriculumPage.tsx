@@ -10,8 +10,11 @@ import {
   loadCurriculumMetadata,
   loadChapterData,
 } from '../lib/curriculum-data-loader';
-import type { CurriculumMetadata, ChapterData } from '../types/curriculum';
-import type { ChapterContent as ChapterContentType } from '../types';
+import type { ChapterData } from '../types/curriculum';
+import type {
+  CurriculumMetadata,
+  ChapterContent as ChapterContentType,
+} from '../types';
 
 export function ArithmeticCurriculumPage() {
   const { chapter: chapterParam } = useParams<{ chapter?: string }>();
@@ -39,14 +42,14 @@ export function ArithmeticCurriculumPage() {
           title: concept.title,
           content: concept.content,
           latex: concept.latex,
-          visuals: concept.visuals || [],
+          visuals: concept.visuals,
         })),
       },
       examples: data.examples.map(example => ({
         problem: example.problem,
         solution: example.solution,
         steps: example.steps,
-        commonErrors: example.commonErrors || [],
+        commonErrors: example.commonErrors,
         latex: example.latex,
       })),
       practice: data.practice.map(question => ({
@@ -61,7 +64,7 @@ export function ArithmeticCurriculumPage() {
         correct: question.correct,
         hints: question.hints,
         explanation: question.explanation,
-        latex: question.latex,
+        latex: undefined, // PracticeQuestion doesn't have latex property
         difficulty: question.difficulty as 1 | 2 | 3 | 4 | 5,
       })),
       tools: data.tools,

@@ -1,7 +1,8 @@
 {
   "topic": "arithmetic",
   "title": "Arithmetic Fundamentals",
-
+  "estimatedHours": 25,
+  "difficulty": "elementary",
   "prerequisites": [],
   "objectives": [
     "Master basic arithmetic operations with whole numbers, fractions, and decimals",

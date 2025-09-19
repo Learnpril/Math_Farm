@@ -7,6 +7,8 @@ export interface CurriculumMetadata {
   chapters: number;
   tools: string[];
   chapterFiles: string[];
+  estimatedHours?: number;
+  difficulty?: string;
 }
 
 export interface ChapterContent {
@@ -34,14 +36,14 @@ export interface TheoryConcept {
   title: string;
   content: string;
   latex?: string;
-  visuals: string[];
+  visuals?: string[];
 }
 
 export interface WorkedExample {
   problem: string;
   solution: string;
   steps: string[];
-  commonErrors: string[];
+  commonErrors?: string[];
   latex?: string;
 }
 
