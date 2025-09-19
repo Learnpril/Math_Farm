@@ -46,7 +46,7 @@
   - _Status: Critical - resolve type mismatches between curriculum types and component props_
   - _Details: Fix optional property types in ArithmeticCurriculumPage.tsx, align CurriculumMetadata interface_
 
-- [ ] Resolve MathJax global declaration conflicts
+- [x] Resolve MathJax global declaration conflicts
   - _Requirements: MathJax 4.0 integration for mathematical expressions_
   - _Status: Critical - fix duplicate MathJax interface declarations_
   - _Details: Consolidate MathJax global interface declarations to prevent TypeScript conflicts_
