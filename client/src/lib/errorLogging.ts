@@ -273,12 +273,10 @@ export class ErrorLogger {
     const id = this.generateErrorId();
     const theme = this.getCurrentTheme();
 
-    return {
+    const errorReport: ErrorReport = {
       id,
       timestamp: new Date().toISOString(),
       message: error.message,
-      stack: error.stack,
-      componentStack,
       category,
       severity,
       context: {
@@ -289,9 +287,22 @@ export class ErrorLogger {
           height: window.innerHeight,
         },
         theme,
-        additionalData,
       },
     };
+
+    if (error.stack) {
+      errorReport.stack = error.stack;
+    }
+
+    if (componentStack) {
+      errorReport.componentStack = componentStack;
+    }
+
+    if (additionalData) {
+      errorReport.context.additionalData = additionalData;
+    }
+
+    return errorReport;
   }
 
   private addToQueue(errorReport: ErrorReport): void {

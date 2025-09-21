@@ -8,12 +8,12 @@
  */
 export function announceToScreenReader(
   message: string,
-  priority: "polite" | "assertive" = "polite"
+  priority: 'polite' | 'assertive' = 'polite'
 ) {
-  const announcement = document.createElement("div");
-  announcement.setAttribute("aria-live", priority);
-  announcement.setAttribute("aria-atomic", "true");
-  announcement.className = "sr-only";
+  const announcement = document.createElement('div');
+  announcement.setAttribute('aria-live', priority);
+  announcement.setAttribute('aria-atomic', 'true');
+  announcement.className = 'sr-only';
   announcement.textContent = message;
 
   document.body.appendChild(announcement);
@@ -27,7 +27,7 @@ export function announceToScreenReader(
       }
     } catch (error) {
       // Silently handle the case where element was already removed
-      console.debug("Announcement element already removed:", error);
+      console.debug('Announcement element already removed:', error);
     }
   }, 1000);
 }
@@ -47,17 +47,17 @@ export class FocusManager {
     this.focusableElements = this.getFocusableElements(container);
 
     if (this.focusableElements.length > 0) {
-      this.focusableElements[0].focus();
+      this.focusableElements[0]?.focus();
     }
 
-    container.addEventListener("keydown", this.handleKeyDown);
+    container.addEventListener('keydown', this.handleKeyDown);
   }
 
   /**
    * Release focus trap and restore previous focus
    */
   releaseFocus(container: HTMLElement) {
-    container.removeEventListener("keydown", this.handleKeyDown);
+    container.removeEventListener('keydown', this.handleKeyDown);
 
     if (this.previousFocus) {
       this.previousFocus.focus();
@@ -68,7 +68,7 @@ export class FocusManager {
   }
 
   private handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key !== "Tab") return;
+    if (event.key !== 'Tab') return;
 
     const firstElement = this.focusableElements[0];
     const lastElement =
@@ -77,26 +77,26 @@ export class FocusManager {
     if (event.shiftKey) {
       if (document.activeElement === firstElement) {
         event.preventDefault();
-        lastElement.focus();
+        lastElement?.focus();
       }
     } else {
       if (document.activeElement === lastElement) {
         event.preventDefault();
-        firstElement.focus();
+        firstElement?.focus();
       }
     }
   };
 
   private getFocusableElements(container: HTMLElement): HTMLElement[] {
     const focusableSelectors = [
-      "button:not([disabled])",
-      "input:not([disabled])",
-      "select:not([disabled])",
-      "textarea:not([disabled])",
-      "a[href]",
+      'button:not([disabled])',
+      'input:not([disabled])',
+      'select:not([disabled])',
+      'textarea:not([disabled])',
+      'a[href]',
       '[tabindex]:not([tabindex="-1"])',
       '[contenteditable="true"]',
-    ].join(", ");
+    ].join(', ');
 
     return Array.from(container.querySelectorAll(focusableSelectors));
   }
@@ -106,11 +106,11 @@ export class FocusManager {
  * Skip link component for keyboard navigation
  */
 export function createSkipLink(targetId: string, text: string): HTMLElement {
-  const skipLink = document.createElement("a");
+  const skipLink = document.createElement('a');
   skipLink.href = `#${targetId}`;
   skipLink.textContent = text;
   skipLink.className =
-    "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 bg-primary text-primary-foreground px-4 py-2 rounded-md font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+    'sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 bg-primary text-primary-foreground px-4 py-2 rounded-md font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2';
 
   return skipLink;
 }
@@ -122,192 +122,192 @@ export function generateMathDescription(expression: string): string {
   // Enhanced LaTeX to text conversion for screen readers
   const conversions: Record<string, string> = {
     // Fractions
-    "\\frac{([^}]+)}{([^}]+)}": "fraction with numerator $1 and denominator $2",
-    "\\dfrac{([^}]+)}{([^}]+)}":
-      "fraction with numerator $1 and denominator $2",
-    "\\tfrac{([^}]+)}{([^}]+)}":
-      "fraction with numerator $1 and denominator $2",
+    '\\frac{([^}]+)}{([^}]+)}': 'fraction with numerator $1 and denominator $2',
+    '\\dfrac{([^}]+)}{([^}]+)}':
+      'fraction with numerator $1 and denominator $2',
+    '\\tfrac{([^}]+)}{([^}]+)}':
+      'fraction with numerator $1 and denominator $2',
 
     // Roots
-    "\\sqrt{([^}]+)}": "square root of $1",
-    "\\sqrt\\[([^\\]]+)\\]{([^}]+)}": "$1th root of $2",
-    "\\cbrt{([^}]+)}": "cube root of $1",
+    '\\sqrt{([^}]+)}': 'square root of $1',
+    '\\sqrt\\[([^\\]]+)\\]{([^}]+)}': '$1th root of $2',
+    '\\cbrt{([^}]+)}': 'cube root of $1',
 
     // Calculus
-    "\\sum": "summation",
-    "\\sum_{([^}]+)}^{([^}]+)}": "summation from $1 to $2",
-    "\\int": "integral",
-    "\\int_{([^}]+)}^{([^}]+)}": "integral from $1 to $2",
-    "\\lim": "limit",
-    "\\lim_{([^}]+)}": "limit as $1",
-    "\\partial": "partial derivative",
-    "\\nabla": "nabla operator",
+    '\\sum': 'summation',
+    '\\sum_{([^}]+)}^{([^}]+)}': 'summation from $1 to $2',
+    '\\int': 'integral',
+    '\\int_{([^}]+)}^{([^}]+)}': 'integral from $1 to $2',
+    '\\lim': 'limit',
+    '\\lim_{([^}]+)}': 'limit as $1',
+    '\\partial': 'partial derivative',
+    '\\nabla': 'nabla operator',
 
     // Trigonometry
-    "\\sin": "sine",
-    "\\cos": "cosine",
-    "\\tan": "tangent",
-    "\\cot": "cotangent",
-    "\\sec": "secant",
-    "\\csc": "cosecant",
-    "\\arcsin": "arcsine",
-    "\\arccos": "arccosine",
-    "\\arctan": "arctangent",
+    '\\sin': 'sine',
+    '\\cos': 'cosine',
+    '\\tan': 'tangent',
+    '\\cot': 'cotangent',
+    '\\sec': 'secant',
+    '\\csc': 'cosecant',
+    '\\arcsin': 'arcsine',
+    '\\arccos': 'arccosine',
+    '\\arctan': 'arctangent',
 
     // Logarithms
-    "\\log": "logarithm",
-    "\\ln": "natural logarithm",
-    "\\log_{([^}]+)}": "logarithm base $1",
+    '\\log': 'logarithm',
+    '\\ln': 'natural logarithm',
+    '\\log_{([^}]+)}': 'logarithm base $1',
 
     // Constants and symbols
-    "\\infty": "infinity",
-    "\\e": "e",
-    "\\emptyset": "empty set",
-    "\\varnothing": "empty set",
+    '\\infty': 'infinity',
+    '\\e': 'e',
+    '\\emptyset': 'empty set',
+    '\\varnothing': 'empty set',
 
     // Greek letters
-    "\\alpha": "alpha",
-    "\\beta": "beta",
-    "\\gamma": "gamma",
-    "\\Gamma": "capital gamma",
-    "\\delta": "delta",
-    "\\Delta": "capital delta",
-    "\\epsilon": "epsilon",
-    "\\varepsilon": "epsilon",
-    "\\zeta": "zeta",
-    "\\eta": "eta",
-    "\\theta": "theta",
-    "\\Theta": "capital theta",
-    "\\vartheta": "theta",
-    "\\iota": "iota",
-    "\\kappa": "kappa",
-    "\\lambda": "lambda",
-    "\\Lambda": "capital lambda",
-    "\\mu": "mu",
-    "\\nu": "nu",
-    "\\xi": "xi",
-    "\\Xi": "capital xi",
-    "\\omicron": "omicron",
-    "\\pi": "pi",
-    "\\Pi": "capital pi",
-    "\\rho": "rho",
-    "\\varrho": "rho",
-    "\\sigma": "sigma",
-    "\\Sigma": "capital sigma",
-    "\\varsigma": "sigma",
-    "\\tau": "tau",
-    "\\upsilon": "upsilon",
-    "\\Upsilon": "capital upsilon",
-    "\\phi": "phi",
-    "\\Phi": "capital phi",
-    "\\varphi": "phi",
-    "\\chi": "chi",
-    "\\psi": "psi",
-    "\\Psi": "capital psi",
-    "\\omega": "omega",
-    "\\Omega": "capital omega",
+    '\\alpha': 'alpha',
+    '\\beta': 'beta',
+    '\\gamma': 'gamma',
+    '\\Gamma': 'capital gamma',
+    '\\delta': 'delta',
+    '\\Delta': 'capital delta',
+    '\\epsilon': 'epsilon',
+    '\\varepsilon': 'epsilon',
+    '\\zeta': 'zeta',
+    '\\eta': 'eta',
+    '\\theta': 'theta',
+    '\\Theta': 'capital theta',
+    '\\vartheta': 'theta',
+    '\\iota': 'iota',
+    '\\kappa': 'kappa',
+    '\\lambda': 'lambda',
+    '\\Lambda': 'capital lambda',
+    '\\mu': 'mu',
+    '\\nu': 'nu',
+    '\\xi': 'xi',
+    '\\Xi': 'capital xi',
+    '\\omicron': 'omicron',
+    '\\pi': 'pi',
+    '\\Pi': 'capital pi',
+    '\\rho': 'rho',
+    '\\varrho': 'rho',
+    '\\sigma': 'sigma',
+    '\\Sigma': 'capital sigma',
+    '\\varsigma': 'sigma',
+    '\\tau': 'tau',
+    '\\upsilon': 'upsilon',
+    '\\Upsilon': 'capital upsilon',
+    '\\phi': 'phi',
+    '\\Phi': 'capital phi',
+    '\\varphi': 'phi',
+    '\\chi': 'chi',
+    '\\psi': 'psi',
+    '\\Psi': 'capital psi',
+    '\\omega': 'omega',
+    '\\Omega': 'capital omega',
 
     // Relations
-    "\\leq": "less than or equal to",
-    "\\le": "less than or equal to",
-    "\\geq": "greater than or equal to",
-    "\\ge": "greater than or equal to",
-    "\\neq": "not equal to",
-    "\\ne": "not equal to",
-    "\\approx": "approximately equal to",
-    "\\equiv": "equivalent to",
-    "\\sim": "similar to",
-    "\\simeq": "similar or equal to",
-    "\\cong": "congruent to",
-    "\\propto": "proportional to",
-    "\\parallel": "parallel to",
-    "\\perp": "perpendicular to",
+    '\\leq': 'less than or equal to',
+    '\\le': 'less than or equal to',
+    '\\geq': 'greater than or equal to',
+    '\\ge': 'greater than or equal to',
+    '\\neq': 'not equal to',
+    '\\ne': 'not equal to',
+    '\\approx': 'approximately equal to',
+    '\\equiv': 'equivalent to',
+    '\\sim': 'similar to',
+    '\\simeq': 'similar or equal to',
+    '\\cong': 'congruent to',
+    '\\propto': 'proportional to',
+    '\\parallel': 'parallel to',
+    '\\perp': 'perpendicular to',
 
     // Operations
-    "\\pm": "plus or minus",
-    "\\mp": "minus or plus",
-    "\\times": "times",
-    "\\div": "divided by",
-    "\\cdot": "dot",
-    "\\ast": "asterisk",
-    "\\star": "star",
-    "\\circ": "circle",
-    "\\bullet": "bullet",
-    "\\oplus": "plus in circle",
-    "\\ominus": "minus in circle",
-    "\\otimes": "times in circle",
-    "\\oslash": "slash in circle",
+    '\\pm': 'plus or minus',
+    '\\mp': 'minus or plus',
+    '\\times': 'times',
+    '\\div': 'divided by',
+    '\\cdot': 'dot',
+    '\\ast': 'asterisk',
+    '\\star': 'star',
+    '\\circ': 'circle',
+    '\\bullet': 'bullet',
+    '\\oplus': 'plus in circle',
+    '\\ominus': 'minus in circle',
+    '\\otimes': 'times in circle',
+    '\\oslash': 'slash in circle',
 
     // Set theory
-    "\\in": "element of",
-    "\\notin": "not element of",
-    "\\subset": "subset of",
-    "\\subseteq": "subset or equal to",
-    "\\supset": "superset of",
-    "\\supseteq": "superset or equal to",
-    "\\cup": "union",
-    "\\cap": "intersection",
-    "\\setminus": "set minus",
-    "\\backslash": "backslash",
+    '\\in': 'element of',
+    '\\notin': 'not element of',
+    '\\subset': 'subset of',
+    '\\subseteq': 'subset or equal to',
+    '\\supset': 'superset of',
+    '\\supseteq': 'superset or equal to',
+    '\\cup': 'union',
+    '\\cap': 'intersection',
+    '\\setminus': 'set minus',
+    '\\backslash': 'backslash',
 
     // Logic
-    "\\land": "and",
-    "\\lor": "or",
-    "\\lnot": "not",
-    "\\neg": "not",
-    "\\implies": "implies",
-    "\\iff": "if and only if",
-    "\\forall": "for all",
-    "\\exists": "there exists",
-    "\\nexists": "there does not exist",
+    '\\land': 'and',
+    '\\lor': 'or',
+    '\\lnot': 'not',
+    '\\neg': 'not',
+    '\\implies': 'implies',
+    '\\iff': 'if and only if',
+    '\\forall': 'for all',
+    '\\exists': 'there exists',
+    '\\nexists': 'there does not exist',
 
     // Arrows
-    "\\rightarrow": "right arrow",
-    "\\leftarrow": "left arrow",
-    "\\leftrightarrow": "left right arrow",
-    "\\Rightarrow": "right double arrow",
-    "\\Leftarrow": "left double arrow",
-    "\\Leftrightarrow": "left right double arrow",
-    "\\uparrow": "up arrow",
-    "\\downarrow": "down arrow",
-    "\\updownarrow": "up down arrow",
+    '\\rightarrow': 'right arrow',
+    '\\leftarrow': 'left arrow',
+    '\\leftrightarrow': 'left right arrow',
+    '\\Rightarrow': 'right double arrow',
+    '\\Leftarrow': 'left double arrow',
+    '\\Leftrightarrow': 'left right double arrow',
+    '\\uparrow': 'up arrow',
+    '\\downarrow': 'down arrow',
+    '\\updownarrow': 'up down arrow',
 
     // Superscripts and subscripts
-    "\\^{([^}]+)}": "to the power of $1",
-    "\\^{2}": "squared",
-    "\\^{3}": "cubed",
-    "\\^{-1}": "inverse",
-    "_{([^}]+)}": "subscript $1",
+    '\\^{([^}]+)}': 'to the power of $1',
+    '\\^{2}': 'squared',
+    '\\^{3}': 'cubed',
+    '\\^{-1}': 'inverse',
+    '_{([^}]+)}': 'subscript $1',
 
     // Brackets and delimiters
-    "\\left\\(": "left parenthesis",
-    "\\right\\)": "right parenthesis",
-    "\\left\\[": "left bracket",
-    "\\right\\]": "right bracket",
-    "\\left\\{": "left brace",
-    "\\right\\}": "right brace",
-    "\\left|": "left vertical bar",
-    "\\right|": "right vertical bar",
-    "\\langle": "left angle bracket",
-    "\\rangle": "right angle bracket",
+    '\\left\\(': 'left parenthesis',
+    '\\right\\)': 'right parenthesis',
+    '\\left\\[': 'left bracket',
+    '\\right\\]': 'right bracket',
+    '\\left\\{': 'left brace',
+    '\\right\\}': 'right brace',
+    '\\left|': 'left vertical bar',
+    '\\right|': 'right vertical bar',
+    '\\langle': 'left angle bracket',
+    '\\rangle': 'right angle bracket',
 
     // Matrices
-    "\\begin{matrix}": "matrix with elements",
-    "\\end{matrix}": "end matrix",
-    "\\begin{pmatrix}": "matrix in parentheses with elements",
-    "\\end{pmatrix}": "end matrix",
-    "\\begin{bmatrix}": "matrix in brackets with elements",
-    "\\end{bmatrix}": "end matrix",
-    "\\begin{vmatrix}": "determinant with elements",
-    "\\end{vmatrix}": "end determinant",
+    '\\begin{matrix}': 'matrix with elements',
+    '\\end{matrix}': 'end matrix',
+    '\\begin{pmatrix}': 'matrix in parentheses with elements',
+    '\\end{pmatrix}': 'end matrix',
+    '\\begin{bmatrix}': 'matrix in brackets with elements',
+    '\\end{bmatrix}': 'end matrix',
+    '\\begin{vmatrix}': 'determinant with elements',
+    '\\end{vmatrix}': 'end determinant',
 
     // Clean up delimiters
-    "\\{": "left brace",
-    "\\}": "right brace",
-    "\\[": "",
-    "\\]": "",
-    "\\(": "",
-    "\\)": "",
+    '\\{': 'left brace',
+    '\\}': 'right brace',
+    '\\[': '',
+    '\\]': '',
+    '\\(': '',
+    '\\)': '',
   };
 
   let description = expression;
@@ -316,7 +316,7 @@ export function generateMathDescription(expression: string): string {
   const escapeRegexSpecialChars = (str: string): string => {
     // Only escape if the string contains unescaped special characters
     // that would cause regex errors
-    return str.replace(/([.*+?^${}()|[\]\\])/g, "\\$1");
+    return str.replace(/([.*+?^${}()|[\]\\])/g, '\\$1');
   };
 
   // Apply conversions in order of complexity (more specific patterns first)
@@ -326,6 +326,8 @@ export function generateMathDescription(expression: string): string {
 
   for (const pattern of sortedPatterns) {
     const replacement = conversions[pattern];
+    if (!replacement) continue;
+
     try {
       // For LaTeX patterns, we want to keep the backslashes as they are
       // but escape other special regex characters if needed
@@ -333,21 +335,21 @@ export function generateMathDescription(expression: string): string {
 
       // Special handling for patterns that are meant to be literal strings
       if (
-        pattern.startsWith("\\") &&
-        !pattern.includes("(") &&
-        !pattern.includes("[")
+        pattern.startsWith('\\') &&
+        !pattern.includes('(') &&
+        !pattern.includes('[')
       ) {
         // This is likely a LaTeX command, treat as literal
         regexPattern = escapeRegexSpecialChars(pattern);
       }
 
-      const regex = new RegExp(regexPattern, "g");
+      const regex = new RegExp(regexPattern, 'g');
       description = description.replace(regex, replacement);
     } catch (error) {
       // Skip invalid regex patterns and try with escaped version
       try {
         const escapedPattern = escapeRegexSpecialChars(pattern);
-        const regex = new RegExp(escapedPattern, "g");
+        const regex = new RegExp(escapedPattern, 'g');
         description = description.replace(regex, replacement);
       } catch (secondError) {
         console.warn(`Could not process pattern: ${pattern}`, secondError);
@@ -357,18 +359,18 @@ export function generateMathDescription(expression: string): string {
 
   // Post-process to improve readability
   description = description
-    .replace(/\s+/g, " ") // Normalize whitespace
-    .replace(/\s*,\s*/g, ", ") // Fix comma spacing
-    .replace(/\s*\.\s*/g, ". ") // Fix period spacing
-    .replace(/\s*;\s*/g, "; ") // Fix semicolon spacing
-    .replace(/\s*:\s*/g, ": ") // Fix colon spacing
-    .replace(/\s*=\s*/g, " equals ") // Replace equals sign
-    .replace(/\s*<\s*/g, " less than ") // Replace less than
-    .replace(/\s*>\s*/g, " greater than ") // Replace greater than
-    .replace(/\s*\+\s*/g, " plus ") // Replace plus
-    .replace(/\s*-\s*/g, " minus ") // Replace minus
-    .replace(/\s*\*\s*/g, " times ") // Replace asterisk
-    .replace(/\s*\/\s*/g, " divided by ") // Replace slash
+    .replace(/\s+/g, ' ') // Normalize whitespace
+    .replace(/\s*,\s*/g, ', ') // Fix comma spacing
+    .replace(/\s*\.\s*/g, '. ') // Fix period spacing
+    .replace(/\s*;\s*/g, '; ') // Fix semicolon spacing
+    .replace(/\s*:\s*/g, ': ') // Fix colon spacing
+    .replace(/\s*=\s*/g, ' equals ') // Replace equals sign
+    .replace(/\s*<\s*/g, ' less than ') // Replace less than
+    .replace(/\s*>\s*/g, ' greater than ') // Replace greater than
+    .replace(/\s*\+\s*/g, ' plus ') // Replace plus
+    .replace(/\s*-\s*/g, ' minus ') // Replace minus
+    .replace(/\s*\*\s*/g, ' times ') // Replace asterisk
+    .replace(/\s*\/\s*/g, ' divided by ') // Replace slash
     .trim();
 
   // Add context if the description is still mostly symbols
@@ -376,7 +378,7 @@ export function generateMathDescription(expression: string): string {
     description = `Mathematical expression: ${description || expression}`;
   }
 
-  return description || "Mathematical expression";
+  return description || 'Mathematical expression';
 }
 
 /**
@@ -389,22 +391,25 @@ export function generateGraphDescription(
   let description = `Interactive ${graphType} graph`;
 
   if (elements.length > 0) {
-    const elementCounts = elements.reduce((acc, el) => {
-      acc[el.type] = (acc[el.type] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const elementCounts = elements.reduce(
+      (acc, el) => {
+        acc[el.type] = (acc[el.type] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
 
     const elementDescriptions = Object.entries(elementCounts).map(
       ([type, count]) => {
-        const plural = count > 1 ? "s" : "";
+        const plural = count > 1 ? 's' : '';
         return `${count} ${type}${plural}`;
       }
     );
 
-    description += ` containing ${elementDescriptions.join(", ")}`;
+    description += ` containing ${elementDescriptions.join(', ')}`;
   }
 
-  description += ". Use arrow keys to navigate interactive elements.";
+  description += '. Use arrow keys to navigate interactive elements.';
 
   return description;
 }
@@ -439,11 +444,11 @@ export function checkColorContrast(
 function hslToRgb(hsl: string): [number, number, number] {
   // Parse HSL string like "255 25% 15%"
   const matches = hsl.match(/(\d+)\s+(\d+)%\s+(\d+)%/);
-  if (!matches) return [0, 0, 0];
+  if (!matches || matches.length < 4) return [0, 0, 0];
 
-  const h = parseInt(matches[1]) / 360;
-  const s = parseInt(matches[2]) / 100;
-  const l = parseInt(matches[3]) / 100;
+  const h = parseInt(matches[1]!) / 360;
+  const s = parseInt(matches[2]!) / 100;
+  const l = parseInt(matches[3]!) / 100;
 
   const hue2rgb = (p: number, q: number, t: number) => {
     if (t < 0) t += 1;
@@ -477,11 +482,11 @@ function getContrastRatio(
   rgb2: [number, number, number]
 ): number {
   const getLuminance = (rgb: [number, number, number]) => {
-    const [r, g, b] = rgb.map((c) => {
+    const [r, g, b] = rgb.map(c => {
       c = c / 255;
       return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
     });
-    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    return 0.2126 * r! + 0.7152 * g! + 0.0722 * b!;
   };
 
   const lum1 = getLuminance(rgb1);
@@ -509,21 +514,21 @@ export class KeyboardNavigation {
 
   handleKeyDown(event: KeyboardEvent) {
     switch (event.key) {
-      case "ArrowDown":
-      case "ArrowRight":
+      case 'ArrowDown':
+      case 'ArrowRight':
         event.preventDefault();
         this.focusNext();
         break;
-      case "ArrowUp":
-      case "ArrowLeft":
+      case 'ArrowUp':
+      case 'ArrowLeft':
         event.preventDefault();
         this.focusPrevious();
         break;
-      case "Home":
+      case 'Home':
         event.preventDefault();
         this.focusFirst();
         break;
-      case "End":
+      case 'End':
         event.preventDefault();
         this.focusLast();
         break;
@@ -573,21 +578,21 @@ export class HighContrastManager {
   }
 
   private detectSystemHighContrast() {
-    if (typeof window !== "undefined") {
-      const mediaQuery = window.matchMedia("(prefers-contrast: high)");
+    if (typeof window !== 'undefined') {
+      const mediaQuery = window.matchMedia('(prefers-contrast: high)');
       this.isHighContrast = mediaQuery.matches;
 
-      mediaQuery.addEventListener("change", (e) => {
+      mediaQuery.addEventListener('change', e => {
         this.setHighContrast(e.matches);
       });
     }
   }
 
   private loadUserPreference() {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("high-contrast");
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('high-contrast');
       if (saved !== null) {
-        this.setHighContrast(saved === "true");
+        this.setHighContrast(saved === 'true');
       }
     }
   }
@@ -595,19 +600,19 @@ export class HighContrastManager {
   setHighContrast(enabled: boolean) {
     this.isHighContrast = enabled;
 
-    if (typeof document !== "undefined") {
+    if (typeof document !== 'undefined') {
       if (enabled) {
-        document.documentElement.classList.add("high-contrast");
+        document.documentElement.classList.add('high-contrast');
       } else {
-        document.documentElement.classList.remove("high-contrast");
+        document.documentElement.classList.remove('high-contrast');
       }
     }
 
-    if (typeof window !== "undefined") {
-      localStorage.setItem("high-contrast", enabled.toString());
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('high-contrast', enabled.toString());
     }
 
-    this.callbacks.forEach((callback) => callback(enabled));
+    this.callbacks.forEach(callback => callback(enabled));
   }
 
   getHighContrast(): boolean {

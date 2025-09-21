@@ -3,17 +3,16 @@
  * Shows comprehensive performance metrics, memory usage, and optimization insights
  */
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
-// import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Progress } from './ui/progress';
 import { useMathWorkerPerformance } from '../hooks/useMathWorker';
 import {
   usePerformanceStats,
   useMemoryMonitor,
-  ComponentRenderMetric,
 } from '../hooks/usePerformanceMonitor';
 import {
   Activity,
@@ -286,7 +285,11 @@ export function PerformanceMonitor() {
                           </span>
                         </div>
                         <Progress
-                          value={(memoryInfo.current / memoryInfo.limit) * 100}
+                          value={
+                            memoryInfo.current && memoryInfo.limit
+                              ? (memoryInfo.current / memoryInfo.limit) * 100
+                              : 0
+                          }
                           className='h-2'
                         />
                       </>
