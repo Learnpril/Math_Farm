@@ -357,87 +357,373 @@ export function TheorySection({
   };
 
   return (
-    <div className='space-y-8'>
-      <div className='prose prose-purple max-w-none dark:prose-invert'>
-        <h3 className='text-xl font-semibold mb-6 flex items-center gap-2'>
-          <span className='w-8 h-8 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full flex items-center justify-center text-sm font-bold'>
-            📚
+    <div className='max-w-4xl mx-auto'>
+      {/* Chapter Overview Section */}
+      <div className='mb-12 p-8 bg-gradient-to-br from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 rounded-lg border border-purple-200 dark:border-purple-700'>
+        <div className='flex items-center gap-3 mb-6'>
+          <span className='w-10 h-10 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full flex items-center justify-center text-lg font-bold'>
+            📖
           </span>
-          Core Concepts
-        </h3>
+          <h3 className='text-2xl font-bold text-purple-800 dark:text-purple-200'>
+            Chapter Overview
+          </h3>
+        </div>
 
-        {concepts.map((concept, index) => (
-          <div
-            key={index}
-            className='mb-8 p-6 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700/50 dark:to-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-600'
-          >
-            <h4 className='text-lg font-medium mb-4 text-purple-700 dark:text-purple-300 flex items-center gap-2'>
-              <span className='w-6 h-6 bg-purple-200 dark:bg-purple-800 text-purple-800 dark:text-purple-200 rounded-full flex items-center justify-center text-xs font-bold'>
-                {index + 1}
-              </span>
-              {concept.title}
-            </h4>
+        <div className='prose prose-purple max-w-none dark:prose-invert text-purple-700 dark:text-purple-300'>
+          <p className='text-lg leading-relaxed mb-4'>
+            This chapter elevates the "Numbers and Place Value" theory section
+            into a comprehensive exploration suitable for elementary to early
+            middle school learners, transforming brief concepts into a
+            textbook-style journey through the foundations of our number system.
+          </p>
 
-            <div className='text-gray-700 dark:text-gray-300 mb-4 leading-relaxed'>
-              {concept.content}
+          <div className='grid md:grid-cols-2 gap-6 mt-6'>
+            <div className='bg-white/50 dark:bg-gray-800/50 p-4 rounded-lg'>
+              <h4 className='font-semibold text-purple-800 dark:text-purple-200 mb-2 flex items-center gap-2'>
+                <span className='text-sm'>🎯</span>
+                Learning Objectives
+              </h4>
+              <ul className='text-sm space-y-1'>
+                <li>
+                  • Explain the base-10 number system and its historical origins
+                </li>
+                <li>
+                  • Identify and use place value positions to represent numbers
+                </li>
+                <li>
+                  • Decompose numbers into expanded form and understand their
+                  structure
+                </li>
+                <li>• Compare numbers using place value principles</li>
+                <li>
+                  • Apply these concepts to real-world scenarios and recognize
+                  common pitfalls
+                </li>
+              </ul>
             </div>
 
-            {concept.latex && (
-              <div className='bg-white dark:bg-gray-800 p-4 rounded-lg border-l-4 border-purple-500 mb-4 shadow-sm'>
-                <div className='flex items-center gap-2 mb-2'>
-                  <span className='text-xs font-medium text-purple-600 dark:text-purple-400 bg-purple-100 dark:bg-purple-900/30 px-2 py-1 rounded'>
-                    FORMULA
-                  </span>
-                </div>
-                <MathExpression inline={false} className='text-xl'>
-                  {concept.latex}
-                </MathExpression>
-              </div>
-            )}
-
-            {concept.visuals && concept.visuals.length > 0 && (
-              <div className='mt-6'>
-                <h5 className='font-medium mb-3 text-gray-800 dark:text-gray-200 flex items-center gap-2'>
-                  <span className='text-sm'>🎯</span>
-                  Visual Learning Tools:
-                </h5>
-                <div className='space-y-2'>
-                  {concept.visuals.map((visual, vIndex) =>
-                    renderVisualAid(visual, index, vIndex)
-                  )}
-                </div>
-              </div>
-            )}
+            <div className='bg-white/50 dark:bg-gray-800/50 p-4 rounded-lg'>
+              <h4 className='font-semibold text-purple-800 dark:text-purple-200 mb-2 flex items-center gap-2'>
+                <span className='text-sm'>📋</span>
+                Chapter Structure
+              </h4>
+              <ul className='text-sm space-y-1'>
+                <li>
+                  • <strong>Prerequisites:</strong> Basic counting skills
+                  (numbers 1-10)
+                </li>
+                <li>
+                  • <strong>Approach:</strong> Concrete → Abstract thinking
+                </li>
+                <li>
+                  • <strong>Difficulty:</strong> Beginner to intermediate
+                  progression
+                </li>
+                <li>
+                  • <strong>Extensions:</strong> Binary systems for advanced
+                  learners
+                </li>
+              </ul>
+            </div>
           </div>
-        ))}
+
+          <div className='mt-6 p-4 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 border border-blue-200 dark:border-blue-700 rounded-lg'>
+            <h4 className='font-semibold text-blue-800 dark:text-blue-200 mb-2 flex items-center gap-2'>
+              <span className='text-sm'>🏛️</span>
+              Historical Context
+            </h4>
+            <p className='text-sm text-blue-700 dark:text-blue-300'>
+              Numbers evolved from ancient tally marks (20,000 BCE) through
+              Sumerian base-60 systems to our modern Hindu-Arabic base-10
+              system. This chapter explores why we use ten digits and how place
+              value revolutionized mathematics, connecting historical
+              development to modern applications in finance, science, and
+              technology.
+            </p>
+          </div>
+        </div>
       </div>
 
-      <div className='bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-6'>
-        <div className='flex items-start gap-3'>
-          <span className='text-2xl'>💡</span>
-          <div>
-            <h4 className='font-medium text-yellow-800 dark:text-yellow-200 mb-2'>
-              Learning Tips
-            </h4>
-            <div className='space-y-2 text-yellow-700 dark:text-yellow-300 text-sm'>
-              <p>
-                • <strong>Take your time:</strong> Don't rush through the
-                theory. Make sure you understand each concept before moving on.
-              </p>
-              <p>
-                • <strong>Use the visuals:</strong> Click on the interactive
-                visual aids to explore and experiment with the ideas.
-              </p>
-              <p>
-                • <strong>Practice as you go:</strong> Try to work through
-                examples in your head or on paper as you read.
-              </p>
-              <p>
-                • <strong>Ask questions:</strong> If something doesn't make
-                sense, review the concept or seek additional help.
-              </p>
+      {/* Main Chapter Content */}
+      <div className='prose prose-lg max-w-none dark:prose-invert'>
+        {concepts.map((concept, index) => {
+          // Enhanced content based on concept title
+          const getEnhancedContent = (
+            title: string,
+            originalContent: string
+          ) => {
+            // Chapter 1: Numbers and Place Value
+            if (chapterNumber === 1) {
+              switch (title) {
+                case 'The Base-10 Number System':
+                  return `Imagine grouping apples: when you have ten, you bundle them into a 'ten,' freeing up space for more. This is the essence of base-10 - grouping by tens.
+
+Our number system is based on groups of 10. Each position in a number represents a different power of 10. Moving from right to left, each position is 10 times larger than the previous one. The base-10 (decimal) system uses ten digits (0-9), where each position represents a power of 10, starting from the right: 10⁰ (units), 10¹ (tens), 10² (hundreds), etc.
+
+To understand this concretely, begin with base-10-blocks: a single block is 1 (unit), ten units make a 'long' (ten), ten longs a 'flat' (hundred). For 23: two longs and three units. Progress to symbolic: 23 = 2 × 10 + 3 × 1.
+
+Base-10 likely arose from ten fingers, evidenced in ancient Egyptian hieroglyphs (ropes for tens, coils for hundreds). Alternatives like base-60 (Babylonian) were used for fractions, but base-10's simplicity won for everyday use. We see this system everywhere today: in metrics, kilometers (10³ meters); in computing, though binary underneath, user interfaces are decimal (e.g., file sizes like 1.2 GB). In population stats, 1,000,000 uses place value for readability.
+
+Common misconceptions include thinking all number systems work like base-10, or ignoring the importance of zero as a placeholder. Remember: our ten-finger heritage shaped mathematics itself.`;
+
+                case 'Place Value Positions':
+                  return `Think of place value like seats in a theater - each 'place' has a different value based on position, from front-row units to balcony thousands.
+
+Place values are the positional weights: rightmost is units (10⁰ = 1), then tens (10¹ = 10), hundreds (10² = 100), etc., extending left for integers and right for decimals (tenths 10⁻¹, etc.). Each digit in a number has a specific place value: ones, tens, hundreds, thousands, ten thousands, hundred thousands, and millions. The value of a digit depends on its position.
+
+To work with this concretely, start with a place-value-chart to label columns. For 372: 3 in hundreds, 7 in tens, 2 in units. Build with base-10-blocks: three flats, seven longs, two units. This helps visualize how 372 = 3 × 100 + 7 × 10 + 2 × 1.
+
+Place value evolved from Indian sundials (positional without zero) to full system with zero (Brahmagupta, 628 CE), enabling efficient arithmetic over additive systems like Greek letters. Today, in banking, check amounts rely on places (e.g., $1,234.56). In engineering, precision machining uses decimal places for exact measurements.
+
+Watch out for confusing place names (thinking "ten thousands" means 10 × 1000) or believing trailing zeros don't matter. Zero changes everything: consider the difference between 15 and 105.`;
+
+                case 'Expanded Form':
+                  return `Expanded form is like unpacking a box - break down a number into its place value parts to see what's inside.
+
+Expanded form writes a number as sum of its digit-place products, e.g., 456 = 400 + 50 + 6. This shows the value of each digit in a number, helping us understand what each digit contributes to the total value.
+
+Start concretely: Use base-10-blocks to group, then write. Symbolic: Multiply digits by places. Abstract: Include exponents, 456 = 4 × 10² + 5 × 10¹ + 6 × 10⁰. This progression from concrete to abstract mirrors how mathematical understanding develops.
+
+This concept ties to place value invention, aiding abacus calculations in China (200 BCE). Today we use expanded form in budgets (break down $123 into hundreds, etc.) and as a precursor to scientific notation for very large or small numbers.
+
+A common error is omitting zeros in expanded form (writing 405 as 400 + 5 instead of 400 + 0 + 5). Think about breaking apart objects in real life - expanded form is similar to taking apart a toy to see its parts.`;
+
+                case 'Comparing Numbers':
+                  return `Comparing numbers is like weighing fruits - align by size (places) to see which is larger.
+
+To compare numbers, start from the leftmost digit and compare place by place. The first position where digits differ determines which number is larger. Compare by aligning places from left; first differing digit decides, e.g., 456 > 432 since 5>3 in tens.
+
+Work concretely with comparison-charts, then progress to abstract inequalities <, >, =. Line up numbers by place value, then scan from left to right until you find a difference.
+
+Early inequalities appeared in Babylonian tablets for astronomy, showing this is an ancient mathematical need. Today we use comparisons constantly: scores, heights, prices, rankings, and measurements all rely on number comparison.
+
+Students often err by thinking longer numbers are always bigger, or comparing from right to left instead of left to right. Remember: when you line up for height, you compare from the top down. Numbers work the same way - compare from left to right.`;
+
+                default:
+                  return originalContent;
+              }
+            }
+
+            // Chapter 2: Addition and Subtraction
+            if (chapterNumber === 2) {
+              switch (title) {
+                case 'Addition with Regrouping':
+                  return `When combining quantities pushes a place value beyond its limit - like filling a cup to overflow - we "trade up," regrouping tens from units, hundreds from tens. Intuitively, imagine ten marbles filling a small box; add one more, and you bundle ten into a larger "ten" box, leaving one. This is addition with regrouping, or carrying, ensuring place value integrity.
+
+Formally, regrouping occurs when a place sum ≥10; carry 1 to the next higher place. For 29 + 36: Units 9 + 6 = 15 (write 5, carry 1); tens 2 + 3 + 1 = 6; sum 65. This exchanges 10 units for 1 ten, mirroring base-10 structure.
+
+Step-by-step development: Concrete with base-10-blocks - 9 units + 6 = 15; trade 10 for a ten-rod, leaving 5 units, add to existing tens. Semi-abstract: Draw models, circling groups of 10. Abstract: Algorithmic - align vertically, add right-to-left, carry as needed. Example: 456 + 789. Units: 6+9=15 (5, carry 1); tens: 5+8+1=14 (4, carry 1); hundreds: 4+7+1=12 (2, carry 1 to thousands). Sum: 1245.
+
+Historically, carrying emerged with decimal systems. Egyptians regrouped symbols (ten frogs to a coil), but true algorithms came with Al-Khwarizmi (825 CE), describing carrying in column addition. European texts by 1400s, like Pacioli's "Summa" (1494), standardized it for accounting.
+
+Applications include multi-digit budgets - $999 + $2 = $1001, carrying across places. Construction: Add beam lengths 456 cm + 789 cm = 1245 cm. Data analysis: Sum populations 12,345 + 67,890 = 80,235.
+
+Watch out for forgetting to carry - resulting in 29 + 36 = 55 instead of 65. Use base-10-blocks to visualize overflow. Another error is carrying to the wrong column - address with the addition-algorithm visual, highlighting place values step by step.`;
+
+                case 'Subtraction with Regrouping':
+                  return `Borrowing addresses shortfall: like borrowing sugar from a neighbor, but in places - trade a ten for ten units when units are insufficient. Intuitively, if you have 1 ten and 2 units (12) minus 5 units, "trade down" the ten into ten units, making 12 units total, then subtract 5 for 7.
+
+Formally, when the minuend digit is smaller than the subtrahend digit, borrow 1 from the left place, adding 10 to the current place while subtracting 1 from the lending place. For 52 - 27: Units 2 < 7, so borrow from tens: 12 - 7 = 5; tens (5-1) - 2 = 2; result 25.
+
+Step-by-step development: Concrete - base-10-blocks: For 32-17, units 2<7; trade one ten-rod for 10 units (now 12 units, 2 tens). 12-7=5 units; 2-1=1 ten; result 15. Semi-abstract: Cross out and rewrite borrowed amounts. Abstract: 503 - 278. Units 3-8: borrow from tens (but tens is 0, so borrow from hundreds first): 13-8=5; tens 10-7=3 (after borrowing); hundreds 4-2=2; result 225.
+
+Historically, borrowing methods varied. Equal additions (adding the same amount to both numbers to avoid borrowing) was popular from 1700-1900. Modern decomposition (borrowing) became standard in U.S. schools post-1940s, emphasizing place value understanding.
+
+Applications include banking - $500 - $278 = $222 for remaining balance. Measurements - 503 mm - 278 mm = 225 mm difference. Time calculations - borrowing minutes from hours when subtracting time intervals.
+
+Students often err by borrowing without adjusting the lending place - use the borrowing-demonstration visual to show the complete process. Another challenge is borrowing across zeros (like 500-123) - work through this step-by-step, borrowing from the hundreds to tens, then tens to units.`;
+
+                default:
+                  return originalContent;
+              }
+            }
+
+            // Chapter 3: Multiplication Basics
+            if (chapterNumber === 3) {
+              switch (title) {
+                case 'Understanding Multiplication':
+                  return `Multiplication starts with grouping, an intuitive leap from addition: instead of adding 3 + 3 + 3 four times, multiply 3 × 4 for 12. Picture arranging cookies in rows - 3 per row, 4 rows: the total is the product. This transforms how we handle repeated quantities, making calculations faster and revealing mathematical patterns.
+
+Formally, multiplication is a binary operation where a × b = p, with a and b as factors, p the product. It scales a by b times, rooted in set theory as Cartesian product cardinality. The operation represents repeated addition: 4 × 3 means "add 3 four times" or equivalently "add 4 three times."
+
+Step-by-step development: Concrete - use base-10-blocks: 3 × 4 as four groups of three units = 12. Semi-abstract - number-line skips: from 0, jump 3 units four times to reach 12. Abstract - extend to larger numbers: 23 × 4 = (20 × 4) + (3 × 4) = 80 + 12 = 92, decomposing by place value from Chapter 1.
+
+Historically, multiplication arose for scaling needs. Sumerian tablets (4000 BCE) listed multiples for calculating wages and trade quantities. Egyptians developed duplication methods (1650 BCE Ahmes papyrus) where they multiplied by repeatedly halving one factor while doubling the other - for example, 13 × 12: halve 13 to get 1 (noting odd numbers), then sum the corresponding doubles. Greeks geometricized multiplication: Euclid's "Elements" (300 BCE) proved fundamental properties like distributivity and commutativity.
+
+Real-world applications make multiplication indispensable: scaling maps (2 cm represents 1 km, so 50 km = 100 cm on map), calculating traffic flow (cars per lane × number of lanes × time), and computing array dimensions in programming. These connect directly to our place value foundation - without understanding that 23 = 20 + 3, we couldn't break apart multiplication problems effectively.
+
+Common misconceptions include confusing multiplication with addition - clarify that multiplication shortens repeated addition. Students sometimes think order matters, but commutativity (a × b = b × a) always holds - demonstrate this with arrays that can be rotated. Another pitfall is assuming multiplication always makes numbers bigger, forgetting about zero (5 × 0 = 0) and eventually fractions.`;
+
+                case 'Distributive Property':
+                  return `The distributive property unlocks multiplication's power by allowing us to break apart numbers strategically. Like unpacking a large box into smaller, manageable pieces, we can split one factor and multiply each part separately, then combine the results.
+
+Formally, the distributive property states that a × (b + c) = (a × b) + (a × c). This means we can distribute the multiplication across addition inside parentheses. For example, 23 × 4 = (20 + 3) × 4 = (20 × 4) + (3 × 4) = 80 + 12 = 92.
+
+Step-by-step development: Concrete - use area models with base-10-blocks: arrange 23 × 4 as a rectangle, then split it into a 20 × 4 rectangle and a 3 × 4 rectangle. Semi-abstract - draw rectangular diagrams showing the split. Abstract - apply algebraically to any numbers, recognizing that this property works because multiplication represents area, and areas can be combined.
+
+This property has ancient roots. Babylonians (1800 BCE) used similar decomposition methods for their multiplication tables, breaking complex calculations into simpler parts. Indian mathematicians like Brahmagupta (628 CE) formalized these ideas, while Islamic scholars like Al-Khwarizmi (825 CE) developed systematic algorithms based on distributive principles.
+
+Real-world applications include mental math shortcuts: calculating 99 × 5 as (100 - 1) × 5 = 500 - 5 = 495, or finding areas of irregular shapes by breaking them into rectangles. In construction, contractors use this to estimate materials: a 23-foot by 4-foot deck needs (20 × 4) + (3 × 4) = 80 + 12 = 92 square feet of decking.
+
+Students often struggle with the distributive property by forgetting to multiply both parts or by adding instead of multiplying. Use area models consistently to show why this works - the total area doesn't change whether you calculate it as one rectangle or as the sum of smaller rectangles. Another common error is not maintaining the correct operation: (a + b) × c requires multiplying both a and b by c, not adding c to both.`;
+
+                case 'Multi-digit Multiplication':
+                  return `Multi-digit multiplication extends our basic facts to handle larger numbers systematically. Like building a house requires organizing materials and following a plan, multi-digit multiplication requires careful attention to place values and systematic organization of partial products.
+
+The process builds on everything we've learned: place value from Chapter 1 tells us that 56 = 50 + 6, addition from Chapter 2 helps us combine partial products, and the distributive property lets us break apart the problem. For 56 × 78, we calculate 56 × (70 + 8) = (56 × 70) + (56 × 8) = 3,920 + 448 = 4,368.
+
+Step-by-step development: Concrete - use base-10-blocks to build rectangular arrays, physically showing how 12 × 13 creates a rectangle that can be split into four smaller rectangles: (10 × 10) + (10 × 3) + (2 × 10) + (2 × 3). Semi-abstract - draw area models or use the lattice method, organizing partial products in grids. Abstract - master the standard algorithm, aligning place values and managing carries systematically.
+
+Historically, various cultures developed different approaches. The lattice method originated in India around 400 CE and spread through Islamic scholars to medieval Europe. Fibonacci's "Liber Abaci" (1202) introduced the long multiplication method we use today. Different algorithms emerged: the Russian peasant method (similar to Egyptian duplication), the Vedic mathematics techniques from ancient India, and various mental math strategies.
+
+Real-world applications are everywhere: calculating areas (a 56-meter by 78-meter field = 4,368 square meters), scaling recipes (making 78 servings of a recipe that serves 56 people), or computing costs (56 items at $78 each = $4,368). These calculations appear in construction, manufacturing, finance, and scientific research.
+
+Common errors include misaligning partial products - the key is understanding that 56 × 70 means 56 × 7 tens, so the result should end in zero. Another frequent mistake is addition errors when combining partial products - always double-check this final step. Students sometimes forget to include all partial products or mix up the place values when using the standard algorithm.`;
+
+                default:
+                  return originalContent;
+              }
+            }
+
+            return originalContent;
+          };
+
+          const enhancedContent = getEnhancedContent(
+            concept.title,
+            concept.content
+          );
+
+          return (
+            <div key={index} className='mb-12'>
+              <h4 className='text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100 border-b-2 border-purple-200 dark:border-purple-700 pb-2'>
+                1.{index + 1} {concept.title}
+              </h4>
+
+              <div className='text-gray-700 dark:text-gray-300 leading-relaxed space-y-4 mb-8'>
+                {enhancedContent.split('\n\n').map((paragraph, pIndex) => {
+                  // Handle special formatting
+                  if (
+                    paragraph.includes('Common misconceptions') ||
+                    paragraph.includes('Watch out for') ||
+                    paragraph.includes('A common error') ||
+                    paragraph.includes('Students often err')
+                  ) {
+                    return (
+                      <div
+                        key={pIndex}
+                        className='my-6 p-4 bg-amber-50 dark:bg-amber-900/20 border-l-4 border-amber-400 rounded-r-lg'
+                      >
+                        <p className='font-semibold text-amber-800 dark:text-amber-200 mb-2 flex items-center gap-2'>
+                          <span>⚠️</span>
+                          Common Pitfalls
+                        </p>
+                        <p className='text-amber-700 dark:text-amber-300'>
+                          {paragraph}
+                        </p>
+                      </div>
+                    );
+                  }
+                  return (
+                    <p key={pIndex} className='mb-4 text-lg leading-relaxed'>
+                      {paragraph}
+                    </p>
+                  );
+                })}
+              </div>
+
+              {concept.latex && (
+                <div className='my-6 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm'>
+                  <MathExpression
+                    inline={false}
+                    className='text-xl text-center'
+                  >
+                    {concept.latex}
+                  </MathExpression>
+                </div>
+              )}
+
+              {concept.visuals && concept.visuals.length > 0 && (
+                <div className='my-8'>
+                  <h5 className='font-semibold mb-4 text-gray-800 dark:text-gray-200 text-lg'>
+                    Interactive Visual Tools
+                  </h5>
+                  <div className='space-y-2'>
+                    {concept.visuals.map((visual, vIndex) =>
+                      renderVisualAid(visual, index, vIndex)
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Self-check as a simple question */}
+              <div className='my-8 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-700'>
+                <p className='font-medium text-purple-800 dark:text-purple-200 mb-2'>
+                  ✓ Quick Check:
+                </p>
+                <p className='text-purple-700 dark:text-purple-300 italic'>
+                  {chapterNumber === 1 &&
+                    index === 0 &&
+                    'Can you represent 56 using base-10 blocks? Try it mentally: 5 tens and 6 units.'}
+                  {chapterNumber === 1 &&
+                    index === 1 &&
+                    "In the number 3,742, what is the value of the digit 7? (Answer: 700 - it's in the hundreds place)"}
+                  {chapterNumber === 1 &&
+                    index === 2 &&
+                    'Write 789 in expanded form. (Answer: 700 + 80 + 9)'}
+                  {chapterNumber === 1 &&
+                    index === 3 &&
+                    'Which is larger: 1,234 or 1,243? How do you know?'}
+                  {chapterNumber === 2 &&
+                    index === 0 &&
+                    'What is 47 + 38? Work through it step by step. (Answer: 85)'}
+                  {chapterNumber === 2 &&
+                    index === 1 &&
+                    'Calculate 52 - 27 using borrowing. (Answer: 25)'}
+                  {chapterNumber === 3 &&
+                    index === 0 &&
+                    'Show 4 × 6 as repeated addition. (Answer: 6 + 6 + 6 + 6 = 24)'}
+                  {chapterNumber === 3 &&
+                    index === 1 &&
+                    'Use the distributive property to calculate 15 × 4. (Answer: (10 + 5) × 4 = 40 + 20 = 60)'}
+                  {chapterNumber === 3 &&
+                    index === 2 &&
+                    'Calculate 23 × 45 using partial products. (Answer: 1,035)'}
+                </p>
+              </div>
             </div>
-          </div>
+          );
+        })}
+      </div>
+
+      {/* Chapter Summary */}
+      <div className='mt-16 p-6 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200 dark:border-green-800 rounded-lg'>
+        <h4 className='font-semibold text-green-800 dark:text-green-200 mb-4 flex items-center gap-2'>
+          <span className='text-xl'>📝</span>
+          Chapter Summary
+        </h4>
+        <div className='text-green-700 dark:text-green-300 space-y-2'>
+          <p>
+            In this chapter, we explored the fundamental concepts that make our
+            number system work:
+          </p>
+          <ul className='list-disc list-inside space-y-1 ml-4'>
+            <li>
+              The base-10 system groups numbers by tens, reflecting our
+              ten-finger heritage
+            </li>
+            <li>
+              Place value gives each digit a specific meaning based on its
+              position
+            </li>
+            <li>Expanded form breaks numbers into their component parts</li>
+            <li>
+              Comparing numbers requires systematic left-to-right analysis
+            </li>
+          </ul>
+          <p className='mt-4 font-medium'>
+            These concepts form the foundation for all arithmetic operations and
+            mathematical reasoning that follows.
+          </p>
         </div>
       </div>
     </div>

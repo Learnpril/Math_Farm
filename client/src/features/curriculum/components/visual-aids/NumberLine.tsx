@@ -43,9 +43,9 @@ export function NumberLine({
         Number Line ({min} to {max})
       </h4>
 
-      <div className='relative h-16 mb-4'>
+      <div className='relative h-20 mb-4'>
         {/* Main line */}
-        <div className='absolute top-8 left-0 right-0 h-1 bg-gray-400 dark:bg-gray-600 rounded'></div>
+        <div className='absolute top-6 left-0 right-0 h-1 bg-gray-400 dark:bg-gray-600 rounded'></div>
 
         {/* Tick marks and labels */}
         {ticks.map(tick => {
@@ -62,7 +62,7 @@ export function NumberLine({
               {/* Tick mark */}
               <div
                 className={`
-                  w-1 h-6 top-5 relative mx-auto cursor-pointer
+                  w-1 h-4 top-4 relative mx-auto cursor-pointer
                   ${
                     isHighlighted || isSelected
                       ? 'bg-purple-600 dark:bg-purple-400'
@@ -73,10 +73,10 @@ export function NumberLine({
                 onClick={() => handleTickClick(tick)}
               />
 
-              {/* Label */}
+              {/* Label positioned well below the line */}
               <div
                 className={`
-                  text-xs text-center mt-2 font-medium cursor-pointer
+                  text-sm text-center mt-4 font-medium cursor-pointer
                   ${
                     isHighlighted || isSelected
                       ? 'text-purple-700 dark:text-purple-300 font-bold'
@@ -98,7 +98,7 @@ export function NumberLine({
           return (
             <div
               key={`highlight-${number}`}
-              className='absolute top-6'
+              className='absolute top-5'
               style={{ left: `${position}%`, transform: 'translateX(-50%)' }}
             >
               <div className='w-3 h-3 bg-purple-600 dark:bg-purple-400 rounded-full border-2 border-white dark:border-gray-800'></div>

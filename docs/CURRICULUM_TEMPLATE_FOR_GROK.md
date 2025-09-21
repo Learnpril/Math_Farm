@@ -44,22 +44,48 @@ For each chapter, provide:
 
 **Content Structure**:
 
-1. **Introduction** (5-10 minutes)
-   - Real-world application/motivation
-   - Connection to previous knowledge
-2. **Theory Section** (15-25 minutes)
-   - Core concepts with step-by-step explanations
-   - Visual aids/diagrams needed
-   - Interactive demonstrations
+1. **Chapter Overview** (5-10 minutes)
+   - Executive summary of the expanded chapter
+   - Learning objectives and prerequisites
+   - Historical context and real-world relevance
+   - Structure preview and difficulty progression
+
+2. **Enhanced Theory Section** (25-40 minutes per chapter)
+   For each core concept (800-1200 words each):
+   - **Intuitive Introduction**: Familiar analogies and concrete examples
+   - **Formal Definition**: Mathematical precision with LaTeX notation
+   - **Step-by-Step Development**: Progressive complexity (concrete → abstract)
+   - **Historical Development**: Origins and evolution of the concept
+   - **Multiple Perspectives**: Visual, analytical, and intuitive approaches
+   - **Real-World Applications**: Practical uses and connections
+   - **Common Misconceptions**: Typical student errors and how to address them
+   - **Self-Check Questions**: Immediate comprehension checks
+   - **Pause and Reflect**: Moments for deeper contemplation
+   - **Interactive Visual Tools**: Specific visual aid integrations
+
 3. **Worked Examples** (10-15 minutes)
    - 2-3 progressively difficult examples
    - Step-by-step solutions with reasoning
    - Common mistakes to avoid
+   - Multiple solution approaches where applicable
+
 4. **Practice Problems** (20-30 minutes)
    - 5-8 problems of varying difficulty
    - Immediate feedback system
    - Hints available on demand
    - Solutions with explanations
+
+5. **Assessment Integration Points**
+   - Self-checks throughout each theory section
+   - Reflection prompts for deeper understanding
+   - Chapter completion quiz (4-6 questions)
+   - Mastery threshold requirements
+
+6. **Extensions for Advanced Learners**
+   - Connections to higher-level mathematics
+   - Alternative number systems or approaches
+   - Historical deep dives
+   - Cross-curricular applications
 
 **Interactive Elements Needed**:
 
@@ -102,6 +128,32 @@ Please structure your response as a complete specification document that include
 5. **Implementation Priority** (which chapters to build first)
 6. **Integration Points** (how this connects to other Math Farm topics)
 
+## Enhanced Theory Section Requirements
+
+When expanding theory sections to textbook-chapter quality:
+
+### Content Depth (4,500+ words per chapter)
+
+- **Chapter Introduction**: 700-800 words with historical context
+- **Each Core Concept**: 800-1200 words with multiple subsections
+- **Progressive Complexity**: Concrete (manipulatives) → Semi-abstract (charts) → Abstract (symbolic)
+- **Multiple Learning Modalities**: Visual, kinesthetic, analytical, and intuitive approaches
+
+### Pedagogical Structure
+
+- **Learning Objectives**: Clear, measurable goals for each section
+- **Prerequisites**: Explicitly stated required prior knowledge
+- **Difficulty Markers**: Beginner → Intermediate → Advanced progression
+- **Self-Assessment**: Built-in comprehension checks and reflection points
+- **Misconception Addressing**: Common errors with specific remediation strategies
+
+### Interactive Integration
+
+- **Visual Aid Specifications**: Exact components needed (place-value-chart, base-10-blocks, etc.)
+- **Self-Check Questions**: Immediate feedback opportunities throughout
+- **Pause and Reflect**: Contemplative moments for deeper understanding
+- **Assessment Points**: Where to integrate quizzes and mastery checks
+
 ## Additional Considerations
 
 - Ensure all content is accessible (screen reader friendly)
@@ -110,6 +162,9 @@ Please structure your response as a complete specification document that include
 - Provide offline capability where possible
 - Include gamification elements (progress tracking, achievements)
 - Support for multiple learning styles (visual, auditory, kinesthetic)
+- **Historical Context**: Include development and cultural significance
+- **Real-World Applications**: Connect abstract concepts to practical uses
+- **Extension Activities**: Advanced topics for accelerated learners
 
 ## Sample Problem Format
 
