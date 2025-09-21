@@ -9,7 +9,8 @@ import { lazy } from 'react';
 export const loadMathJS = async () => {
   try {
     const mathjs = await import('mathjs');
-    return { loaded: true, mathInstance: mathjs.default || mathjs };
+    // mathjs is an ES module, use the entire module as the instance
+    return { loaded: true, mathInstance: mathjs };
   } catch (error) {
     console.error('Failed to load mathjs:', error);
     return {
@@ -22,7 +23,7 @@ export const loadMathJS = async () => {
 export const loadNerdamer = async () => {
   try {
     const nerdamer = await import('nerdamer');
-    return { loaded: true, nerdamerInstance: nerdamer.default || nerdamer };
+    return { loaded: true, nerdamerInstance: nerdamer };
   } catch (error) {
     console.error('Failed to load nerdamer:', error);
     return {
@@ -35,7 +36,7 @@ export const loadNerdamer = async () => {
 export const loadJSXGraph = async () => {
   try {
     const jsxgraph = await import('jsxgraph');
-    return { loaded: true, jsxgraphInstance: jsxgraph.default || jsxgraph };
+    return { loaded: true, jsxgraphInstance: jsxgraph };
   } catch (error) {
     console.error('Failed to load JSXGraph:', error);
     return {
@@ -47,10 +48,15 @@ export const loadJSXGraph = async () => {
 
 export const loadMathJax = async () => {
   try {
-    const mathjax = await import('mathjax');
-    return { loaded: true, mathjaxInstance: mathjax.default || mathjax };
+    // MathJax is loaded via better-react-mathjax wrapper, not directly
+    // This function exists for compatibility but should not be used
+    const mathjax = await import('better-react-mathjax');
+    return {
+      loaded: true,
+      mathjaxInstance: mathjax,
+    };
   } catch (error) {
-    console.error('Failed to load MathJax:', error);
+    console.error('Failed to load MathJax via better-react-mathjax:', error);
     return {
       loaded: false,
       error: error instanceof Error ? error.message : 'Unknown error',

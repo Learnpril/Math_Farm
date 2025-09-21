@@ -2,23 +2,19 @@
  * Nerdamer library loader utility for symbolic math operations
  */
 
-import nerdamer from 'nerdamer';
-import nerdamer from 'nerdamer';
-import nerdamer from 'nerdamer';
-import nerdamer from 'nerdamer';
 import { errorLogger } from '../errorLogging';
 
 export interface NerdamerLoaderResult {
   loaded: boolean;
   error?: string;
-  nerdamerInstance?: typeof nerdamer;
+  nerdamerInstance?: any;
 }
 
 export class NerdamerLoader {
   private static instance: NerdamerLoader;
   private loadPromise: Promise<NerdamerLoaderResult> | null = null;
   private isLoaded = false;
-  private nerdamerInstance: typeof nerdamer | null = null;
+  private nerdamerInstance: any | null = null;
 
   private constructor() {}
 
@@ -61,15 +57,36 @@ export class NerdamerLoader {
         };
       }
 
-      // For now, skip loading nerdamer to avoid compatibility issues
-      console.warn(
-        'Nerdamer loading skipped due to browser compatibility issues'
-      );
+      // Try to dynamically import nerdamer
+      try {
+        const nerdamerModule = await import('nerdamer');
+        // nerdamer is the entire module
+        const nerdamer = nerdamerModule;
 
-      return {
-        loaded: false,
-        error: 'Nerdamer not available in browser environment',
-      };
+        this.nerdamerInstance = nerdamer;
+        this.isLoaded = true;
+
+        // Also make it available globally for compatibility
+        if (typeof window !== 'undefined') {
+          (window as any).nerdamer = nerdamer;
+        }
+
+        console.log('Successfully loaded nerdamer via dynamic import');
+        return {
+          loaded: true,
+          nerdamerInstance: nerdamer,
+        };
+      } catch (importError) {
+        console.warn(
+          'Failed to dynamically import nerdamer, skipping:',
+          importError
+        );
+
+        return {
+          loaded: false,
+          error: 'Nerdamer not available in browser environment',
+        };
+      }
     } catch (error) {
       const errorObj =
         error instanceof Error
@@ -96,7 +113,7 @@ export class NerdamerLoader {
   /**
    * Gets the loaded nerdamer instance
    */
-  getNerdamerInstance(): typeof nerdamer | null {
+  getNerdamerInstance(): any | null {
     return (
       this.nerdamerInstance ||
       (typeof window !== 'undefined' ? window.nerdamer : null) ||
@@ -123,7 +140,7 @@ export const loadNerdamer = async (): Promise<NerdamerLoaderResult> => {
 /**
  * Convenience function to get nerdamer instance
  */
-export const getNerdamerInstance = (): typeof nerdamer | null => {
+export const getNerdamerInstance = (): any | null => {
   const loader = NerdamerLoader.getInstance();
   return loader.getNerdamerInstance();
 };

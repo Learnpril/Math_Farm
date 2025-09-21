@@ -16,12 +16,6 @@
 import { createFallbackMath } from './fallback-math';
 import { errorLogger } from '../errorLogging';
 
-declare global {
-  interface Window {
-    math?: any;
-  }
-}
-
 export interface MathLoaderResult {
   loaded: boolean;
   error?: string;
@@ -113,14 +107,15 @@ export class MathLoader {
       // Try to dynamically import mathjs first
       try {
         const mathModule = await import('mathjs');
-        const mathjs = mathModule.default || mathModule;
+        // mathjs is an ES module, use the entire module as the instance
+        const mathjs = mathModule;
 
         this.mathInstance = mathjs;
         this.isLoaded = true;
 
         // Also make it available globally for compatibility
         if (typeof window !== 'undefined') {
-          window.math = mathjs;
+          (window as any).math = mathjs;
         }
 
         console.log('Successfully loaded mathjs via dynamic import');
@@ -141,7 +136,7 @@ export class MathLoader {
 
         // Also make it available globally for compatibility
         if (typeof window !== 'undefined') {
-          window.math = fallbackMath;
+          (window as any).math = fallbackMath;
         }
 
         return {
@@ -172,31 +167,6 @@ export class MathLoader {
     }
   }
 
-  private loadScript(src: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      // Check if script is already loaded
-      const existingScript = document.querySelector(`script[src="${src}"]`);
-      if (existingScript) {
-        resolve();
-        return;
-      }
-
-      const script = document.createElement('script');
-      script.src = src;
-      script.async = true;
-
-      script.onload = () => {
-        resolve();
-      };
-
-      script.onerror = () => {
-        reject(new Error(`Failed to load script: ${src}`));
-      };
-
-      document.head.appendChild(script);
-    });
-  }
-
   /**
    * Gets the loaded math.js instance
    */
@@ -218,7 +188,7 @@ export class MathLoader {
   /**
    * Creates a configured math.js instance with specific settings
    */
-  createConfiguredInstance(config: any = {}): any {
+  createConfiguredInstance(): any {
     try {
       // Return the main instance since we're using fallback implementation
       console.warn('Using fallback math instance, configuration not supported');

@@ -1,8 +1,12 @@
-import { useState } from 'react';
-import { Check, X, HelpCircle, RotateCcw } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Check, X, HelpCircle, RotateCcw, AlertCircle } from 'lucide-react';
 import { PracticeProblem, ChapterProgress } from '../types';
 import { MathExpression } from './MathExpression';
 import { useCurriculumProgress } from '../hooks/useCurriculumProgress';
+import {
+  PracticeMathValidator,
+  MathValidationResult,
+} from '../lib/math-validation';
 
 interface PracticeProblemsProps {
   problems: PracticeProblem[];
@@ -23,13 +27,64 @@ export function PracticeProblems({
   const [hintLevel, setHintLevel] = useState(0);
   const [showExplanation, setShowExplanation] = useState(false);
   const [answered, setAnswered] = useState(false);
+  const [validationResult, setValidationResult] =
+    useState<MathValidationResult | null>(null);
+  const [isValidating, setIsValidating] = useState(false);
+  const [mathValidatorReady, setMathValidatorReady] = useState(false);
 
   const { recordPracticeAttempt } = useCurriculumProgress();
 
+  // Initialize math validator on component mount
+  useEffect(() => {
+    const initValidator = async () => {
+      const ready = await PracticeMathValidator.initialize();
+      setMathValidatorReady(ready);
+    };
+    initValidator();
+  }, []);
+
   const problem = problems[currentProblem];
 
-  // Helper function to normalize answers for flexible matching
-  const normalizeAnswer = (answer: string | number): string => {
+  // Enhanced answer validation using math.js
+  const validateAnswer = async (
+    userAnswer: string | number,
+    correctAnswer: string | number
+  ): Promise<boolean> => {
+    if (!mathValidatorReady) {
+      // Fallback to basic string comparison if math.js isn't ready
+      return (
+        normalizeAnswerBasic(userAnswer) === normalizeAnswerBasic(correctAnswer)
+      );
+    }
+
+    try {
+      setIsValidating(true);
+      const result = await PracticeMathValidator.validateAnswer(
+        userAnswer,
+        correctAnswer,
+        {
+          tolerance: 0.0001,
+          allowEquivalentForms: true,
+          caseSensitive: false,
+          normalizeSpaces: true,
+        }
+      );
+
+      setValidationResult(result);
+      return result.isCorrect;
+    } catch (error) {
+      console.error('Validation error:', error);
+      // Fallback to basic comparison
+      return (
+        normalizeAnswerBasic(userAnswer) === normalizeAnswerBasic(correctAnswer)
+      );
+    } finally {
+      setIsValidating(false);
+    }
+  };
+
+  // Basic fallback normalization
+  const normalizeAnswerBasic = (answer: string | number): string => {
     if (typeof answer === 'number') return answer.toString();
 
     return answer
@@ -40,55 +95,15 @@ export function PracticeProblems({
       .trim();
   };
 
-  // Check if answers match with flexible formatting
-  const answersMatch = (
-    userAnswer: string | number,
-    correctAnswer: string | number
-  ): boolean => {
-    const normalizedUser = normalizeAnswer(userAnswer);
-    const normalizedCorrect = normalizeAnswer(correctAnswer);
-
-    // Direct match
-    if (normalizedUser === normalizedCorrect) return true;
-
-    // For expanded form problems, also check if they evaluate to the same mathematical expression
-    if (problem.type === 'fill-in' && typeof correctAnswer === 'string') {
-      // Check if both contain + signs (likely expanded form)
-      if (normalizedUser.includes('+') && normalizedCorrect.includes('+')) {
-        try {
-          // Split by + and sort the parts to handle different orders
-          const userParts = normalizedUser
-            .split('+')
-            .map(p => p.trim())
-            .sort();
-          const correctParts = normalizedCorrect
-            .split('+')
-            .map(p => p.trim())
-            .sort();
-
-          if (userParts.length === correctParts.length) {
-            return userParts.every(
-              (part, index) => part === correctParts[index]
-            );
-          }
-        } catch (e) {
-          // If parsing fails, fall back to direct comparison
-        }
-      }
-    }
-
-    return false;
-  };
-
-  const handleAnswer = () => {
-    if (selectedAnswer === null || answered) return;
+  const handleAnswer = async () => {
+    if (selectedAnswer === null || answered || isValidating) return;
 
     let isCorrect = false;
 
     if (problem.type === 'multiple-choice') {
       isCorrect = selectedAnswer === problem.correct;
     } else if (problem.type === 'fill-in') {
-      isCorrect = answersMatch(selectedAnswer, problem.correct);
+      isCorrect = await validateAnswer(selectedAnswer, problem.correct);
     }
 
     const score = isCorrect ? 1 : 0;
@@ -119,6 +134,8 @@ export function PracticeProblems({
     setHintLevel(0);
     setShowExplanation(false);
     setAnswered(false);
+    setValidationResult(null);
+    setIsValidating(false);
   };
 
   const showNextHint = () => {
@@ -132,7 +149,7 @@ export function PracticeProblems({
     answered &&
     (problem.type === 'multiple-choice'
       ? selectedAnswer === problem.correct
-      : answersMatch(selectedAnswer || '', problem.correct));
+      : validationResult?.isCorrect || false);
   const isIncorrect = answered && !isCorrect;
 
   return (
@@ -258,10 +275,17 @@ export function PracticeProblems({
 
                 <button
                   onClick={handleAnswer}
-                  disabled={selectedAnswer === null}
-                  className='px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
+                  disabled={selectedAnswer === null || isValidating}
+                  className='px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2'
                 >
-                  Submit Answer
+                  {isValidating ? (
+                    <>
+                      <div className='animate-spin rounded-full h-4 w-4 border-b-2 border-white'></div>
+                      <span>Validating...</span>
+                    </>
+                  ) : (
+                    <span>Submit Answer</span>
+                  )}
                 </button>
               </>
             )}
@@ -308,6 +332,30 @@ export function PracticeProblems({
           </div>
         )}
 
+        {/* Math Validator Status */}
+        {!mathValidatorReady && (
+          <div className='mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg'>
+            <div className='flex items-center space-x-2'>
+              <AlertCircle className='w-4 h-4 text-yellow-600 dark:text-yellow-400' />
+              <p className='text-sm text-yellow-700 dark:text-yellow-300'>
+                Advanced math validation is loading. Basic validation is active.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Validation Error */}
+        {validationResult?.error && (
+          <div className='mt-4 p-3 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg'>
+            <div className='flex items-center space-x-2'>
+              <AlertCircle className='w-4 h-4 text-orange-600 dark:text-orange-400' />
+              <p className='text-sm text-orange-700 dark:text-orange-300'>
+                Validation note: {validationResult.error}
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Explanation */}
         {showExplanation && (
           <div
@@ -327,7 +375,7 @@ export function PracticeProblems({
               {isCorrect ? '✅ Correct!' : '❌ Incorrect'}
             </h5>
             <p
-              className={`${
+              className={`mb-3 ${
                 isCorrect
                   ? 'text-green-700 dark:text-green-300'
                   : 'text-red-700 dark:text-red-300'
@@ -335,6 +383,53 @@ export function PracticeProblems({
             >
               {problem.explanation}
             </p>
+
+            {/* Validation Details */}
+            {validationResult && (
+              <div className='mt-3 pt-3 border-t border-gray-200 dark:border-gray-600'>
+                {validationResult.normalizedAnswer && (
+                  <p className='text-sm text-gray-600 dark:text-gray-400 mb-2'>
+                    Your answer:{' '}
+                    <code className='bg-gray-100 dark:bg-gray-700 px-1 rounded'>
+                      {validationResult.normalizedAnswer}
+                    </code>
+                  </p>
+                )}
+
+                {validationResult.evaluatedAnswer !== undefined && (
+                  <p className='text-sm text-gray-600 dark:text-gray-400 mb-2'>
+                    Evaluated as:{' '}
+                    <code className='bg-gray-100 dark:bg-gray-700 px-1 rounded'>
+                      {String(validationResult.evaluatedAnswer)}
+                    </code>
+                  </p>
+                )}
+
+                {/* Suggestions for incorrect answers */}
+                {!isCorrect &&
+                  validationResult.suggestions &&
+                  validationResult.suggestions.length > 0 && (
+                    <div className='mt-2'>
+                      <p className='text-sm font-medium text-blue-700 dark:text-blue-300 mb-1'>
+                        💡 Helpful hints:
+                      </p>
+                      <ul className='text-sm text-blue-600 dark:text-blue-400 space-y-1'>
+                        {validationResult.suggestions.map(
+                          (suggestion, index) => (
+                            <li
+                              key={index}
+                              className='flex items-start space-x-1'
+                            >
+                              <span>•</span>
+                              <span>{suggestion}</span>
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+                  )}
+              </div>
+            )}
           </div>
         )}
       </div>

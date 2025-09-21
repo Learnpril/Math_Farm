@@ -49,10 +49,3 @@ export interface MathContext {
 
 export type AngleMode = 'deg' | 'rad';
 export type SolverType = 'solve' | 'derivative' | 'simplify';
-
-// Math.js global type declaration
-declare global {
-  interface Window {
-    math?: any;
-  }
-}
