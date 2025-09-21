@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TheoryConcept } from '../types/curriculum';
+import { TheoryConcept } from '../types';
 import { MathExpression } from './MathExpression';
 import {
   PlaceValueChart,

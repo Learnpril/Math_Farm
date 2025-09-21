@@ -16,7 +16,7 @@ import { PracticeProblems } from './PracticeProblems';
 
 interface ChapterContentProps {
   chapter: ChapterContentType;
-  progress?: ChapterProgress;
+  progress?: ChapterProgress | undefined;
   onNext: () => void;
   onPrevious: () => void;
   currentChapter: number;

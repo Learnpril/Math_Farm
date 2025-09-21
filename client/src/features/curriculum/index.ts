@@ -10,13 +10,12 @@ export { useCurriculumProgress } from './hooks/useCurriculumProgress';
 
 export {
   loadCurriculumMetadata,
-  loadChapterContent,
-  preloadCurriculum,
+  loadChapterData,
 } from './lib/curriculum-data-loader';
 
 export type {
   CurriculumMetadata,
-  ChapterContent,
+  ChapterContent as ChapterContentType,
   TheoryConcept,
   WorkedExample,
   PracticeProblem,

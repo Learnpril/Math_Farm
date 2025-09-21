@@ -11,7 +11,7 @@ import {
 interface PracticeProblemsProps {
   problems: PracticeProblem[];
   chapterId: string;
-  progress?: ChapterProgress;
+  progress?: ChapterProgress | undefined;
 }
 
 export function PracticeProblems({

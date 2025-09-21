@@ -1,4 +1,3 @@
-import React from 'react';
 import { ChevronRight, CheckCircle, Circle } from 'lucide-react';
 import { CurriculumMetadata, CurriculumProgress } from '../types';
 

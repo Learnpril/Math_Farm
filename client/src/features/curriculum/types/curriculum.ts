@@ -11,6 +11,8 @@ export interface CurriculumMetadata {
   chapters: number;
   tools: string[];
   chapterFiles: string[];
+  estimatedHours?: number | undefined;
+  difficulty?: string | undefined;
 }
 
 export interface ChapterIntroduction {
@@ -21,8 +23,8 @@ export interface ChapterIntroduction {
 export interface TheoryConcept {
   title: string;
   content: string;
-  latex?: string;
-  visuals?: string[];
+  latex?: string | undefined;
+  visuals?: string[] | undefined;
 }
 
 export interface TheorySection {
@@ -33,19 +35,19 @@ export interface WorkedExample {
   problem: string;
   solution: string;
   steps: string[];
-  commonErrors?: string[];
-  latex?: string;
+  commonErrors?: string[] | undefined;
+  latex?: string | undefined;
 }
 
 export interface PracticeQuestion {
   id: string;
-  type: 'multiple-choice' | 'fill-in' | 'true-false' | 'drag-drop';
+  type: 'multiple-choice' | 'fill-in' | 'step-by-step' | 'drag-drop';
   problem: string;
-  options?: string[];
+  options?: string[] | undefined;
   correct: string | number;
   hints: string[];
   explanation: string;
-  difficulty: number; // 1-5 scale
+  difficulty: 1 | 2 | 3 | 4 | 5;
 }
 
 export interface ChapterAssessment {

@@ -7,8 +7,8 @@ export interface CurriculumMetadata {
   chapters: number;
   tools: string[];
   chapterFiles: string[];
-  estimatedHours?: number;
-  difficulty?: string;
+  estimatedHours?: number | undefined;
+  difficulty?: string | undefined;
 }
 
 export interface ChapterContent {
@@ -35,27 +35,27 @@ export interface ChapterContent {
 export interface TheoryConcept {
   title: string;
   content: string;
-  latex?: string;
-  visuals?: string[];
+  latex?: string | undefined;
+  visuals?: string[] | undefined;
 }
 
 export interface WorkedExample {
   problem: string;
   solution: string;
   steps: string[];
-  commonErrors?: string[];
-  latex?: string;
+  commonErrors?: string[] | undefined;
+  latex?: string | undefined;
 }
 
 export interface PracticeProblem {
   id: string;
   type: 'multiple-choice' | 'fill-in' | 'step-by-step' | 'drag-drop';
   problem: string;
-  options?: string[];
+  options?: string[] | undefined;
   correct: number | string;
   hints: string[];
   explanation: string;
-  latex?: string;
+  latex?: string | undefined;
   difficulty: 1 | 2 | 3 | 4 | 5;
 }
 

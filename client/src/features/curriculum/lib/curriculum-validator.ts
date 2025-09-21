@@ -10,8 +10,8 @@ import type {
   PracticeQuestion,
   WorkedExample,
   TheoryConcept,
+  CurriculumMetadata,
 } from '../types/curriculum';
-import type { CurriculumMetadata } from '../types';
 
 /**
  * Validates curriculum metadata structure
