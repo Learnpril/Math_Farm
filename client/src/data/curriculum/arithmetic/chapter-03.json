@@ -18,19 +18,19 @@
         "title": "Understanding Multiplication",
         "content": "Multiplication is repeated addition or scaling (a × b = a + a + ... b times). For basics, use times tables (e.g., 5×6=30) and extend to multi-digit via partial products or standard algorithm. Arrays visualize (3×4 as 3 rows of 4). Notation: × or ⋅. Commutative (a × b = b × a). Real-world: area (l × w), scaling recipes.",
         "latex": "5 \\times 6 = 5 + 5 + 5 + 5 + 5 + 5 = 30",
-        "visuals": ["array-model", "repeated-addition"]
+        "visuals": ["MultiplicationArrayModel", "Base10Blocks"]
       },
       {
         "title": "Distributive Property",
         "content": "The distributive property allows us to break apart numbers to make multiplication easier. We can multiply each part separately and then add the results together.",
         "latex": "23 \\times 4 = (20 + 3) \\times 4 = 20 \\times 4 + 3 \\times 4 = 80 + 12 = 92",
-        "visuals": ["area-model", "partial-products"]
+        "visuals": ["MultiplicationArrayModel", "ExpandedFormDiagram"]
       },
       {
         "title": "Multi-digit Multiplication",
         "content": "For larger numbers, we use the standard algorithm or break numbers into place values. Each digit is multiplied by each digit in the other number, keeping track of place values.",
         "latex": "56 \\times 78 = 56 \\times 70 + 56 \\times 8 = 3,920 + 448 = 4,368",
-        "visuals": ["standard-algorithm", "place-value-chart"]
+        "visuals": ["MultiplicationArrayModel", "PlaceValueChart"]
       }
     ]
   },

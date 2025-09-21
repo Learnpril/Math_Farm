@@ -18,24 +18,24 @@
         "title": "The Base-10 Number System",
         "content": "Our number system is based on groups of 10. Each position in a number represents a different power of 10. Moving from right to left, each position is 10 times larger than the previous one.",
         "latex": "1,234 = 1 \\times 10^3 + 2 \\times 10^2 + 3 \\times 10^1 + 4 \\times 10^0",
-        "visuals": ["place-value-chart", "base-10-blocks"]
+        "visuals": ["PlaceValueChart", "Base10Blocks"]
       },
       {
         "title": "Place Value Positions",
         "content": "Each digit in a number has a specific place value: ones, tens, hundreds, thousands, ten thousands, hundred thousands, and millions. The value of a digit depends on its position.",
         "latex": "\\text{Millions} \\quad \\text{Hundred Thousands} \\quad \\text{Ten Thousands} \\quad \\text{Thousands} \\quad \\text{Hundreds} \\quad \\text{Tens} \\quad \\text{Ones}",
-        "visuals": ["place-value-chart", "number-line"]
+        "visuals": ["PlaceValueChart", "NumberLine"]
       },
       {
         "title": "Expanded Form",
         "content": "Expanded form shows the value of each digit in a number. It helps us understand what each digit contributes to the total value of the number.",
         "latex": "45,678 = 40,000 + 5,000 + 600 + 70 + 8",
-        "visuals": ["expanded-form-diagram"]
+        "visuals": ["ExpandedFormDiagram"]
       },
       {
         "title": "Comparing Numbers",
         "content": "To compare numbers, start from the leftmost digit and compare place by place. The first position where digits differ determines which number is larger.",
-        "visuals": ["comparison-chart", "number-line"]
+        "visuals": ["ComparisonChart", "NumberLine"]
       }
     ]
   },

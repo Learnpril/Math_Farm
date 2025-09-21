@@ -19,36 +19,32 @@
         "title": "Understanding Decimals",
         "content": "Decimals intuitively extend wholes rightward, representing parts via tenths, hundredths, like zooming into a number line beyond integers. Start with money: $0.25 as quarter dollar, or 25/100. Formally, a decimal is a number with integer and fractional parts separated by a point: 4.56 = 4 + 5/10 + 6/100, using negative powers of 10 (10^{-1}, 10^{-2}). Historically, Stevin (1585) popularized for surveying: decimals eased adding lengths. Earlier, Al-Kashi computed pi to 16 decimals. Applications: GPS coordinates - 37.7749 latitude. Cooking - 0.5 tsp salt.",
         "latex": "4.56 = 4 + \\frac{5}{10} + \\frac{6}{100} = 4 + 5 \\times 10^{-1} + 6 \\times 10^{-2}",
-        "visuals": ["decimal-number-line", "base-10-blocks", "money-models"]
+        "visuals": ["NumberLine", "Base10Blocks", "DecimalPlaceValueChart"]
       },
       {
         "title": "Decimal Place Value and Equivalents",
         "content": "Decimal places mirror whole-number ones but rightward, each ÷10 smaller. Intuitively, like zooming: units to tenths as dividing by 10. Formally, positions: ... hundreds, tens, units . tenths, hundredths...; 3.141 = 3×1 + 1×0.1 + 4×0.01 + 1×0.001. History: Stevin's exponents evolved to points. Decimals equated fractions post-1600s. Applications: Metrics - 1.5 km = 1500 m (shift point). Misconceptions: Misreading places - label charts; terminating vs. repeating confusion - explain 1/3=0.333...",
         "latex": "3.141 = 3 \\times 10^0 + 1 \\times 10^{-1} + 4 \\times 10^{-2} + 1 \\times 10^{-3}",
         "visuals": [
-          "decimal-place-chart",
-          "expanded-form-diagram",
-          "fraction-decimal-equivalents"
+          "DecimalPlaceValueChart",
+          "ExpandedFormDiagram",
+          "ComparisonChart"
         ]
       },
       {
         "title": "Adding and Subtracting Decimals",
         "content": "Align decimals by point for addition/subtraction, like wholes but with fractions. Intuitively, add 1.2 + 0.3 as 12 tenths + 3 tenths = 15 tenths = 1.5. Formally, align places, add/subtract column-wise, carry/borrow as needed. History: Stevin added decimals for bookkeeping. 1700s texts standardized alignment. Applications: Bills - $12.50 + $3.75 = $16.25. Heights - 1.75 m - 1.20 m = 0.55 m. Misconceptions: Ignoring point - align always; no zero-padding - add for clarity.",
         "latex": "\\begin{align} 3.45 \\\\ + 1.20 \\\\ \\hline 4.65 \\end{align}",
-        "visuals": [
-          "decimal-addition-model",
-          "place-value-alignment",
-          "base-10-blocks"
-        ]
+        "visuals": ["AdditionAlgorithm", "PlaceValueChart", "Base10Blocks"]
       },
       {
         "title": "Multiplying Decimals",
         "content": "Multiplying decimals ignores points initially, then places based on total decimals. Intuitively, 1.2 × 0.3 = area 1.2 by 0.3 = 0.36. Formally, multiply as wholes, count decimal places in factors, place in product. History: Stevin multiplied for commerce. Logarithms aided pre-calculators. Applications: Area - 2.5 m × 1.5 m = 3.75 m². Discounts - $10 × 0.2 = $2 off. Misconceptions: Fewer places in product - count always; point misalignment.",
         "latex": "1.23 \\times 0.4 = \\frac{123 \\times 4}{100 \\times 10} = \\frac{492}{1000} = 0.492",
         "visuals": [
-          "area-model",
-          "decimal-multiplication-grid",
-          "place-value-counting"
+          "MultiplicationArrayModel",
+          "DecimalPlaceValueChart",
+          "PlaceValueChart"
         ]
       },
       {
@@ -56,9 +52,9 @@
         "content": "Dividing decimals shifts to make divisor whole, adjusting dividend. Intuitively, 1.2 ÷ 0.3 = how many 0.3 in 1.2? (4). Formally, multiply divisor/dividend by 10^k to integerize divisor, divide. History: Stevin divided for weights. 1800s algorithms standardized shifts. Applications: Rates - 10.5 km ÷ 1.5 h = 7 km/h. Unit prices - $4.50 ÷ 1.5 kg = $3/kg. Misconceptions: Not shifting - results wrong magnitude; infinite decimals - round or note repeating.",
         "latex": "1.5 \\div 0.3 = \\frac{1.5 \\times 10}{0.3 \\times 10} = \\frac{15}{3} = 5",
         "visuals": [
-          "division-model",
-          "decimal-shifting",
-          "long-division-decimals"
+          "DivisionGroupsModel",
+          "DecimalPlaceValueChart",
+          "PlaceValueChart"
         ]
       }
     ]

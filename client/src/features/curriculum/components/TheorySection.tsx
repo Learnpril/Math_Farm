@@ -65,6 +65,7 @@ export function TheorySection({
     const renderVisualComponent = () => {
       switch (visualType) {
         // Place value and number structure
+        case 'PlaceValueChart':
         case 'place-value-chart':
           return (
             <PlaceValueChart
@@ -75,6 +76,7 @@ export function TheorySection({
           );
 
         // Decimal place value
+        case 'DecimalPlaceValueChart':
         case 'decimal-place-chart':
           return (
             <DecimalPlaceValueChart
@@ -85,6 +87,7 @@ export function TheorySection({
           );
 
         // Number lines and sequences
+        case 'NumberLine':
         case 'number-line':
           return (
             <NumberLine
@@ -98,6 +101,7 @@ export function TheorySection({
           );
 
         // Base-10 blocks and concrete representations
+        case 'Base10Blocks':
         case 'base-10-blocks':
         case 'fraction-circles':
         case 'fraction-bars':
@@ -111,6 +115,7 @@ export function TheorySection({
           );
 
         // Expanded form and decomposition
+        case 'ExpandedFormDiagram':
         case 'expanded-form-diagram':
         case 'area-model':
         case 'partial-products':
@@ -124,6 +129,7 @@ export function TheorySection({
           );
 
         // Percentage visualization
+        case 'PercentageGrid':
         case 'percent-grid':
         case 'pie-chart':
           return (
@@ -135,6 +141,7 @@ export function TheorySection({
           );
 
         // Ratio and proportion visualization
+        case 'RatioVisualizer':
         case 'ratio-bars':
         case 'proportion-cross':
           return (
@@ -148,6 +155,7 @@ export function TheorySection({
           );
 
         // Number comparison
+        case 'NumberComparison':
         case 'comparison-chart':
           return (
             <NumberComparison
@@ -159,6 +167,7 @@ export function TheorySection({
           );
 
         // Other comparisons and relationships
+        case 'ComparisonChart':
         case 'conversion-chart':
         case 'equivalent-representations':
           return (
@@ -170,6 +179,7 @@ export function TheorySection({
           );
 
         // Multiplication models
+        case 'MultiplicationArrayModel':
         case 'array-model':
         case 'repeated-addition':
           return (
@@ -182,6 +192,7 @@ export function TheorySection({
           );
 
         // Division models
+        case 'DivisionGroupsModel':
         case 'equal-groups':
         case 'long-division-steps':
         case 'remainder-model':
@@ -196,6 +207,7 @@ export function TheorySection({
           );
 
         // Addition algorithm
+        case 'AdditionAlgorithm':
         case 'addition-algorithm':
           return (
             <AdditionAlgorithm
@@ -207,6 +219,7 @@ export function TheorySection({
           );
 
         // Subtraction algorithm
+        case 'SubtractionAlgorithm':
         case 'subtraction-algorithm':
         case 'borrowing-demonstration':
           return (

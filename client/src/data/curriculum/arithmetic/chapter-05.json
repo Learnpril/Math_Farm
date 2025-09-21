@@ -19,31 +19,31 @@
         "title": "Understanding Fractions",
         "content": "Fractions begin with wholes divided into parts, intuitively like slicing a pie: one slice of four is 1/4. This part-whole relationship makes fractions essential for non-integer quantities. Formally, a fraction a/b represents a divided by b, where a is numerator, b denominator (b ≠ 0). Proper if |a| < |b|, improper otherwise (e.g., 5/3), mixed as whole + proper (1 2/3). Historically, Egyptians (2000 BCE) used eye of Horus for halves to 1/64. Babylonians had positional fractions. Greeks like Archimedes (200 BCE) approximated pi as fractions.",
         "latex": "\\frac{a}{b} \\text{ where } a \\text{ is numerator, } b \\text{ is denominator } (b \\neq 0)",
-        "visuals": ["fraction-circles", "fraction-bars", "number-line"]
+        "visuals": ["Base10Blocks", "NumberLine", "ComparisonChart"]
       },
       {
         "title": "Equivalent Fractions and Simplifying",
         "content": "Equivalent fractions look different but equal value, like 1/2 = 2/4. Intuitively, halve a halved pie - same as quartering directly. Formally, a/b = c/d if a×d = b×c; generate by multiplying/dividing numerator/denominator by same k ≠ 0. History: Euclid proved equivalence via common measures. Arabs used for astronomy.",
         "latex": "\\frac{a}{b} = \\frac{c}{d} \\text{ if } a \\times d = b \\times c",
-        "visuals": ["equivalent-fraction-models", "fraction-strips"]
+        "visuals": ["ComparisonChart", "NumberLine"]
       },
       {
         "title": "Adding and Subtracting Fractions",
         "content": "Combining fractions requires common denominators, intuitively like aligning units: add 1/2 + 1/3 by sixths (3/6 + 2/6 = 5/6). Formally, a/b + c/d = (a×d + b×c)/(b×d); subtract similarly minus. History: Egyptians added unit fractions. Al-Khwarizmi used LCD.",
         "latex": "\\frac{a}{b} + \\frac{c}{d} = \\frac{a \\times d + b \\times c}{b \\times d}",
-        "visuals": ["fraction-addition-model", "common-denominator-chart"]
+        "visuals": ["Base10Blocks", "ComparisonChart"]
       },
       {
         "title": "Multiplying Fractions",
         "content": "Fraction multiplication scales parts: 1/2 × 3/4 = 3/8, intuitively half of three-quarters. Formally, (a/b) × (c/d) = (a×c)/(b×d); simplify before/after. History: Babylonians multiplied fractions positionally. Greeks geometrically.",
         "latex": "\\frac{a}{b} \\times \\frac{c}{d} = \\frac{a \\times c}{b \\times d}",
-        "visuals": ["area-model", "fraction-multiplication-grid"]
+        "visuals": ["MultiplicationArrayModel", "Base10Blocks"]
       },
       {
         "title": "Dividing Fractions",
         "content": "Dividing fractions inverts: 1/2 ÷ 1/3 = 3/2, intuitively how many thirds in half? (1.5). Formally, (a/b) ÷ (c/d) = (a/b) × (d/c). History: Rhind Papyrus inverted. Modern rule from 1800s texts.",
         "latex": "\\frac{a}{b} \\div \\frac{c}{d} = \\frac{a}{b} \\times \\frac{d}{c}",
-        "visuals": ["division-model", "reciprocal-visualization"]
+        "visuals": ["DivisionGroupsModel", "ComparisonChart"]
       }
     ]
   },

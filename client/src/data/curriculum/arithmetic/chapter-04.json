@@ -18,19 +18,19 @@
         "title": "Understanding Division",
         "content": "Division partitions into equal groups (a ÷ b or a / b), inverse of multiplication. Components: dividend ÷ divisor = quotient, possible remainder R (if not even). Long division: e.g., 456 ÷ 4: 4 into 4=1, subtract 0; into 5=1 (remainder 1), into 16=4. Notation: ÷, /, or fraction bar. Remainder < divisor. Real-world: sharing costs, measuring portions.",
         "latex": "456 \\div 4 = 114 \\text{ (exactly)}",
-        "visuals": ["equal-groups", "long-division-steps"]
+        "visuals": ["DivisionGroupsModel", "Base10Blocks"]
       },
       {
         "title": "Division with Remainders",
         "content": "When numbers don't divide evenly, we have a remainder. The remainder must always be less than the divisor. In real-world problems, we need to interpret what the remainder means.",
         "latex": "17 \\div 5 = 3 \\text{ R } 2 \\text{ because } 3 \\times 5 + 2 = 17",
-        "visuals": ["remainder-model", "sharing-with-leftovers"]
+        "visuals": ["DivisionGroupsModel", "NumberLine"]
       },
       {
         "title": "Long Division Algorithm",
         "content": "For larger numbers, we use the long division algorithm: divide, multiply, subtract, bring down. This process repeats until we've used all digits in the dividend.",
         "latex": "789 \\div 23 = 34 \\text{ R } 7",
-        "visuals": ["long-division-algorithm", "step-by-step-process"]
+        "visuals": ["DivisionGroupsModel", "PlaceValueChart"]
       }
     ]
   },
