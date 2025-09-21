@@ -318,7 +318,7 @@ export class PracticeMathValidator {
   ): { numerator: number; denominator: number } | null {
     try {
       const match = expression.match(/(\d+)\s*\/\s*(\d+)/);
-      if (match) {
+      if (match && match[1] && match[2]) {
         return {
           numerator: parseInt(match[1]),
           denominator: parseInt(match[2]),
@@ -336,7 +336,7 @@ export class PracticeMathValidator {
   private static parsePercentage(expression: string): number | null {
     try {
       const match = expression.match(/([\d.]+)\s*%?/);
-      if (match) {
+      if (match && match[1]) {
         const value = parseFloat(match[1]);
         return expression.includes('%') ? value : value * 100;
       }

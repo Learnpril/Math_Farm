@@ -104,6 +104,8 @@ export class MathValidator {
   ];
 
   // Allowed mathematical functions and constants (whitelist approach)
+  // Note: Currently unused but kept for future validation enhancements
+  /*
   private static readonly ALLOWED_FUNCTIONS = [
     // Trigonometric functions
     'sin',
@@ -209,6 +211,7 @@ export class MathValidator {
     'rightArithShift',
     'rightLogShift',
   ];
+  */
 
   // Maximum expression length to prevent DoS attacks
   private static readonly MAX_EXPRESSION_LENGTH = 10000;
@@ -217,8 +220,9 @@ export class MathValidator {
   private static readonly MAX_RECURSION_DEPTH = 50;
 
   // Regex patterns for safe mathematical characters (more restrictive)
-  private static readonly SAFE_CHAR_PATTERN =
-    /^[a-zA-Z0-9+\-*/^().,\s_πετφγλμσωαβδεζηθικνξοπρστυχψΩΠΣΦΨ\[\]]+$/;
+  // Note: Currently unused but kept for future validation enhancements
+  // private static readonly SAFE_CHAR_PATTERN =
+  //   /^[a-zA-Z0-9+\-*/^().,\s_πετφγλμσωαβδεζηθικνξοπρστυχψΩΠΣΦΨ\[\]]+$/;
 
   // Pattern for detecting potential code injection
   private static readonly INJECTION_PATTERNS = [
@@ -750,7 +754,7 @@ export class MathValidator {
     }
 
     const rows = matrix.length;
-    const cols = matrix[0].length;
+    const cols = matrix[0]?.length || 0;
 
     // Check for reasonable matrix dimensions
     const maxDimension = 1000;
@@ -770,10 +774,10 @@ export class MathValidator {
         };
       }
 
-      if (matrix[i].length !== cols) {
+      if (matrix[i]?.length !== cols) {
         return {
           valid: false,
-          error: `Matrix row ${i} has inconsistent length (expected ${cols}, got ${matrix[i].length})`,
+          error: `Matrix row ${i} has inconsistent length (expected ${cols}, got ${matrix[i]?.length || 0})`,
         };
       }
     }
@@ -801,123 +805,127 @@ export class MathValidator {
 
   /**
    * Validates bracket and parentheses balance with enhanced checking
+   * Note: Currently unused but kept for future validation enhancements
    */
-  private static validateBracketBalance(expression: string): ValidationResult {
-    const brackets = { '(': ')', '[': ']', '{': '}' };
-    const stack: string[] = [];
+  // private static validateBracketBalance(expression: string): ValidationResult {
+  //   const brackets = { '(': ')', '[': ']', '{': '}' };
+  //   const stack: string[] = [];
 
-    for (let i = 0; i < expression.length; i++) {
-      const char = expression[i];
+  //   for (let i = 0; i < expression.length; i++) {
+  //     const char = expression[i];
 
-      if (char in brackets) {
-        stack.push(char);
-      } else if (Object.values(brackets).includes(char)) {
-        if (stack.length === 0) {
-          return {
-            valid: false,
-            error: `Unmatched closing bracket '${char}' at position ${i}`,
-          };
-        }
+  //     if (char && char in brackets) {
+  //       stack.push(char);
+  //     } else if (char && Object.values(brackets).includes(char)) {
+  //       if (stack.length === 0) {
+  //         return {
+  //           valid: false,
+  //           error: `Unmatched closing bracket '${char}' at position ${i}`,
+  //         };
+  //       }
 
-        const lastOpen = stack.pop()!;
-        if (brackets[lastOpen as keyof typeof brackets] !== char) {
-          return {
-            valid: false,
-            error: `Mismatched brackets: '${lastOpen}' and '${char}' at position ${i}`,
-          };
-        }
-      }
-    }
+  //       const lastOpen = stack.pop()!;
+  //       if (brackets[lastOpen as keyof typeof brackets] !== char) {
+  //         return {
+  //           valid: false,
+  //           error: `Mismatched brackets: '${lastOpen}' and '${char}' at position ${i}`,
+  //         };
+  //       }
+  //     }
+  //   }
 
-    if (stack.length > 0) {
-      return {
-        valid: false,
-        error: `Unmatched opening bracket(s): ${stack.join(', ')}`,
-      };
-    }
+  //   if (stack.length > 0) {
+  //     return {
+  //       valid: false,
+  //       error: `Unmatched opening bracket(s): ${stack.join(', ')}`,
+  //     };
+  //   }
 
-    return { valid: true };
-  }
+  //   return { valid: true };
+  // }
 
   /**
    * Validates that function calls are from the allowed whitelist
+   * Note: Currently unused but kept for future validation enhancements
    */
-  private static validateFunctionCalls(expression: string): ValidationResult {
-    // Match function calls: word followed by opening parenthesis
-    const functionPattern = /\b([a-zA-Z_][a-zA-Z0-9_]*)\s*\(/g;
-    let match;
+  // private static validateFunctionCalls(expression: string): ValidationResult {
+  //   // Match function calls: word followed by opening parenthesis
+  //   const functionPattern = /\b([a-zA-Z_][a-zA-Z0-9_]*)\s*\(/g;
+  //   let match;
 
-    while ((match = functionPattern.exec(expression)) !== null) {
-      const functionName = match[1].toLowerCase();
+  //   while ((match = functionPattern.exec(expression)) !== null) {
+  //     const functionName = match[1]?.toLowerCase();
 
-      if (!this.ALLOWED_FUNCTIONS.includes(functionName)) {
-        return {
-          valid: false,
-          error: `Unauthorized function call: '${functionName}'. Only whitelisted mathematical functions are allowed.`,
-        };
-      }
-    }
+  //     if (functionName && !this.ALLOWED_FUNCTIONS.includes(functionName)) {
+  //       return {
+  //         valid: false,
+  //         error: `Unauthorized function call: '${functionName}'. Only whitelisted mathematical functions are allowed.`,
+  //       };
+  //     }
+  //   }
 
-    return { valid: true };
-  }
+  //   return { valid: true };
+  // }
 
   /**
    * Validates nesting depth to prevent stack overflow attacks
+   * Note: Currently unused but kept for future validation enhancements
    */
-  private static validateNestingDepth(expression: string): ValidationResult {
-    let maxDepth = 0;
-    let currentDepth = 0;
+  // private static validateNestingDepth(expression: string): ValidationResult {
+  //   let maxDepth = 0;
+  //   let currentDepth = 0;
 
-    for (const char of expression) {
-      if (char === '(' || char === '[' || char === '{') {
-        currentDepth++;
-        maxDepth = Math.max(maxDepth, currentDepth);
+  //   for (const char of expression) {
+  //     if (char === '(' || char === '[' || char === '{') {
+  //       currentDepth++;
+  //       maxDepth = Math.max(maxDepth, currentDepth);
 
-        if (maxDepth > this.MAX_RECURSION_DEPTH) {
-          return {
-            valid: false,
-            error: `Expression nesting too deep (max ${this.MAX_RECURSION_DEPTH} levels). This could cause stack overflow.`,
-          };
-        }
-      } else if (char === ')' || char === ']' || char === '}') {
-        currentDepth--;
-      }
-    }
+  //       if (maxDepth > this.MAX_RECURSION_DEPTH) {
+  //         return {
+  //           valid: false,
+  //           error: `Expression nesting too deep (max ${this.MAX_RECURSION_DEPTH} levels). This could cause stack overflow.`,
+  //         };
+  //       }
+  //     } else if (char === ')' || char === ']' || char === '}') {
+  //       currentDepth--;
+  //     }
+  //   }
 
-    return { valid: true };
-  }
+  //   return { valid: true };
+  // }
 
   /**
    * Validates the sanitized expression for any remaining issues
+   * Note: Currently unused but kept for future validation enhancements
    */
-  private static validateSanitizedExpression(
-    expression: string
-  ): ValidationResult {
-    // Check for empty expression after sanitization
-    if (!expression.trim()) {
-      return { valid: false, error: 'Expression is empty after sanitization' };
-    }
+  // private static validateSanitizedExpression(
+  //   expression: string
+  // ): ValidationResult {
+  //   // Check for empty expression after sanitization
+  //   if (!expression.trim()) {
+  //     return { valid: false, error: 'Expression is empty after sanitization' };
+  //   }
 
-    // Check for suspicious patterns that might have survived sanitization
-    const suspiciousPatterns = [
-      /\b(null|undefined)\b/i,
-      /\[\s*\]/, // Empty array access
-      /\.\s*\./, // Double dots
-      /\s{10,}/, // Excessive whitespace
-      /[^\x20-\x7E\u03B1-\u03C9\u0391-\u03A9]/, // Non-printable or unusual Unicode
-    ];
+  //   // Check for suspicious patterns that might have survived sanitization
+  //   const suspiciousPatterns = [
+  //     /\b(null|undefined)\b/i,
+  //     /\[\s*\]/, // Empty array access
+  //     /\.\s*\./, // Double dots
+  //     /\s{10,}/, // Excessive whitespace
+  //     /[^\x20-\x7E\u03B1-\u03C9\u0391-\u03A9]/, // Non-printable or unusual Unicode
+  //   ];
 
-    for (const pattern of suspiciousPatterns) {
-      if (pattern.test(expression)) {
-        return {
-          valid: false,
-          error: 'Sanitized expression contains suspicious patterns',
-        };
-      }
-    }
+  //   for (const pattern of suspiciousPatterns) {
+  //     if (pattern.test(expression)) {
+  //       return {
+  //         valid: false,
+  //         error: 'Sanitized expression contains suspicious patterns',
+  //       };
+  //     }
+  //   }
 
-    return { valid: true };
-  }
+  //   return { valid: true };
+  // }
 
   /**
    * Validates floating-point precision and handles edge cases with enhanced security
@@ -1001,7 +1009,7 @@ export class MathValidator {
     // Check for suspicious number patterns that might indicate injection attempts
     if (valueStr.includes('e+') || valueStr.includes('E+')) {
       const [, exponent] = valueStr.split(/[eE]\+?/);
-      const expValue = parseInt(exponent);
+      const expValue = parseInt(exponent || '0');
 
       if (expValue > 308) {
         // Close to MAX_VALUE exponent
@@ -1102,7 +1110,7 @@ export class MathValidator {
   /**
    * Validates input rate limiting to prevent DoS attacks
    */
-  static validateRateLimit(input: string, userId?: string): ValidationResult {
+  static validateRateLimit(_input: string, userId?: string): ValidationResult {
     const now = Date.now();
     const windowMs = 60000; // 1 minute window
     const maxRequests = 100; // Max requests per window
@@ -1210,7 +1218,7 @@ export class SecurityValidator {
       }
     }
 
-    return { valid: true, sanitized: basicResult.sanitized };
+    return { valid: true, sanitized: basicResult.sanitized || input };
   }
 
   /**

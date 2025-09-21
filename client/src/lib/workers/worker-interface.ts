@@ -3,12 +3,7 @@
  * Provides a clean API for interacting with math workers
  */
 
-import {
-  MathResult,
-  FunctionData,
-  GraphBounds,
-  AngleMode,
-} from '../math/types';
+import { MathResult, GraphBounds, AngleMode } from '../math/types';
 
 export interface WorkerMessage {
   id: string;
@@ -79,10 +74,10 @@ export class MathWorkerManager {
 
     try {
       for (let i = 0; i < this.maxWorkers; i++) {
-        const worker = new Worker(
-          new URL('./math-worker.ts', import.meta.url),
-          { type: 'module' }
-        );
+        // Create worker using a simple path approach
+        const worker = new Worker('/src/lib/workers/math-worker.ts', {
+          type: 'module',
+        });
 
         worker.onmessage = this.handleWorkerMessage.bind(this);
         worker.onerror = this.handleWorkerError.bind(this);
@@ -145,7 +140,7 @@ export class MathWorkerManager {
 
     const worker = this.workers[this.workerIndex];
     this.workerIndex = (this.workerIndex + 1) % this.workers.length;
-    return worker;
+    return worker || null;
   }
 
   /**
@@ -204,7 +199,7 @@ export class MathWorkerManager {
     type: 'solve' | 'derivative' | 'simplify' = 'solve'
   ): Promise<MathResult> {
     try {
-      const result = await this.sendToWorker('equation-solve', {
+      const result = await this.sendToWorker<MathResult>('equation-solve', {
         equation,
         variable,
         type,
@@ -226,11 +221,14 @@ export class MathWorkerManager {
     resolution: number = 1000
   ): Promise<Array<{ x: number; y: number }>> {
     try {
-      const result = await this.sendToWorker('function-graph', {
-        expression,
-        bounds,
-        resolution,
-      });
+      const result = await this.sendToWorker<Array<{ x: number; y: number }>>(
+        'function-graph',
+        {
+          expression,
+          bounds,
+          resolution,
+        }
+      );
       return result;
     } catch (error) {
       throw new Error(
@@ -250,7 +248,9 @@ export class MathWorkerManager {
     Array<{ x: number; y: number; type: 'max' | 'min' | 'inflection' }>
   > {
     try {
-      const result = await this.sendToWorker('critical-points', {
+      const result = await this.sendToWorker<
+        Array<{ x: number; y: number; type: 'max' | 'min' | 'inflection' }>
+      >('critical-points', {
         expression,
         bounds,
         tolerance,
@@ -271,7 +271,10 @@ export class MathWorkerManager {
     angleMode: AngleMode = 'deg'
   ): Promise<{ result: string; error?: string }> {
     try {
-      const result = await this.sendToWorker('calculator-eval', {
+      const result = await this.sendToWorker<{
+        result: string;
+        error?: string;
+      }>('calculator-eval', {
         expression,
         angleMode,
       });
@@ -288,10 +291,10 @@ export class MathWorkerManager {
    */
   terminate(): void {
     // Clear pending operations
-    for (const [id, operation] of this.pendingOperations) {
+    this.pendingOperations.forEach(operation => {
       clearTimeout(operation.timeout);
       operation.reject(new Error('Worker manager terminated'));
-    }
+    });
     this.pendingOperations.clear();
 
     // Terminate workers
@@ -374,10 +377,13 @@ export class FallbackMathOperations {
   ): Promise<{ result: string; error?: string }> {
     const { Calculator } = await import('../math/calculator');
     const result = Calculator.evaluate(expression, angleMode);
-    return {
+    const returnValue: { result: string; error?: string } = {
       result: result.result.toString(),
-      error: result.error,
     };
+    if (result.error) {
+      returnValue.error = result.error;
+    }
+    return returnValue;
   }
 }
 
