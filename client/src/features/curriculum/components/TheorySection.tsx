@@ -585,6 +585,55 @@ Common errors include misaligning partial products - the key is understanding th
               }
             }
 
+            // Chapter 4: Division Basics
+            if (chapterNumber === 4) {
+              switch (title) {
+                case 'Understanding Division':
+                  return `Division starts with partitioning, an intuitive counterpart to multiplication: take 12 apples and share among 4 people - each gets 3. This "sharing" or "grouping" reveals division's dual nature: quotative (how many groups of 4 in 12?) or partitive (12 shared by 4, how many each?). Division completes our arithmetic foundation, allowing us to partition quantities, find rates, and reverse multiplication in ways that model fairness and measurement.
+
+Formally, division is multiplication's inverse: a ÷ b = q (or a / b = q), where q (quotient) satisfies q × b = a, assuming b ≠ 0. With remainders, we have the division algorithm: a = b × q + r, where 0 ≤ r < b. This means every division can be expressed as quotient times divisor plus remainder.
+
+Step-by-step development: Concrete - use base-10-blocks: Divide 15 by 3 as three groups of 5 units each. Semi-abstract - number-line backward skips: From 15, subtract 3 repeatedly until reaching 0, counting the skips (5 times). Abstract - multi-digit: 92 ÷ 4 = (80 ÷ 4) + (12 ÷ 4) = 20 + 3 = 23, breaking apart by place value from Chapter 1.
+
+Historically, division addressed allocation needs across civilizations. Sumerian tablets (4000 BCE) used inverse multiplication tables for dividing resources like beer rations, their base-60 system proving ideal for fractions. Egyptians (2000 BCE) employed unit fractions in the Ahmes papyrus, dividing via doubling inverses - to divide 19 by 3, they found multiples that summed to 19. Greeks like Euclid (300 BCE) formalized division as ratios in "Elements," proving the division algorithm we still use today.
+
+Real-world applications make division essential for equity and analysis: sharing (divide 24 cookies among 6 friends = 4 each), calculating rates (120 miles ÷ 2 hours = 60 mph), scaling recipes (3/4 cup for 4 servings ÷ 2 = 3/8 cup per pair), and construction planning (1000 sq ft ÷ 50 sq ft tiles = 20 needed). These connect to our previous foundations - without multiplication facts, division becomes tedious; subtraction underpins its mechanics.
+
+Common misconceptions include thinking division always makes numbers smaller - but dividing by fractions less than 1 actually increases the result (10 ÷ 0.5 = 20). Another error is attempting to divide by zero, which is undefined because no quotient can satisfy the requirement. Students also sometimes confuse dividend and divisor order, forgetting that division is not commutative like addition and multiplication.`;
+
+                case 'Division with Remainders':
+                  return `When numbers don't divide evenly, we encounter remainders - the "leftover" amount that represents what cannot be distributed equally. Think of sharing 17 stickers among 5 children: each gets 3, but 2 stickers remain. This remainder concept is crucial for real-world problem solving where perfect division rarely occurs.
+
+Formally, when dividing a by b, if the result isn't exact, we express it as a = b × q + r, where q is the quotient and r is the remainder, with the critical constraint that 0 ≤ r < b. The remainder must always be smaller than the divisor - this ensures our division is complete and unique.
+
+Step-by-step development: Concrete - use physical objects: Share 17 blocks among 5 groups, resulting in 3 per group with 2 left over. Semi-abstract - draw pictures showing the sharing process and highlighting leftovers. Abstract - apply the division algorithm: 17 ÷ 5 = 3 R2 because 3 × 5 + 2 = 17, and 2 < 5.
+
+Historically, remainders posed challenges for ancient mathematicians. Babylonians (1800 BCE) developed sophisticated methods for handling fractional parts in their astronomical calculations. Chinese mathematicians in the "Nine Chapters on the Mathematical Art" (100 BCE) used remainder concepts for solving practical problems like distributing grain. The formal division algorithm with remainders wasn't fully developed until Indian mathematicians like Brahmagupta (628 CE) systematized these ideas.
+
+Real-world applications of remainders are everywhere: in scheduling (if 100 minutes of work needs to be done in 7-minute intervals, you complete 14 intervals with 2 minutes remaining), in packaging (137 items in boxes of 12 means 11 full boxes plus 5 items for a partial box), and in time calculations (converting 100 minutes to hours gives 1 hour and 40 minutes remaining).
+
+Students often struggle with interpreting remainders contextually. Sometimes we round up (if you need 137 items and boxes hold 12, you need 12 boxes, not 11), sometimes we use the remainder as a fraction (17 ÷ 5 = 3 2/5), and sometimes we ignore it (if dividing people into equal groups). The key is understanding what the remainder represents in each specific situation.`;
+
+                case 'Long Division Algorithm':
+                  return `Long division extends our division capabilities to handle larger numbers systematically, much like the standard algorithms for addition, subtraction, and multiplication. It's a methodical process that breaks complex divisions into manageable steps: divide, multiply, subtract, bring down, and repeat.
+
+The algorithm follows a precise sequence: First, determine how many times the divisor fits into the leftmost digits of the dividend. Multiply this quotient digit by the divisor, subtract the result from those digits, then bring down the next digit and repeat. This process continues until all digits have been processed.
+
+Step-by-step development: Concrete - use base-10-blocks to physically model the process: for 144 ÷ 12, arrange 144 blocks and systematically group them into sets of 12. Semi-abstract - use the traditional long division format with careful alignment and clear steps. Abstract - master multi-digit divisors like 987 ÷ 23, requiring estimation skills and careful arithmetic.
+
+Historically, long division algorithms evolved across cultures. Al-Khwarizmi (825 CE) described systematic division methods in his algebraic works, using placeholders that prefigured our modern approach. Medieval European texts standardized the format by the 1600s, though various alternative methods existed - the "galley method" used in Renaissance Italy arranged calculations differently but achieved the same results.
+
+The algorithm's power lies in its systematic approach to complex problems. Consider 789 ÷ 23: We estimate that 23 goes into 78 about 3 times (since 23 × 3 = 69), subtract to get 9, bring down the final 9 to make 99, then determine that 23 goes into 99 four times (23 × 4 = 92), leaving remainder 7. The final answer is 34 R7.
+
+Real-world applications include calculating unit costs (if 789 items cost $23 each, how many can you buy with a budget?), determining time intervals (789 minutes divided into 23-minute segments), and solving measurement problems in construction and engineering where precise calculations matter.
+
+Common errors include misaligning digits in the quotient, making arithmetic mistakes in the multiplication or subtraction steps, and incorrectly estimating how many times the divisor fits into the partial dividend. The key to mastery is practicing the systematic approach and checking work by multiplying the quotient by the divisor and adding any remainder to verify it equals the original dividend.`;
+
+                default:
+                  return originalContent;
+              }
+            }
+
             return originalContent;
           };
 
@@ -688,6 +737,15 @@ Common errors include misaligning partial products - the key is understanding th
                   {chapterNumber === 3 &&
                     index === 2 &&
                     'Calculate 23 × 45 using partial products. (Answer: 1,035)'}
+                  {chapterNumber === 4 &&
+                    index === 0 &&
+                    'Share 20 items equally among 4 groups. How many in each group? (Answer: 5)'}
+                  {chapterNumber === 4 &&
+                    index === 1 &&
+                    'Calculate 17 ÷ 5 and express with remainder. (Answer: 3 R2)'}
+                  {chapterNumber === 4 &&
+                    index === 2 &&
+                    'Use long division to find 456 ÷ 12. (Answer: 38)'}
                 </p>
               </div>
             </div>

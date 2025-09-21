@@ -1,48 +1,112 @@
 {
   "id": "chapter-05",
-  "title": "Fractions",
+  "title": "Fractions Basics",
   "objectives": [
     "Understand fractions as parts of a whole",
     "Compare and order fractions",
-    "Add and subtract fractions with like denominators",
-    "Convert between improper fractions and mixed numbers"
+    "Find equivalent fractions and simplify",
+    "Add and subtract fractions with like and unlike denominators",
+    "Multiply and divide fractions"
   ],
   "prerequisites": ["chapter-04"],
   "introduction": {
-    "context": "Fractions represent parts of wholes and are everywhere in daily life - from cooking measurements (1/2 cup) to time (1/4 hour) to sharing pizza slices. Understanding fractions is crucial for advanced math.",
-    "connection": "Fractions build on division from Chapter 4. A fraction like 3/4 means 3 ÷ 4, or 3 parts out of 4 equal parts."
+    "context": "Fractions represent the pinnacle of basic arithmetic, introducing parts of wholes and enabling precise measurements, ratios, and proportional thinking that underpin advanced mathematics like algebra and calculus. This chapter extends the operations from prior chapters: place value from Chapter 1 gives structure to decimal equivalents, addition/subtraction from Chapter 2 handles combining parts, multiplication from Chapter 3 scales fractions, and division from Chapter 4 forms their very definition (numerator divided by denominator).",
+    "connection": "Fractions build directly on division from Chapter 4. A fraction like 3/4 means 3 ÷ 4, representing 3 parts out of 4 equal parts. The operations you learned in previous chapters extend naturally to fractions, with some important modifications for handling different denominators."
   },
   "theory": {
     "concepts": [
       {
         "title": "Understanding Fractions",
-        "content": "A fraction has two parts: the numerator (top) shows how many parts we have, and the denominator (bottom) shows how many equal parts make the whole.",
-        "latex": "\\frac{3}{4} = \\text{3 parts out of 4 equal parts}",
-        "visuals": ["fraction-circles", "fraction-bars"]
+        "content": "Fractions begin with wholes divided into parts, intuitively like slicing a pie: one slice of four is 1/4. This part-whole relationship makes fractions essential for non-integer quantities. Formally, a fraction a/b represents a divided by b, where a is numerator, b denominator (b ≠ 0). Proper if |a| < |b|, improper otherwise (e.g., 5/3), mixed as whole + proper (1 2/3). Historically, Egyptians (2000 BCE) used eye of Horus for halves to 1/64. Babylonians had positional fractions. Greeks like Archimedes (200 BCE) approximated pi as fractions.",
+        "latex": "\\frac{a}{b} \\text{ where } a \\text{ is numerator, } b \\text{ is denominator } (b \\neq 0)",
+        "visuals": ["fraction-circles", "fraction-bars", "number-line"]
       },
       {
-        "title": "Equivalent Fractions",
-        "content": "Different fractions can represent the same amount. We can multiply or divide both numerator and denominator by the same number to create equivalent fractions.",
-        "latex": "\\frac{1}{2} = \\frac{2}{4} = \\frac{3}{6} = \\frac{4}{8}",
+        "title": "Equivalent Fractions and Simplifying",
+        "content": "Equivalent fractions look different but equal value, like 1/2 = 2/4. Intuitively, halve a halved pie - same as quartering directly. Formally, a/b = c/d if a×d = b×c; generate by multiplying/dividing numerator/denominator by same k ≠ 0. History: Euclid proved equivalence via common measures. Arabs used for astronomy.",
+        "latex": "\\frac{a}{b} = \\frac{c}{d} \\text{ if } a \\times d = b \\times c",
         "visuals": ["equivalent-fraction-models", "fraction-strips"]
+      },
+      {
+        "title": "Adding and Subtracting Fractions",
+        "content": "Combining fractions requires common denominators, intuitively like aligning units: add 1/2 + 1/3 by sixths (3/6 + 2/6 = 5/6). Formally, a/b + c/d = (a×d + b×c)/(b×d); subtract similarly minus. History: Egyptians added unit fractions. Al-Khwarizmi used LCD.",
+        "latex": "\\frac{a}{b} + \\frac{c}{d} = \\frac{a \\times d + b \\times c}{b \\times d}",
+        "visuals": ["fraction-addition-model", "common-denominator-chart"]
+      },
+      {
+        "title": "Multiplying Fractions",
+        "content": "Fraction multiplication scales parts: 1/2 × 3/4 = 3/8, intuitively half of three-quarters. Formally, (a/b) × (c/d) = (a×c)/(b×d); simplify before/after. History: Babylonians multiplied fractions positionally. Greeks geometrically.",
+        "latex": "\\frac{a}{b} \\times \\frac{c}{d} = \\frac{a \\times c}{b \\times d}",
+        "visuals": ["area-model", "fraction-multiplication-grid"]
+      },
+      {
+        "title": "Dividing Fractions",
+        "content": "Dividing fractions inverts: 1/2 ÷ 1/3 = 3/2, intuitively how many thirds in half? (1.5). Formally, (a/b) ÷ (c/d) = (a/b) × (d/c). History: Rhind Papyrus inverted. Modern rule from 1800s texts.",
+        "latex": "\\frac{a}{b} \\div \\frac{c}{d} = \\frac{a}{b} \\times \\frac{d}{c}",
+        "visuals": ["division-model", "reciprocal-visualization"]
       }
     ]
   },
   "examples": [
     {
-      "problem": "Add 1/4 + 2/4",
-      "solution": "1/4 + 2/4 = 3/4",
+      "problem": "What fraction of the circle is shaded if 3 out of 8 equal parts are colored?",
+      "solution": "3/8",
       "steps": [
-        "Since denominators are the same, add the numerators",
-        "1 + 2 = 3",
-        "Keep the same denominator: 4",
-        "The answer is 3/4"
+        "Count the total number of equal parts: 8",
+        "Count the shaded parts: 3",
+        "Write as fraction: 3/8",
+        "Check: 3 parts out of 8 total parts"
       ],
       "commonErrors": [
-        "Adding both numerators and denominators",
-        "Forgetting to simplify the final answer"
+        "Writing 8/3 instead of 3/8",
+        "Confusing numerator and denominator"
       ],
-      "latex": "\\frac{1}{4} + \\frac{2}{4} = \\frac{1+2}{4} = \\frac{3}{4}"
+      "latex": "\\frac{\\text{shaded parts}}{\\text{total parts}} = \\frac{3}{8}"
+    },
+    {
+      "problem": "Add 1/4 + 1/3",
+      "solution": "1/4 + 1/3 = 7/12",
+      "steps": [
+        "Find the least common denominator: LCM of 4 and 3 is 12",
+        "Convert to equivalent fractions: 1/4 = 3/12, 1/3 = 4/12",
+        "Add the numerators: 3 + 4 = 7",
+        "Keep the denominator: 7/12"
+      ],
+      "commonErrors": [
+        "Adding denominators: 1/4 + 1/3 ≠ 2/7",
+        "Not finding common denominator first"
+      ],
+      "latex": "\\frac{1}{4} + \\frac{1}{3} = \\frac{3}{12} + \\frac{4}{12} = \\frac{7}{12}"
+    },
+    {
+      "problem": "Calculate 2/3 × 3/4",
+      "solution": "2/3 × 3/4 = 1/2",
+      "steps": [
+        "Multiply numerators: 2 × 3 = 6",
+        "Multiply denominators: 3 × 4 = 12",
+        "Result: 6/12",
+        "Simplify: 6/12 = 1/2"
+      ],
+      "commonErrors": [
+        "Adding instead of multiplying",
+        "Forgetting to simplify the result"
+      ],
+      "latex": "\\frac{2}{3} \\times \\frac{3}{4} = \\frac{2 \\times 3}{3 \\times 4} = \\frac{6}{12} = \\frac{1}{2}"
+    },
+    {
+      "problem": "Calculate 3/4 ÷ 1/2",
+      "solution": "3/4 ÷ 1/2 = 3/2 = 1 1/2",
+      "steps": [
+        "Keep the first fraction: 3/4",
+        "Change division to multiplication: ×",
+        "Flip the second fraction: 1/2 becomes 2/1",
+        "Multiply: 3/4 × 2/1 = 6/4 = 3/2 = 1 1/2"
+      ],
+      "commonErrors": [
+        "Not flipping the second fraction",
+        "Flipping the first fraction instead"
+      ],
+      "latex": "\\frac{3}{4} \\div \\frac{1}{2} = \\frac{3}{4} \\times \\frac{2}{1} = \\frac{6}{4} = \\frac{3}{2}"
     }
   ],
   "practice": [
@@ -72,6 +136,47 @@
       ],
       "explanation": "When denominators are the same, add the numerators: 2 + 1 = 3, so 2/5 + 1/5 = 3/5",
       "difficulty": 2
+    },
+    {
+      "id": "p5-3",
+      "type": "multiple-choice",
+      "problem": "What is 1/3 + 1/6?",
+      "options": ["2/9", "1/2", "2/6", "1/9"],
+      "correct": 1,
+      "hints": [
+        "Find a common denominator first",
+        "The LCD of 3 and 6 is 6",
+        "Convert 1/3 to sixths"
+      ],
+      "explanation": "1/3 = 2/6, so 1/3 + 1/6 = 2/6 + 1/6 = 3/6 = 1/2",
+      "difficulty": 3
+    },
+    {
+      "id": "p5-4",
+      "type": "fill-in",
+      "problem": "Multiply: 1/4 × 2/3 = ?",
+      "correct": "2/12",
+      "hints": [
+        "Multiply numerators together",
+        "Multiply denominators together",
+        "1 × 2 = 2, and 4 × 3 = 12"
+      ],
+      "explanation": "To multiply fractions: (1 × 2)/(4 × 3) = 2/12, which can be simplified to 1/6",
+      "difficulty": 3
+    },
+    {
+      "id": "p5-5",
+      "type": "multiple-choice",
+      "problem": "What is 1/2 ÷ 1/4?",
+      "options": ["1/8", "2", "1/6", "4"],
+      "correct": 1,
+      "hints": [
+        "Remember: keep, change, flip",
+        "1/2 × 4/1",
+        "How many quarters fit in a half?"
+      ],
+      "explanation": "1/2 ÷ 1/4 = 1/2 × 4/1 = 4/2 = 2. There are 2 quarter-pieces in one half.",
+      "difficulty": 3
     }
   ],
   "tools": ["calculator", "fraction-visualizer", "fraction-strips"],

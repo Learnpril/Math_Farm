@@ -2,187 +2,211 @@
   "id": "chapter-07",
   "title": "Percentages and Ratios",
   "objectives": [
-    "Understand percentages as parts per hundred",
-    "Convert between percentages, decimals, and fractions",
-    "Calculate percentages of quantities and solve percent problems",
-    "Understand and work with ratios and proportions"
+    "Understand ratios as comparisons between quantities",
+    "Find equivalent ratios and simplify them",
+    "Convert between fractions, decimals, and percentages",
+    "Calculate percentage increases and decreases",
+    "Apply ratios and percentages to solve real-world problems"
   ],
-  "prerequisites": ["chapter-05", "chapter-06"],
+  "prerequisites": ["chapter-06"],
   "introduction": {
-    "context": "Percentages and ratios are fundamental for understanding discounts, taxes, tips, interest rates, statistics, and comparisons. They appear in news reports, financial documents, recipes, and scientific data, making them essential for informed decision-making.",
-    "connection": "Building on fractions and decimals, percentages provide another way to express parts of wholes, while ratios help us compare quantities and understand proportional relationships."
+    "context": "Percentages and ratios deepen our understanding of proportional relationships, transforming abstract comparisons into practical tools for analysis, decision-making, and real-world problem-solving. This chapter integrates seamlessly with prior ones: place value and decimals from Chapters 1 and 6 provide the base for percentage calculations (e.g., 25% = 0.25), fractions from Chapter 5 equate directly (50% = 1/2), and operations from Chapters 2-4 enable finding ratios or percentage changes. Imagine a merchant comparing profits: ratios quantify efficiency, percentages communicate growth - both evolving from ancient proportional thinking.",
+    "connection": "Ratios and percentages are extensions of the fraction and decimal concepts you've already mastered. A ratio is simply a way to compare two quantities, while a percentage is a special ratio that compares to 100. These tools help us make sense of proportional relationships in everything from cooking recipes to financial calculations."
   },
   "theory": {
     "concepts": [
       {
+        "title": "Understanding Ratios",
+        "content": "Ratios compare quantities, intuitively like mixing paint: 2 parts red to 3 blue - the relationship, not totals. This part-to-part or part-to-whole sets ratios apart from raw numbers. Formally, a ratio a:b = a/b, comparing a to b (order matters unless equivalent). Historically, Babylonians used for recipes (e.g., 1:2 bronze alloy). Greeks like Aristotle (300 BCE) philosophized ratios as equality of proportions. Applications: Sports - batting average 3:10 hits. Finance - debt:income 1:3. Misconceptions: Ratios as addition - clarify comparison (2:3 ≠5); reversing order - 3:2 ≠2:3, show with examples.",
+        "latex": "\\text{Ratio } a:b = \\frac{a}{b} \\text{ where order matters}",
+        "visuals": ["ratio-diagram", "part-to-part-models", "comparison-bars"]
+      },
+      {
+        "title": "Equivalent Ratios and Simplifying",
+        "content": "Equivalent ratios maintain proportion, like 2:4 = 1:2 - same relationship, scaled. Intuitively, double recipe 1:2 sugar:flour to 2:4 - unchanged taste. Formally, a:b = c:d if a/d = b/c (cross-multiply ad=bc); simplify by dividing by GCD. History: Euclid proved equivalence for geometry. Medieval merchants used for currency. Applications: Maps - scale 1:100000, equivalent distances. Diets - nutrient ratios scaled. Misconceptions: Adding to simplify - wrong (4:6 ≠5:7); use multiplication check.",
+        "latex": "a:b = c:d \\text{ if } ad = bc \\text{ (cross multiplication)}",
+        "visuals": [
+          "equivalent-ratio-tables",
+          "scaling-models",
+          "proportion-grids"
+        ]
+      },
+      {
         "title": "Understanding Percentages",
-        "content": "Percentages are parts per 100 (p% = p/100). They provide a standard way to compare fractions with different denominators. Convert: fraction to percent by dividing and multiplying by 100. 'Of' means multiply: p% of x = (p/100) × x.",
-        "latex": "25\\% = \\frac{25}{100} = 0.25 = \\frac{1}{4}",
-        "visuals": ["percent-grid", "pie-chart"]
+        "content": "Percentages are ratios per 100, intuitively 50% as 50/100=1/2 - half the whole. Like shading half a 100-square grid. Formally, p% = p/100; convert fraction f to % as (f×100)%. History: Roman 'per centum' for taxes (8 per centum). 1400s Italians abbreviated; % symbol from 1650. Applications: Tips - 15% of $40= $6. Polls - 60% approval. Misconceptions: % as addition - 20% + 30% ≠50% if bases differ; clarify.",
+        "latex": "p\\% = \\frac{p}{100} \\text{ and } \\frac{a}{b} = \\frac{a \\times 100}{b}\\%",
+        "visuals": ["percentage-bar", "hundred-grid", "pie-charts"]
       },
       {
-        "title": "Ratio and Proportion",
-        "content": "Ratios compare quantities (a:b = a/b). They can be simplified like fractions. Proportions are equal ratios (a:b = c:d means a/b = c/d). Cross-multiply to solve: if a/b = c/d, then ad = bc.",
-        "latex": "\\text{If } \\frac{2}{3} = \\frac{x}{12}, \\text{ then } 2 \\times 12 = 3 \\times x, \\text{ so } x = 8",
-        "visuals": ["ratio-bars", "proportion-cross"]
+        "title": "Percentage Increase and Decrease",
+        "content": "Percentage change measures relative shift: increase from 100 to 120=20% up. Intuitively, sale 20% off - multiply by 0.8. Formally, change = (new - old)/old ×100%; decrease similar negative. History: 1700s economists used for growth. Statistics formalized. Applications: Inflation - 3% rise. Stocks - 5% drop. Misconceptions: % change additive - 50% up then down ≠original (100+50=150-75=75); show math.",
+        "latex": "\\text{Percentage Change} = \\frac{\\text{new} - \\text{old}}{\\text{old}} \\times 100\\%",
+        "visuals": ["change-models", "before-after-bars", "growth-charts"]
       },
       {
-        "title": "Real-world Applications",
-        "content": "Percentages appear in discounts (20% off means multiply by 0.8), taxes, tips, and interest. Ratios appear in recipes, maps, and comparisons. Understanding these helps in financial literacy and problem-solving.",
-        "latex": "\\text{20% off } \\$50 = \\$50 \\times 0.8 = \\$40",
-        "visuals": ["discount-model", "recipe-scaling"]
+        "title": "Relating Percentages and Ratios",
+        "content": "Percentages are ratios to 100, e.g., 2:5=40:100=40%. Intuitively, ratio 3:7 as (3/10)×100=30%, 70%. Formally, ratio a:b to % - (a/(a+b))×100% for a, similar for b. History: Renaissance linked for proportions. Modern stats use. Applications: Pie charts - ratios as %. Mixtures - 2:3 solution=40% one. Misconceptions: Direct ratio=% - 1:2≠1%, but 33.3:66.7%.",
+        "latex": "\\text{Ratio } a:b \\text{ gives } \\frac{a}{a+b} \\times 100\\% \\text{ and } \\frac{b}{a+b} \\times 100\\%",
+        "visuals": [
+          "ratio-percentage-conversion",
+          "pie-chart-ratios",
+          "proportion-circles"
+        ]
       }
     ]
   },
   "examples": [
     {
-      "problem": "Find 25% of 100",
-      "solution": "25/100 × 100 = 25",
+      "problem": "A team wins 5 games and loses 3 games. What is the ratio of wins to losses?",
+      "solution": "The ratio of wins to losses is 5:3",
       "steps": [
-        "Convert percent to fraction: 25% = 25/100",
-        "Multiply: (25/100) × 100",
-        "Simplify: 25/100 × 100 = 25"
+        "Identify the quantities being compared: wins = 5, losses = 3",
+        "Write the ratio in the order requested: wins to losses",
+        "Express as ratio notation: 5:3",
+        "Check: This means for every 5 wins, there are 3 losses"
       ],
       "commonErrors": [
-        "Dividing instead of multiplying",
-        "Forgetting to convert percent"
+        "Reversing the order (3:5 instead of 5:3)",
+        "Adding the numbers together instead of comparing"
       ],
-      "latex": "25\\% \\text{ of } 100 = \\frac{25}{100} \\times 100 = 25"
+      "latex": "\\text{Wins : Losses} = 5:3"
     },
     {
-      "problem": "Convert 3/4 to a percentage",
-      "solution": "3÷4=0.75, ×100=75%",
+      "problem": "Simplify the ratio 10:15",
+      "solution": "10:15 = 2:3",
       "steps": [
-        "Divide numerator by denominator: 3 ÷ 4 = 0.75",
-        "Multiply by 100: 0.75 × 100 = 75",
-        "Add percent symbol: 75%"
+        "Find the GCD of 10 and 15",
+        "Factors of 10: 1, 2, 5, 10",
+        "Factors of 15: 1, 3, 5, 15",
+        "GCD = 5",
+        "Divide both terms by 5: 10÷5 = 2, 15÷5 = 3",
+        "Simplified ratio: 2:3"
       ],
-      "commonErrors": ["Multiplying by 10 instead of 100", "Wrong division"],
-      "latex": "\\frac{3}{4} = 0.75 = 75\\%"
+      "commonErrors": [
+        "Not finding the correct GCD",
+        "Only dividing one term by the GCD"
+      ],
+      "latex": "10:15 = \\frac{10 \\div 5}{15 \\div 5} = \\frac{2}{3} = 2:3"
     },
     {
-      "problem": "In a ratio of 2:3, if the total is 50, find each part",
-      "solution": "Parts: 5 total (2+3), each part: 10 (50/5). 2 parts=20, 3 parts=30",
+      "problem": "Convert 3/5 to a percentage",
+      "solution": "3/5 = 60%",
       "steps": [
-        "Add ratio parts: 2 + 3 = 5 total parts",
-        "Find value of each part: 50 ÷ 5 = 10",
-        "Calculate each quantity: 2 × 10 = 20, 3 × 10 = 30"
+        "Convert the fraction to a decimal: 3 ÷ 5 = 0.6",
+        "Multiply by 100 to get percentage: 0.6 × 100 = 60",
+        "Add the percent symbol: 60%",
+        "Check: 60/100 = 3/5 ✓"
       ],
-      "commonErrors": ["Using wrong total parts", "Not scaling proportionally"],
-      "latex": "\\text{Ratio } 2:3 \\text{ with total } 50 \\Rightarrow 20:30"
+      "commonErrors": [
+        "Forgetting to multiply by 100",
+        "Misplacing the decimal point"
+      ],
+      "latex": "\\frac{3}{5} = 0.6 = 0.6 \\times 100\\% = 60\\%"
+    },
+    {
+      "problem": "A shirt originally costs $40. It's on sale for 25% off. What is the sale price?",
+      "solution": "The sale price is $30",
+      "steps": [
+        "Calculate the discount amount: 25% of $40 = 0.25 × $40 = $10",
+        "Subtract the discount from original price: $40 - $10 = $30",
+        "Alternative method: Sale price = 75% of original = 0.75 × $40 = $30",
+        "Check: $30 + $10 = $40 ✓"
+      ],
+      "commonErrors": [
+        "Calculating 25% but forgetting to subtract from original",
+        "Adding the discount instead of subtracting"
+      ],
+      "latex": "\\text{Sale Price} = \\$40 - (0.25 \\times \\$40) = \\$40 - \\$10 = \\$30"
+    },
+    {
+      "problem": "A population increases from 200 to 250. What is the percentage increase?",
+      "solution": "The percentage increase is 25%",
+      "steps": [
+        "Find the change: 250 - 200 = 50",
+        "Divide by the original amount: 50 ÷ 200 = 0.25",
+        "Convert to percentage: 0.25 × 100% = 25%",
+        "Check: 200 + (25% of 200) = 200 + 50 = 250 ✓"
+      ],
+      "commonErrors": [
+        "Dividing by the new amount instead of original",
+        "Forgetting to multiply by 100 for percentage"
+      ],
+      "latex": "\\text{Percentage Increase} = \\frac{250 - 200}{200} \\times 100\\% = \\frac{50}{200} \\times 100\\% = 25\\%"
     }
   ],
   "practice": [
     {
-      "id": "pct-basic-1",
-      "type": "fill-in",
-      "problem": "Calculate 50% of 200",
-      "correct": "100",
-      "hints": [
-        "50% = 50/100 = 1/2",
-        "50% of 200 means half of 200",
-        "200 ÷ 2 = 100"
-      ],
-      "explanation": "50% of 200 = 100. 50% means half, so we divide by 2.",
-      "difficulty": 1
-    },
-    {
-      "id": "ratio-basic-1",
+      "id": "p7-1",
       "type": "multiple-choice",
-      "problem": "What does a ratio of 1:1 mean?",
-      "options": [
-        "Equal parts",
-        "One part only",
-        "Two parts total",
-        "Add the numbers"
-      ],
-      "correct": 0,
+      "problem": "What is the ratio 12:18 in simplest form?",
+      "options": ["6:9", "4:6", "2:3", "1:2"],
+      "correct": 2,
       "hints": [
-        "1:1 means 1 part to 1 part",
-        "Both quantities are the same",
-        "Equal sharing or equal amounts"
+        "Find the GCD of 12 and 18",
+        "The GCD is 6",
+        "Divide both terms by 6"
       ],
-      "explanation": "A ratio of 1:1 means equal parts - the same amount of each quantity.",
-      "difficulty": 1
-    },
-    {
-      "id": "pct-calc-1",
-      "type": "fill-in",
-      "problem": "Find 20% of 50",
-      "correct": "10",
-      "hints": ["20% = 0.2 or 1/5", "0.2 × 50 = 10", "Or: 50 ÷ 5 = 10"],
-      "explanation": "20% of 50 = 10. We can calculate this as 0.2 × 50 or 50 ÷ 5.",
+      "explanation": "12:18 = (12÷6):(18÷6) = 2:3. The GCD of 12 and 18 is 6.",
       "difficulty": 2
     },
     {
-      "id": "convert-pct-1",
+      "id": "p7-2",
       "type": "fill-in",
-      "problem": "Convert 0.4 to a percentage",
-      "correct": "40",
+      "problem": "Convert 0.75 to a percentage: ?",
+      "correct": "75%",
       "hints": [
-        "Multiply by 100 to convert decimal to percent",
-        "0.4 × 100 = 40",
-        "Add the % symbol"
+        "Multiply the decimal by 100",
+        "0.75 × 100 = ?",
+        "Don't forget the % symbol"
       ],
-      "explanation": "0.4 = 40%. To convert decimal to percent, multiply by 100.",
+      "explanation": "To convert a decimal to percentage, multiply by 100: 0.75 × 100 = 75%",
       "difficulty": 2
     },
     {
-      "id": "discount-1",
-      "type": "fill-in",
-      "problem": "A $80 item has a 15% discount. What is the sale price?",
-      "correct": "68",
+      "id": "p7-3",
+      "type": "multiple-choice",
+      "problem": "What is 20% of 150?",
+      "options": ["20", "30", "25", "35"],
+      "correct": 1,
       "hints": [
-        "15% of $80 = 0.15 × 80 = $12",
-        "Sale price = Original price - Discount",
-        "$80 - $12 = $68"
+        "Convert 20% to decimal: 0.20",
+        "Multiply: 0.20 × 150",
+        "20% means 20 out of 100"
       ],
-      "explanation": "15% of $80 = $12 discount. Sale price = $80 - $12 = $68.",
+      "explanation": "20% of 150 = 0.20 × 150 = 30",
+      "difficulty": 2
+    },
+    {
+      "id": "p7-4",
+      "type": "fill-in",
+      "problem": "A price increases from $80 to $100. What is the percentage increase? ?",
+      "correct": "25%",
+      "hints": [
+        "Find the change: $100 - $80 = $20",
+        "Divide by original: $20 ÷ $80 = 0.25",
+        "Convert to percentage: 0.25 × 100%"
+      ],
+      "explanation": "Percentage increase = (100-80)/80 × 100% = 20/80 × 100% = 25%",
       "difficulty": 3
     },
     {
-      "id": "ratio-solve-1",
-      "type": "fill-in",
-      "problem": "In a 4:5 ratio, if the first part is 20, what is the second part?",
-      "correct": "25",
+      "id": "p7-5",
+      "type": "multiple-choice",
+      "problem": "In a class of 30 students, the ratio of boys to girls is 2:3. How many boys are there?",
+      "options": ["10", "12", "15", "18"],
+      "correct": 1,
       "hints": [
-        "Set up proportion: 4:5 = 20:x",
-        "Cross multiply: 4x = 5 × 20",
-        "Solve: 4x = 100, so x = 25"
+        "The ratio 2:3 means 2 parts boys, 3 parts girls",
+        "Total parts = 2 + 3 = 5",
+        "Boys = (2/5) × 30"
       ],
-      "explanation": "If 4:5 = 20:x, then 4x = 100, so x = 25. The second part is 25.",
-      "difficulty": 4
-    },
-    {
-      "id": "fraction-pct-1",
-      "type": "fill-in",
-      "problem": "Express 75% as a fraction in lowest terms",
-      "correct": "3/4",
-      "hints": [
-        "75% = 75/100",
-        "Find GCD of 75 and 100",
-        "75 ÷ 25 = 3, 100 ÷ 25 = 4"
-      ],
-      "explanation": "75% = 75/100 = 3/4 after dividing both numerator and denominator by 25.",
-      "difficulty": 4
-    },
-    {
-      "id": "mixture-1",
-      "type": "fill-in",
-      "problem": "Mix paint in red:blue ratio 3:7. For 100L total, how much red paint?",
-      "correct": "30",
-      "hints": [
-        "Total ratio parts: 3 + 7 = 10",
-        "Each part: 100L ÷ 10 = 10L",
-        "Red paint: 3 × 10L = 30L"
-      ],
-      "explanation": "In a 3:7 ratio with 100L total, red paint = (3/10) × 100L = 30L.",
-      "difficulty": 5
+      "explanation": "Ratio 2:3 means 2 out of 5 parts are boys. Boys = (2/5) × 30 = 12",
+      "difficulty": 3
     }
   ],
-  "tools": ["percentage-calculator", "ratio-visualizer"],
+  "tools": ["calculator", "ratio-visualizer", "percentage-grid"],
   "assessment": {
     "masteryThreshold": 0.8,
-    "requiredProblems": 6
+    "requiredProblems": 5
   }
 }
