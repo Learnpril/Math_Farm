@@ -21,7 +21,7 @@
   - Fix nerdamer duplicate import declarations in `client/src/lib/math/nerdamer-loader.ts`
   - _Requirements: MathJax 4.0 integration for mathematical expressions_
 
-- [ ] 2. Fix curriculum component type conflicts
+- [x] 2. Fix curriculum component type conflicts
   - Resolve type mismatches in `ArithmeticCurriculumPage.tsx` between curriculum types and component props
   - Fix optional property type issues in curriculum components
   - Align CurriculumMetadata interface with component expectations
