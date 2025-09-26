@@ -1,11 +1,5 @@
 import { useState } from 'react';
-import {
-  ChevronLeft,
-  ChevronRight,
-  Target,
-  BookOpen,
-  PenTool,
-} from 'lucide-react';
+import { ChevronLeft, ChevronRight, BookOpen, PenTool } from 'lucide-react';
 import {
   ChapterContent as ChapterContentType,
   ChapterProgress,
@@ -23,7 +17,7 @@ interface ChapterContentProps {
   totalChapters: number;
 }
 
-type SectionType = 'introduction' | 'theory' | 'examples' | 'practice';
+type SectionType = 'theory' | 'examples' | 'practice';
 
 export function ChapterContent({
   chapter,
@@ -33,71 +27,16 @@ export function ChapterContent({
   currentChapter,
   totalChapters,
 }: ChapterContentProps) {
-  const [activeSection, setActiveSection] =
-    useState<SectionType>('introduction');
+  const [activeSection, setActiveSection] = useState<SectionType>('theory');
 
   const sections = [
-    { id: 'introduction' as SectionType, label: 'Introduction', icon: Target },
-    { id: 'theory' as SectionType, label: 'Theory', icon: BookOpen },
+    { id: 'theory' as SectionType, label: 'Reading', icon: BookOpen },
     { id: 'examples' as SectionType, label: 'Examples', icon: PenTool },
     { id: 'practice' as SectionType, label: 'Practice', icon: PenTool },
   ];
 
   const renderSectionContent = () => {
     switch (activeSection) {
-      case 'introduction':
-        return (
-          <div className='prose prose-purple max-w-none dark:prose-invert'>
-            <h3 className='text-xl font-semibold mb-4'>Chapter Overview</h3>
-
-            <div className='bg-purple-50 dark:bg-purple-900/20 rounded-lg p-6 mb-6'>
-              <h4 className='font-medium text-purple-900 dark:text-purple-100 mb-2'>
-                Learning Objectives
-              </h4>
-              <ul className='list-disc list-inside space-y-1 text-purple-800 dark:text-purple-200'>
-                {chapter.objectives.map((objective, index) => (
-                  <li key={index}>{objective}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className='grid md:grid-cols-2 gap-6'>
-              <div>
-                <h4 className='font-medium mb-2'>Real-World Context</h4>
-                <p className='text-gray-600 dark:text-gray-400'>
-                  {chapter.introduction.context}
-                </p>
-              </div>
-
-              <div>
-                <h4 className='font-medium mb-2'>Building On</h4>
-                <p className='text-gray-600 dark:text-gray-400'>
-                  {chapter.introduction.connection}
-                </p>
-              </div>
-            </div>
-
-            <div className='mt-8 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg'>
-              <div className='flex items-center justify-between'>
-                <div>
-                  <h4 className='font-medium text-blue-900 dark:text-blue-100'>
-                    Learn at Your Own Pace
-                  </h4>
-                  <p className='text-sm text-blue-700 dark:text-blue-300'>
-                    Take your time and work at your own pace
-                  </p>
-                </div>
-                <button
-                  onClick={() => setActiveSection('theory')}
-                  className='px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors'
-                >
-                  Start Learning
-                </button>
-              </div>
-            </div>
-          </div>
-        );
-
       case 'theory':
         return (
           <TheorySection
