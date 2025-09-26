@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from 'react';
 import { TheoryConcept } from '../types';
 import { MathExpression } from './MathExpression';
 import {
@@ -26,18 +26,121 @@ export function TheorySection({
   concepts,
   chapterNumber = 1,
 }: TheorySectionProps) {
-  const [expandedVisuals, setExpandedVisuals] = useState<Set<string>>(
-    new Set()
-  );
+  // Track used visuals to prevent reuse
+  const usedVisuals = new Set<string>();
+  // Global visual counter for unique numbering across all concepts
+  let globalVisualCounter = 0;
 
-  const toggleVisual = (visualId: string) => {
-    const newExpanded = new Set(expandedVisuals);
-    if (newExpanded.has(visualId)) {
-      newExpanded.delete(visualId);
-    } else {
-      newExpanded.add(visualId);
+  const getVisualDescription = (visualType: string): string => {
+    switch (visualType) {
+      // Place value and number structure
+      case 'PlaceValueChart':
+      case 'place-value-chart':
+        return 'Below is a chart that shows how each digit in a number has a different value based on its position.';
+
+      case 'DecimalPlaceValueChart':
+      case 'decimal-place-chart':
+        return 'The following chart demonstrates how decimal numbers work with tenths, hundredths, and more.';
+
+      // Number lines and sequences
+      case 'NumberLine':
+      case 'number-line':
+        return 'Below is a number line that helps you count, add, subtract, and see patterns.';
+
+      // Base-10 blocks and concrete representations
+      case 'Base10Blocks':
+      case 'base-10-blocks':
+      case 'fraction-circles':
+      case 'fraction-bars':
+      case 'fraction-strips':
+        return 'The following visual blocks show how numbers are built from ones, tens, and hundreds.';
+
+      // Expanded form and decomposition
+      case 'ExpandedFormDiagram':
+      case 'expanded-form-diagram':
+      case 'area-model':
+      case 'partial-products':
+      case 'equivalent-fraction-models':
+        return 'Below is a diagram that breaks apart numbers to show what each part is worth.';
+
+      // Percentage visualization
+      case 'PercentageGrid':
+      case 'percent-grid':
+      case 'pie-chart':
+        return 'The following grid shows percentages as parts out of 100.';
+
+      // Ratio and proportion visualization
+      case 'RatioVisualizer':
+      case 'ratio-bars':
+      case 'proportion-cross':
+        return 'Below is a visual that compares different amounts and shows how they relate to each other.';
+
+      // Number comparison
+      case 'NumberComparison':
+      case 'comparison-chart':
+        return 'The following comparison shows two numbers to help you see which is bigger, smaller, or if they are equal.';
+
+      // Other comparisons and relationships
+      case 'ComparisonChart':
+      case 'conversion-chart':
+      case 'equivalent-representations':
+        return 'Below is a chart that compares different numbers or shows the same amount in different ways.';
+
+      // Multiplication models
+      case 'MultiplicationArrayModel':
+      case 'array-model':
+      case 'repeated-addition':
+        return 'Below are dots arranged in rows and columns to show what multiplication means.';
+
+      // Division models
+      case 'DivisionGroupsModel':
+      case 'equal-groups':
+      case 'long-division-steps':
+      case 'remainder-model':
+      case 'sharing-with-leftovers':
+        return 'The following demonstration shows how to share objects equally into groups to understand division.';
+
+      // Addition algorithm
+      case 'AdditionAlgorithm':
+      case 'addition-algorithm':
+        return 'Below is the step-by-step process for adding large numbers, including carrying.';
+
+      // Subtraction algorithm
+      case 'SubtractionAlgorithm':
+      case 'subtraction-algorithm':
+      case 'borrowing-demonstration':
+        return 'The following shows the step-by-step process for subtracting large numbers, including borrowing.';
+
+      // Other algorithms and procedures
+      case 'standard-algorithm':
+      case 'long-division-algorithm':
+      case 'step-by-step-process':
+        return 'Below is the standard way to solve math problems step by step.';
+
+      // Decimal operations
+      case 'decimal-alignment':
+      case 'decimal-multiplication':
+        return 'The following demonstration shows how to line up decimal points when doing math with decimal numbers.';
+
+      // Real-world applications
+      case 'discount-model':
+      case 'recipe-scaling':
+      case 'money-problems':
+      case 'measurement-conversions':
+        return 'Below are examples that show how math is used in everyday situations like shopping and cooking.';
+
+      // Problem solving and strategies
+      case 'problem-solving-flowchart':
+      case 'strategy-diagram':
+      case 'multi-step-diagram':
+      case 'operation-sequence':
+      case 'estimation-examples':
+      case 'reasonableness-checks':
+        return 'The following is a step-by-step guide for solving word problems and checking your answers.';
+
+      default:
+        return 'Below is a helpful visual that makes this math concept easier to understand.';
     }
-    setExpandedVisuals(newExpanded);
   };
 
   const renderVisualAid = (
@@ -45,8 +148,15 @@ export function TheorySection({
     conceptIndex: number,
     visualIndex: number
   ) => {
-    const visualId = `${conceptIndex}-${visualIndex}`;
-    const isExpanded = expandedVisuals.has(visualId);
+    // Check if this visual type has already been used
+    if (usedVisuals.has(visualType)) {
+      // Skip this visual to avoid reuse
+      return null;
+    }
+
+    // Mark this visual type as used and increment global counter
+    usedVisuals.add(visualType);
+    globalVisualCounter++;
 
     // Sample numbers based on chapter context
     const getSampleNumber = () => {
@@ -339,32 +449,19 @@ export function TheorySection({
     };
 
     return (
-      <div key={visualIndex} className='mt-4'>
-        <button
-          onClick={() => toggleVisual(visualId)}
-          className='flex items-center gap-2 px-4 py-2 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-lg hover:bg-purple-200 dark:hover:bg-purple-900/50 transition-colors'
-        >
-          <span
-            className={`transform transition-transform ${isExpanded ? 'rotate-90' : ''}`}
-          >
-            ▶
-          </span>
-          <span className='font-medium'>
-            {visualType
-              .split('-')
-              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-              .join(' ')}
-          </span>
-          <span className='text-xs bg-purple-200 dark:bg-purple-800 px-2 py-1 rounded'>
-            Interactive
-          </span>
-        </button>
-
-        {isExpanded && (
-          <div className='mt-3 border-l-4 border-purple-300 dark:border-purple-600 pl-4'>
-            {renderVisualComponent()}
-          </div>
-        )}
+      <div key={visualIndex} className='mt-6'>
+        <div className='mb-3'>
+          <h4 className='text-lg font-semibold text-purple-700 dark:text-purple-300 flex items-center gap-2'>
+            <span className='text-2xl'>📊</span>
+            Visual {chapterNumber}-{globalVisualCounter}
+          </h4>
+          <p className='text-sm text-purple-600 dark:text-purple-400 mt-1'>
+            {getVisualDescription(visualType)}
+          </p>
+        </div>
+        <div className='border-l-4 border-purple-300 dark:border-purple-600 pl-4'>
+          {renderVisualComponent()}
+        </div>
       </div>
     );
   };
@@ -620,13 +717,12 @@ Common errors include misaligning digits in the quotient, making arithmetic mist
 
               {concept.visuals && concept.visuals.length > 0 && (
                 <div className='my-8'>
-                  <h5 className='font-semibold mb-4 text-gray-800 dark:text-gray-200 text-lg'>
-                    Interactive Visual Tools
-                  </h5>
                   <div className='space-y-2'>
-                    {concept.visuals.map((visual, vIndex) =>
-                      renderVisualAid(visual, index, vIndex)
-                    )}
+                    {concept.visuals
+                      .map((visual, vIndex) =>
+                        renderVisualAid(visual, index, vIndex)
+                      )
+                      .filter(visual => visual !== null)}
                   </div>
                 </div>
               )}

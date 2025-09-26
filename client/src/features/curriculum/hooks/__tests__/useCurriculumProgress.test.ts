@@ -224,7 +224,7 @@ describe('useCurriculumProgress', () => {
     });
 
     const overallProgress = result.current.getOverallProgress();
-    expect(overallProgress).toBeCloseTo(0.25); // 2/8 chapters
+    expect(overallProgress).toBeCloseTo(0.286); // 2/7 chapters
   });
 
   it('resets progress correctly', async () => {

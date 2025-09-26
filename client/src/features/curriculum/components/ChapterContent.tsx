@@ -46,7 +46,12 @@ export function ChapterContent({
         );
 
       case 'examples':
-        return <WorkedExamples examples={chapter.examples} />;
+        return (
+          <WorkedExamples
+            key={`examples-${chapter.id}`}
+            examples={chapter.examples}
+          />
+        );
 
       case 'practice':
         return (

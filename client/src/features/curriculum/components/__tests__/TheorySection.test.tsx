@@ -94,28 +94,21 @@ describe('TheorySection', () => {
     expect(screen.getByText('Expanded Form Diagram')).toBeInTheDocument();
   });
 
-  it('expands visual aids when clicked', () => {
+  it('shows visual aids directly without buttons', () => {
     render(<TheorySection concepts={mockConcepts} />);
 
-    const placeValueButton = screen.getByText('Place Value Chart');
-    fireEvent.click(placeValueButton);
-
-    // Should show the interactive place value chart
-    expect(screen.getByTestId('place-value-chart')).toBeInTheDocument();
-  });
-
-  it('collapses visual aids when clicked again', () => {
-    render(<TheorySection concepts={mockConcepts} />);
-
-    const placeValueButton = screen.getByText('Place Value Chart');
-
-    // Expand
-    fireEvent.click(placeValueButton);
+    // Should show the interactive place value chart immediately
     expect(screen.getByTestId('place-value-chart')).toBeInTheDocument();
 
-    // Collapse
-    fireEvent.click(placeValueButton);
-    expect(screen.queryByTestId('place-value-chart')).not.toBeInTheDocument();
+    // Should show the visual aid title with numbering
+    expect(screen.getByText('Visual 1.1')).toBeInTheDocument();
+
+    // Should show specific description
+    expect(
+      screen.getByText(
+        'Below is a chart that shows how each digit in a number has a different value based on its position.'
+      )
+    ).toBeInTheDocument();
   });
 
   it('handles concepts without visuals gracefully', () => {
@@ -165,10 +158,24 @@ describe('TheorySection', () => {
     expect(conceptNumbers).toHaveLength(3);
   });
 
-  it('shows interactive badges on visual aid buttons', () => {
+  it('shows specific visual aid descriptions', () => {
     render(<TheorySection concepts={mockConcepts} />);
 
-    const interactiveBadges = screen.getAllByText('Interactive');
-    expect(interactiveBadges.length).toBeGreaterThan(0);
+    // Check for specific descriptions based on the visual types in mockConcepts
+    expect(
+      screen.getByText(
+        'Below is a chart that shows how each digit in a number has a different value based on its position.'
+      )
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        'The following visual blocks show how numbers are built from ones, tens, and hundreds.'
+      )
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        'Below is a diagram that breaks apart numbers to show what each part is worth.'
+      )
+    ).toBeInTheDocument();
   });
 });

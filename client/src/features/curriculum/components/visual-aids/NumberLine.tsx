@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 
 interface NumberLineProps {
   min?: number;
@@ -17,7 +17,13 @@ export function NumberLine({
   interactive = false,
   className = '',
 }: NumberLineProps) {
-  const [selectedNumber, setSelectedNumber] = useState<number | null>(null);
+  const [selectedNumber, setSelectedNumber] = useState<number | null>(
+    highlightNumbers.length > 0
+      ? highlightNumbers[0]
+      : Math.floor((min + max) / 2)
+  );
+  const [isDragging, setIsDragging] = useState(false);
+  const lineRef = useRef<HTMLDivElement>(null);
 
   // Generate tick marks
   const ticks = [];
@@ -27,13 +33,64 @@ export function NumberLine({
 
   const handleTickClick = (number: number) => {
     if (interactive) {
-      setSelectedNumber(selectedNumber === number ? null : number);
+      setSelectedNumber(number);
     }
   };
 
   const getTickPosition = (number: number) => {
     return ((number - min) / (max - min)) * 100;
   };
+
+  const getNumberFromPosition = useCallback(
+    (clientX: number) => {
+      if (!lineRef.current) return min;
+
+      const rect = lineRef.current.getBoundingClientRect();
+      const relativeX = clientX - rect.left;
+      const percentage = Math.max(0, Math.min(1, relativeX / rect.width));
+      const rawNumber = min + percentage * (max - min);
+
+      // Snap to nearest integer (1s place)
+      const snappedNumber = Math.round(rawNumber);
+      return Math.max(min, Math.min(max, snappedNumber));
+    },
+    [min, max]
+  );
+
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      if (!interactive) return;
+      setIsDragging(true);
+      const newNumber = getNumberFromPosition(e.clientX);
+      setSelectedNumber(newNumber);
+    },
+    [interactive, getNumberFromPosition]
+  );
+
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (!isDragging || !interactive) return;
+      const newNumber = getNumberFromPosition(e.clientX);
+      setSelectedNumber(newNumber);
+    },
+    [isDragging, interactive, getNumberFromPosition]
+  );
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  // Add global mouse event listeners for dragging
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isDragging, handleMouseMove, handleMouseUp]);
 
   return (
     <div
@@ -45,7 +102,13 @@ export function NumberLine({
 
       <div className='relative h-20 mb-4'>
         {/* Main line */}
-        <div className='absolute top-6 left-0 right-0 h-1 bg-gray-400 dark:bg-gray-600 rounded'></div>
+        <div
+          ref={lineRef}
+          className={`absolute top-6 left-0 right-0 h-1 bg-gray-400 dark:bg-gray-600 rounded ${
+            interactive ? 'cursor-pointer' : ''
+          }`}
+          onMouseDown={handleMouseDown}
+        ></div>
 
         {/* Tick marks and labels */}
         {ticks.map(tick => {
@@ -92,19 +155,25 @@ export function NumberLine({
           );
         })}
 
-        {/* Highlighted numbers with dots */}
-        {highlightNumbers.map(number => {
-          const position = getTickPosition(number);
-          return (
+        {/* Draggable dot for selected number */}
+        {selectedNumber !== null && (
+          <div
+            className='absolute top-4'
+            style={{
+              left: `${getTickPosition(selectedNumber)}%`,
+              transform: 'translateX(-50%)',
+            }}
+          >
             <div
-              key={`highlight-${number}`}
-              className='absolute top-5'
-              style={{ left: `${position}%`, transform: 'translateX(-50%)' }}
-            >
-              <div className='w-3 h-3 bg-purple-600 dark:bg-purple-400 rounded-full border-2 border-white dark:border-gray-800'></div>
-            </div>
-          );
-        })}
+              className={`w-4 h-4 bg-purple-600 dark:bg-purple-400 rounded-full border-2 border-white dark:border-gray-800 shadow-lg ${
+                interactive
+                  ? 'cursor-grab active:cursor-grabbing hover:scale-110'
+                  : ''
+              } transition-transform duration-150`}
+              onMouseDown={handleMouseDown}
+            ></div>
+          </div>
+        )}
       </div>
 
       {selectedNumber !== null && (
@@ -117,7 +186,7 @@ export function NumberLine({
 
       {interactive && (
         <p className='text-xs text-gray-500 dark:text-gray-400 mt-2 text-center'>
-          Click on any number to select it
+          Click on any number or drag the purple dot to explore the number line
         </p>
       )}
     </div>

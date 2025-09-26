@@ -157,7 +157,7 @@ describe('Mastery Calculation Logic', () => {
   it('calculates overall progress correctly', async () => {
     const { result } = renderHook(() => useCurriculumProgress());
 
-    // Complete 3 out of 8 chapters
+    // Complete 3 out of 7 chapters
     await act(async () => {
       result.current.completeChapter('chapter-01');
       result.current.completeChapter('chapter-03');

@@ -114,10 +114,10 @@ describe('Navigation and Progress Integration', () => {
 
     // Check navigation is rendered
     expect(screen.getByText('Progress')).toBeInTheDocument();
-    expect(screen.getByText('0/8 chapters')).toBeInTheDocument();
+    expect(screen.getByText('0/7 chapters')).toBeInTheDocument();
 
     // Check all chapters are listed
-    for (let i = 1; i <= 8; i++) {
+    for (let i = 1; i <= 7; i++) {
       expect(screen.getByText(`Chapter ${i}`)).toBeInTheDocument();
     }
   });
@@ -170,11 +170,11 @@ describe('Navigation and Progress Integration', () => {
     });
 
     // Should show completed chapter 1
-    expect(screen.getByText('1/8 chapters')).toBeInTheDocument();
+    expect(screen.getByText('1/7 chapters')).toBeInTheDocument();
 
-    // Should show progress bar at 12.5% (1/8)
+    // Should show progress bar at ~14.3% (1/7)
     const progressBar = screen.getByRole('progressbar', { hidden: true });
-    expect(progressBar).toHaveStyle('width: 12.5%');
+    expect(progressBar).toHaveStyle('width: 14.29%');
 
     // Should show time spent
     expect(screen.getByText('Time spent: 2h 0m')).toBeInTheDocument();
@@ -261,7 +261,7 @@ describe('Navigation and Progress Integration', () => {
     });
 
     // Should still show all chapters
-    for (let i = 1; i <= 8; i++) {
+    for (let i = 1; i <= 7; i++) {
       expect(screen.getByText(`Chapter ${i}`)).toBeInTheDocument();
     }
 
@@ -343,8 +343,8 @@ describe('Navigation and Progress Integration', () => {
     const checkIcons = screen.getAllByTestId('check-circle-icon');
     expect(checkIcons).toHaveLength(2);
 
-    // Should show progress as 2/8 chapters
-    expect(screen.getByText('2/8 chapters')).toBeInTheDocument();
+    // Should show progress as 2/7 chapters
+    expect(screen.getByText('2/7 chapters')).toBeInTheDocument();
   });
 
   it('handles corrupted localStorage gracefully', async () => {
@@ -358,7 +358,7 @@ describe('Navigation and Progress Integration', () => {
     });
 
     // Should still render with default progress
-    expect(screen.getByText('0/8 chapters')).toBeInTheDocument();
+    expect(screen.getByText('0/7 chapters')).toBeInTheDocument();
     expect(consoleSpy).toHaveBeenCalled();
 
     consoleSpy.mockRestore();

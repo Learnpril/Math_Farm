@@ -1,7 +1,7 @@
 {
   "topic": "arithmetic",
   "title": "Arithmetic Fundamentals",
-  "estimatedHours": 25,
+  "estimatedHours": 22,
   "difficulty": "elementary",
   "prerequisites": [],
   "objectives": [
@@ -10,7 +10,7 @@
     "Develop number sense and computational fluency",
     "Use mathematical tools and notation accurately"
   ],
-  "chapters": 8,
+  "chapters": 7,
   "tools": ["calculator", "fraction-visualizer", "place-value-chart"],
   "chapterFiles": [
     "chapter-01.json",
@@ -19,7 +19,6 @@
     "chapter-04.json",
     "chapter-05.json",
     "chapter-06.json",
-    "chapter-07.json",
-    "chapter-08.json"
+    "chapter-07.json"
   ]
 }

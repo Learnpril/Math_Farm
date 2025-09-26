@@ -140,7 +140,7 @@ export function useCurriculumProgress() {
   );
 
   const getOverallProgress = useCallback((): number => {
-    const totalChapters = 8; // Arithmetic has 8 chapters
+    const totalChapters = 7; // Arithmetic has 7 chapters
     return progress.completedChapters.length / totalChapters;
   }, [progress.completedChapters]);
 

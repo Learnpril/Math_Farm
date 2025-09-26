@@ -68,7 +68,7 @@ describe('CurriculumNavigation', () => {
     );
 
     expect(screen.getByText('Arithmetic Fundamentals')).toBeInTheDocument();
-    expect(screen.getByText('2/8 chapters')).toBeInTheDocument();
+    expect(screen.getByText('2/7 chapters')).toBeInTheDocument();
   });
 
   it('displays overall progress bar correctly', () => {
@@ -85,7 +85,7 @@ describe('CurriculumNavigation', () => {
     const progressBar = document.querySelector(
       '.bg-gradient-to-r.from-purple-500.to-purple-600'
     );
-    expect(progressBar).toHaveStyle('width: 25%'); // 2/8 chapters = 25%
+    expect(progressBar).toHaveStyle('width: 28.57%'); // 2/7 chapters ≈ 28.57%
   });
 
   it('renders all chapters with correct titles', () => {

@@ -124,7 +124,7 @@ class CurriculumFunctionalityVerifier {
     }
 
     // Test loading individual chapters
-    for (let i = 1; i <= 8; i++) {
+    for (let i = 1; i <= 7; i++) {
       try {
         const chapter = await CurriculumDataLoader.loadChapter('arithmetic', i);
         this.addResult(

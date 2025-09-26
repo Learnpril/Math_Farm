@@ -10,7 +10,7 @@ console.log('🧪 Test 1: Curriculum Data Structure');
 const testMetadata = {
   topic: 'arithmetic',
   title: 'Arithmetic Fundamentals',
-  estimatedHours: 25,
+  estimatedHours: 22,
   difficulty: 'elementary',
   prerequisites: [],
   objectives: [
@@ -19,7 +19,7 @@ const testMetadata = {
     'Develop number sense and computational fluency',
     'Use mathematical tools and notation accurately',
   ],
-  chapters: 8,
+  chapters: 7,
   tools: ['calculator', 'fraction-visualizer', 'place-value-chart'],
   chapterFiles: [
     'chapter-01.json',
@@ -29,7 +29,6 @@ const testMetadata = {
     'chapter-05.json',
     'chapter-06.json',
     'chapter-07.json',
-    'chapter-08.json',
   ],
 };
 
@@ -126,7 +125,7 @@ const routes = [
   '/topic/arithmetic/curriculum',
   '/topic/arithmetic/curriculum/1',
   '/topic/arithmetic/curriculum/2',
-  '/topic/arithmetic/curriculum/8',
+  '/topic/arithmetic/curriculum/7',
 ];
 
 routes.forEach(route => {
