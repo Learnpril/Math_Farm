@@ -35,14 +35,12 @@ export async function loadCurriculumMetadata(
   topic: string
 ): Promise<CurriculumMetadata> {
   try {
-    const response = await fetch(`/src/data/curriculum/${topic}/metadata.json`);
-    if (!response.ok) {
-      throw new Error(
-        `Failed to load curriculum metadata for ${topic}: ${response.statusText}`
-      );
-    }
+    // Use dynamic import for better compatibility
+    const metadataModule = await import(
+      `../../../data/curriculum/${topic}/metadata.json`
+    );
+    const data = metadataModule.default || metadataModule;
 
-    const data = await response.json();
     const validation = validateCurriculumMetadata(data);
 
     if (!validation.isValid) {
@@ -57,9 +55,34 @@ export async function loadCurriculumMetadata(
     if (error instanceof CurriculumValidationError) {
       throw error;
     }
-    throw new Error(
-      `Failed to load curriculum metadata: ${error instanceof Error ? error.message : 'Unknown error'}`
-    );
+
+    // Fallback to fetch if dynamic import fails
+    try {
+      const response = await fetch(
+        `/src/data/curriculum/${topic}/metadata.json`
+      );
+      if (!response.ok) {
+        throw new Error(
+          `Failed to load curriculum metadata for ${topic}: ${response.statusText}`
+        );
+      }
+
+      const data = await response.json();
+      const validation = validateCurriculumMetadata(data);
+
+      if (!validation.isValid) {
+        throw new CurriculumValidationError(
+          validation,
+          `Invalid curriculum metadata for ${topic}`
+        );
+      }
+
+      return data as CurriculumMetadata;
+    } catch (fetchError) {
+      throw new Error(
+        `Failed to load curriculum metadata: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+    }
   }
 }
 
@@ -71,16 +94,12 @@ export async function loadChapterData(
   chapterId: string
 ): Promise<ChapterData> {
   try {
-    const response = await fetch(
-      `/src/data/curriculum/${topic}/${chapterId}.json`
+    // Use dynamic import for better compatibility
+    const chapterModule = await import(
+      `../../../data/curriculum/${topic}/${chapterId}.json`
     );
-    if (!response.ok) {
-      throw new Error(
-        `Failed to load chapter ${chapterId}: ${response.statusText}`
-      );
-    }
+    const data = chapterModule.default || chapterModule;
 
-    const data = await response.json();
     const validation = validateChapterData(data);
 
     if (!validation.isValid) {
@@ -104,9 +123,43 @@ export async function loadChapterData(
     if (error instanceof CurriculumValidationError) {
       throw error;
     }
-    throw new Error(
-      `Failed to load chapter data: ${error instanceof Error ? error.message : 'Unknown error'}`
-    );
+
+    // Fallback to fetch if dynamic import fails
+    try {
+      const response = await fetch(
+        `/src/data/curriculum/${topic}/${chapterId}.json`
+      );
+      if (!response.ok) {
+        throw new Error(
+          `Failed to load chapter ${chapterId}: ${response.statusText}`
+        );
+      }
+
+      const data = await response.json();
+      const validation = validateChapterData(data);
+
+      if (!validation.isValid) {
+        throw new CurriculumValidationError(
+          validation,
+          `Invalid chapter data for ${chapterId}`
+        );
+      }
+
+      // Additional validation for unique question IDs
+      const uniqueIdValidation = validateUniqueQuestionIds(data.practice);
+      if (!uniqueIdValidation.isValid) {
+        throw new CurriculumValidationError(
+          uniqueIdValidation,
+          `Duplicate question IDs in chapter ${chapterId}`
+        );
+      }
+
+      return data as ChapterData;
+    } catch (fetchError) {
+      throw new Error(
+        `Failed to load chapter data: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+    }
   }
 }
 

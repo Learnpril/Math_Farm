@@ -74,8 +74,9 @@ export class MathWorkerManager {
 
     try {
       for (let i = 0; i < this.maxWorkers; i++) {
-        // Create worker using a simple path approach
-        const worker = new Worker('/src/lib/workers/math-worker.ts', {
+        // Create worker using URL approach for better compatibility
+        const workerUrl = new URL('./math-worker.ts', import.meta.url);
+        const worker = new Worker(workerUrl, {
           type: 'module',
         });
 

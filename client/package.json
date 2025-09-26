@@ -1,8 +1,8 @@
 {
   "dependencies": {
-    "@radix-ui/react-tabs": "^1.1.13"
+    "@radix-ui/react-tabs": "^1.0.4"
   },
   "devDependencies": {
-    "typedoc": "^0.28.12"
+    "typedoc": "^0.25.13"
   }
 }

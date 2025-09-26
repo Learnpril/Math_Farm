@@ -31,5 +31,18 @@ export default defineConfig({
     minifyIdentifiers: false,
     minifySyntax: false,
     minifyWhitespace: false,
+    target: 'es2020',
+  },
+  // Fix worker loading issues
+  worker: {
+    format: 'es',
+    plugins: [react()],
+  },
+  // Serve static files properly
+  publicDir: '../attached_assets',
+  server: {
+    fs: {
+      allow: ['..'],
+    },
   },
 });
