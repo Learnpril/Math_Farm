@@ -97,13 +97,24 @@ export function useCurriculumProgress() {
       hintsUsed: number = 0
     ) => {
       const currentProgress = progress.chapterProgress[chapterId];
+      const newPracticeScores = {
+        ...currentProgress?.practiceScores,
+        [problemId]: score,
+      };
+
+      // Calculate new mastery level based on updated scores
+      const scores = Object.values(newPracticeScores);
+      const averageScore =
+        scores.length > 0
+          ? scores.reduce((sum, score) => sum + score, 0) / scores.length
+          : 0;
+      const newMasteryLevel = Math.min(averageScore, 1);
+
       updateChapterProgress(chapterId, {
-        practiceScores: {
-          ...currentProgress?.practiceScores,
-          [problemId]: score,
-        },
+        practiceScores: newPracticeScores,
         attemptsCount: (currentProgress?.attemptsCount || 0) + 1,
         hintsUsed: (currentProgress?.hintsUsed || 0) + hintsUsed,
+        masteryLevel: newMasteryLevel,
       });
     },
     [progress.chapterProgress, updateChapterProgress]
@@ -139,6 +150,18 @@ export function useCurriculumProgress() {
     [progress.chapterProgress]
   );
 
+  // Get current mastery level for a chapter (returns the stored value or calculates it)
+  const getCurrentMasteryLevel = useCallback(
+    (chapterId: string): number => {
+      const chapterProgress = progress.chapterProgress[chapterId];
+      if (!chapterProgress) return 0;
+
+      // Return stored mastery level if it exists, otherwise calculate it
+      return chapterProgress.masteryLevel ?? calculateMasteryLevel(chapterId);
+    },
+    [progress.chapterProgress, calculateMasteryLevel]
+  );
+
   const getOverallProgress = useCallback((): number => {
     const totalChapters = 7; // Arithmetic has 7 chapters
     return progress.completedChapters.length / totalChapters;
@@ -162,6 +185,7 @@ export function useCurriculumProgress() {
     recordPracticeAttempt,
     addTimeSpent,
     calculateMasteryLevel,
+    getCurrentMasteryLevel,
     getOverallProgress,
     resetProgress,
     clearProgressForTesting,

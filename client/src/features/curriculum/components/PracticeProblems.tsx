@@ -291,13 +291,30 @@ export function PracticeProblems({
             )}
 
             {answered && (
-              <button
-                onClick={resetProblemState}
-                className='flex items-center space-x-2 px-3 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors'
-              >
-                <RotateCcw className='w-4 h-4' />
-                <span>Try Again</span>
-              </button>
+              <>
+                {isCorrect ? (
+                  <button
+                    onClick={nextProblem}
+                    disabled={currentProblem === problems.length - 1}
+                    className='flex items-center space-x-2 px-4 py-2 bg-green-500 text-white hover:bg-green-600 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed'
+                  >
+                    <Check className='w-4 h-4' />
+                    <span>
+                      {currentProblem === problems.length - 1
+                        ? 'Complete'
+                        : 'Next Problem'}
+                    </span>
+                  </button>
+                ) : (
+                  <button
+                    onClick={resetProblemState}
+                    className='flex items-center space-x-2 px-3 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors'
+                  >
+                    <RotateCcw className='w-4 h-4' />
+                    <span>Try Again</span>
+                  </button>
+                )}
+              </>
             )}
           </div>
 
@@ -310,13 +327,16 @@ export function PracticeProblems({
               Previous
             </button>
 
-            <button
-              onClick={nextProblem}
-              disabled={currentProblem === problems.length - 1}
-              className='px-3 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg disabled:opacity-50 transition-colors'
-            >
-              Next
-            </button>
+            {/* Only show navigation Next button if not answered or if answered incorrectly */}
+            {(!answered || !isCorrect) && (
+              <button
+                onClick={nextProblem}
+                disabled={currentProblem === problems.length - 1}
+                className='px-3 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg disabled:opacity-50 transition-colors'
+              >
+                Skip
+              </button>
+            )}
           </div>
         </div>
 

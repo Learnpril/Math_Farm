@@ -7,6 +7,7 @@ import {
 import { TheorySection } from './TheorySection';
 import { WorkedExamples } from './WorkedExamples';
 import { PracticeProblems } from './PracticeProblems';
+import { useCurriculumProgress } from '../hooks/useCurriculumProgress';
 
 interface ChapterContentProps {
   chapter: ChapterContentType;
@@ -28,6 +29,10 @@ export function ChapterContent({
   totalChapters,
 }: ChapterContentProps) {
   const [activeSection, setActiveSection] = useState<SectionType>('theory');
+  const { getCurrentMasteryLevel } = useCurriculumProgress();
+
+  // Get real-time mastery level
+  const currentMasteryLevel = getCurrentMasteryLevel(chapter.id);
 
   const sections = [
     { id: 'theory' as SectionType, label: 'Reading', icon: BookOpen },
@@ -78,16 +83,14 @@ export function ChapterContent({
             </h2>
           </div>
 
-          {progress && (
-            <div className='text-right'>
-              <div className='text-sm text-gray-600 dark:text-gray-400'>
-                Mastery Level
-              </div>
-              <div className='text-2xl font-bold text-purple-600 dark:text-purple-400'>
-                {Math.round(progress.masteryLevel * 100)}%
-              </div>
+          <div className='text-right'>
+            <div className='text-sm text-gray-600 dark:text-gray-400'>
+              Mastery Level
             </div>
-          )}
+            <div className='text-2xl font-bold text-purple-600 dark:text-purple-400'>
+              {Math.round(currentMasteryLevel * 100)}%
+            </div>
+          </div>
         </div>
       </div>
 
