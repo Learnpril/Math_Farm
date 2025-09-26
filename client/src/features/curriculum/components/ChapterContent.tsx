@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, BookOpen, PenTool } from 'lucide-react';
 import {
   ChapterContent as ChapterContentType,
@@ -29,10 +29,32 @@ export function ChapterContent({
   totalChapters,
 }: ChapterContentProps) {
   const [activeSection, setActiveSection] = useState<SectionType>('theory');
-  const { getCurrentMasteryLevel } = useCurriculumProgress();
+  const { getCurrentMasteryLevel, progress: fullProgress } =
+    useCurriculumProgress();
 
   // Get real-time mastery level
-  const currentMasteryLevel = getCurrentMasteryLevel(chapter.id);
+  const totalProblems = chapter.practice?.length || 8;
+  const currentMasteryLevel = getCurrentMasteryLevel(chapter.id, totalProblems);
+
+  // Force re-render when progress changes by accessing the progress state
+  const chapterProgress = fullProgress.chapterProgress[chapter.id];
+  const masteryFromState = chapterProgress?.masteryLevel || 0;
+
+  // Force component to re-render when progress changes
+  const [, forceUpdate] = useState({});
+  useEffect(() => {
+    forceUpdate({});
+  }, [chapterProgress?.masteryLevel, chapterProgress?.practiceScores]);
+
+  console.log('ChapterContent Debug:', {
+    chapterId: chapter.id,
+    totalProblems,
+    currentMasteryLevel,
+    masteryFromState,
+    masteryPercentage: Math.round(currentMasteryLevel * 100) + '%',
+    chapterProgressFromHook: fullProgress.chapterProgress[chapter.id],
+    chapterProgressFromProp: progress,
+  });
 
   const sections = [
     { id: 'theory' as SectionType, label: 'Reading', icon: BookOpen },
@@ -88,7 +110,7 @@ export function ChapterContent({
               Mastery Level
             </div>
             <div className='text-2xl font-bold text-purple-600 dark:text-purple-400'>
-              {Math.round(currentMasteryLevel * 100)}%
+              {Math.round(masteryFromState * 100)}%
             </div>
           </div>
         </div>

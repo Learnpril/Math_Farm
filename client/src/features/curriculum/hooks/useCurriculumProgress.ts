@@ -94,7 +94,8 @@ export function useCurriculumProgress() {
       chapterId: string,
       problemId: string,
       score: number,
-      hintsUsed: number = 0
+      hintsUsed: number = 0,
+      totalProblems?: number
     ) => {
       const currentProgress = progress.chapterProgress[chapterId];
       const newPracticeScores = {
@@ -102,19 +103,38 @@ export function useCurriculumProgress() {
         [problemId]: score,
       };
 
-      // Calculate new mastery level based on updated scores
-      const scores = Object.values(newPracticeScores);
-      const averageScore =
-        scores.length > 0
-          ? scores.reduce((sum, score) => sum + score, 0) / scores.length
-          : 0;
-      const newMasteryLevel = Math.min(averageScore, 1);
+      // Calculate mastery level based on unique problems solved correctly
+      const correctProblems = Object.entries(newPracticeScores).filter(
+        ([_, score]) => score === 1
+      ).length;
+
+      // Use provided totalProblems or default to 8 (most chapters have 8 problems)
+      const totalChapterProblems = totalProblems || 8;
+      let newMasteryLevel = correctProblems / totalChapterProblems;
+
+      // Ensure 100% mastery when all problems are solved correctly
+      const isFullyMastered = correctProblems === totalChapterProblems;
+      if (isFullyMastered) {
+        newMasteryLevel = 1.0; // Guarantee exactly 100%
+      }
+
+      console.log('Mastery Update:', {
+        chapterId,
+        problemId,
+        score,
+        correctProblems,
+        totalChapterProblems,
+        newMasteryLevel: Math.round(newMasteryLevel * 100) + '%',
+        isFullyMastered,
+        practiceScores: newPracticeScores,
+      });
 
       updateChapterProgress(chapterId, {
         practiceScores: newPracticeScores,
         attemptsCount: (currentProgress?.attemptsCount || 0) + 1,
         hintsUsed: (currentProgress?.hintsUsed || 0) + hintsUsed,
         masteryLevel: newMasteryLevel,
+        completed: isFullyMastered, // Mark chapter as completed when 100% mastery is achieved
       });
     },
     [progress.chapterProgress, updateChapterProgress]
@@ -136,28 +156,44 @@ export function useCurriculumProgress() {
   );
 
   const calculateMasteryLevel = useCallback(
-    (chapterId: string): number => {
+    (chapterId: string, totalProblems: number = 8): number => {
       const chapterProgress = progress.chapterProgress[chapterId];
       if (!chapterProgress) return 0;
 
-      const scores = Object.values(chapterProgress.practiceScores);
-      if (scores.length === 0) return 0;
+      const practiceScores = chapterProgress.practiceScores || {};
+      const correctProblems = Object.entries(practiceScores).filter(
+        ([_, score]) => score === 1
+      ).length;
 
-      const averageScore =
-        scores.reduce((sum, score) => sum + score, 0) / scores.length;
-      return Math.min(averageScore, 1);
+      return correctProblems / totalProblems;
     },
     [progress.chapterProgress]
   );
 
   // Get current mastery level for a chapter (returns the stored value or calculates it)
   const getCurrentMasteryLevel = useCallback(
-    (chapterId: string): number => {
+    (chapterId: string, totalProblems: number = 8): number => {
       const chapterProgress = progress.chapterProgress[chapterId];
-      if (!chapterProgress) return 0;
+      if (!chapterProgress) {
+        console.log('No chapter progress found for:', chapterId);
+        return 0;
+      }
 
-      // Return stored mastery level if it exists, otherwise calculate it
-      return chapterProgress.masteryLevel ?? calculateMasteryLevel(chapterId);
+      const storedMastery = chapterProgress.masteryLevel;
+      const calculatedMastery = calculateMasteryLevel(chapterId, totalProblems);
+      const finalMastery = storedMastery ?? calculatedMastery;
+
+      console.log('getCurrentMasteryLevel Debug:', {
+        chapterId,
+        totalProblems,
+        storedMastery,
+        calculatedMastery,
+        finalMastery,
+        practiceScores: chapterProgress.practiceScores,
+      });
+
+      // Always calculate from current state to ensure real-time updates
+      return calculatedMastery;
     },
     [progress.chapterProgress, calculateMasteryLevel]
   );

@@ -152,7 +152,7 @@
       "type": "multiple-choice",
       "problem": "In the number 567,890, what digit is in the ten thousands place?",
       "options": ["5", "6", "7", "8"],
-      "correct": 2,
+      "correct": 1,
       "hints": [
         "Count place values from right to left",
         "Ones, tens, hundreds, thousands, ten thousands, hundred thousands",

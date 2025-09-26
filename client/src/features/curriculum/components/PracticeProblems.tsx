@@ -31,6 +31,7 @@ export function PracticeProblems({
     useState<MathValidationResult | null>(null);
   const [isValidating, setIsValidating] = useState(false);
   const [mathValidatorReady, setMathValidatorReady] = useState(false);
+  const [achievedFullMastery, setAchievedFullMastery] = useState(false);
 
   const { recordPracticeAttempt } = useCurriculumProgress();
 
@@ -109,7 +110,31 @@ export function PracticeProblems({
     const score = isCorrect ? 1 : 0;
     const hintsUsed = showHint ? hintLevel + 1 : 0;
 
-    recordPracticeAttempt(chapterId, problem.id, score, hintsUsed);
+    recordPracticeAttempt(
+      chapterId,
+      problem.id,
+      score,
+      hintsUsed,
+      problems.length
+    );
+
+    // Check if this correct answer achieves 100% mastery
+    if (isCorrect && progress) {
+      const currentScores = progress.practiceScores || {};
+      const updatedScores = { ...currentScores, [problem.id]: 1 };
+      const correctCount = Object.values(updatedScores).filter(
+        s => s === 1
+      ).length;
+
+      if (correctCount === problems.length) {
+        setAchievedFullMastery(true);
+        // Add a small delay to show the celebration after the explanation appears
+        setTimeout(() => {
+          console.log('🎉 100% MASTERY ACHIEVED! 🎉');
+        }, 500);
+      }
+    }
+
     setAnswered(true);
     setShowExplanation(true);
   };
@@ -450,6 +475,26 @@ export function PracticeProblems({
                   )}
               </div>
             )}
+          </div>
+        )}
+
+        {/* 100% Mastery Achievement Celebration */}
+        {achievedFullMastery && isCorrect && (
+          <div className='mt-4 p-6 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-2 border-purple-200 dark:border-purple-700 rounded-lg'>
+            <div className='text-center'>
+              <div className='text-4xl mb-2'>🎉</div>
+              <h3 className='text-xl font-bold text-purple-800 dark:text-purple-200 mb-2'>
+                Congratulations!
+              </h3>
+              <p className='text-purple-700 dark:text-purple-300 mb-3'>
+                You've achieved <strong>100% Mastery</strong> of this chapter!
+              </p>
+              <div className='flex items-center justify-center space-x-2 text-sm text-purple-600 dark:text-purple-400'>
+                <span>🏆</span>
+                <span>All {problems.length} problems completed correctly</span>
+                <span>🏆</span>
+              </div>
+            </div>
           </div>
         )}
       </div>
