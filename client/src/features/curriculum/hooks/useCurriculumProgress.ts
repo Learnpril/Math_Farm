@@ -41,6 +41,11 @@ export function useCurriculumProgress() {
     if (!loading) {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+        console.log('Progress saved to localStorage:', {
+          key: STORAGE_KEY,
+          chapterProgress: Object.keys(progress.chapterProgress),
+          saved: true,
+        });
       } catch (error) {
         console.warn('Failed to save curriculum progress:', error);
       }
@@ -49,23 +54,33 @@ export function useCurriculumProgress() {
 
   const updateChapterProgress = useCallback(
     (chapterId: string, updates: Partial<ChapterProgress>) => {
-      setProgress(prev => ({
-        ...prev,
-        chapterProgress: {
-          ...prev.chapterProgress,
-          [chapterId]: {
-            completed: false,
-            timeSpent: 0,
-            practiceScores: {},
-            masteryLevel: 0,
-            attemptsCount: 0,
-            hintsUsed: 0,
-            ...prev.chapterProgress[chapterId],
-            ...updates,
+      console.log('updateChapterProgress called:', { chapterId, updates });
+      setProgress(prev => {
+        const newProgress = {
+          ...prev,
+          chapterProgress: {
+            ...prev.chapterProgress,
+            [chapterId]: {
+              completed: false,
+              timeSpent: 0,
+              practiceScores: {},
+              masteryLevel: 0,
+              attemptsCount: 0,
+              hintsUsed: 0,
+              ...prev.chapterProgress[chapterId],
+              ...updates,
+            },
           },
-        },
-        lastAccessed: new Date().toISOString(),
-      }));
+          lastAccessed: new Date().toISOString(),
+        };
+        console.log('Progress state updated:', {
+          chapterId,
+          newMasteryLevel: newProgress.chapterProgress[chapterId]?.masteryLevel,
+          practiceScores:
+            newProgress.chapterProgress[chapterId]?.practiceScores,
+        });
+        return newProgress;
+      });
     },
     []
   );
@@ -118,6 +133,7 @@ export function useCurriculumProgress() {
         newMasteryLevel = 1.0; // Guarantee exactly 100%
       }
 
+      // Log mastery updates for debugging (can be removed in production)
       console.log('Mastery Update:', {
         chapterId,
         problemId,
@@ -126,7 +142,6 @@ export function useCurriculumProgress() {
         totalChapterProblems,
         newMasteryLevel: Math.round(newMasteryLevel * 100) + '%',
         isFullyMastered,
-        practiceScores: newPracticeScores,
       });
 
       updateChapterProgress(chapterId, {
@@ -183,14 +198,14 @@ export function useCurriculumProgress() {
       const calculatedMastery = calculateMasteryLevel(chapterId, totalProblems);
       const finalMastery = storedMastery ?? calculatedMastery;
 
-      console.log('getCurrentMasteryLevel Debug:', {
-        chapterId,
-        totalProblems,
-        storedMastery,
-        calculatedMastery,
-        finalMastery,
-        practiceScores: chapterProgress.practiceScores,
-      });
+      // Debug: Log mastery calculation (can be removed in production)
+      if (storedMastery !== calculatedMastery) {
+        console.log(
+          'Mastery recalculated:',
+          chapterId,
+          Math.round(calculatedMastery * 100) + '%'
+        );
+      }
 
       // Always calculate from current state to ensure real-time updates
       return calculatedMastery;
@@ -213,6 +228,18 @@ export function useCurriculumProgress() {
     setProgress(defaultProgress);
   }, []);
 
+  const resetChapterProgress = useCallback((chapterId: string) => {
+    setProgress(prev => {
+      const newProgress = { ...prev };
+      // Remove the chapter progress entirely
+      delete newProgress.chapterProgress[chapterId];
+      return {
+        ...newProgress,
+        lastAccessed: new Date().toISOString(),
+      };
+    });
+  }, []);
+
   return {
     progress,
     loading,
@@ -225,5 +252,6 @@ export function useCurriculumProgress() {
     getOverallProgress,
     resetProgress,
     clearProgressForTesting,
+    resetChapterProgress,
   };
 }

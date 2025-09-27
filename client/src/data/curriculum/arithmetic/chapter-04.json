@@ -154,14 +154,14 @@
     {
       "id": "div-large-1",
       "type": "fill-in",
-      "problem": "Calculate 1,234 ÷ 12",
-      "correct": "102",
+      "problem": "Calculate 1,234 ÷ 12, if there is a remainder put R before it (Example: 5 ÷ 2 would be 2 R1)",
+      "correct": "102 R10",
       "hints": [
         "Use long division with a two-digit divisor",
-        "12 goes into 123 about 10 times",
-        "Continue the process carefully"
+        "12 goes into 123 about 10 times (12 × 10 = 120)",
+        "Continue the process: 1,234 - 1,224 = 10 remainder"
       ],
-      "explanation": "1,234 ÷ 12 = 102 R10. Multi-digit divisors require careful estimation.",
+      "explanation": "1,234 ÷ 12 = 102 R10. Using long division: 12 goes into 123 ten times (120), leaving 3. Bring down 4 to get 34. 12 goes into 34 twice (24), leaving remainder 10.",
       "difficulty": 4
     },
     {

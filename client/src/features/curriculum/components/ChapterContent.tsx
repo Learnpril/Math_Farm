@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, BookOpen, PenTool } from 'lucide-react';
+import {
+  ChevronLeft,
+  ChevronRight,
+  BookOpen,
+  PenTool,
+  RotateCcw,
+} from 'lucide-react';
 import {
   ChapterContent as ChapterContentType,
   ChapterProgress,
@@ -29,32 +35,43 @@ export function ChapterContent({
   totalChapters,
 }: ChapterContentProps) {
   const [activeSection, setActiveSection] = useState<SectionType>('theory');
-  const { getCurrentMasteryLevel, progress: fullProgress } =
-    useCurriculumProgress();
+  const {
+    getCurrentMasteryLevel,
+    progress: fullProgress,
+    resetChapterProgress,
+  } = useCurriculumProgress();
 
   // Get real-time mastery level
   const totalProblems = chapter.practice?.length || 8;
-  const currentMasteryLevel = getCurrentMasteryLevel(chapter.id, totalProblems);
 
   // Force re-render when progress changes by accessing the progress state
   const chapterProgress = fullProgress.chapterProgress[chapter.id];
-  const masteryFromState = chapterProgress?.masteryLevel || 0;
 
-  // Force component to re-render when progress changes
-  const [, forceUpdate] = useState({});
+  // Use the stored mastery level directly from the chapter progress
+  // Also force a re-calculation based on practice scores as a fallback
+  const storedMasteryLevel = chapterProgress?.masteryLevel || 0;
+  const calculatedMasteryLevel = chapterProgress?.practiceScores
+    ? Object.values(chapterProgress.practiceScores).filter(score => score === 1)
+        .length / totalProblems
+    : 0;
+
+  // Calculate final mastery level - use the higher of stored or calculated
+  const finalMasteryLevel = chapterProgress
+    ? Math.max(storedMasteryLevel, calculatedMasteryLevel)
+    : 0;
+
+  // Controlled re-render trigger when mastery level changes
+  const [renderKey, setRenderKey] = useState(0);
+  const [lastMasteryLevel, setLastMasteryLevel] = useState(0);
+
   useEffect(() => {
-    forceUpdate({});
-  }, [chapterProgress?.masteryLevel, chapterProgress?.practiceScores]);
-
-  console.log('ChapterContent Debug:', {
-    chapterId: chapter.id,
-    totalProblems,
-    currentMasteryLevel,
-    masteryFromState,
-    masteryPercentage: Math.round(currentMasteryLevel * 100) + '%',
-    chapterProgressFromHook: fullProgress.chapterProgress[chapter.id],
-    chapterProgressFromProp: progress,
-  });
+    const currentMastery = finalMasteryLevel;
+    if (Math.abs(currentMastery - lastMasteryLevel) > 0.001) {
+      // Use small threshold for floating point comparison
+      setLastMasteryLevel(currentMastery);
+      setRenderKey(prev => prev + 1);
+    }
+  }, [finalMasteryLevel, lastMasteryLevel]);
 
   const sections = [
     { id: 'theory' as SectionType, label: 'Reading', icon: BookOpen },
@@ -95,7 +112,10 @@ export function ChapterContent({
   };
 
   return (
-    <div className='bg-white dark:bg-gray-800 rounded-lg shadow-sm'>
+    <div
+      key={`chapter-${chapter.id}-${renderKey}`}
+      className='bg-white dark:bg-gray-800 rounded-lg shadow-sm'
+    >
       {/* Chapter Header */}
       <div className='p-6 border-b border-gray-200 dark:border-gray-700'>
         <div className='flex items-center justify-between'>
@@ -110,7 +130,7 @@ export function ChapterContent({
               Mastery Level
             </div>
             <div className='text-2xl font-bold text-purple-600 dark:text-purple-400'>
-              {Math.round(masteryFromState * 100)}%
+              {Math.round(finalMasteryLevel * 100)}%
             </div>
           </div>
         </div>
@@ -118,24 +138,37 @@ export function ChapterContent({
 
       {/* Section Navigation */}
       <div className='border-b border-gray-200 dark:border-gray-700'>
-        <nav className='flex space-x-8 px-6'>
-          {sections.map(({ id, label, icon: Icon }) => (
-            <button
-              key={id}
-              onClick={() => setActiveSection(id)}
-              className={`
-                flex items-center space-x-2 py-4 border-b-2 font-medium text-sm transition-colors
-                ${
-                  activeSection === id
-                    ? 'border-purple-500 text-purple-600 dark:text-purple-400'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
-                }
-              `}
-            >
-              <Icon className='w-4 h-4' />
-              <span>{label}</span>
-            </button>
-          ))}
+        <nav className='flex justify-between items-center px-6'>
+          <div className='flex space-x-8'>
+            {sections.map(({ id, label, icon: Icon }) => (
+              <button
+                key={id}
+                onClick={() => setActiveSection(id)}
+                className={`
+                  flex items-center space-x-2 py-4 border-b-2 font-medium text-sm transition-colors
+                  ${
+                    activeSection === id
+                      ? 'border-purple-500 text-purple-600 dark:text-purple-400'
+                      : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
+                  }
+                `}
+              >
+                <Icon className='w-4 h-4' />
+                <span>{label}</span>
+              </button>
+            ))}
+          </div>
+          <button
+            onClick={() => {
+              resetChapterProgress(chapter.id);
+              setRenderKey(prev => prev + 1); // Force re-render
+            }}
+            className='flex items-center space-x-1 px-3 py-1 text-sm bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-colors'
+            title='Reset chapter progress'
+          >
+            <RotateCcw className='w-4 h-4' />
+            <span>Reset</span>
+          </button>
         </nav>
       </div>
 
