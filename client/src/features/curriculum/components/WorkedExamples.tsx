@@ -125,20 +125,19 @@ export function WorkedExamples({ examples }: WorkedExamplesProps) {
                       <div className='flex items-center space-x-2'>
                         {hasSteps && (
                           <>
-                            <button
-                              onClick={e => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                revealNextStep(index);
-                              }}
-                              disabled={allRevealed}
-                              className='flex items-center space-x-1 px-3 py-1 text-sm bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-md hover:bg-blue-200 dark:hover:bg-blue-900/50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
-                            >
-                              <Play className='w-3 h-3' />
-                              <span>
-                                {currentRevealed === 0 ? 'Start' : 'Next Step'}
-                              </span>
-                            </button>
+                            {currentRevealed > 0 && (
+                              <button
+                                onClick={e => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  replaySteps(index);
+                                }}
+                                className='flex items-center space-x-1 px-3 py-1 text-sm bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-md hover:bg-purple-200 dark:hover:bg-purple-900/50 transition-colors'
+                              >
+                                <Play className='w-3 h-3' />
+                                <span>Replay</span>
+                              </button>
+                            )}
 
                             {currentRevealed > 0 && !allRevealed && (
                               <button
@@ -168,19 +167,20 @@ export function WorkedExamples({ examples }: WorkedExamplesProps) {
                               </button>
                             )}
 
-                            {currentRevealed > 0 && (
-                              <button
-                                onClick={e => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  replaySteps(index);
-                                }}
-                                className='flex items-center space-x-1 px-3 py-1 text-sm bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-md hover:bg-purple-200 dark:hover:bg-purple-900/50 transition-colors'
-                              >
-                                <Play className='w-3 h-3' />
-                                <span>Replay</span>
-                              </button>
-                            )}
+                            <button
+                              onClick={e => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                revealNextStep(index);
+                              }}
+                              disabled={allRevealed}
+                              className='flex items-center space-x-1 px-3 py-1 text-sm bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-md hover:bg-blue-200 dark:hover:bg-blue-900/50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors'
+                            >
+                              <Play className='w-3 h-3' />
+                              <span>
+                                {currentRevealed === 0 ? 'Start' : 'Next Step'}
+                              </span>
+                            </button>
                           </>
                         )}
                       </div>
