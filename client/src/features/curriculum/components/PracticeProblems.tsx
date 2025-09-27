@@ -19,6 +19,21 @@ export function PracticeProblems({
   chapterId,
   progress,
 }: PracticeProblemsProps) {
+  const { recordPracticeAttempt, progress: fullProgress } =
+    useCurriculumProgress();
+
+  // Get current chapter progress to check completed problems
+  const chapterProgress = fullProgress.chapterProgress[chapterId];
+  const practiceScores = chapterProgress?.practiceScores || {};
+
+  // Filter out completed problems (score = 1 means correctly answered)
+  const uncompletedProblems = problems.filter(
+    problem => practiceScores[problem.id] !== 1
+  );
+
+  // If all problems are completed, show completion message
+  const allProblemsCompleted = uncompletedProblems.length === 0;
+
   const [currentProblem, setCurrentProblem] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | number | null>(
     null
@@ -33,8 +48,6 @@ export function PracticeProblems({
   const [mathValidatorReady, setMathValidatorReady] = useState(false);
   const [achievedFullMastery, setAchievedFullMastery] = useState(false);
 
-  const { recordPracticeAttempt } = useCurriculumProgress();
-
   // Initialize math validator on component mount
   useEffect(() => {
     const initValidator = async () => {
@@ -44,7 +57,8 @@ export function PracticeProblems({
     initValidator();
   }, []);
 
-  const problem = problems[currentProblem];
+  // Use uncompleted problems instead of all problems
+  const problem = uncompletedProblems[currentProblem];
 
   // Enhanced answer validation using math.js
   const validateAnswer = async (
@@ -140,7 +154,7 @@ export function PracticeProblems({
   };
 
   const nextProblem = () => {
-    if (currentProblem < problems.length - 1) {
+    if (currentProblem < uncompletedProblems.length - 1) {
       setCurrentProblem(currentProblem + 1);
       resetProblemState();
     }
@@ -177,12 +191,43 @@ export function PracticeProblems({
       : validationResult?.isCorrect || false);
   const isIncorrect = answered && !isCorrect;
 
+  // Show completion message if all problems are done
+  if (allProblemsCompleted) {
+    return (
+      <div className='space-y-6'>
+        <div className='flex items-center justify-between'>
+          <h3 className='text-xl font-semibold'>Practice Problems</h3>
+          <div className='text-sm text-green-600 dark:text-green-400'>
+            All Complete! 🎉
+          </div>
+        </div>
+
+        <div className='bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-8 text-center'>
+          <div className='flex items-center justify-center mb-4'>
+            <Check className='w-16 h-16 text-green-500' />
+          </div>
+          <h4 className='text-xl font-semibold text-green-800 dark:text-green-200 mb-2'>
+            Congratulations! 🎉
+          </h4>
+          <p className='text-green-700 dark:text-green-300 mb-4'>
+            You've successfully completed all practice problems for this
+            chapter!
+          </p>
+          <p className='text-sm text-green-600 dark:text-green-400'>
+            Use the Reset button above to practice again, or continue to the
+            next chapter.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className='space-y-6'>
       <div className='flex items-center justify-between'>
         <h3 className='text-xl font-semibold'>Practice Problems</h3>
         <div className='text-sm text-gray-600 dark:text-gray-400'>
-          Problem {currentProblem + 1} of {problems.length}
+          Problem {currentProblem + 1} of {uncompletedProblems.length}
         </div>
       </div>
 
@@ -191,7 +236,7 @@ export function PracticeProblems({
         <div
           className='bg-purple-500 h-2 rounded-full transition-all duration-300'
           style={{
-            width: `${((currentProblem + 1) / problems.length) * 100}%`,
+            width: `${((currentProblem + 1) / uncompletedProblems.length) * 100}%`,
           }}
         />
       </div>

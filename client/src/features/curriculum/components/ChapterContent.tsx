@@ -47,6 +47,12 @@ export function ChapterContent({
   // Force re-render when progress changes by accessing the progress state
   const chapterProgress = fullProgress.chapterProgress[chapter.id];
 
+  // Force component to re-render when the progress object changes
+  const progressVersion = JSON.stringify(fullProgress.chapterProgress);
+
+  // Also track the specific chapter progress to ensure reactivity
+  const currentChapterProgressString = JSON.stringify(chapterProgress);
+
   // Use the stored mastery level directly from the chapter progress
   // Also force a re-calculation based on practice scores as a fallback
   const storedMasteryLevel = chapterProgress?.masteryLevel || 0;
@@ -60,6 +66,18 @@ export function ChapterContent({
     ? Math.max(storedMasteryLevel, calculatedMasteryLevel)
     : 0;
 
+  // Debug: Log when mastery level changes
+  console.log('🔍 ChapterContent Mastery Debug:', {
+    chapterId: chapter.id,
+    totalProblems,
+    hasChapterProgress: !!chapterProgress,
+    storedMasteryLevel,
+    calculatedMasteryLevel,
+    finalMasteryLevel,
+    practiceScores: chapterProgress?.practiceScores,
+    timestamp: new Date().toLocaleTimeString(),
+  });
+
   // Controlled re-render trigger when mastery level changes
   const [renderKey, setRenderKey] = useState(0);
   const [lastMasteryLevel, setLastMasteryLevel] = useState(0);
@@ -68,10 +86,21 @@ export function ChapterContent({
     const currentMastery = finalMasteryLevel;
     if (Math.abs(currentMastery - lastMasteryLevel) > 0.001) {
       // Use small threshold for floating point comparison
+      console.log(
+        '🔄 Mastery level updating:',
+        lastMasteryLevel,
+        '->',
+        currentMastery
+      );
       setLastMasteryLevel(currentMastery);
       setRenderKey(prev => prev + 1);
     }
-  }, [finalMasteryLevel, lastMasteryLevel]);
+  }, [
+    finalMasteryLevel,
+    lastMasteryLevel,
+    progressVersion,
+    currentChapterProgressString,
+  ]);
 
   const sections = [
     { id: 'theory' as SectionType, label: 'Reading', icon: BookOpen },
