@@ -26,13 +26,10 @@ export function PracticeProblems({
   const chapterProgress = fullProgress.chapterProgress[chapterId];
   const practiceScores = chapterProgress?.practiceScores || {};
 
-  // Filter out completed problems (score = 1 means correctly answered)
-  const uncompletedProblems = problems.filter(
-    problem => practiceScores[problem.id] !== 1
+  // Check if all problems are completed, but don't filter the array
+  const allProblemsCompleted = problems.every(
+    problem => practiceScores[problem.id] === 1
   );
-
-  // If all problems are completed, show completion message
-  const allProblemsCompleted = uncompletedProblems.length === 0;
 
   const [currentProblem, setCurrentProblem] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | number | null>(
@@ -88,8 +85,9 @@ export function PracticeProblems({
     );
   }
 
-  // Use uncompleted problems instead of all problems
-  const problem = uncompletedProblems[currentProblem];
+  // Use all problems, but show completion status
+  const problem = problems[currentProblem];
+  const isProblemCompleted = practiceScores[problem?.id] === 1;
 
   // Enhanced answer validation using math.js
   const validateAnswer = async (
@@ -142,7 +140,13 @@ export function PracticeProblems({
   };
 
   const handleAnswer = async () => {
-    if (selectedAnswer === null || answered || isValidating) return;
+    if (
+      selectedAnswer === null ||
+      answered ||
+      isValidating ||
+      isProblemCompleted
+    )
+      return;
 
     let isCorrect = false;
 
@@ -185,7 +189,7 @@ export function PracticeProblems({
   };
 
   const nextProblem = () => {
-    if (currentProblem < uncompletedProblems.length - 1) {
+    if (currentProblem < problems.length - 1) {
       setCurrentProblem(currentProblem + 1);
       resetProblemState();
     }
@@ -258,7 +262,12 @@ export function PracticeProblems({
       <div className='flex items-center justify-between'>
         <h3 className='text-xl font-semibold'>Practice Problems</h3>
         <div className='text-sm text-gray-600 dark:text-gray-400'>
-          Problem {currentProblem + 1} of {uncompletedProblems.length}
+          Problem {currentProblem + 1} of {problems.length}
+          {isProblemCompleted && (
+            <span className='ml-2 text-green-600 dark:text-green-400'>
+              ✓ Completed
+            </span>
+          )}
         </div>
       </div>
 
@@ -267,17 +276,28 @@ export function PracticeProblems({
         <div
           className='bg-purple-500 h-2 rounded-full transition-all duration-300'
           style={{
-            width: `${((currentProblem + 1) / uncompletedProblems.length) * 100}%`,
+            width: `${((currentProblem + 1) / problems.length) * 100}%`,
           }}
         />
       </div>
 
       {/* Problem Card */}
-      <div className='bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6'>
+      <div
+        className={`bg-white dark:bg-gray-800 border rounded-lg p-6 ${
+          isProblemCompleted
+            ? 'border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/10'
+            : 'border-gray-200 dark:border-gray-700'
+        }`}
+      >
         <div className='mb-6'>
           <div className='flex items-center justify-between mb-4'>
             <h4 className='text-lg font-medium'>
               Problem {currentProblem + 1}
+              {isProblemCompleted && (
+                <span className='ml-2 text-green-600 dark:text-green-400'>
+                  ✓
+                </span>
+              )}
             </h4>
           </div>
 
@@ -300,8 +320,10 @@ export function PracticeProblems({
             {problem.options.map((option, index) => (
               <button
                 key={index}
-                onClick={() => !answered && setSelectedAnswer(index)}
-                disabled={answered}
+                onClick={() =>
+                  !answered && !isProblemCompleted && setSelectedAnswer(index)
+                }
+                disabled={answered || isProblemCompleted}
                 className={`
                   w-full p-4 text-left rounded-lg border-2 transition-all
                   ${
@@ -342,9 +364,17 @@ export function PracticeProblems({
             <input
               type='text'
               value={selectedAnswer || ''}
-              onChange={e => !answered && setSelectedAnswer(e.target.value)}
-              disabled={answered}
-              placeholder='Enter your answer...'
+              onChange={e =>
+                !answered &&
+                !isProblemCompleted &&
+                setSelectedAnswer(e.target.value)
+              }
+              disabled={answered || isProblemCompleted}
+              placeholder={
+                isProblemCompleted
+                  ? 'Already completed ✓'
+                  : 'Enter your answer...'
+              }
               className={`
                 w-full p-3 border-2 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400
                 ${
@@ -360,10 +390,23 @@ export function PracticeProblems({
           </div>
         )}
 
+        {/* Completed Problem Message */}
+        {isProblemCompleted && !answered && (
+          <div className='mb-4 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg'>
+            <div className='flex items-center space-x-2'>
+              <Check className='w-4 h-4 text-green-600 dark:text-green-400' />
+              <p className='text-sm text-green-700 dark:text-green-300'>
+                You've already completed this problem correctly! Use navigation
+                to move to other problems.
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Action Buttons */}
         <div className='flex items-center justify-between'>
           <div className='flex items-center space-x-3'>
-            {!answered && (
+            {!answered && !isProblemCompleted && (
               <>
                 <button
                   onClick={showNextHint}
@@ -428,14 +471,14 @@ export function PracticeProblems({
               Previous
             </button>
 
-            {/* Only show navigation Next button if not answered or if answered incorrectly */}
-            {(!answered || !isCorrect) && (
+            {/* Show navigation Next button for completed problems or unanswered problems */}
+            {(isProblemCompleted || !answered || !isCorrect) && (
               <button
                 onClick={nextProblem}
                 disabled={currentProblem === problems.length - 1}
                 className='px-3 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg disabled:opacity-50 transition-colors'
               >
-                Skip
+                {isProblemCompleted ? 'Next' : 'Skip'}
               </button>
             )}
           </div>

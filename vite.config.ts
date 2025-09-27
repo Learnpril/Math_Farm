@@ -37,6 +37,11 @@ export default defineConfig({
   worker: {
     format: 'es',
     plugins: [react()],
+    rollupOptions: {
+      output: {
+        entryFileNames: 'assets/[name]-[hash].js',
+      },
+    },
   },
   // Serve static files properly
   publicDir: '../attached_assets',

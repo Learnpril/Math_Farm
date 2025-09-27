@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { LeftSidebar } from './LeftSidebar';
 import { RightSidebar } from './RightSidebar';
+import { MobileNavigationTabs } from './MobileNavigationTabs';
 
 interface SidebarLayoutProps {
   children: ReactNode;
@@ -9,9 +10,9 @@ interface SidebarLayoutProps {
 }
 
 /**
- * Layout component with left and right sidebars
- * Left sidebar contains topics navigation
- * Right sidebar contains math tools
+ * Layout component with responsive sidebars
+ * Desktop: Left and right sidebars
+ * Mobile: Top navigation tabs for better space utilization
  */
 export function SidebarLayout({
   children,
@@ -23,15 +24,27 @@ export function SidebarLayout({
   }
 
   return (
-    <div className={`flex min-h-screen ${className}`}>
-      {/* Left Sidebar - Topics */}
-      <LeftSidebar />
+    <>
+      {/* Desktop Layout - Sidebars */}
+      <div className={`hidden lg:flex min-h-screen ${className}`}>
+        {/* Left Sidebar - Topics */}
+        <LeftSidebar />
 
-      {/* Main Content */}
-      <main className='flex-1 min-w-0'>{children}</main>
+        {/* Main Content */}
+        <main className='flex-1 min-w-0'>{children}</main>
 
-      {/* Right Sidebar - Tools */}
-      <RightSidebar />
-    </div>
+        {/* Right Sidebar - Tools */}
+        <RightSidebar />
+      </div>
+
+      {/* Mobile Layout - Vertical Navigation */}
+      <div className={`lg:hidden flex flex-col min-h-screen ${className}`}>
+        {/* Mobile Navigation Tabs */}
+        <MobileNavigationTabs />
+
+        {/* Main Content */}
+        <main className='flex-1 min-w-0'>{children}</main>
+      </div>
+    </>
   );
 }

@@ -26,13 +26,54 @@ app.use((_req, res, next) => {
 // Middleware
 app.use(express.json());
 
+// Fix MIME types for various file types
+app.use((req, res, next) => {
+  const url = req.url.toLowerCase();
+
+  // Worker files
+  if (url.includes('worker') || url.includes('math-worker')) {
+    res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+  }
+  // TypeScript files served as JavaScript
+  else if (url.endsWith('.ts') && !url.includes('.d.ts')) {
+    res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+  }
+  // JavaScript modules
+  else if (url.endsWith('.js') || url.endsWith('.mjs')) {
+    res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+  }
+  // JSON files
+  else if (url.endsWith('.json')) {
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  }
+  // CSS files
+  else if (url.endsWith('.css')) {
+    res.setHeader('Content-Type', 'text/css; charset=utf-8');
+  }
+  // HTML files
+  else if (url.endsWith('.html')) {
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  }
+
+  next();
+});
+
 // In production, serve static files from the same dist directory
 const staticPath =
   process.env.NODE_ENV === 'production'
     ? path.join(__dirname, '.')
     : path.join(__dirname, '../dist');
 
-app.use(express.static(staticPath));
+app.use(
+  express.static(staticPath, {
+    setHeaders: (res, path) => {
+      // Set proper MIME types for worker files
+      if (path.includes('worker') || path.includes('math-worker')) {
+        res.setHeader('Content-Type', 'application/javascript');
+      }
+    },
+  })
+);
 
 // Import forum routes
 import forumRoutes from './routes/forum/index.js';

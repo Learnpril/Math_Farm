@@ -1,0 +1,10 @@
+<svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="192" height="192" rx="24" fill="#8b5cf6"/>
+  <g transform="translate(48, 48)">
+    <!-- Math symbols -->
+    <text x="48" y="40" text-anchor="middle" fill="white" font-family="serif" font-size="32" font-weight="bold">√</text>
+    <text x="20" y="70" text-anchor="middle" fill="white" font-family="serif" font-size="24">π</text>
+    <text x="76" y="70" text-anchor="middle" fill="white" font-family="serif" font-size="24">∑</text>
+    <text x="48" y="90" text-anchor="middle" fill="white" font-family="serif" font-size="20">x²</text>
+  </g>
+</svg>

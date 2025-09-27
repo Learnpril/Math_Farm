@@ -74,19 +74,59 @@ export class MathWorkerManager {
 
     try {
       for (let i = 0; i < this.maxWorkers; i++) {
-        // Create worker using URL approach for better compatibility
-        const workerUrl = new URL('./math-worker.ts', import.meta.url);
-        const worker = new Worker(workerUrl, {
-          type: 'module',
-        });
+        let worker: Worker | null = null;
 
-        worker.onmessage = this.handleWorkerMessage.bind(this);
-        worker.onerror = this.handleWorkerError.bind(this);
+        try {
+          // Try multiple approaches for worker creation
+          // Approach 1: Use ?worker suffix
+          const workerUrl = new URL('./math-worker.ts?worker', import.meta.url);
+          worker = new Worker(workerUrl, { type: 'module' });
+        } catch (error1) {
+          try {
+            // Approach 2: Direct import without ?worker
+            const workerUrl = new URL('./math-worker.ts', import.meta.url);
+            worker = new Worker(workerUrl, { type: 'module' });
+          } catch (error2) {
+            try {
+              // Approach 3: Use blob URL as fallback
+              const workerCode = `
+                import('./math-worker.ts').then(module => {
+                  // Worker code will be loaded dynamically
+                }).catch(error => {
+                  console.warn('Worker module loading failed:', error);
+                });
+              `;
+              const blob = new Blob([workerCode], {
+                type: 'application/javascript',
+              });
+              const blobUrl = URL.createObjectURL(blob);
+              worker = new Worker(blobUrl, { type: 'module' });
+            } catch (error3) {
+              console.warn('All worker creation methods failed:', {
+                error1,
+                error2,
+                error3,
+              });
+              continue; // Skip this worker
+            }
+          }
+        }
 
-        this.workers.push(worker);
+        if (worker) {
+          worker.onmessage = this.handleWorkerMessage.bind(this);
+          worker.onerror = this.handleWorkerError.bind(this);
+          this.workers.push(worker);
+        }
+      }
+
+      if (this.workers.length === 0) {
+        console.warn('No workers could be initialized, using fallback mode');
+      } else {
+        console.log(`Initialized ${this.workers.length} math workers`);
       }
     } catch (error) {
-      console.warn('Failed to initialize workers:', error);
+      console.warn('Worker initialization failed completely:', error);
+      this.workers = [];
     }
   }
 
@@ -127,8 +167,23 @@ export class MathWorkerManager {
    * Handle worker errors
    */
   private handleWorkerError(error: ErrorEvent): void {
-    console.error('Worker error:', error);
-    // Could implement worker restart logic here
+    // Only log worker errors in development or if they're critical
+    if (process.env.NODE_ENV === 'development') {
+      console.warn(
+        'Math worker encountered an error, falling back to main thread:',
+        error.message || error
+      );
+    }
+
+    // Remove the failed worker from the pool
+    this.workers = this.workers.filter(worker => worker !== error.target);
+
+    // If no workers remain, we'll automatically fall back to main thread operations
+    if (this.workers.length === 0) {
+      console.info(
+        'All math workers failed, using main thread fallback (performance may be reduced)'
+      );
+    }
   }
 
   /**
