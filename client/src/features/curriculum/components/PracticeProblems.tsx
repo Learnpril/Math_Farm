@@ -57,6 +57,37 @@ export function PracticeProblems({
     initValidator();
   }, []);
 
+  // Show completion message if all problems are done - check this FIRST
+  if (allProblemsCompleted) {
+    return (
+      <div className='space-y-6'>
+        <div className='flex items-center justify-between'>
+          <h3 className='text-xl font-semibold'>Practice Problems</h3>
+          <div className='text-sm text-green-600 dark:text-green-400'>
+            All Complete! 🎉
+          </div>
+        </div>
+
+        <div className='bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-8 text-center'>
+          <div className='flex items-center justify-center mb-4'>
+            <Check className='w-16 h-16 text-green-500' />
+          </div>
+          <h4 className='text-xl font-semibold text-green-800 dark:text-green-200 mb-2'>
+            Congratulations! 🎉
+          </h4>
+          <p className='text-green-700 dark:text-green-300 mb-4'>
+            You've successfully completed all practice problems for this
+            chapter!
+          </p>
+          <p className='text-sm text-green-600 dark:text-green-400'>
+            Use the Reset button above to practice again, or continue to the
+            next chapter.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   // Use uncompleted problems instead of all problems
   const problem = uncompletedProblems[currentProblem];
 

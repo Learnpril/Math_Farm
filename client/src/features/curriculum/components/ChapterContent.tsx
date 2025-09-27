@@ -62,9 +62,17 @@ export function ChapterContent({
     : 0;
 
   // Calculate final mastery level - use the higher of stored or calculated
-  const finalMasteryLevel = chapterProgress
-    ? Math.max(storedMasteryLevel, calculatedMasteryLevel)
-    : 0;
+  // Special case: if all problems are completed, ensure 100% mastery
+  const allProblemsCompleted =
+    chapterProgress?.practiceScores &&
+    Object.values(chapterProgress.practiceScores).filter(score => score === 1)
+      .length === totalProblems;
+
+  const finalMasteryLevel = allProblemsCompleted
+    ? 1.0 // Force 100% when all problems are completed
+    : chapterProgress
+      ? Math.max(storedMasteryLevel, calculatedMasteryLevel)
+      : 0;
 
   // Debug: Log when mastery level changes
   console.log('🔍 ChapterContent Mastery Debug:', {
