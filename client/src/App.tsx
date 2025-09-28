@@ -9,6 +9,7 @@ import {
   LazyToolsPage,
   LazyLaTeXGuidePage,
   LazyMATLABGuidePage,
+  LazyASCIIGuidePage,
 } from './components/LazyComponents';
 import { ForumHome } from './features/forum/pages/ForumHome';
 import { CategoryPage } from './features/forum/pages/CategoryPage';
@@ -146,6 +147,18 @@ function App() {
                 )}
               />
               <Route path='/math-symbols' component={MathSymbolsPage} />
+              <Route
+                path='/ascii-guide'
+                component={() => (
+                  <LazyWrapper
+                    fallback='skeleton'
+                    skeletonVariant='page'
+                    loadingText='Loading ASCII guide...'
+                  >
+                    <LazyASCIIGuidePage />
+                  </LazyWrapper>
+                )}
+              />
 
               {/* Curriculum routes */}
               <Route

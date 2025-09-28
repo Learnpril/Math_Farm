@@ -75,6 +75,7 @@ export function Header({ className = '' }: HeaderProps) {
     { href: '/tools', label: 'Tools', isInternal: false },
     { href: '/latex-guide', label: 'LaTeX Guide', isInternal: false },
     { href: '/matlab-guide', label: 'MATLAB Guide', isInternal: false },
+    { href: '/ascii-guide', label: 'ASCII Guide', isInternal: false },
     { href: '/math-symbols', label: 'Math Symbols', isInternal: false },
     { href: '/#hours', label: 'Hours', isInternal: true },
     { href: '/community', label: 'Forum', isInternal: false },

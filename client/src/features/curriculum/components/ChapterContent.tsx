@@ -175,37 +175,78 @@ export function ChapterContent({
 
       {/* Section Navigation */}
       <div className='border-b border-gray-200 dark:border-gray-700'>
-        <nav className='flex justify-between items-center px-6'>
-          <div className='flex space-x-8'>
-            {sections.map(({ id, label, icon: Icon }) => (
-              <button
-                key={id}
-                onClick={() => setActiveSection(id)}
-                className={`
-                  flex items-center space-x-2 py-4 border-b-2 font-medium text-sm transition-colors
-                  ${
-                    activeSection === id
-                      ? 'border-purple-500 text-purple-600 dark:text-purple-400'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
-                  }
-                `}
-              >
-                <Icon className='w-4 h-4' />
-                <span>{label}</span>
-              </button>
-            ))}
+        <nav className='px-6'>
+          {/* Desktop Layout */}
+          <div className='hidden sm:flex justify-between items-center'>
+            <div className='flex space-x-8'>
+              {sections.map(({ id, label, icon: Icon }) => (
+                <button
+                  key={id}
+                  onClick={() => setActiveSection(id)}
+                  className={`
+                    flex items-center space-x-2 py-4 border-b-2 font-medium text-sm transition-colors
+                    ${
+                      activeSection === id
+                        ? 'border-purple-500 text-purple-600 dark:text-purple-400'
+                        : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
+                    }
+                  `}
+                >
+                  <Icon className='w-4 h-4' />
+                  <span>{label}</span>
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={() => {
+                resetChapterProgress(chapter.id);
+                setRenderKey(prev => prev + 1); // Force re-render
+              }}
+              className='flex items-center space-x-1 px-3 py-1 text-sm bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-colors'
+              title='Reset chapter progress'
+            >
+              <RotateCcw className='w-4 h-4' />
+              <span>Reset</span>
+            </button>
           </div>
-          <button
-            onClick={() => {
-              resetChapterProgress(chapter.id);
-              setRenderKey(prev => prev + 1); // Force re-render
-            }}
-            className='flex items-center space-x-1 px-3 py-1 text-sm bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-colors'
-            title='Reset chapter progress'
-          >
-            <RotateCcw className='w-4 h-4' />
-            <span>Reset</span>
-          </button>
+
+          {/* Mobile Layout */}
+          <div className='sm:hidden'>
+            {/* Section tabs */}
+            <div className='flex space-x-4 py-2'>
+              {sections.map(({ id, label, icon: Icon }) => (
+                <button
+                  key={id}
+                  onClick={() => setActiveSection(id)}
+                  className={`
+                    flex items-center space-x-1 py-3 border-b-2 font-medium text-xs transition-colors flex-1 justify-center
+                    ${
+                      activeSection === id
+                        ? 'border-purple-500 text-purple-600 dark:text-purple-400'
+                        : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
+                    }
+                  `}
+                >
+                  <Icon className='w-3 h-3' />
+                  <span>{label}</span>
+                </button>
+              ))}
+            </div>
+            {/* Reset button below tabs */}
+            <div className='flex justify-center pb-2'>
+              <button
+                onClick={() => {
+                  resetChapterProgress(chapter.id);
+                  setRenderKey(prev => prev + 1); // Force re-render
+                }}
+                className='flex items-center space-x-1 px-3 py-1 text-xs bg-purple-500 hover:bg-purple-600 text-white rounded-md transition-colors'
+                title='Reset chapter progress'
+              >
+                <RotateCcw className='w-3 h-3' />
+                <span>Reset Progress</span>
+              </button>
+            </div>
+          </div>
         </nav>
       </div>
 

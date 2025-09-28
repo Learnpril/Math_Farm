@@ -50,6 +50,12 @@ export const LazyMATLABGuidePage = lazy(() =>
   }))
 );
 
+export const LazyASCIIGuidePage = lazy(() =>
+  import('../features/guides/components/ASCIIGuidePage').then(module => ({
+    default: module.ASCIIGuidePage,
+  }))
+);
+
 // Lazy load MathJax-heavy components
 export const LazyMathExpression = lazy(() =>
   import('./MathExpression').then(module => ({
