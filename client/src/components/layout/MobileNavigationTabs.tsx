@@ -15,11 +15,8 @@ import {
   Palette,
   ArrowLeftRight,
   Wrench,
-  ChevronDown,
-  ChevronUp,
 } from 'lucide-react';
-import { Button } from '../ui/button';
-import { ScrollArea } from '../ui/scroll-area';
+
 import topicsData from '../../data/topicsData.json';
 import { Topic } from '../../../../shared/types';
 
@@ -42,7 +39,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
  */
 export function MobileNavigationTabs() {
   const [activeTab, setActiveTab] = useState<'topics' | 'tools'>('topics');
-  const [location, setLocation] = useLocation();
+  const [location] = useLocation();
   const { openTool } = useToolModalContext();
   const topics = topicsData as Topic[];
 
@@ -121,22 +118,23 @@ export function MobileNavigationTabs() {
       {/* Tab Content */}
       <div className='p-2'>
         {activeTab === 'topics' && (
-          <ScrollArea className='w-full'>
-            <div className='flex space-x-2 pb-2'>
+          <div className='w-full'>
+            {/* Horizontal scrollable topics with touch support */}
+            <div className='flex space-x-3 pb-2 overflow-x-auto scrollbar-hide touch-scroll px-1'>
               {topics.map(topic => (
                 <button
                   key={topic.id}
-                  className={`flex-shrink-0 flex flex-col items-center space-y-1 p-2 rounded-md text-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-[70px] ${
+                  className={`flex-shrink-0 flex flex-col items-center space-y-2 p-3 rounded-lg text-xs transition-all duration-200 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-w-[80px] touch-manipulation active:scale-95 ${
                     isActiveLink(`/topic/${topic.id}`)
-                      ? 'bg-accent text-accent-foreground'
-                      : 'text-muted-foreground'
+                      ? 'bg-accent text-accent-foreground shadow-sm border border-accent-foreground/20'
+                      : 'text-muted-foreground hover:shadow-sm'
                   }`}
                   onClick={() => handleTopicClick(topic)}
                 >
                   <span className='flex-shrink-0' aria-hidden='true'>
                     {topic.icon && iconMap[topic.icon]
                       ? React.createElement(iconMap[topic.icon], {
-                          className: 'h-5 w-5',
+                          className: 'h-6 w-6',
                         })
                       : '📚'}
                   </span>
@@ -148,59 +146,33 @@ export function MobileNavigationTabs() {
                 </button>
               ))}
             </div>
-          </ScrollArea>
+          </div>
         )}
 
         {activeTab === 'tools' && (
-          <div className='flex space-x-2'>
-            {tools.map(tool => {
-              const IconComponent = tool.icon;
-              return (
-                <button
-                  key={tool.id}
-                  className='flex-1 flex flex-col items-center space-y-1 p-2 rounded-md text-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 text-muted-foreground'
-                  onClick={() => openTool(tool.id)}
-                >
-                  <IconComponent className='h-5 w-5 text-primary' />
-                  <div className='text-center min-w-0'>
-                    <div className='font-medium text-foreground text-xs truncate'>
-                      {tool.title}
+          <div className='w-full'>
+            {/* Horizontal scrollable tools with touch support */}
+            <div className='flex space-x-3 pb-2 overflow-x-auto scrollbar-hide touch-scroll px-1'>
+              {tools.map(tool => {
+                const IconComponent = tool.icon;
+                return (
+                  <button
+                    key={tool.id}
+                    className='flex-shrink-0 flex flex-col items-center space-y-2 p-3 rounded-lg text-xs transition-all duration-200 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 text-muted-foreground min-w-[80px] touch-manipulation hover:shadow-sm active:scale-95'
+                    onClick={() => openTool(tool.id)}
+                  >
+                    <IconComponent className='h-6 w-6 text-primary' />
+                    <div className='text-center min-w-0'>
+                      <div className='font-medium text-foreground text-xs truncate'>
+                        {tool.title}
+                      </div>
                     </div>
-                  </div>
-                </button>
-              );
-            })}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         )}
-      </div>
-
-      {/* Quick Actions */}
-      <div className='px-2 pb-2'>
-        <div className='flex space-x-2'>
-          <Button
-            variant='outline'
-            size='sm'
-            className='flex-1 text-xs'
-            onClick={() => {
-              if (location === '/') {
-                const element = document.getElementById('topics');
-                element?.scrollIntoView({ behavior: 'smooth' });
-              } else {
-                setLocation('/#topics');
-              }
-            }}
-          >
-            All Topics
-          </Button>
-          <Button
-            variant='outline'
-            size='sm'
-            className='flex-1 text-xs'
-            onClick={() => setLocation('/tools')}
-          >
-            All Tools
-          </Button>
-        </div>
       </div>
     </div>
   );
