@@ -200,9 +200,48 @@ function InteractiveDrawingTool({
 }: InteractiveDrawingToolProps) {
   const [selectedLine, setSelectedLine] = useState<LineType>(LINE_TYPES[0]);
   const [canvas, setCanvas] = useState<string[][]>([]);
-  const [canvasSize, setCanvasSize] = useState({ width: 20, height: 8 });
   const [customText, setCustomText] = useState('');
   const [useCustomText, setUseCustomText] = useState(false);
+
+  // Responsive canvas size based on screen width
+  const getResponsiveCanvasSize = () => {
+    if (typeof window !== 'undefined') {
+      const width = window.innerWidth;
+      if (width < 640) {
+        // Mobile
+        return { width: 12, height: 6 };
+      } else if (width < 1024) {
+        // Tablet
+        return { width: 16, height: 8 };
+      } else {
+        // Desktop
+        return { width: 20, height: 10 };
+      }
+    }
+    return { width: 16, height: 8 }; // Default
+  };
+
+  const [canvasSize, setCanvasSize] = useState(getResponsiveCanvasSize());
+
+  // Separate states for input field values to allow editing
+  const [widthInput, setWidthInput] = useState(canvasSize.width.toString());
+  const [heightInput, setHeightInput] = useState(canvasSize.height.toString());
+
+  // Update canvas size on window resize
+  React.useEffect(() => {
+    const handleResize = () => {
+      setCanvasSize(getResponsiveCanvasSize());
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Sync input values when canvas size changes
+  React.useEffect(() => {
+    setWidthInput(canvasSize.width.toString());
+    setHeightInput(canvasSize.height.toString());
+  }, [canvasSize]);
 
   const initializeCanvas = useCallback(() => {
     const newCanvas = Array(canvasSize.height)
@@ -211,9 +250,49 @@ function InteractiveDrawingTool({
     setCanvas(newCanvas);
   }, [canvasSize]);
 
+  // Smart canvas resize that preserves existing artwork
+  const resizeCanvas = useCallback((newWidth: number, newHeight: number) => {
+    setCanvas(prevCanvas => {
+      // If no existing canvas, create new one
+      if (prevCanvas.length === 0) {
+        return Array(newHeight)
+          .fill(null)
+          .map(() => Array(newWidth).fill('\u200B'));
+      }
+
+      const newCanvas = Array(newHeight)
+        .fill(null)
+        .map(() => Array(newWidth).fill('\u200B'));
+
+      // Copy existing content, preserving what fits in the new dimensions
+      const copyHeight = Math.min(prevCanvas.length, newHeight);
+      const copyWidth = Math.min(prevCanvas[0]?.length || 0, newWidth);
+
+      for (let row = 0; row < copyHeight; row++) {
+        for (let col = 0; col < copyWidth; col++) {
+          if (prevCanvas[row] && prevCanvas[row][col] !== undefined) {
+            newCanvas[row][col] = prevCanvas[row][col];
+          }
+        }
+      }
+
+      return newCanvas;
+    });
+  }, []);
+
+  // Initialize canvas on first load
   React.useEffect(() => {
-    initializeCanvas();
-  }, [initializeCanvas]);
+    if (canvas.length === 0) {
+      initializeCanvas();
+    }
+  }, [initializeCanvas, canvas.length]);
+
+  // Handle canvas size changes with preservation
+  React.useEffect(() => {
+    if (canvas.length > 0) {
+      resizeCanvas(canvasSize.width, canvasSize.height);
+    }
+  }, [canvasSize.width, canvasSize.height, resizeCanvas]);
 
   const handleCellClick = (row: number, col: number) => {
     const newCanvas = [...canvas];
@@ -434,15 +513,29 @@ function InteractiveDrawingTool({
             <label className='text-sm font-medium'>Width:</label>
             <input
               type='number'
-              min='10'
-              max='40'
-              value={canvasSize.width}
-              onChange={e =>
-                setCanvasSize(prev => ({
-                  ...prev,
-                  width: parseInt(e.target.value) || 20,
-                }))
-              }
+              min='4'
+              max='15'
+              value={widthInput}
+              onChange={e => {
+                setWidthInput(e.target.value);
+              }}
+              onBlur={e => {
+                const value = e.target.value;
+                if (value === '' || isNaN(parseInt(value))) {
+                  setWidthInput(canvasSize.width.toString());
+                  return;
+                }
+                const numValue = parseInt(value);
+                const newWidth = Math.min(15, Math.max(4, numValue));
+                // Update canvas size and preserve artwork
+                const newCanvasSize = { ...canvasSize, width: newWidth };
+                setCanvasSize(newCanvasSize);
+              }}
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
+                  e.currentTarget.blur();
+                }
+              }}
               className='w-16 px-2 py-1 border rounded text-sm bg-white text-black'
             />
           </div>
@@ -450,15 +543,29 @@ function InteractiveDrawingTool({
             <label className='text-sm font-medium'>Height:</label>
             <input
               type='number'
-              min='5'
-              max='20'
-              value={canvasSize.height}
-              onChange={e =>
-                setCanvasSize(prev => ({
-                  ...prev,
-                  height: parseInt(e.target.value) || 8,
-                }))
-              }
+              min='4'
+              max='40'
+              value={heightInput}
+              onChange={e => {
+                setHeightInput(e.target.value);
+              }}
+              onBlur={e => {
+                const value = e.target.value;
+                if (value === '' || isNaN(parseInt(value))) {
+                  setHeightInput(canvasSize.height.toString());
+                  return;
+                }
+                const numValue = parseInt(value);
+                const newHeight = Math.min(40, Math.max(4, numValue));
+                // Update canvas size and preserve artwork
+                const newCanvasSize = { ...canvasSize, height: newHeight };
+                setCanvasSize(newCanvasSize);
+              }}
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
+                  e.currentTarget.blur();
+                }
+              }}
               className='w-16 px-2 py-1 border rounded text-sm bg-white text-black'
             />
           </div>
@@ -472,47 +579,46 @@ function InteractiveDrawingTool({
               💡 Click to place • Click again to clear
             </p>
           </div>
-          <div className='border rounded-lg p-4 bg-muted/20'>
+          <div className='border rounded-lg p-2 sm:p-4 bg-muted/20 overflow-x-auto'>
             <div
-              className='text-sm leading-none select-none'
+              className='text-sm leading-none select-none inline-block space-y-1'
               style={{
                 fontFamily:
                   'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
-                display: 'grid',
-                gridTemplateColumns: `repeat(${canvasSize.width}, 1fr)`,
-                gap: '1px',
               }}
             >
-              {canvas.map((row, rowIndex) =>
-                row.map((cell, colIndex) => {
-                  const isSpace = cell === '\u00A0'; // Non-breaking space
-                  const isEmpty = cell === '\u200B'; // Zero-width space (empty cell)
-                  return (
-                    <button
-                      key={`${rowIndex}-${colIndex}`}
-                      className={`w-4 h-4 hover:bg-primary/20 border hover:border-primary/50 rounded-sm flex items-center justify-center text-xs transition-colors ${
-                        isSpace
-                          ? 'bg-foreground/10 border-foreground/20'
-                          : 'bg-muted/30 border-muted-foreground/20'
-                      }`}
-                      style={{
-                        fontFamily:
-                          'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
-                      }}
-                      onClick={() => handleCellClick(rowIndex, colIndex)}
-                      title={
-                        isSpace
-                          ? 'Space character'
-                          : isEmpty
-                            ? 'Empty cell'
-                            : undefined
-                      }
-                    >
-                      {cell === '\u00A0' ? ' ' : isEmpty ? '' : cell}
-                    </button>
-                  );
-                })
-              )}
+              {canvas.map((row, rowIndex) => (
+                <div key={rowIndex} className='flex gap-1'>
+                  {row.map((cell, colIndex) => {
+                    const isSpace = cell === '\u00A0'; // Non-breaking space
+                    const isEmpty = cell === '\u200B'; // Zero-width space (empty cell)
+                    return (
+                      <button
+                        key={`${rowIndex}-${colIndex}`}
+                        className={`w-[18px] h-[18px] sm:w-[24px] sm:h-[24px] md:w-[36px] md:h-[36px] lg:w-[42px] lg:h-[42px] hover:bg-primary/20 border hover:border-primary/50 rounded-sm flex items-center justify-center text-lg transition-colors flex-shrink-0 ${
+                          isSpace
+                            ? 'bg-foreground/10 border-foreground/20'
+                            : 'bg-muted/30 border-muted-foreground/20'
+                        }`}
+                        style={{
+                          fontFamily:
+                            'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+                        }}
+                        onClick={() => handleCellClick(rowIndex, colIndex)}
+                        title={
+                          isSpace
+                            ? 'Space character'
+                            : isEmpty
+                              ? 'Empty cell'
+                              : undefined
+                        }
+                      >
+                        {cell === '\u00A0' ? ' ' : isEmpty ? '' : cell}
+                      </button>
+                    );
+                  })}
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -542,40 +648,39 @@ function InteractiveDrawingTool({
         </div>
 
         {/* Preview */}
-        <div className='border rounded-lg p-4 bg-background'>
+        <div className='border rounded-lg p-2 sm:p-4 bg-background overflow-x-auto'>
           <h4 className='text-sm font-medium mb-2'>
             Preview (Visual Spacing):
           </h4>
           <div
-            className='text-xs leading-none select-none mb-4'
+            className='text-xs leading-none select-none mb-4 inline-block space-y-1'
             style={{
               fontFamily:
                 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
-              display: 'grid',
-              gridTemplateColumns: `repeat(${canvasSize.width}, 1fr)`,
-              gap: '1px',
             }}
           >
-            {canvas.map((row, rowIndex) =>
-              row.map((cell, colIndex) => (
-                <div
-                  key={`preview-${rowIndex}-${colIndex}`}
-                  className='w-4 h-4 flex items-center justify-center text-xs bg-muted/10'
-                  style={{
-                    fontFamily:
-                      'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
-                  }}
-                >
-                  {cell}
-                </div>
-              ))
-            )}
+            {canvas.map((row, rowIndex) => (
+              <div key={rowIndex} className='flex gap-1'>
+                {row.map((cell, colIndex) => (
+                  <div
+                    key={`preview-${rowIndex}-${colIndex}`}
+                    className='w-[18px] h-[18px] sm:w-[24px] sm:h-[24px] md:w-[36px] md:h-[36px] lg:w-[42px] lg:h-[42px] flex items-center justify-center text-lg bg-muted/10 flex-shrink-0'
+                    style={{
+                      fontFamily:
+                        'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+                    }}
+                  >
+                    {cell}
+                  </div>
+                ))}
+              </div>
+            ))}
           </div>
           <h4 className='text-sm font-medium mb-2'>
             Text Output (Copy/Paste):
           </h4>
           <pre
-            className='text-xs whitespace-pre overflow-x-auto'
+            className='text-lg whitespace-pre overflow-x-auto'
             style={{
               fontFamily:
                 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
