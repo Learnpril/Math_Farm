@@ -12,6 +12,7 @@ import { CalculatorDemo } from './CalculatorDemo';
 import { FunctionGrapherDemo } from './FunctionGrapherDemo';
 import { UnitConverterDemo } from './UnitConverterDemo';
 import { EquationSolverDemo } from './EquationSolverDemo';
+import LinesDrawingTool from './LinesDrawingTool';
 import { ToolDemoErrorBoundary } from './ToolDemoErrorBoundary';
 import { ToolErrorBoundary } from './ToolErrorBoundary';
 import {
@@ -20,6 +21,7 @@ import {
   BarChart3,
   ArrowLeftRight,
   Zap,
+  Minus,
 } from 'lucide-react';
 
 export interface ToolsSectionProps {
@@ -54,6 +56,7 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
     | 'function-grapher'
     | 'unit-converter'
     | 'equation-solver'
+    | 'lines-drawing'
     | null
   >(null);
 
@@ -150,6 +153,21 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
             <Zap className='h-4 w-4' />
             Equation Solver
           </Button>
+
+          <Button
+            variant={activeDemo === 'lines-drawing' ? 'default' : 'outline'}
+            onClick={() =>
+              setActiveDemo(
+                activeDemo === 'lines-drawing' ? null : 'lines-drawing'
+              )
+            }
+            className='flex items-center gap-2'
+            aria-pressed={activeDemo === 'lines-drawing'}
+            aria-label='Toggle lines drawing tool demonstration'
+          >
+            <Minus className='h-4 w-4' />
+            Lines Drawing
+          </Button>
         </div>
 
         {/* Tool Demonstrations */}
@@ -242,9 +260,31 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
             </div>
           )}
 
+          {/* Lines Drawing Tool Demo */}
+          {activeDemo === 'lines-drawing' && (
+            <div
+              className='animate-in slide-in-from-top-4 duration-300'
+              role='region'
+              aria-labelledby='lines-drawing-demo-title'
+            >
+              <ToolDemoErrorBoundary
+                toolName='Lines Drawing Tool'
+                showErrorDetails={process.env.NODE_ENV === 'development'}
+              >
+                <Suspense
+                  fallback={<ToolLoadingFallback title='Lines Drawing Tool' />}
+                >
+                  <ToolErrorBoundary toolName='Lines Drawing Tool'>
+                    <LinesDrawingTool />
+                  </ToolErrorBoundary>
+                </Suspense>
+              </ToolDemoErrorBoundary>
+            </div>
+          )}
+
           {/* Default state - show overview cards */}
           {!activeDemo && (
-            <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-6'>
+            <div className='grid md:grid-cols-2 lg:grid-cols-5 gap-6'>
               {/* Calculator Overview */}
               <Card className='cursor-pointer hover:shadow-lg transition-shadow flex flex-col h-full'>
                 <CardHeader>
@@ -357,6 +397,35 @@ export const ToolsSection: React.FC<ToolsSectionProps> = ({
                     aria-label='Try equation solver demonstration'
                   >
                     Try Equation Solver
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Lines Drawing Tool Overview */}
+              <Card className='cursor-pointer hover:shadow-lg transition-shadow flex flex-col h-full'>
+                <CardHeader>
+                  <CardTitle className='flex items-center gap-2'>
+                    <Minus className='h-5 w-5 text-primary' />
+                    Lines Drawing
+                  </CardTitle>
+                  <CardDescription>
+                    Create ASCII art and diagrams using single and double line
+                    characters with an interactive drawing canvas.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className='flex-1 flex flex-col'>
+                  <div className='space-y-2 text-sm text-muted-foreground mb-4 flex-1'>
+                    <p>• Single and double line types</p>
+                    <p>• Interactive drawing canvas</p>
+                    <p>• Export as text or download</p>
+                    <p>• Perfect for ASCII diagrams</p>
+                  </div>
+                  <Button
+                    onClick={() => setActiveDemo('lines-drawing')}
+                    className='w-full mt-auto'
+                    aria-label='Try lines drawing tool demonstration'
+                  >
+                    Try Lines Drawing
                   </Button>
                 </CardContent>
               </Card>
