@@ -49,7 +49,42 @@ const LETTERS = [
 // Numbers for ASCII art
 const NUMBERS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
+// Arrow characters for ASCII art
+const ARROWS = [
+  '→',
+  '←',
+  '↑',
+  '↓', // Basic arrows
+  '↗',
+  '↖',
+  '↘',
+  '↙', // Diagonal arrows
+  '⇒',
+  '⇐',
+  '⇑',
+  '⇓', // Double arrows
+  '⟶',
+  '⟵',
+  '⟷',
+  '⟸', // Long arrows
+  '▶',
+  '◀',
+  '▲',
+  '▼', // Triangle arrows
+  '►',
+  '◄',
+  '▴',
+  '▾', // Filled triangle arrows
+];
+
 const LINE_TYPES: LineType[] = [
+  // Space character
+  {
+    id: 'space',
+    name: 'Space',
+    symbol: '\u00A0',
+    description: 'Space character - creates visible spacing',
+  },
   // Single lines
   {
     id: 'horizontal',
@@ -307,7 +342,7 @@ export default function LinesDrawingTool() {
       <Card>
         <CardHeader>
           <CardTitle className='flex items-center gap-2'>
-            Lines Drawing Tool - WITH SPACE BUTTON ADDED
+            Interactive ASCII Drawing Tool
           </CardTitle>
           <CardDescription>
             Create ASCII diagrams by clicking on the canvas. Click a square
@@ -315,44 +350,9 @@ export default function LinesDrawingTool() {
           </CardDescription>
         </CardHeader>
         <CardContent className='space-y-4'>
-          {/* SPACE CHARACTER TOOL - SHOULD BE VISIBLE */}
-          <div className='border-4 border-red-500 rounded-lg p-4 bg-yellow-100'>
-            <h2 className='text-lg font-bold mb-3 text-red-600'>
-              🔲 SPACE CHARACTER TOOL
-            </h2>
-            <div className='grid grid-cols-6 sm:grid-cols-8 md:grid-cols-12 gap-2'>
-              <Button
-                variant={
-                  selectedLine.id === 'space' && !useCustomText
-                    ? 'default'
-                    : 'outline'
-                }
-                size='lg'
-                className='h-16 w-16 p-0 text-lg font-bold border-4 border-red-400 bg-yellow-200'
-                onClick={() => {
-                  setSelectedLine({
-                    id: 'space',
-                    name: 'Space',
-                    symbol: '\u00A0',
-                    description: 'Space character',
-                  });
-                  setUseCustomText(false);
-                }}
-                title='Click to select space character tool'
-              >
-                SPACE
-              </Button>
-            </div>
-            <p className='text-sm font-bold text-red-600 mt-2'>
-              ⬆️ CLICK THIS BUTTON TO SELECT SPACE TOOL ⬆️
-            </p>
-          </div>
-
           {/* Letters */}
           <div>
-            <h3 className='text-sm font-medium mb-3'>
-              Letters (SPACE BUTTON SHOULD BE IN NUMBERS)
-            </h3>
+            <h3 className='text-sm font-medium mb-3'>Letters</h3>
             <div className='grid grid-cols-6 sm:grid-cols-8 md:grid-cols-12 gap-2'>
               {LETTERS.map((letter, index) => (
                 <Button
@@ -399,92 +399,35 @@ export default function LinesDrawingTool() {
                   {number}
                 </Button>
               ))}
-              {/* Space Button */}
-              <Button
-                variant={
-                  selectedLine.id === 'space' && !useCustomText
-                    ? 'default'
-                    : 'outline'
-                }
-                size='sm'
-                className='h-10 w-16 p-0 text-xs font-bold bg-blue-100 border-blue-300'
-                onClick={() => {
-                  setSelectedLine({
-                    id: 'space',
-                    name: 'Space',
-                    symbol: '\u00A0',
-                    description: 'Space character',
-                  });
-                  setUseCustomText(false);
-                }}
-                title='Space character - creates visible spacing'
-              >
-                SPACE
-              </Button>
             </div>
           </div>
 
-          {/* Space */}
+          {/* Arrows */}
           <div>
-            <h3 className='text-sm font-medium mb-3'>Space</h3>
+            <h3 className='text-sm font-medium mb-3'>Arrows</h3>
             <div className='grid grid-cols-6 sm:grid-cols-8 md:grid-cols-12 gap-2'>
-              <Button
-                variant={
-                  selectedLine.id === 'space' && !useCustomText
-                    ? 'default'
-                    : 'outline'
-                }
-                size='sm'
-                className='h-10 w-16 p-0 text-sm font-medium'
-                onClick={() => {
-                  setSelectedLine({
-                    id: 'space',
-                    name: 'Space',
-                    symbol: '\u00A0',
-                    description: 'Space character',
-                  });
-                  setUseCustomText(false);
-                }}
-                title='Space character - creates visible spacing'
-              >
-                SPACE
-              </Button>
+              {ARROWS.map((arrow, index) => (
+                <Button
+                  key={index}
+                  variant={
+                    useCustomText && customText === arrow
+                      ? 'default'
+                      : 'outline'
+                  }
+                  size='sm'
+                  className='h-10 w-10 p-0 text-lg'
+                  onClick={() => {
+                    setCustomText(arrow);
+                    setUseCustomText(true);
+                  }}
+                  title={`Arrow: ${arrow}`}
+                >
+                  {arrow}
+                </Button>
+              ))}
             </div>
             <p className='text-xs text-muted-foreground mt-1'>
-              Creates visible space characters on the canvas
-            </p>
-          </div>
-
-          {/* Space Character - VISIBLE SPACE TOOL */}
-          <div className='border-2 border-primary/20 rounded-lg p-3 bg-primary/5'>
-            <h3 className='text-sm font-medium mb-3 text-primary'>
-              🔲 Space Character
-            </h3>
-            <div className='grid grid-cols-6 sm:grid-cols-8 md:grid-cols-12 gap-2'>
-              <Button
-                variant={
-                  selectedLine.id === 'space' && !useCustomText
-                    ? 'default'
-                    : 'outline'
-                }
-                size='sm'
-                className='h-12 w-12 p-0 text-sm font-bold border-2'
-                onClick={() => {
-                  setSelectedLine({
-                    id: 'space',
-                    name: 'Space',
-                    symbol: '\u00A0',
-                    description: 'Space character',
-                  });
-                  setUseCustomText(false);
-                }}
-                title='Click to select space character tool'
-              >
-                SPACE
-              </Button>
-            </div>
-            <p className='text-xs text-muted-foreground mt-2'>
-              Select this to place visible space characters on the canvas
+              Various arrow characters for directional indicators
             </p>
           </div>
 
@@ -501,14 +444,16 @@ export default function LinesDrawingTool() {
                       : 'outline'
                   }
                   size='sm'
-                  className='h-10 w-10 p-0 font-mono text-lg'
+                  className={`h-10 p-0 font-mono text-lg ${
+                    lineType.id === 'space' ? 'w-16 text-xs font-bold' : 'w-10'
+                  }`}
                   onClick={() => {
                     setSelectedLine(lineType);
                     setUseCustomText(false);
                   }}
                   title={lineType.description}
                 >
-                  {lineType.symbol}
+                  {lineType.id === 'space' ? 'SPACE' : lineType.symbol}
                 </Button>
               ))}
             </div>

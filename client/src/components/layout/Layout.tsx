@@ -34,8 +34,7 @@ export function Layout({
   // Show sidebars only on the home page
   const showSidebars = location === '/';
 
-  // Debug: Log navigation attempts
-  console.log('Current location:', location, 'Show sidebars:', showSidebars);
+  // Show sidebars only on the home page
 
   return (
     <div className={`min-h-screen bg-background text-foreground ${className}`}>

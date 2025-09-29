@@ -104,11 +104,9 @@ export function useForumPerformance(
 
     const observer = new PerformanceObserver(list => {
       for (const entry of list.getEntries()) {
-        if (entry.duration > 50) {
-          // Long task threshold
-          console.warn(
-            `Long task detected in ${componentName}: ${entry.duration.toFixed(2)}ms`
-          );
+        if (entry.duration > 100) {
+          // Increased threshold and reduced logging
+          // console.warn(`Long task detected in ${componentName}: ${entry.duration.toFixed(2)}ms`);
         }
       }
     });
@@ -354,13 +352,9 @@ export function useForumPerformanceMonitor(componentName: string) {
   ]);
 
   const logPerformanceReport = useCallback(() => {
-    const report = getPerformanceReport();
-    console.group(`Performance Report: ${componentName}`);
-    console.table(report.component);
-    console.table(report.images);
-    console.table(report.chunks);
-    console.groupEnd();
-  }, [getPerformanceReport, componentName]);
+    // Temporarily disabled to reduce console noise
+    return;
+  }, []);
 
   return {
     ...componentPerf,

@@ -33,6 +33,13 @@ export function SimpleAvatarDisplay({
       layer => layer.itemId === 'chibi-base-default' && layer.visible
     ) || true; // Always show chibi for now
 
+  // Fallback to a simple colored avatar if image fails
+  React.useEffect(() => {
+    if (imageError) {
+      console.warn('Avatar image failed to load, using fallback');
+    }
+  }, [imageError]);
+
   const handleImageLoad = () => {
     setImageLoaded(true);
     setImageError(false);
@@ -41,10 +48,13 @@ export function SimpleAvatarDisplay({
   const handleImageError = () => {
     setImageError(true);
     setImageLoaded(false);
-    console.warn('Failed to load chibi avatar image');
+    console.warn(
+      'Failed to load chibi avatar image from:',
+      '/assets/avatar/base/chibi-default.png'
+    );
   };
 
-  // Fallback avatar with gradient background
+  // Enhanced anime-style fallback avatar
   const renderFallback = () => {
     const gradients = [
       'bg-gradient-to-br from-purple-400 to-pink-500',
@@ -58,24 +68,61 @@ export function SimpleAvatarDisplay({
     const bgGradient = gradients[colorIndex];
 
     return (
-      <div
-        className={cn(
-          'rounded-full flex items-center justify-center text-white font-semibold shadow-lg',
-          bgGradient,
-          showBorder && 'border-2 border-border',
-          className
-        )}
-        style={{ width: size, height: size }}
-      >
-        <span style={{ fontSize: size * 0.4 }}>
-          {fallbackInitials.charAt(0).toUpperCase()}
-        </span>
+      <div className='relative inline-block'>
+        <div
+          className={cn(
+            'rounded-full flex items-center justify-center text-white font-bold shadow-lg relative overflow-hidden',
+            bgGradient,
+            showBorder && 'border-2 border-border',
+            className
+          )}
+          style={{ width: size, height: size }}
+        >
+          {/* Main character initial */}
+          <span
+            className='relative z-10 font-bold text-white drop-shadow-sm'
+            style={{ fontSize: size * 0.35 }}
+          >
+            {fallbackInitials.charAt(0).toUpperCase()}
+          </span>
+
+          {/* Cute sparkle effects */}
+          <div
+            className='absolute bg-white rounded-full opacity-80'
+            style={{
+              width: size * 0.08,
+              height: size * 0.08,
+              top: size * 0.15,
+              right: size * 0.15,
+            }}
+          />
+          <div
+            className='absolute bg-white rounded-full opacity-60'
+            style={{
+              width: size * 0.06,
+              height: size * 0.06,
+              bottom: size * 0.2,
+              left: size * 0.15,
+            }}
+          />
+
+          {/* Subtle inner glow */}
+          <div
+            className='absolute rounded-full bg-white/10'
+            style={{
+              width: size * 0.85,
+              height: size * 0.85,
+              top: size * 0.075,
+              left: size * 0.075,
+            }}
+          />
+        </div>
       </div>
     );
   };
 
-  // Show chibi image if available and should be displayed
-  if (shouldShowChibi && !imageError) {
+  // Temporarily disable image loading until server static file serving is fixed
+  if (false && shouldShowChibi && !imageError) {
     return (
       <div className='relative inline-block'>
         <img
@@ -95,6 +142,7 @@ export function SimpleAvatarDisplay({
           }}
           onLoad={handleImageLoad}
           onError={handleImageError}
+          loading='lazy'
         />
         {/* Loading state */}
         {!imageLoaded && !imageError && (

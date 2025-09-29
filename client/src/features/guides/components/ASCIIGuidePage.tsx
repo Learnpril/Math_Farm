@@ -25,6 +25,13 @@ interface LineType {
 }
 
 const LINE_TYPES: LineType[] = [
+  // Space character
+  {
+    id: 'space',
+    name: 'Space',
+    symbol: '\u00A0',
+    description: 'Space character - creates visible spacing',
+  },
   // Single lines
   {
     id: 'horizontal',
@@ -188,6 +195,34 @@ const ALPHABET_LETTERS = [
 ];
 
 const NUMBERS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+// Arrow characters for ASCII art
+const ARROWS = [
+  '→',
+  '←',
+  '↑',
+  '↓', // Basic arrows
+  '↗',
+  '↖',
+  '↘',
+  '↙', // Diagonal arrows
+  '⇒',
+  '⇐',
+  '⇑',
+  '⇓', // Double arrows
+  '⟶',
+  '⟵',
+  '⟷',
+  '⟸', // Long arrows
+  '▶',
+  '◀',
+  '▲',
+  '▼', // Triangle arrows
+  '►',
+  '◄',
+  '▴',
+  '▾', // Filled triangle arrows
+];
 
 interface InteractiveDrawingToolProps {
   copyToClipboard: (text: string, id: string) => void;
@@ -412,35 +447,30 @@ function InteractiveDrawingTool({
           </div>
         </div>
 
-        {/* Space Character */}
+        {/* Arrows */}
         <div>
-          <h4 className='text-sm font-medium mb-3'>Space:</h4>
-          <div className='grid grid-cols-5 sm:grid-cols-10 gap-2'>
-            <Button
-              variant={
-                selectedLine.id === 'space' && !useCustomText
-                  ? 'default'
-                  : 'outline'
-              }
-              size='sm'
-              className='h-10 w-16 p-0 text-sm font-bold'
-              onClick={() => {
-                setSelectedLine({
-                  id: 'space',
-                  name: 'Space',
-                  symbol: '\u00A0',
-                  description: 'Space character',
-                });
-                setUseCustomText(false);
-                setCustomText('');
-              }}
-              title='Space character - creates visible spacing'
-            >
-              SPACE
-            </Button>
+          <h4 className='text-sm font-medium mb-3'>Arrows:</h4>
+          <div className='grid grid-cols-6 sm:grid-cols-8 md:grid-cols-12 gap-2'>
+            {ARROWS.map((arrow, index) => (
+              <Button
+                key={index}
+                variant={
+                  useCustomText && customText === arrow ? 'default' : 'outline'
+                }
+                size='sm'
+                className='h-10 w-10 p-0 text-lg'
+                onClick={() => {
+                  setCustomText(arrow);
+                  setUseCustomText(true);
+                }}
+                title={`Arrow: ${arrow}`}
+              >
+                {arrow}
+              </Button>
+            ))}
           </div>
           <p className='text-xs text-muted-foreground mt-1'>
-            Creates visible space characters on the canvas
+            Various arrow characters for directional indicators
           </p>
         </div>
 
@@ -457,7 +487,9 @@ function InteractiveDrawingTool({
                     : 'outline'
                 }
                 size='sm'
-                className='h-10 w-10 p-0 font-mono text-lg'
+                className={`h-10 p-0 font-mono text-lg ${
+                  lineType.id === 'space' ? 'w-16 text-xs font-bold' : 'w-10'
+                }`}
                 onClick={() => {
                   setSelectedLine(lineType);
                   setUseCustomText(false);
@@ -465,7 +497,7 @@ function InteractiveDrawingTool({
                 }}
                 title={lineType.description}
               >
-                {lineType.symbol}
+                {lineType.id === 'space' ? 'SPACE' : lineType.symbol}
               </Button>
             ))}
           </div>
@@ -502,8 +534,7 @@ function InteractiveDrawingTool({
             />
           </div>
           <div className='text-xs text-muted-foreground'>
-            💡 Try: Letters (A, B, C), Numbers (1, 2, 3), Symbols (★, ●, ◆), or
-            Emojis (🏠, 📊, ✅)
+            💡 Try: Letters (A, B, C), Numbers (1, 2, 3), or Symbols (★, ●, ◆)
           </div>
         </div>
 
@@ -595,14 +626,20 @@ function InteractiveDrawingTool({
                     return (
                       <button
                         key={`${rowIndex}-${colIndex}`}
-                        className={`w-[18px] h-[18px] sm:w-[24px] sm:h-[24px] md:w-[36px] md:h-[36px] lg:w-[42px] lg:h-[42px] hover:bg-primary/20 border hover:border-primary/50 rounded-sm flex items-center justify-center text-lg transition-colors flex-shrink-0 ${
+                        className={`w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] md:w-[40px] md:h-[40px] lg:w-[48px] lg:h-[48px] hover:bg-primary/20 border hover:border-primary/50 rounded-sm flex items-center justify-center transition-colors flex-shrink-0 ${
                           isSpace
                             ? 'bg-foreground/10 border-foreground/20'
                             : 'bg-muted/30 border-muted-foreground/20'
                         }`}
                         style={{
                           fontFamily:
-                            'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+                            '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                          fontSize: 'clamp(12px, 2.5vw, 20px)',
+                          lineHeight: '1',
+                          textRendering: 'optimizeLegibility',
+                          fontFeatureSettings: '"liga" 1, "kern" 1',
+                          WebkitFontSmoothing: 'antialiased',
+                          MozOsxFontSmoothing: 'grayscale',
                         }}
                         onClick={() => handleCellClick(rowIndex, colIndex)}
                         title={
@@ -656,7 +693,7 @@ function InteractiveDrawingTool({
             className='text-xs leading-none select-none mb-4 inline-block space-y-1'
             style={{
               fontFamily:
-                'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+                '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
             }}
           >
             {canvas.map((row, rowIndex) => (
@@ -664,10 +701,16 @@ function InteractiveDrawingTool({
                 {row.map((cell, colIndex) => (
                   <div
                     key={`preview-${rowIndex}-${colIndex}`}
-                    className='w-[18px] h-[18px] sm:w-[24px] sm:h-[24px] md:w-[36px] md:h-[36px] lg:w-[42px] lg:h-[42px] flex items-center justify-center text-lg bg-muted/10 flex-shrink-0'
+                    className='w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] md:w-[40px] md:h-[40px] lg:w-[48px] lg:h-[48px] flex items-center justify-center bg-muted/10 flex-shrink-0'
                     style={{
                       fontFamily:
-                        'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+                        '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                      fontSize: 'clamp(12px, 2.5vw, 20px)',
+                      lineHeight: '1',
+                      textRendering: 'optimizeLegibility',
+                      fontFeatureSettings: '"liga" 1, "kern" 1',
+                      WebkitFontSmoothing: 'antialiased',
+                      MozOsxFontSmoothing: 'grayscale',
                     }}
                   >
                     {cell}
@@ -680,10 +723,15 @@ function InteractiveDrawingTool({
             Text Output (Copy/Paste):
           </h4>
           <pre
-            className='text-lg whitespace-pre overflow-x-auto'
+            className='text-lg whitespace-pre overflow-x-auto bg-muted/10 p-3 rounded border'
             style={{
               fontFamily:
-                'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+                '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols", "Courier New", monospace',
+              lineHeight: '1.2',
+              textRendering: 'optimizeLegibility',
+              fontFeatureSettings: '"liga" 1, "kern" 1',
+              WebkitFontSmoothing: 'antialiased',
+              MozOsxFontSmoothing: 'grayscale',
             }}
             dangerouslySetInnerHTML={{
               __html: exportAsText()

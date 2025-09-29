@@ -190,6 +190,50 @@ export function useForumApi() {
     },
   ];
 
+  // Generic API call function
+  const apiCall = useCallback(
+    async (url: string, options: RequestInit = {}) => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const response = await fetch(url, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+            ...options.headers,
+          },
+          ...options,
+        });
+
+        if (!response.ok) {
+          throw new Error(`API call failed: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return {
+          success: true,
+          data,
+          pagination: response.headers.get('X-Pagination')
+            ? JSON.parse(response.headers.get('X-Pagination') || '{}')
+            : undefined,
+        };
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : 'API call failed';
+        setError(errorMessage);
+        return {
+          success: false,
+          error: errorMessage,
+          data: null,
+        };
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    []
+  );
+
   return {
     createThread,
     getCategories,
@@ -197,5 +241,6 @@ export function useForumApi() {
     categories,
     isLoading,
     error,
+    apiCall,
   };
 }

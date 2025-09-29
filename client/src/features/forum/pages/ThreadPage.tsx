@@ -156,16 +156,18 @@ export function ThreadPage() {
     // In real app, fetch thread and posts data
     setLoading(true);
     // Simulate API call
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setLoading(false);
       endRenderTracking();
 
-      // Log performance report in development
+      // Log performance report in development (less frequently)
       if (process.env.NODE_ENV === 'development') {
-        setTimeout(logPerformanceReport, 1000);
+        setTimeout(logPerformanceReport, 2000);
       }
     }, 500);
-  }, [threadId, startRenderTracking, endRenderTracking, logPerformanceReport]);
+
+    return () => clearTimeout(timeoutId);
+  }, [threadId]); // Simplified dependencies to prevent excessive re-renders
 
   const breadcrumbs = [
     { label: 'Forum', href: '/community' },
