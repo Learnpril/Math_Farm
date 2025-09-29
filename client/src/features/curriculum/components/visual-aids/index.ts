@@ -11,3 +11,5 @@ export { RatioVisualizer } from './RatioVisualizer';
 export { AdditionAlgorithm } from './AdditionAlgorithm';
 export { SubtractionAlgorithm } from './SubtractionAlgorithm';
 export { NumberComparison } from './NumberComparison';
+export { CountingDots } from './CountingDots';
+export { CommonCoreStrategies } from './CommonCoreStrategies';

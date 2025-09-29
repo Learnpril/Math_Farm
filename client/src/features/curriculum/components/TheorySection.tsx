@@ -15,6 +15,8 @@ import {
   AdditionAlgorithm,
   SubtractionAlgorithm,
   NumberComparison,
+  CountingDots,
+  CommonCoreStrategies,
 } from './visual-aids';
 
 interface TheorySectionProps {
@@ -110,6 +112,16 @@ export function TheorySection({
       case 'subtraction-algorithm':
       case 'borrowing-demonstration':
         return 'The following shows the step-by-step process for subtracting large numbers, including borrowing.';
+
+      // Counting dots for simple addition and subtraction
+      case 'CountingDots':
+      case 'counting-dots':
+        return 'Below is an interactive visual that shows addition and subtraction using dots you can count step by step.';
+
+      // Common Core strategies
+      case 'CommonCoreStrategies':
+      case 'common-core-strategies':
+        return 'Below are interactive demonstrations of Common Core approaches like "making ten" and decomposition strategies that help build number sense.';
 
       // Other algorithms and procedures
       case 'standard-algorithm':
@@ -340,6 +352,24 @@ export function TheorySection({
               className='mt-4'
             />
           );
+
+        // Counting dots for simple addition and subtraction
+        case 'CountingDots':
+        case 'counting-dots':
+          return (
+            <CountingDots
+              problem='7 + 5'
+              operation='addition'
+              firstNumber={7}
+              secondNumber={5}
+              showAnswer={false}
+            />
+          );
+
+        // Common Core strategies
+        case 'CommonCoreStrategies':
+        case 'common-core-strategies':
+          return <CommonCoreStrategies problem='8 + 5' operation='addition' />;
 
         // Other algorithms and procedures
         case 'standard-algorithm':
@@ -727,50 +757,53 @@ Common errors include misaligning digits in the quotient, making arithmetic mist
                 </div>
               )}
 
-              {/* Self-check as a simple question */}
-              <div className='my-8 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-700'>
-                <p className='font-medium text-purple-800 dark:text-purple-200 mb-2'>
-                  ✓ Quick Check:
-                </p>
-                <p className='text-purple-700 dark:text-purple-300 italic'>
-                  {chapterNumber === 1 &&
-                    index === 0 &&
-                    'Can you represent 56 using base-10 blocks? Try it mentally: 5 tens and 6 units.'}
-                  {chapterNumber === 1 &&
-                    index === 1 &&
-                    "In the number 3,742, what is the value of the digit 7? (Answer: 700 - it's in the hundreds place)"}
-                  {chapterNumber === 1 &&
-                    index === 2 &&
-                    'Write 789 in expanded form. (Answer: 700 + 80 + 9)'}
-                  {chapterNumber === 1 &&
-                    index === 3 &&
-                    'Which is larger: 1,234 or 1,243? How do you know?'}
-                  {chapterNumber === 2 &&
-                    index === 0 &&
-                    'What is 47 + 38? Work through it step by step. (Answer: 85)'}
-                  {chapterNumber === 2 &&
-                    index === 1 &&
-                    'Calculate 52 - 27 using borrowing. (Answer: 25)'}
-                  {chapterNumber === 3 &&
-                    index === 0 &&
-                    'Show 4 × 6 as repeated addition. (Answer: 6 + 6 + 6 + 6 = 24)'}
-                  {chapterNumber === 3 &&
-                    index === 1 &&
-                    'Use the distributive property to calculate 15 × 4. (Answer: (10 + 5) × 4 = 40 + 20 = 60)'}
-                  {chapterNumber === 3 &&
-                    index === 2 &&
-                    'Calculate 23 × 45 using partial products. (Answer: 1,035)'}
-                  {chapterNumber === 4 &&
-                    index === 0 &&
-                    'Share 20 items equally among 4 groups. How many in each group? (Answer: 5)'}
-                  {chapterNumber === 4 &&
-                    index === 1 &&
-                    'Calculate 17 ÷ 5 and express with remainder. (Answer: 3 R2)'}
-                  {chapterNumber === 4 &&
-                    index === 2 &&
-                    'Use long division to find 456 ÷ 12. (Answer: 38)'}
-                </p>
-              </div>
+              {/* Self-check as a simple question - Skip for Common Core Concepts since it has its own interactive Quick Check */}
+              {!(chapterNumber === 2 && index === 3) && (
+                <div className='my-8 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-700'>
+                  <p className='font-medium text-purple-800 dark:text-purple-200 mb-2'>
+                    ✓ Quick Check:
+                  </p>
+                  <p className='text-purple-700 dark:text-purple-300 italic'>
+                    {chapterNumber === 1 &&
+                      index === 0 &&
+                      'Can you represent 56 using base-10 blocks? Try it mentally: 5 tens and 6 units.'}
+                    {chapterNumber === 1 &&
+                      index === 1 &&
+                      "In the number 3,742, what is the value of the digit 7? (Answer: 700 - it's in the hundreds place)"}
+                    {chapterNumber === 1 &&
+                      index === 2 &&
+                      'Write 789 in expanded form. (Answer: 700 + 80 + 9)'}
+                    {chapterNumber === 1 &&
+                      index === 3 &&
+                      'Which is larger: 1,234 or 1,243? How do you know?'}
+
+                    {chapterNumber === 2 &&
+                      index === 1 &&
+                      'Calculate 52 - 27 using borrowing. (Answer: 25)'}
+                    {chapterNumber === 2 &&
+                      index === 2 &&
+                      'What is 15 - 8? Show your work step by step. (Answer: 7)'}
+                    {chapterNumber === 3 &&
+                      index === 0 &&
+                      'Show 4 × 6 as repeated addition. (Answer: 6 + 6 + 6 + 6 = 24)'}
+                    {chapterNumber === 3 &&
+                      index === 1 &&
+                      'Use the distributive property to calculate 15 × 4. (Answer: (10 + 5) × 4 = 40 + 20 = 60)'}
+                    {chapterNumber === 3 &&
+                      index === 2 &&
+                      'Calculate 23 × 45 using partial products. (Answer: 1,035)'}
+                    {chapterNumber === 4 &&
+                      index === 0 &&
+                      'Share 20 items equally among 4 groups. How many in each group? (Answer: 5)'}
+                    {chapterNumber === 4 &&
+                      index === 1 &&
+                      'Calculate 17 ÷ 5 and express with remainder. (Answer: 3 R2)'}
+                    {chapterNumber === 4 &&
+                      index === 2 &&
+                      'Use long division to find 456 ÷ 12. (Answer: 38)'}
+                  </p>
+                </div>
+              )}
             </div>
           );
         })}

@@ -184,6 +184,13 @@ export function NumberLine({
         </div>
       )}
 
+      <div className='mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg'>
+        <p className='text-sm text-blue-800 dark:text-blue-200 text-center'>
+          💡 <strong>Remember:</strong> Moving right (→) is addition, moving
+          left (←) is subtraction
+        </p>
+      </div>
+
       {interactive && (
         <p className='text-xs text-gray-500 dark:text-gray-400 mt-2 text-center'>
           Click on any number or drag the purple dot to explore the number line
