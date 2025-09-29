@@ -534,7 +534,8 @@ function InteractiveDrawingTool({
             />
           </div>
           <div className='text-xs text-muted-foreground'>
-            💡 Try: Letters (A, B, C), Numbers (1, 2, 3), or Symbols (★, ●, ◆)
+            💡 Try: Letters (A, B, C), Numbers (1, 2, 3), Symbols (★, ●, ◆), or
+            Emojis (😀, 🎯, 🚀)
           </div>
         </div>
 

@@ -18,13 +18,13 @@
         "title": "Addition with Regrouping",
         "content": "When adding numbers, sometimes the sum in a column exceeds 9. We 'carry over' the extra value to the next column. This is called regrouping or carrying.",
         "latex": "47 + 38 = (40 + 7) + (30 + 8) = 70 + 15 = 85",
-        "visuals": ["AdditionAlgorithm", "Base10Blocks"]
+        "visuals": []
       },
       {
         "title": "Subtraction with Regrouping",
         "content": "When subtracting, if the top digit is smaller than the bottom digit, we 'borrow' from the next column. This is regrouping in subtraction.",
         "latex": "52 - 27 = 52 - 27 = 25",
-        "visuals": ["SubtractionAlgorithm", "Base10Blocks"]
+        "visuals": []
       }
     ]
   },
