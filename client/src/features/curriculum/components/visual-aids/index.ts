@@ -18,3 +18,7 @@ export { DistributivePropertyDemo } from './DistributivePropertyDemo';
 export { RepeatedAdditionVisual } from './RepeatedAdditionVisual';
 export { TwoDigitMultiplicationDemo } from './TwoDigitMultiplicationDemo';
 export { MultiplicationTable } from './MultiplicationTable';
+export { DivisionGroupingVisual } from './DivisionGroupingVisual';
+export { DivisionRemainderVisual } from './DivisionRemainderVisual';
+export { LongDivisionDemo } from './LongDivisionDemo';
+export { DivisionFactsTable } from './DivisionFactsTable';

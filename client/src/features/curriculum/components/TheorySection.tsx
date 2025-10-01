@@ -22,6 +22,10 @@ import {
   RepeatedAdditionVisual,
   TwoDigitMultiplicationDemo,
   MultiplicationTable,
+  DivisionGroupingVisual,
+  DivisionRemainderVisual,
+  LongDivisionDemo,
+  DivisionFactsTable,
 } from './visual-aids';
 
 interface TheorySectionProps {
@@ -149,6 +153,23 @@ export function TheorySection({
       case 'TwoDigitMultiplicationDemo':
       case 'two-digit-multiplication-demo':
         return 'The following demonstration shows the step-by-step process for multiplying two-digit numbers using both the standard algorithm and area model.';
+
+      // Division visuals
+      case 'DivisionGroupingVisual':
+      case 'division-grouping-visual':
+        return 'Below is an interactive visual that shows division as splitting objects into equal groups, helping you understand what division really means.';
+
+      case 'DivisionRemainderVisual':
+      case 'division-remainder-visual':
+        return "The following demonstration shows what happens when numbers don't divide evenly, explaining remainders step by step.";
+
+      case 'LongDivisionDemo':
+      case 'long-division-demo':
+        return 'Below is an interactive step-by-step demonstration of the long division algorithm, showing the complete process for dividing larger numbers.';
+
+      case 'DivisionFactsTable':
+      case 'division-facts-table':
+        return 'The following table shows the relationship between multiplication and division facts, helping you understand how these operations are connected.';
 
       // Other algorithms and procedures
       case 'standard-algorithm':
@@ -448,6 +469,43 @@ export function TheorySection({
               number1={23}
               number2={45}
               interactive={true}
+            />
+          );
+
+        // Division visuals
+        case 'DivisionGroupingVisual':
+        case 'division-grouping-visual':
+          return (
+            <DivisionGroupingVisual
+              dividend={12}
+              divisor={3}
+              interactive={true}
+            />
+          );
+
+        case 'DivisionRemainderVisual':
+        case 'division-remainder-visual':
+          return (
+            <DivisionRemainderVisual
+              dividend={17}
+              divisor={5}
+              interactive={true}
+            />
+          );
+
+        case 'LongDivisionDemo':
+        case 'long-division-demo':
+          return (
+            <LongDivisionDemo dividend={456} divisor={4} interactive={true} />
+          );
+
+        case 'DivisionFactsTable':
+        case 'division-facts-table':
+          return (
+            <DivisionFactsTable
+              maxNumber={12}
+              interactive={true}
+              className='mt-4'
             />
           );
 
