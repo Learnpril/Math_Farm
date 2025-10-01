@@ -17,6 +17,11 @@ import {
   NumberComparison,
   CountingDots,
   CommonCoreStrategies,
+  MultiplicationGrid,
+  DistributivePropertyDemo,
+  RepeatedAdditionVisual,
+  TwoDigitMultiplicationDemo,
+  MultiplicationTable,
 } from './visual-aids';
 
 interface TheorySectionProps {
@@ -122,6 +127,28 @@ export function TheorySection({
       case 'CommonCoreStrategies':
       case 'common-core-strategies':
         return 'Below are interactive demonstrations of Common Core approaches like "making ten" and decomposition strategies that help build number sense.';
+
+      // Multiplication visuals
+      case 'MultiplicationGrid':
+      case 'multiplication-grid':
+        return 'Below is an interactive grid that shows multiplication as arrays of objects arranged in rows and columns.';
+
+      case 'MultiplicationTable':
+      case 'multiplication-table':
+      case 'times-table':
+        return 'Below is an interactive multiplication table (times table) showing all basic multiplication facts from 1×1 to 12×12. Click on any cell to see how the row and column numbers multiply together.';
+
+      case 'DistributivePropertyDemo':
+      case 'distributive-property-demo':
+        return 'The following demonstration shows how to break apart numbers using the distributive property to make multiplication easier.';
+
+      case 'RepeatedAdditionVisual':
+      case 'repeated-addition-visual':
+        return 'Below is a visual that shows how multiplication is really just repeated addition of the same number.';
+
+      case 'TwoDigitMultiplicationDemo':
+      case 'two-digit-multiplication-demo':
+        return 'The following demonstration shows the step-by-step process for multiplying two-digit numbers using both the standard algorithm and area model.';
 
       // Other algorithms and procedures
       case 'standard-algorithm':
@@ -370,6 +397,59 @@ export function TheorySection({
         case 'CommonCoreStrategies':
         case 'common-core-strategies':
           return <CommonCoreStrategies problem='8 + 5' operation='addition' />;
+
+        // Multiplication visuals
+        case 'MultiplicationGrid':
+        case 'multiplication-grid':
+          return (
+            <MultiplicationGrid
+              rows={4}
+              cols={6}
+              interactive={true}
+              showAnimation={true}
+            />
+          );
+
+        case 'MultiplicationTable':
+        case 'multiplication-table':
+        case 'times-table':
+          return (
+            <MultiplicationTable
+              maxNumber={12}
+              interactive={true}
+              className='mt-4'
+            />
+          );
+
+        case 'DistributivePropertyDemo':
+        case 'distributive-property-demo':
+          return (
+            <DistributivePropertyDemo
+              number1={23}
+              number2={4}
+              interactive={true}
+            />
+          );
+
+        case 'RepeatedAdditionVisual':
+        case 'repeated-addition-visual':
+          return (
+            <RepeatedAdditionVisual
+              multiplier={4}
+              multiplicand={3}
+              interactive={true}
+            />
+          );
+
+        case 'TwoDigitMultiplicationDemo':
+        case 'two-digit-multiplication-demo':
+          return (
+            <TwoDigitMultiplicationDemo
+              number1={23}
+              number2={45}
+              interactive={true}
+            />
+          );
 
         // Other algorithms and procedures
         case 'standard-algorithm':

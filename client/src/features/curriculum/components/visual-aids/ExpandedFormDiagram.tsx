@@ -77,7 +77,7 @@ export function ExpandedFormDiagram({
                   px-4 py-2 rounded-lg border-2 transition-all
                   ${
                     selectedPart === index
-                      ? 'border-purple-500 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-200'
+                      ? 'border-purple-500 bg-purple-600 dark:bg-purple-900/30 text-white dark:text-purple-200'
                       : 'border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200'
                   }
                   ${interactive ? 'hover:border-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 cursor-pointer' : ''}
@@ -127,7 +127,7 @@ export function ExpandedFormDiagram({
                   w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold
                   ${
                     selectedPart === index
-                      ? 'bg-purple-200 dark:bg-purple-800 text-purple-800 dark:text-purple-200'
+                      ? 'bg-purple-600 dark:bg-purple-800 text-white dark:text-purple-200'
                       : 'bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200'
                   }
                 `}

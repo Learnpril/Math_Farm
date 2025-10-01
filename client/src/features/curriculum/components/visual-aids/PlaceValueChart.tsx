@@ -54,7 +54,7 @@ export function PlaceValueChart({
                     border border-gray-300 dark:border-gray-600 p-2 text-xs font-medium
                     ${
                       highlightedPlace === index
-                        ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-200'
+                        ? 'bg-purple-600 dark:bg-purple-900/30 text-white dark:text-purple-200'
                         : 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
                     }
                     ${interactive ? 'cursor-pointer hover:bg-purple-50 dark:hover:bg-purple-900/20' : ''}
@@ -75,7 +75,7 @@ export function PlaceValueChart({
                     border border-gray-300 dark:border-gray-600 p-4 text-center text-2xl font-bold
                     ${
                       highlightedPlace === index
-                        ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-200'
+                        ? 'bg-purple-600 dark:bg-purple-900/30 text-white dark:text-purple-200'
                         : 'bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200'
                     }
                     ${interactive ? 'cursor-pointer hover:bg-purple-50 dark:hover:bg-purple-900/20' : ''}
@@ -94,7 +94,7 @@ export function PlaceValueChart({
                     border border-gray-300 dark:border-gray-600 p-2 text-center text-xs
                     ${
                       highlightedPlace === index
-                        ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-200'
+                        ? 'bg-purple-600 dark:bg-purple-900/30 text-white dark:text-purple-200'
                         : 'bg-gray-50 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
                     }
                     ${interactive ? 'cursor-pointer hover:bg-purple-50 dark:hover:bg-purple-900/20' : ''}

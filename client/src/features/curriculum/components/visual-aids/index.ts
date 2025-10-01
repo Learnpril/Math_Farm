@@ -13,3 +13,8 @@ export { SubtractionAlgorithm } from './SubtractionAlgorithm';
 export { NumberComparison } from './NumberComparison';
 export { CountingDots } from './CountingDots';
 export { CommonCoreStrategies } from './CommonCoreStrategies';
+export { MultiplicationGrid } from './MultiplicationGrid';
+export { DistributivePropertyDemo } from './DistributivePropertyDemo';
+export { RepeatedAdditionVisual } from './RepeatedAdditionVisual';
+export { TwoDigitMultiplicationDemo } from './TwoDigitMultiplicationDemo';
+export { MultiplicationTable } from './MultiplicationTable';
