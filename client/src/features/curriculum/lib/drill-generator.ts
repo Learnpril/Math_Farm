@@ -17,18 +17,18 @@ import type {
  */
 const CHAPTER_CONFIGURATIONS: Record<string, DrillConfiguration> = {
   'chapter-02': {
-    problemCount: 40,
-    gridColumns: 5,
-    gridRows: 8,
+    problemCount: 20,
+    gridColumns: 4,
+    gridRows: 5,
     numberRange: { min: 1, max: 20 },
     allowNegativeResults: false,
     mixedDifficulty: false,
   },
   // Default configuration (fallback for Chapter 2)
   default: {
-    problemCount: 40,
-    gridColumns: 5,
-    gridRows: 8,
+    problemCount: 20,
+    gridColumns: 4,
+    gridRows: 5,
     numberRange: { min: 1, max: 20 },
     allowNegativeResults: false,
     mixedDifficulty: false,

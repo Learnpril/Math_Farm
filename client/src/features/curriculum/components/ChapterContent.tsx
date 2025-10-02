@@ -17,6 +17,7 @@ import { WorkedExamples } from './WorkedExamples';
 import { PracticeProblems } from './PracticeProblems';
 import { DrillsSection } from './DrillsSection';
 import { DrillAnswersSection } from './DrillAnswersSection';
+import { DrillProvider } from '../contexts/DrillContext';
 import { useCurriculumProgress } from '../hooks/useCurriculumProgress';
 
 interface ChapterContentProps {
@@ -170,12 +171,7 @@ export function ChapterContent({
       case 'drills':
         // Only render drills for Chapter 2 (Addition and Subtraction)
         if (chapter.id === 'chapter-02') {
-          return (
-            <DrillsSection
-              chapterId={chapter.id}
-              chapterTitle={chapter.title}
-            />
-          );
+          return <DrillsSection />;
         }
         return (
           <div className='text-center py-12'>
@@ -189,12 +185,7 @@ export function ChapterContent({
       case 'drill-answers':
         // Only render drill answers for Chapter 2 (Addition and Subtraction)
         if (chapter.id === 'chapter-02') {
-          return (
-            <DrillAnswersSection
-              chapterId={chapter.id}
-              chapterTitle={chapter.title}
-            />
-          );
+          return <DrillAnswersSection />;
         }
         return (
           <div className='text-center py-12'>
@@ -313,7 +304,15 @@ export function ChapterContent({
       </div>
 
       {/* Section Content */}
-      <div className='p-6'>{renderSectionContent()}</div>
+      <div className='p-6'>
+        {chapter.id === 'chapter-02' ? (
+          <DrillProvider chapterId={chapter.id} chapterTitle={chapter.title}>
+            {renderSectionContent()}
+          </DrillProvider>
+        ) : (
+          renderSectionContent()
+        )}
+      </div>
 
       {/* Navigation Footer */}
       <div className='p-6 border-t border-gray-200 dark:border-gray-700 flex justify-between'>
