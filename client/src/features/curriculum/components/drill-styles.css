@@ -1,0 +1,200 @@
+/* Print-optimized styles for drill worksheets */
+
+@media print {
+  /* Hide all non-essential elements */
+  .print\\:hidden,
+  nav,
+  header,
+  footer,
+  .sidebar,
+  .navigation,
+  button:not(.print-button),
+  .controls {
+    display: none !important;
+  }
+
+  /* Page setup for 8.5" x 11" paper */
+  @page {
+    size: letter;
+    margin: 0.75in;
+  }
+
+  /* Ensure drill worksheet takes full page */
+  .drill-worksheet {
+    width: 100% !important;
+    max-width: none !important;
+    background: white !important;
+    color: black !important;
+    font-size: 12pt !important;
+    line-height: 1.4 !important;
+    page-break-inside: avoid;
+  }
+
+  /* Header styling */
+  .drill-header h1 {
+    font-size: 24pt !important;
+    color: black !important;
+    margin-bottom: 8pt !important;
+  }
+
+  .drill-header h2 {
+    font-size: 16pt !important;
+    color: black !important;
+    margin-bottom: 16pt !important;
+  }
+
+  /* Student info fields */
+  .drill-header .border-b {
+    border-bottom: 1px solid black !important;
+  }
+
+  .drill-header .border-b-2 {
+    border-bottom: 2px solid black !important;
+  }
+
+  /* Grid layout optimization */
+  .drill-grid {
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 24pt 16pt !important;
+    margin-top: 24pt !important;
+  }
+
+  /* Individual problem styling */
+  .drill-problem {
+    text-align: center !important;
+    page-break-inside: avoid;
+  }
+
+  .drill-problem .text-lg {
+    font-size: 12pt !important;
+    font-weight: 600 !important;
+    margin-bottom: 8pt !important;
+  }
+
+  .drill-problem .text-xl {
+    font-size: 14pt !important;
+    font-family: 'Courier New', monospace !important;
+  }
+
+  .drill-problem .border-t-2 {
+    border-top: 2px solid black !important;
+    padding-top: 4pt !important;
+  }
+
+  .drill-problem .border-b {
+    border-bottom: 1px solid black !important;
+    height: 20pt !important;
+    width: 48pt !important;
+  }
+
+  /* Instructions */
+  .drill-worksheet .text-sm {
+    font-size: 10pt !important;
+    color: black !important;
+  }
+
+  /* Ensure proper spacing */
+  .space-y-1 > * + * {
+    margin-top: 4pt !important;
+  }
+
+  .space-y-6 > * + * {
+    margin-top: 24pt !important;
+  }
+
+  .mb-2 {
+    margin-bottom: 8pt !important;
+  }
+
+  .mb-6 {
+    margin-bottom: 24pt !important;
+  }
+
+  .mb-8 {
+    margin-bottom: 32pt !important;
+  }
+
+  .mt-12 {
+    margin-top: 48pt !important;
+  }
+
+  .pb-4 {
+    padding-bottom: 16pt !important;
+  }
+
+  .pt-1 {
+    padding-top: 4pt !important;
+  }
+
+  /* Force black text for all elements, except answers */
+  * {
+    color: black !important;
+    background: transparent !important;
+  }
+
+  /* Answer styling - keep red color for answers in print */
+  .text-red-600 {
+    color: #dc2626 !important;
+  }
+
+  /* Ensure proper font weights */
+  .font-bold {
+    font-weight: bold !important;
+  }
+
+  .font-semibold {
+    font-weight: 600 !important;
+  }
+
+  .font-medium {
+    font-weight: 500 !important;
+  }
+
+  .font-mono {
+    font-family: 'Courier New', monospace !important;
+  }
+}
+
+/* Utility classes */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
+/* Screen styles for better preview */
+@media screen {
+  .drill-worksheet {
+    background: white;
+    color: black;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    max-width: 8.5in;
+    margin: 0 auto;
+  }
+
+  .drill-grid {
+    margin-top: 2rem;
+  }
+
+  .drill-problem .border-t-2 {
+    border-top: 2px solid #1f2937;
+  }
+
+  .drill-problem .border-b {
+    border-bottom: 1px solid #9ca3af;
+  }
+
+  .drill-header .border-b {
+    border-bottom: 1px solid #9ca3af;
+  }
+
+  .drill-header .border-b-2 {
+    border-bottom: 2px solid #6b7280;
+  }
+}

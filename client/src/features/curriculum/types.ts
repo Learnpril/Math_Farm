@@ -84,3 +84,37 @@ export interface CurriculumState {
   loading: boolean;
   error: string | null;
 }
+
+// Drill types for printable math worksheets
+export interface DrillProblem {
+  id: string;
+  operand1: number;
+  operand2: number;
+  operation: 'addition' | 'subtraction';
+  answer: number;
+  difficulty: 'easy' | 'medium' | 'hard';
+}
+
+export interface DrillSet {
+  id: string;
+  title: string;
+  operation: 'addition' | 'subtraction';
+  problems: DrillProblem[];
+  generatedAt: Date;
+  chapterLevel: number;
+}
+
+export type DigitSelection = 'one' | 'two' | 'three' | 'mixed';
+
+export interface DrillConfiguration {
+  problemCount: number;
+  gridColumns: number;
+  gridRows: number;
+  numberRange: {
+    min: number;
+    max: number;
+  };
+  allowNegativeResults: boolean;
+  mixedDifficulty: boolean;
+  digitSelection?: DigitSelection;
+}

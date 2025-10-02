@@ -5,7 +5,7 @@
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { DrillGenerator, drillGenerator } from '../drill-generator';
-import type { DrillConfiguration, DrillProblem } from '../../types/curriculum';
+import type { DrillConfiguration, DrillProblem } from '../../types';
 import { afterEach } from 'node:test';
 
 describe('DrillGenerator', () => {
@@ -35,27 +35,15 @@ describe('DrillGenerator', () => {
   });
 
   describe('Chapter Configuration', () => {
-    it('should return correct configuration for chapter-01', () => {
-      const config = generator.getChapterConfiguration('chapter-01');
+    it('should return correct configuration for chapter-02', () => {
+      const config = generator.getChapterConfiguration('chapter-02');
       expect(config).toEqual({
         problemCount: 40,
         gridColumns: 5,
         gridRows: 8,
-        numberRange: { min: 1, max: 10 },
+        numberRange: { min: 1, max: 20 },
         allowNegativeResults: false,
         mixedDifficulty: false,
-      });
-    });
-
-    it('should return correct configuration for chapter-03', () => {
-      const config = generator.getChapterConfiguration('chapter-03');
-      expect(config).toEqual({
-        problemCount: 40,
-        gridColumns: 5,
-        gridRows: 8,
-        numberRange: { min: 1, max: 50 },
-        allowNegativeResults: false,
-        mixedDifficulty: true,
       });
     });
 
@@ -71,11 +59,9 @@ describe('DrillGenerator', () => {
       });
     });
 
-    it('should list all available chapters', () => {
+    it('should list only chapter-02 as available', () => {
       const chapters = generator.getAvailableChapters();
-      expect(chapters).toContain('chapter-01');
-      expect(chapters).toContain('chapter-02');
-      expect(chapters).toContain('chapter-07');
+      expect(chapters).toEqual(['chapter-02']);
       expect(chapters).not.toContain('default');
     });
   });
@@ -214,7 +200,6 @@ describe('DrillGenerator', () => {
         .mockReturnValueOnce(0.9); // operand2 = 10
 
       const problems = generator.generateSubtractionProblems(negativeConfig);
-      const hasNegativeResult = problems.some(problem => problem.answer < 0);
 
       // At least verify the calculation is correct even if negative
       problems.forEach(problem => {
@@ -233,17 +218,17 @@ describe('DrillGenerator', () => {
   describe('Drill Set Generation', () => {
     it('should generate complete addition drill set', () => {
       const drillSet = generator.generateDrillSet(
-        'chapter-01',
+        'chapter-02',
         'addition',
-        'Numbers and Place Value'
+        'Addition and Subtraction'
       );
 
       expect(drillSet.operation).toBe('addition');
       expect(drillSet.problems).toHaveLength(40);
-      expect(drillSet.title).toBe('Numbers and Place Value - Addition Drills');
-      expect(drillSet.chapterLevel).toBe(1);
+      expect(drillSet.title).toBe('Addition and Subtraction - Addition Drills');
+      expect(drillSet.chapterLevel).toBe(2);
       expect(drillSet.generatedAt).toBeInstanceOf(Date);
-      expect(drillSet.id).toMatch(/^drill-chapter-01-addition-\d+$/);
+      expect(drillSet.id).toMatch(/^drill-chapter-02-addition-\d+$/);
     });
 
     it('should generate complete subtraction drill set', () => {
@@ -257,13 +242,13 @@ describe('DrillGenerator', () => {
     });
 
     it('should extract chapter number correctly', () => {
-      const drillSet1 = generator.generateDrillSet('chapter-05', 'addition');
+      const drillSet1 = generator.generateDrillSet('chapter-02', 'addition');
       const drillSet2 = generator.generateDrillSet(
         'unknown-chapter',
         'addition'
       );
 
-      expect(drillSet1.chapterLevel).toBe(5);
+      expect(drillSet1.chapterLevel).toBe(2);
       expect(drillSet2.chapterLevel).toBe(1); // default for unknown chapters
     });
   });
@@ -408,6 +393,142 @@ describe('DrillGenerator', () => {
 
       // Larger numbers should result in medium or hard difficulty
       expect(['medium', 'hard']).toContain(problems[0].difficulty);
+    });
+  });
+
+  describe('Digit Selection', () => {
+    it('should generate 1-digit numbers when digitSelection is "one"', () => {
+      const config: DrillConfiguration = {
+        problemCount: 5,
+        gridColumns: 5,
+        gridRows: 1,
+        numberRange: { min: 1, max: 100 },
+        allowNegativeResults: false,
+        mixedDifficulty: false,
+        digitSelection: 'one',
+      };
+
+      const problems = generator.generateAdditionProblems(config);
+      problems.forEach(problem => {
+        expect(problem.operand1).toBeGreaterThanOrEqual(1);
+        expect(problem.operand1).toBeLessThanOrEqual(9);
+        expect(problem.operand2).toBeGreaterThanOrEqual(1);
+        expect(problem.operand2).toBeLessThanOrEqual(9);
+      });
+    });
+
+    it('should generate 2-digit numbers when digitSelection is "two"', () => {
+      const config: DrillConfiguration = {
+        problemCount: 5,
+        gridColumns: 5,
+        gridRows: 1,
+        numberRange: { min: 1, max: 100 },
+        allowNegativeResults: false,
+        mixedDifficulty: false,
+        digitSelection: 'two',
+      };
+
+      const problems = generator.generateAdditionProblems(config);
+      problems.forEach(problem => {
+        expect(problem.operand1).toBeGreaterThanOrEqual(10);
+        expect(problem.operand1).toBeLessThanOrEqual(99);
+        expect(problem.operand2).toBeGreaterThanOrEqual(10);
+        expect(problem.operand2).toBeLessThanOrEqual(99);
+      });
+    });
+
+    it('should generate 3-digit numbers when digitSelection is "three"', () => {
+      const config: DrillConfiguration = {
+        problemCount: 5,
+        gridColumns: 5,
+        gridRows: 1,
+        numberRange: { min: 1, max: 100 },
+        allowNegativeResults: false,
+        mixedDifficulty: false,
+        digitSelection: 'three',
+      };
+
+      const problems = generator.generateAdditionProblems(config);
+      problems.forEach(problem => {
+        expect(problem.operand1).toBeGreaterThanOrEqual(100);
+        expect(problem.operand1).toBeLessThanOrEqual(999);
+        expect(problem.operand2).toBeGreaterThanOrEqual(100);
+        expect(problem.operand2).toBeLessThanOrEqual(999);
+      });
+    });
+
+    it('should generate mixed digit numbers when digitSelection is "mixed"', () => {
+      const config: DrillConfiguration = {
+        problemCount: 20,
+        gridColumns: 5,
+        gridRows: 4,
+        numberRange: { min: 1, max: 100 },
+        allowNegativeResults: false,
+        mixedDifficulty: false,
+        digitSelection: 'mixed',
+      };
+
+      const problems = generator.generateAdditionProblems(config);
+
+      // With 20 problems, we should have some variety (though not guaranteed due to randomness)
+      expect(problems.length).toBe(20);
+      problems.forEach(problem => {
+        expect(problem.operand1).toBeGreaterThanOrEqual(1);
+        expect(problem.operand1).toBeLessThanOrEqual(999);
+        expect(problem.operand2).toBeGreaterThanOrEqual(1);
+        expect(problem.operand2).toBeLessThanOrEqual(999);
+      });
+    });
+
+    it('should use number range when digitSelection is not specified', () => {
+      const config: DrillConfiguration = {
+        problemCount: 5,
+        gridColumns: 5,
+        gridRows: 1,
+        numberRange: { min: 50, max: 60 },
+        allowNegativeResults: false,
+        mixedDifficulty: false,
+        // digitSelection not specified
+      };
+
+      const problems = generator.generateAdditionProblems(config);
+      problems.forEach(problem => {
+        expect(problem.operand1).toBeGreaterThanOrEqual(50);
+        expect(problem.operand1).toBeLessThanOrEqual(60);
+        expect(problem.operand2).toBeGreaterThanOrEqual(50);
+        expect(problem.operand2).toBeLessThanOrEqual(60);
+      });
+    });
+
+    it('should include digit info in drill set title', () => {
+      const drillSet1 = generator.generateDrillSet(
+        'chapter-02',
+        'addition',
+        'Addition and Subtraction',
+        'one'
+      );
+      const drillSet2 = generator.generateDrillSet(
+        'chapter-02',
+        'subtraction',
+        'Addition and Subtraction',
+        'two'
+      );
+      const drillSet3 = generator.generateDrillSet(
+        'chapter-02',
+        'addition',
+        'Addition and Subtraction',
+        'mixed'
+      );
+
+      expect(drillSet1.title).toBe(
+        'Addition and Subtraction - Addition Drills (1-Digit)'
+      );
+      expect(drillSet2.title).toBe(
+        'Addition and Subtraction - Subtraction Drills (2-Digit)'
+      );
+      expect(drillSet3.title).toBe(
+        'Addition and Subtraction - Addition Drills (Mixed Digits)'
+      );
     });
   });
 

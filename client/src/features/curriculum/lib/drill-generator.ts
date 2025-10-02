@@ -7,21 +7,15 @@ import type {
   DrillProblem,
   DrillSet,
   DrillConfiguration,
-} from '../types/curriculum';
+  DigitSelection,
+} from '../types';
 
 /**
  * Chapter-based difficulty configurations
- * Maps chapter IDs to appropriate number ranges and difficulty settings
+ * Currently only supports Chapter 2 (Addition and Subtraction)
+ * Future chapters will have their own drill types (multiplication, division, fractions, etc.)
  */
 const CHAPTER_CONFIGURATIONS: Record<string, DrillConfiguration> = {
-  'chapter-01': {
-    problemCount: 40,
-    gridColumns: 5,
-    gridRows: 8,
-    numberRange: { min: 1, max: 10 },
-    allowNegativeResults: false,
-    mixedDifficulty: false,
-  },
   'chapter-02': {
     problemCount: 40,
     gridColumns: 5,
@@ -30,47 +24,7 @@ const CHAPTER_CONFIGURATIONS: Record<string, DrillConfiguration> = {
     allowNegativeResults: false,
     mixedDifficulty: false,
   },
-  'chapter-03': {
-    problemCount: 40,
-    gridColumns: 5,
-    gridRows: 8,
-    numberRange: { min: 1, max: 50 },
-    allowNegativeResults: false,
-    mixedDifficulty: true,
-  },
-  'chapter-04': {
-    problemCount: 40,
-    gridColumns: 5,
-    gridRows: 8,
-    numberRange: { min: 1, max: 100 },
-    allowNegativeResults: false,
-    mixedDifficulty: true,
-  },
-  'chapter-05': {
-    problemCount: 40,
-    gridColumns: 5,
-    gridRows: 8,
-    numberRange: { min: 10, max: 500 },
-    allowNegativeResults: false,
-    mixedDifficulty: true,
-  },
-  'chapter-06': {
-    problemCount: 40,
-    gridColumns: 5,
-    gridRows: 8,
-    numberRange: { min: 10, max: 1000 },
-    allowNegativeResults: false,
-    mixedDifficulty: true,
-  },
-  'chapter-07': {
-    problemCount: 40,
-    gridColumns: 5,
-    gridRows: 8,
-    numberRange: { min: 50, max: 10000 },
-    allowNegativeResults: false,
-    mixedDifficulty: true,
-  },
-  // Default configuration for unknown chapters
+  // Default configuration (fallback for Chapter 2)
   default: {
     problemCount: 40,
     gridColumns: 5,
@@ -99,7 +53,7 @@ export class DrillGenerator {
    */
   public getChapterConfiguration(chapterId: string): DrillConfiguration {
     return (
-      CHAPTER_CONFIGURATIONS[chapterId] || CHAPTER_CONFIGURATIONS['default']
+      CHAPTER_CONFIGURATIONS[chapterId] || CHAPTER_CONFIGURATIONS['default']!
     );
   }
 
@@ -110,14 +64,27 @@ export class DrillGenerator {
     const problems: DrillProblem[] = [];
 
     for (let i = 0; i < config.problemCount; i++) {
-      const operand1 = this.generateRandomNumber(
-        config.numberRange.min,
-        config.numberRange.max
-      );
-      const operand2 = this.generateRandomNumber(
-        config.numberRange.min,
-        config.numberRange.max
-      );
+      let operand1: number;
+      let operand2: number;
+
+      // Use digit selection if specified, otherwise use number range
+      if (config.digitSelection) {
+        const numbers = this.generateNumbersByDigitSelection(
+          config.digitSelection
+        );
+        operand1 = numbers.operand1;
+        operand2 = numbers.operand2;
+      } else {
+        operand1 = this.generateRandomNumber(
+          config.numberRange.min,
+          config.numberRange.max
+        );
+        operand2 = this.generateRandomNumber(
+          config.numberRange.min,
+          config.numberRange.max
+        );
+      }
+
       const answer = operand1 + operand2;
 
       const difficulty = config.mixedDifficulty
@@ -151,31 +118,49 @@ export class DrillGenerator {
       let operand2: number;
       let answer: number;
 
-      // Generate numbers ensuring positive results unless negative results are allowed
-      if (config.allowNegativeResults) {
-        operand1 = this.generateRandomNumber(
-          config.numberRange.min,
-          config.numberRange.max
-        );
-        operand2 = this.generateRandomNumber(
-          config.numberRange.min,
-          config.numberRange.max
-        );
-        answer = operand1 - operand2;
-      } else {
-        // Ensure operand1 >= operand2 for positive results
-        const num1 = this.generateRandomNumber(
-          config.numberRange.min,
-          config.numberRange.max
-        );
-        const num2 = this.generateRandomNumber(
-          config.numberRange.min,
-          config.numberRange.max
+      // Use digit selection if specified
+      if (config.digitSelection) {
+        const numbers = this.generateNumbersByDigitSelection(
+          config.digitSelection
         );
 
-        operand1 = Math.max(num1, num2);
-        operand2 = Math.min(num1, num2);
-        answer = operand1 - operand2;
+        if (config.allowNegativeResults) {
+          operand1 = numbers.operand1;
+          operand2 = numbers.operand2;
+          answer = operand1 - operand2;
+        } else {
+          // Ensure operand1 >= operand2 for positive results
+          operand1 = Math.max(numbers.operand1, numbers.operand2);
+          operand2 = Math.min(numbers.operand1, numbers.operand2);
+          answer = operand1 - operand2;
+        }
+      } else {
+        // Generate numbers ensuring positive results unless negative results are allowed
+        if (config.allowNegativeResults) {
+          operand1 = this.generateRandomNumber(
+            config.numberRange.min,
+            config.numberRange.max
+          );
+          operand2 = this.generateRandomNumber(
+            config.numberRange.min,
+            config.numberRange.max
+          );
+          answer = operand1 - operand2;
+        } else {
+          // Ensure operand1 >= operand2 for positive results
+          const num1 = this.generateRandomNumber(
+            config.numberRange.min,
+            config.numberRange.max
+          );
+          const num2 = this.generateRandomNumber(
+            config.numberRange.min,
+            config.numberRange.max
+          );
+
+          operand1 = Math.max(num1, num2);
+          operand2 = Math.min(num1, num2);
+          answer = operand1 - operand2;
+        }
       }
 
       const difficulty = config.mixedDifficulty
@@ -202,17 +187,43 @@ export class DrillGenerator {
   public generateDrillSet(
     chapterId: string,
     operation: 'addition' | 'subtraction',
-    chapterTitle?: string
+    chapterTitle?: string,
+    digitSelection?: DigitSelection
   ): DrillSet {
     const config = this.getChapterConfiguration(chapterId);
+
+    // Override digit selection if provided
+    if (digitSelection) {
+      config.digitSelection = digitSelection;
+    }
+
     const problems =
       operation === 'addition'
         ? this.generateAdditionProblems(config)
         : this.generateSubtractionProblems(config);
 
+    // Update title to include digit information
+    let digitInfo = '';
+    if (digitSelection) {
+      switch (digitSelection) {
+        case 'one':
+          digitInfo = ' (1-Digit)';
+          break;
+        case 'two':
+          digitInfo = ' (2-Digit)';
+          break;
+        case 'three':
+          digitInfo = ' (3-Digit)';
+          break;
+        case 'mixed':
+          digitInfo = ' (Mixed Digits)';
+          break;
+      }
+    }
+
     const title = chapterTitle
-      ? `${chapterTitle} - ${operation.charAt(0).toUpperCase() + operation.slice(1)} Drills`
-      : `${operation.charAt(0).toUpperCase() + operation.slice(1)} Drills`;
+      ? `${chapterTitle} - ${operation.charAt(0).toUpperCase() + operation.slice(1)} Drills${digitInfo}`
+      : `${operation.charAt(0).toUpperCase() + operation.slice(1)} Drills${digitInfo}`;
 
     return {
       id: `drill-${chapterId}-${operation}-${Date.now()}`,
@@ -248,6 +259,59 @@ export class DrillGenerator {
   }
 
   /**
+   * Generate a random number with specified digit count
+   */
+  private generateNumberByDigits(digitCount: number): number {
+    if (digitCount === 1) {
+      return this.generateRandomNumber(1, 9);
+    } else if (digitCount === 2) {
+      return this.generateRandomNumber(10, 99);
+    } else if (digitCount === 3) {
+      return this.generateRandomNumber(100, 999);
+    }
+    return this.generateRandomNumber(1, 9); // fallback
+  }
+
+  /**
+   * Generate numbers based on digit selection
+   */
+  private generateNumbersByDigitSelection(digitSelection: DigitSelection): {
+    operand1: number;
+    operand2: number;
+  } {
+    switch (digitSelection) {
+      case 'one':
+        return {
+          operand1: this.generateNumberByDigits(1),
+          operand2: this.generateNumberByDigits(1),
+        };
+      case 'two':
+        return {
+          operand1: this.generateNumberByDigits(2),
+          operand2: this.generateNumberByDigits(2),
+        };
+      case 'three':
+        return {
+          operand1: this.generateNumberByDigits(3),
+          operand2: this.generateNumberByDigits(3),
+        };
+      case 'mixed':
+        // Mix of 1, 2, and 3 digit numbers
+        const digits1 = [1, 2, 3][Math.floor(Math.random() * 3)] as 1 | 2 | 3;
+        const digits2 = [1, 2, 3][Math.floor(Math.random() * 3)] as 1 | 2 | 3;
+        return {
+          operand1: this.generateNumberByDigits(digits1),
+          operand2: this.generateNumberByDigits(digits2),
+        };
+      default:
+        return {
+          operand1: this.generateNumberByDigits(1),
+          operand2: this.generateNumberByDigits(1),
+        };
+    }
+  }
+
+  /**
    * Determine difficulty level based on operands and operation
    */
   private determineDifficulty(
@@ -275,7 +339,7 @@ export class DrillGenerator {
    */
   private extractChapterNumber(chapterId: string): number {
     const match = chapterId.match(/chapter-(\d+)/);
-    return match ? parseInt(match[1], 10) : 1;
+    return match && match[1] ? parseInt(match[1], 10) : 1;
   }
 
   /**

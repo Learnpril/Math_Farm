@@ -5,6 +5,8 @@ import {
   BookOpen,
   PenTool,
   RotateCcw,
+  FileText,
+  FileCheck,
 } from 'lucide-react';
 import {
   ChapterContent as ChapterContentType,
@@ -13,6 +15,8 @@ import {
 import { TheorySection } from './TheorySection';
 import { WorkedExamples } from './WorkedExamples';
 import { PracticeProblems } from './PracticeProblems';
+import { DrillsSection } from './DrillsSection';
+import { DrillAnswersSection } from './DrillAnswersSection';
 import { useCurriculumProgress } from '../hooks/useCurriculumProgress';
 
 interface ChapterContentProps {
@@ -24,7 +28,12 @@ interface ChapterContentProps {
   totalChapters: number;
 }
 
-type SectionType = 'theory' | 'examples' | 'practice';
+type SectionType =
+  | 'theory'
+  | 'examples'
+  | 'practice'
+  | 'drills'
+  | 'drill-answers';
 
 export function ChapterContent({
   chapter,
@@ -110,11 +119,26 @@ export function ChapterContent({
     currentChapterProgressString,
   ]);
 
-  const sections = [
+  // Only show drills for Chapter 2 (Addition and Subtraction)
+  const baseSections = [
     { id: 'theory' as SectionType, label: 'Reading', icon: BookOpen },
     { id: 'examples' as SectionType, label: 'Examples', icon: PenTool },
     { id: 'practice' as SectionType, label: 'Practice', icon: PenTool },
   ];
+
+  const drillSections = [
+    { id: 'drills' as SectionType, label: 'Drills', icon: FileText },
+    {
+      id: 'drill-answers' as SectionType,
+      label: 'Drill Answers',
+      icon: FileCheck,
+    },
+  ];
+
+  const sections =
+    chapter.id === 'chapter-02'
+      ? [...baseSections, ...drillSections]
+      : baseSections;
 
   const renderSectionContent = () => {
     switch (activeSection) {
@@ -141,6 +165,44 @@ export function ChapterContent({
             chapterId={chapter.id}
             progress={progress}
           />
+        );
+
+      case 'drills':
+        // Only render drills for Chapter 2 (Addition and Subtraction)
+        if (chapter.id === 'chapter-02') {
+          return (
+            <DrillsSection
+              chapterId={chapter.id}
+              chapterTitle={chapter.title}
+            />
+          );
+        }
+        return (
+          <div className='text-center py-12'>
+            <p className='text-gray-600 dark:text-gray-400'>
+              Drills are only available for Addition and Subtraction (Chapter
+              2).
+            </p>
+          </div>
+        );
+
+      case 'drill-answers':
+        // Only render drill answers for Chapter 2 (Addition and Subtraction)
+        if (chapter.id === 'chapter-02') {
+          return (
+            <DrillAnswersSection
+              chapterId={chapter.id}
+              chapterTitle={chapter.title}
+            />
+          );
+        }
+        return (
+          <div className='text-center py-12'>
+            <p className='text-gray-600 dark:text-gray-400'>
+              Drill answers are only available for Addition and Subtraction
+              (Chapter 2).
+            </p>
+          </div>
         );
 
       default:
@@ -212,14 +274,14 @@ export function ChapterContent({
 
           {/* Mobile Layout */}
           <div className='sm:hidden'>
-            {/* Section tabs */}
-            <div className='flex space-x-4 py-2'>
+            {/* Section tabs - scrollable for better mobile experience with 5 tabs */}
+            <div className='flex overflow-x-auto py-2 space-x-2 scrollbar-hide'>
               {sections.map(({ id, label, icon: Icon }) => (
                 <button
                   key={id}
                   onClick={() => setActiveSection(id)}
                   className={`
-                    flex items-center space-x-1 py-3 border-b-2 font-medium text-xs transition-colors flex-1 justify-center
+                    flex items-center space-x-1 py-3 px-3 border-b-2 font-medium text-xs transition-colors whitespace-nowrap min-w-fit
                     ${
                       activeSection === id
                         ? 'border-purple-500 text-purple-600 dark:text-purple-400'
