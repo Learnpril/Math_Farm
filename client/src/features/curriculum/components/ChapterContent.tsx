@@ -120,7 +120,7 @@ export function ChapterContent({
     currentChapterProgressString,
   ]);
 
-  // Only show drills for Chapter 2 (Addition and Subtraction)
+  // Show drills for Chapter 2 (Addition and Subtraction) and Chapter 3 (Multiplication Basics)
   const baseSections = [
     { id: 'theory' as SectionType, label: 'Reading', icon: BookOpen },
     { id: 'examples' as SectionType, label: 'Examples', icon: PenTool },
@@ -137,7 +137,7 @@ export function ChapterContent({
   ];
 
   const sections =
-    chapter.id === 'chapter-02'
+    chapter.id === 'chapter-02' || chapter.id === 'chapter-03'
       ? [...baseSections, ...drillSections]
       : baseSections;
 
@@ -169,29 +169,29 @@ export function ChapterContent({
         );
 
       case 'drills':
-        // Only render drills for Chapter 2 (Addition and Subtraction)
-        if (chapter.id === 'chapter-02') {
+        // Render drills for Chapter 2 (Addition and Subtraction) and Chapter 3 (Multiplication Basics)
+        if (chapter.id === 'chapter-02' || chapter.id === 'chapter-03') {
           return <DrillsSection />;
         }
         return (
           <div className='text-center py-12'>
             <p className='text-gray-600 dark:text-gray-400'>
-              Drills are only available for Addition and Subtraction (Chapter
-              2).
+              Drills are available for Addition and Subtraction (Chapter 2) and
+              Multiplication Basics (Chapter 3).
             </p>
           </div>
         );
 
       case 'drill-answers':
-        // Only render drill answers for Chapter 2 (Addition and Subtraction)
-        if (chapter.id === 'chapter-02') {
+        // Render drill answers for Chapter 2 (Addition and Subtraction) and Chapter 3 (Multiplication Basics)
+        if (chapter.id === 'chapter-02' || chapter.id === 'chapter-03') {
           return <DrillAnswersSection />;
         }
         return (
           <div className='text-center py-12'>
             <p className='text-gray-600 dark:text-gray-400'>
-              Drill answers are only available for Addition and Subtraction
-              (Chapter 2).
+              Drill answers are available for Addition and Subtraction (Chapter
+              2) and Multiplication Basics (Chapter 3).
             </p>
           </div>
         );
@@ -305,7 +305,7 @@ export function ChapterContent({
 
       {/* Section Content */}
       <div className='p-6'>
-        {chapter.id === 'chapter-02' ? (
+        {chapter.id === 'chapter-02' || chapter.id === 'chapter-03' ? (
           <DrillProvider chapterId={chapter.id} chapterTitle={chapter.title}>
             {renderSectionContent()}
           </DrillProvider>

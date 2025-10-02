@@ -12,8 +12,9 @@ import type {
 
 /**
  * Chapter-based difficulty configurations
- * Currently only supports Chapter 2 (Addition and Subtraction)
- * Future chapters will have their own drill types (multiplication, division, fractions, etc.)
+ * Chapter 2: Addition and Subtraction
+ * Chapter 3: Multiplication Basics
+ * Future chapters will have their own drill types (division, fractions, etc.)
  */
 const CHAPTER_CONFIGURATIONS: Record<string, DrillConfiguration> = {
   'chapter-02': {
@@ -21,6 +22,14 @@ const CHAPTER_CONFIGURATIONS: Record<string, DrillConfiguration> = {
     gridColumns: 4,
     gridRows: 5,
     numberRange: { min: 1, max: 20 },
+    allowNegativeResults: false,
+    mixedDifficulty: false,
+  },
+  'chapter-03': {
+    problemCount: 20,
+    gridColumns: 4,
+    gridRows: 5,
+    numberRange: { min: 1, max: 12 }, // Times tables up to 12
     allowNegativeResults: false,
     mixedDifficulty: false,
   },
@@ -60,7 +69,10 @@ export class DrillGenerator {
   /**
    * Generate a set of addition problems
    */
-  public generateAdditionProblems(config: DrillConfiguration): DrillProblem[] {
+  public generateAdditionProblems(
+    config: DrillConfiguration,
+    chapterId?: string
+  ): DrillProblem[] {
     const problems: DrillProblem[] = [];
 
     for (let i = 0; i < config.problemCount; i++) {
@@ -70,7 +82,8 @@ export class DrillGenerator {
       // Use digit selection if specified, otherwise use number range
       if (config.digitSelection) {
         const numbers = this.generateNumbersByDigitSelection(
-          config.digitSelection
+          config.digitSelection,
+          chapterId
         );
         operand1 = numbers.operand1;
         operand2 = numbers.operand2;
@@ -106,10 +119,70 @@ export class DrillGenerator {
   }
 
   /**
+   * Generate a set of multiplication problems
+   */
+  public generateMultiplicationProblems(
+    config: DrillConfiguration,
+    chapterId?: string
+  ): DrillProblem[] {
+    const problems: DrillProblem[] = [];
+
+    for (let i = 0; i < config.problemCount; i++) {
+      let operand1: number;
+      let operand2: number;
+
+      // Use digit selection if specified, otherwise use number range
+      if (config.digitSelection) {
+        const numbers = this.generateNumbersByDigitSelection(
+          config.digitSelection,
+          chapterId
+        );
+        operand1 = numbers.operand1;
+        operand2 = numbers.operand2;
+      } else {
+        operand1 = this.generateRandomNumber(
+          config.numberRange.min,
+          config.numberRange.max
+        );
+        operand2 = this.generateRandomNumber(
+          config.numberRange.min,
+          config.numberRange.max
+        );
+      }
+
+      // For multiplication, ensure the larger number is always on top (operand1)
+      if (operand2 > operand1) {
+        const temp = operand1;
+        operand1 = operand2;
+        operand2 = temp;
+      }
+
+      const answer = operand1 * operand2;
+
+      const difficulty = config.mixedDifficulty
+        ? this.determineDifficulty(operand1, operand2, 'multiplication')
+        : 'easy';
+
+      problems.push({
+        id: `mult-${i + 1}-${this.seedCounter}`,
+        operand1,
+        operand2,
+        operation: 'multiplication',
+        answer,
+        difficulty,
+      });
+    }
+
+    this.seedCounter++;
+    return problems;
+  }
+
+  /**
    * Generate a set of subtraction problems
    */
   public generateSubtractionProblems(
-    config: DrillConfiguration
+    config: DrillConfiguration,
+    chapterId?: string
   ): DrillProblem[] {
     const problems: DrillProblem[] = [];
 
@@ -121,7 +194,8 @@ export class DrillGenerator {
       // Use digit selection if specified
       if (config.digitSelection) {
         const numbers = this.generateNumbersByDigitSelection(
-          config.digitSelection
+          config.digitSelection,
+          chapterId
         );
 
         if (config.allowNegativeResults) {
@@ -186,7 +260,7 @@ export class DrillGenerator {
    */
   public generateDrillSet(
     chapterId: string,
-    operation: 'addition' | 'subtraction',
+    operation: 'addition' | 'subtraction' | 'multiplication',
     chapterTitle?: string,
     digitSelection?: DigitSelection
   ): DrillSet {
@@ -197,10 +271,20 @@ export class DrillGenerator {
       config.digitSelection = digitSelection;
     }
 
-    const problems =
-      operation === 'addition'
-        ? this.generateAdditionProblems(config)
-        : this.generateSubtractionProblems(config);
+    let problems: DrillProblem[];
+    switch (operation) {
+      case 'addition':
+        problems = this.generateAdditionProblems(config, chapterId);
+        break;
+      case 'subtraction':
+        problems = this.generateSubtractionProblems(config, chapterId);
+        break;
+      case 'multiplication':
+        problems = this.generateMultiplicationProblems(config, chapterId);
+        break;
+      default:
+        problems = this.generateAdditionProblems(config, chapterId);
+    }
 
     // Update title to include digit information
     let digitInfo = '';
@@ -239,7 +323,20 @@ export class DrillGenerator {
    * Format a problem for display
    */
   public formatProblemForDisplay(problem: DrillProblem): string {
-    const operator = problem.operation === 'addition' ? '+' : '-';
+    let operator: string;
+    switch (problem.operation) {
+      case 'addition':
+        operator = '+';
+        break;
+      case 'subtraction':
+        operator = '-';
+        break;
+      case 'multiplication':
+        operator = '×';
+        break;
+      default:
+        operator = '+';
+    }
     return `${problem.operand1} ${operator} ${problem.operand2} = ____`;
   }
 
@@ -247,7 +344,20 @@ export class DrillGenerator {
    * Format a problem with answer for display
    */
   public formatProblemWithAnswer(problem: DrillProblem): string {
-    const operator = problem.operation === 'addition' ? '+' : '-';
+    let operator: string;
+    switch (problem.operation) {
+      case 'addition':
+        operator = '+';
+        break;
+      case 'subtraction':
+        operator = '-';
+        break;
+      case 'multiplication':
+        operator = '×';
+        break;
+      default:
+        operator = '+';
+    }
     return `${problem.operand1} ${operator} ${problem.operand2} = ${problem.answer}`;
   }
 
@@ -275,7 +385,10 @@ export class DrillGenerator {
   /**
    * Generate numbers based on digit selection
    */
-  private generateNumbersByDigitSelection(digitSelection: DigitSelection): {
+  private generateNumbersByDigitSelection(
+    digitSelection: DigitSelection,
+    chapterId?: string
+  ): {
     operand1: number;
     operand2: number;
   } {
@@ -296,9 +409,14 @@ export class DrillGenerator {
           operand2: this.generateNumberByDigits(3),
         };
       case 'mixed':
-        // Mix of 1, 2, and 3 digit numbers
-        const digits1 = [1, 2, 3][Math.floor(Math.random() * 3)] as 1 | 2 | 3;
-        const digits2 = [1, 2, 3][Math.floor(Math.random() * 3)] as 1 | 2 | 3;
+        // Mix of 1, 2, and 3 digit numbers (but exclude 3-digit for Chapter 3)
+        const availableDigits = chapterId === 'chapter-03' ? [1, 2] : [1, 2, 3];
+        const digits1 = availableDigits[
+          Math.floor(Math.random() * availableDigits.length)
+        ] as 1 | 2 | 3;
+        const digits2 = availableDigits[
+          Math.floor(Math.random() * availableDigits.length)
+        ] as 1 | 2 | 3;
         return {
           operand1: this.generateNumberByDigits(digits1),
           operand2: this.generateNumberByDigits(digits2),
@@ -317,7 +435,7 @@ export class DrillGenerator {
   private determineDifficulty(
     operand1: number,
     operand2: number,
-    operation: 'addition' | 'subtraction'
+    operation: 'addition' | 'subtraction' | 'multiplication'
   ): 'easy' | 'medium' | 'hard' {
     const maxOperand = Math.max(operand1, operand2);
     const sum = operand1 + operand2;
@@ -326,10 +444,14 @@ export class DrillGenerator {
       if (sum <= 20) return 'easy';
       if (sum <= 100) return 'medium';
       return 'hard';
-    } else {
-      // subtraction
+    } else if (operation === 'subtraction') {
       if (maxOperand <= 20) return 'easy';
       if (maxOperand <= 100) return 'medium';
+      return 'hard';
+    } else {
+      // multiplication
+      if (maxOperand <= 5) return 'easy';
+      if (maxOperand <= 10) return 'medium';
       return 'hard';
     }
   }

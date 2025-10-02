@@ -192,5 +192,40 @@
   "assessment": {
     "masteryThreshold": 0.8,
     "requiredProblems": 6
+  },
+  "drills": {
+    "title": "Multiplication Practice Drills",
+    "description": "Printable worksheets for multiplication practice with times tables and basic multiplication facts.",
+    "operations": ["multiplication"],
+    "configurations": [
+      {
+        "name": "Times Tables (1-5)",
+        "operation": "multiplication",
+        "digitSelection": "one",
+        "numberRange": { "min": 1, "max": 5 },
+        "description": "Basic multiplication facts with factors 1-5"
+      },
+      {
+        "name": "Times Tables (1-10)",
+        "operation": "multiplication",
+        "digitSelection": "one",
+        "numberRange": { "min": 1, "max": 10 },
+        "description": "Standard times tables up to 10×10"
+      },
+      {
+        "name": "Times Tables (1-12)",
+        "operation": "multiplication",
+        "digitSelection": "one",
+        "numberRange": { "min": 1, "max": 12 },
+        "description": "Complete times tables including 11s and 12s"
+      },
+      {
+        "name": "Mixed Multiplication",
+        "operation": "multiplication",
+        "digitSelection": "mixed",
+        "numberRange": { "min": 1, "max": 12 },
+        "description": "Mix of single and double digit multiplication"
+      }
+    ]
   }
 }

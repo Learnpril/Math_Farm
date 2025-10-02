@@ -90,7 +90,7 @@ export interface DrillProblem {
   id: string;
   operand1: number;
   operand2: number;
-  operation: 'addition' | 'subtraction';
+  operation: 'addition' | 'subtraction' | 'multiplication';
   answer: number;
   difficulty: 'easy' | 'medium' | 'hard';
 }
@@ -98,7 +98,7 @@ export interface DrillProblem {
 export interface DrillSet {
   id: string;
   title: string;
-  operation: 'addition' | 'subtraction';
+  operation: 'addition' | 'subtraction' | 'multiplication';
   problems: DrillProblem[];
   generatedAt: Date;
   chapterLevel: number;

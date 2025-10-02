@@ -8,14 +8,17 @@ import { useDrillState } from '../hooks/useDrillState';
 import type { DrillSet, DigitSelection } from '../types';
 
 interface DrillContextType {
-  selectedOperation: 'addition' | 'subtraction';
+  chapterId: string;
+  selectedOperation: 'addition' | 'subtraction' | 'multiplication';
   selectedDigits: DigitSelection;
   currentDrillSet: DrillSet | null;
   isGenerating: boolean;
-  setSelectedOperation: (operation: 'addition' | 'subtraction') => void;
+  setSelectedOperation: (
+    operation: 'addition' | 'subtraction' | 'multiplication'
+  ) => void;
   setSelectedDigits: (digits: DigitSelection) => void;
   generateNewDrillSet: (
-    operation?: 'addition' | 'subtraction',
+    operation?: 'addition' | 'subtraction' | 'multiplication',
     digits?: DigitSelection
   ) => Promise<void>;
 }
@@ -41,7 +44,9 @@ export function DrillProvider({
   }, [chapterId]); // Only re-generate when chapter changes
 
   return (
-    <DrillContext.Provider value={drillState}>{children}</DrillContext.Provider>
+    <DrillContext.Provider value={{ ...drillState, chapterId }}>
+      {children}
+    </DrillContext.Provider>
   );
 }
 

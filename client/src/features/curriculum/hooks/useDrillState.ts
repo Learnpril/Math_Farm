@@ -8,14 +8,16 @@ import { drillGenerator } from '../lib/drill-generator';
 import type { DrillSet, DigitSelection } from '../types';
 
 interface UseDrillStateReturn {
-  selectedOperation: 'addition' | 'subtraction';
+  selectedOperation: 'addition' | 'subtraction' | 'multiplication';
   selectedDigits: DigitSelection;
   currentDrillSet: DrillSet | null;
   isGenerating: boolean;
-  setSelectedOperation: (operation: 'addition' | 'subtraction') => void;
+  setSelectedOperation: (
+    operation: 'addition' | 'subtraction' | 'multiplication'
+  ) => void;
   setSelectedDigits: (digits: DigitSelection) => void;
   generateNewDrillSet: (
-    operation?: 'addition' | 'subtraction',
+    operation?: 'addition' | 'subtraction' | 'multiplication',
     digits?: DigitSelection
   ) => Promise<void>;
 }
@@ -24,15 +26,36 @@ export function useDrillState(
   chapterId: string,
   chapterTitle: string
 ): UseDrillStateReturn {
+  // Default operation based on chapter
+  const getDefaultOperation = (
+    chapterId: string
+  ): 'addition' | 'subtraction' | 'multiplication' => {
+    if (chapterId === 'chapter-03') return 'multiplication';
+    return 'addition';
+  };
+
   const [selectedOperation, setSelectedOperation] = useState<
-    'addition' | 'subtraction'
-  >('addition');
+    'addition' | 'subtraction' | 'multiplication'
+  >(getDefaultOperation(chapterId));
   const [selectedDigits, setSelectedDigits] = useState<DigitSelection>('one');
+
+  // Custom setter that prevents 'three' selection in Chapter 3
+  const handleSetSelectedDigits = (digits: DigitSelection) => {
+    // If Chapter 3 and trying to set 'three', default to 'one' instead
+    if (chapterId === 'chapter-03' && digits === 'three') {
+      setSelectedDigits('one');
+    } else {
+      setSelectedDigits(digits);
+    }
+  };
   const [currentDrillSet, setCurrentDrillSet] = useState<DrillSet | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
 
   const generateNewDrillSet = useCallback(
-    async (operation?: 'addition' | 'subtraction', digits?: DigitSelection) => {
+    async (
+      operation?: 'addition' | 'subtraction' | 'multiplication',
+      digits?: DigitSelection
+    ) => {
       const op = operation || selectedOperation;
       const dig = digits || selectedDigits;
 
@@ -50,7 +73,7 @@ export function useDrillState(
 
         // Update the selected values if they were passed as parameters
         if (operation) setSelectedOperation(operation);
-        if (digits) setSelectedDigits(digits);
+        if (digits) handleSetSelectedDigits(digits);
       } catch (error) {
         console.error('Error generating drill set:', error);
       } finally {
@@ -66,7 +89,7 @@ export function useDrillState(
     currentDrillSet,
     isGenerating,
     setSelectedOperation,
-    setSelectedDigits,
+    setSelectedDigits: handleSetSelectedDigits,
     generateNewDrillSet,
   };
 }
