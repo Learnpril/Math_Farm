@@ -9,16 +9,16 @@ import type { DrillSet, DigitSelection } from '../types';
 
 interface DrillContextType {
   chapterId: string;
-  selectedOperation: 'addition' | 'subtraction' | 'multiplication';
+  selectedOperation: 'addition' | 'subtraction' | 'multiplication' | 'division';
   selectedDigits: DigitSelection;
   currentDrillSet: DrillSet | null;
   isGenerating: boolean;
   setSelectedOperation: (
-    operation: 'addition' | 'subtraction' | 'multiplication'
+    operation: 'addition' | 'subtraction' | 'multiplication' | 'division'
   ) => void;
   setSelectedDigits: (digits: DigitSelection) => void;
   generateNewDrillSet: (
-    operation?: 'addition' | 'subtraction' | 'multiplication',
+    operation?: 'addition' | 'subtraction' | 'multiplication' | 'division',
     digits?: DigitSelection
   ) => Promise<void>;
 }

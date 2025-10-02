@@ -195,5 +195,40 @@
   "assessment": {
     "masteryThreshold": 0.8,
     "requiredProblems": 6
+  },
+  "drills": {
+    "title": "Division Practice Drills",
+    "description": "Printable worksheets for division practice with basic division facts and simple division problems.",
+    "operations": ["division"],
+    "configurations": [
+      {
+        "name": "Basic Division Facts (1-5)",
+        "operation": "division",
+        "digitSelection": "one",
+        "numberRange": { "min": 1, "max": 5 },
+        "description": "Simple division facts with divisors 1-5"
+      },
+      {
+        "name": "Division Facts (1-10)",
+        "operation": "division",
+        "digitSelection": "one",
+        "numberRange": { "min": 1, "max": 10 },
+        "description": "Standard division facts up to 10"
+      },
+      {
+        "name": "Division Facts (1-12)",
+        "operation": "division",
+        "digitSelection": "one",
+        "numberRange": { "min": 1, "max": 12 },
+        "description": "Complete division facts including 11s and 12s"
+      },
+      {
+        "name": "Mixed Division",
+        "operation": "division",
+        "digitSelection": "mixed",
+        "numberRange": { "min": 1, "max": 12 },
+        "description": "Mix of single and double digit division"
+      }
+    ]
   }
 }

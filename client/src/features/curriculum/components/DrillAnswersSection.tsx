@@ -1,4 +1,12 @@
-import { Printer, RefreshCw, Plus, Minus, X, FileCheck } from 'lucide-react';
+import {
+  Printer,
+  RefreshCw,
+  Plus,
+  Minus,
+  X,
+  Divide,
+  FileCheck,
+} from 'lucide-react';
 import { useDrillContext } from '../contexts/DrillContext';
 import type { DigitSelection } from '../types';
 import './drill-styles.css';
@@ -16,7 +24,7 @@ export function DrillAnswersSection() {
   } = useDrillContext();
 
   const handleOperationChange = (
-    operation: 'addition' | 'subtraction' | 'multiplication'
+    operation: 'addition' | 'subtraction' | 'multiplication' | 'division'
   ) => {
     setSelectedOperation(operation);
     generateNewDrillSet(operation, selectedDigits);
@@ -188,7 +196,7 @@ export function DrillAnswersSection() {
                 <div class="problem-number">${index + 1}.</div>
                 <div class="problem-content">
                   <div class="operand">${problem.operand1}</div>
-                  <div class="operand">${problem.operation === 'addition' ? '+' : problem.operation === 'subtraction' ? '-' : '×'} ${problem.operand2}</div>
+                  <div class="operand">${problem.operation === 'addition' ? '+' : problem.operation === 'subtraction' ? '-' : problem.operation === 'multiplication' ? '×' : '÷'} ${problem.operand2}</div>
                   <div class="answer-line">${problem.answer}</div>
                 </div>
               </div>
@@ -290,6 +298,18 @@ export function DrillAnswersSection() {
                   <button className='flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium bg-white dark:bg-gray-600 text-purple-600 dark:text-purple-400 shadow-sm cursor-default'>
                     <X className='w-4 h-4' />
                     <span>Multiplication</span>
+                  </button>
+                </div>
+              </div>
+            ) : chapterId === 'chapter-04' ? (
+              <div className='flex items-center space-x-4'>
+                <span className='text-sm font-medium text-gray-700 dark:text-gray-300'>
+                  Operation:
+                </span>
+                <div className='flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1'>
+                  <button className='flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium bg-white dark:bg-gray-600 text-purple-600 dark:text-purple-400 shadow-sm cursor-default'>
+                    <Divide className='w-4 h-4' />
+                    <span>Division</span>
                   </button>
                 </div>
               </div>
@@ -431,7 +451,9 @@ export function DrillAnswersSection() {
                     ? '+'
                     : problem.operation === 'subtraction'
                       ? '-'
-                      : '×'}{' '}
+                      : problem.operation === 'multiplication'
+                        ? '×'
+                        : '÷'}{' '}
                   {problem.operand2}
                 </div>
                 <div className='border-t-2 border-gray-800 text-right pt-1'>

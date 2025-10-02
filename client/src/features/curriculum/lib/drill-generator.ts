@@ -14,7 +14,8 @@ import type {
  * Chapter-based difficulty configurations
  * Chapter 2: Addition and Subtraction
  * Chapter 3: Multiplication Basics
- * Future chapters will have their own drill types (division, fractions, etc.)
+ * Chapter 4: Division Basics
+ * Future chapters will have their own drill types (fractions, etc.)
  */
 const CHAPTER_CONFIGURATIONS: Record<string, DrillConfiguration> = {
   'chapter-02': {
@@ -30,6 +31,14 @@ const CHAPTER_CONFIGURATIONS: Record<string, DrillConfiguration> = {
     gridColumns: 4,
     gridRows: 5,
     numberRange: { min: 1, max: 12 }, // Times tables up to 12
+    allowNegativeResults: false,
+    mixedDifficulty: false,
+  },
+  'chapter-04': {
+    problemCount: 20,
+    gridColumns: 4,
+    gridRows: 5,
+    numberRange: { min: 1, max: 12 }, // Division facts up to 12
     allowNegativeResults: false,
     mixedDifficulty: false,
   },
@@ -178,6 +187,63 @@ export class DrillGenerator {
   }
 
   /**
+   * Generate a set of division problems
+   */
+  public generateDivisionProblems(
+    config: DrillConfiguration,
+    chapterId?: string
+  ): DrillProblem[] {
+    const problems: DrillProblem[] = [];
+
+    for (let i = 0; i < config.problemCount; i++) {
+      let divisor: number;
+      let quotient: number;
+
+      // Use digit selection if specified, otherwise use number range
+      if (config.digitSelection) {
+        const numbers = this.generateNumbersByDigitSelection(
+          config.digitSelection,
+          chapterId
+        );
+        // For division, we want smaller divisors and reasonable quotients
+        divisor = Math.min(numbers.operand1, numbers.operand2);
+        quotient = Math.max(numbers.operand1, numbers.operand2);
+      } else {
+        divisor = this.generateRandomNumber(
+          config.numberRange.min,
+          config.numberRange.max
+        );
+        quotient = this.generateRandomNumber(
+          config.numberRange.min,
+          config.numberRange.max
+        );
+      }
+
+      // Ensure divisor is not 0 and is reasonable for division
+      if (divisor === 0) divisor = 1;
+
+      // Calculate dividend (the number being divided)
+      const dividend = divisor * quotient;
+
+      const difficulty = config.mixedDifficulty
+        ? this.determineDifficulty(dividend, divisor, 'division')
+        : 'easy';
+
+      problems.push({
+        id: `div-${i + 1}-${this.seedCounter}`,
+        operand1: dividend, // dividend (top number)
+        operand2: divisor, // divisor (bottom number)
+        operation: 'division',
+        answer: quotient, // quotient (answer)
+        difficulty,
+      });
+    }
+
+    this.seedCounter++;
+    return problems;
+  }
+
+  /**
    * Generate a set of subtraction problems
    */
   public generateSubtractionProblems(
@@ -260,7 +326,7 @@ export class DrillGenerator {
    */
   public generateDrillSet(
     chapterId: string,
-    operation: 'addition' | 'subtraction' | 'multiplication',
+    operation: 'addition' | 'subtraction' | 'multiplication' | 'division',
     chapterTitle?: string,
     digitSelection?: DigitSelection
   ): DrillSet {
@@ -281,6 +347,9 @@ export class DrillGenerator {
         break;
       case 'multiplication':
         problems = this.generateMultiplicationProblems(config, chapterId);
+        break;
+      case 'division':
+        problems = this.generateDivisionProblems(config, chapterId);
         break;
       default:
         problems = this.generateAdditionProblems(config, chapterId);
@@ -334,6 +403,9 @@ export class DrillGenerator {
       case 'multiplication':
         operator = '×';
         break;
+      case 'division':
+        operator = '÷';
+        break;
       default:
         operator = '+';
     }
@@ -355,6 +427,9 @@ export class DrillGenerator {
       case 'multiplication':
         operator = '×';
         break;
+      case 'division':
+        operator = '÷';
+        break;
       default:
         operator = '+';
     }
@@ -371,10 +446,17 @@ export class DrillGenerator {
   /**
    * Generate a random number with specified digit count
    */
-  private generateNumberByDigits(digitCount: number): number {
+  private generateNumberByDigits(
+    digitCount: number,
+    chapterId?: string
+  ): number {
     if (digitCount === 1) {
       return this.generateRandomNumber(1, 9);
     } else if (digitCount === 2) {
+      // For Chapter 4 (Division), use smaller 2-digit numbers to keep problems manageable
+      if (chapterId === 'chapter-04') {
+        return this.generateRandomNumber(10, 25); // Much smaller range for division
+      }
       return this.generateRandomNumber(10, 99);
     } else if (digitCount === 3) {
       return this.generateRandomNumber(100, 999);
@@ -395,22 +477,25 @@ export class DrillGenerator {
     switch (digitSelection) {
       case 'one':
         return {
-          operand1: this.generateNumberByDigits(1),
-          operand2: this.generateNumberByDigits(1),
+          operand1: this.generateNumberByDigits(1, chapterId),
+          operand2: this.generateNumberByDigits(1, chapterId),
         };
       case 'two':
         return {
-          operand1: this.generateNumberByDigits(2),
-          operand2: this.generateNumberByDigits(2),
+          operand1: this.generateNumberByDigits(2, chapterId),
+          operand2: this.generateNumberByDigits(2, chapterId),
         };
       case 'three':
         return {
-          operand1: this.generateNumberByDigits(3),
-          operand2: this.generateNumberByDigits(3),
+          operand1: this.generateNumberByDigits(3, chapterId),
+          operand2: this.generateNumberByDigits(3, chapterId),
         };
       case 'mixed':
-        // Mix of 1, 2, and 3 digit numbers (but exclude 3-digit for Chapter 3)
-        const availableDigits = chapterId === 'chapter-03' ? [1, 2] : [1, 2, 3];
+        // Mix of 1, 2, and 3 digit numbers (but exclude 3-digit for Chapter 3 and 4)
+        const availableDigits =
+          chapterId === 'chapter-03' || chapterId === 'chapter-04'
+            ? [1, 2]
+            : [1, 2, 3];
         const digits1 = availableDigits[
           Math.floor(Math.random() * availableDigits.length)
         ] as 1 | 2 | 3;
@@ -418,13 +503,13 @@ export class DrillGenerator {
           Math.floor(Math.random() * availableDigits.length)
         ] as 1 | 2 | 3;
         return {
-          operand1: this.generateNumberByDigits(digits1),
-          operand2: this.generateNumberByDigits(digits2),
+          operand1: this.generateNumberByDigits(digits1, chapterId),
+          operand2: this.generateNumberByDigits(digits2, chapterId),
         };
       default:
         return {
-          operand1: this.generateNumberByDigits(1),
-          operand2: this.generateNumberByDigits(1),
+          operand1: this.generateNumberByDigits(1, chapterId),
+          operand2: this.generateNumberByDigits(1, chapterId),
         };
     }
   }
@@ -435,7 +520,7 @@ export class DrillGenerator {
   private determineDifficulty(
     operand1: number,
     operand2: number,
-    operation: 'addition' | 'subtraction' | 'multiplication'
+    operation: 'addition' | 'subtraction' | 'multiplication' | 'division'
   ): 'easy' | 'medium' | 'hard' {
     const maxOperand = Math.max(operand1, operand2);
     const sum = operand1 + operand2;
@@ -448,10 +533,14 @@ export class DrillGenerator {
       if (maxOperand <= 20) return 'easy';
       if (maxOperand <= 100) return 'medium';
       return 'hard';
-    } else {
-      // multiplication
+    } else if (operation === 'multiplication') {
       if (maxOperand <= 5) return 'easy';
       if (maxOperand <= 10) return 'medium';
+      return 'hard';
+    } else {
+      // division - based on dividend (operand1)
+      if (operand1 <= 50) return 'easy';
+      if (operand1 <= 144) return 'medium';
       return 'hard';
     }
   }

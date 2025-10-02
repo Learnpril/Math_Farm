@@ -8,16 +8,16 @@ import { drillGenerator } from '../lib/drill-generator';
 import type { DrillSet, DigitSelection } from '../types';
 
 interface UseDrillStateReturn {
-  selectedOperation: 'addition' | 'subtraction' | 'multiplication';
+  selectedOperation: 'addition' | 'subtraction' | 'multiplication' | 'division';
   selectedDigits: DigitSelection;
   currentDrillSet: DrillSet | null;
   isGenerating: boolean;
   setSelectedOperation: (
-    operation: 'addition' | 'subtraction' | 'multiplication'
+    operation: 'addition' | 'subtraction' | 'multiplication' | 'division'
   ) => void;
   setSelectedDigits: (digits: DigitSelection) => void;
   generateNewDrillSet: (
-    operation?: 'addition' | 'subtraction' | 'multiplication',
+    operation?: 'addition' | 'subtraction' | 'multiplication' | 'division',
     digits?: DigitSelection
   ) => Promise<void>;
 }
@@ -29,13 +29,14 @@ export function useDrillState(
   // Default operation based on chapter
   const getDefaultOperation = (
     chapterId: string
-  ): 'addition' | 'subtraction' | 'multiplication' => {
+  ): 'addition' | 'subtraction' | 'multiplication' | 'division' => {
     if (chapterId === 'chapter-03') return 'multiplication';
+    if (chapterId === 'chapter-04') return 'division';
     return 'addition';
   };
 
   const [selectedOperation, setSelectedOperation] = useState<
-    'addition' | 'subtraction' | 'multiplication'
+    'addition' | 'subtraction' | 'multiplication' | 'division'
   >(getDefaultOperation(chapterId));
   const [selectedDigits, setSelectedDigits] = useState<DigitSelection>('one');
 
@@ -53,7 +54,7 @@ export function useDrillState(
 
   const generateNewDrillSet = useCallback(
     async (
-      operation?: 'addition' | 'subtraction' | 'multiplication',
+      operation?: 'addition' | 'subtraction' | 'multiplication' | 'division',
       digits?: DigitSelection
     ) => {
       const op = operation || selectedOperation;
