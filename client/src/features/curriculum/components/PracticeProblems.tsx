@@ -31,7 +31,17 @@ export function PracticeProblems({
     problem => practiceScores[problem.id] === 1
   );
 
-  const [currentProblem, setCurrentProblem] = useState(0);
+  // Find the first unsolved problem index
+  const findFirstUnsolvedProblem = () => {
+    const firstUnsolved = problems.findIndex(
+      problem => practiceScores[problem.id] !== 1
+    );
+    return firstUnsolved === -1 ? 0 : firstUnsolved; // Default to 0 if all are solved
+  };
+
+  const [currentProblem, setCurrentProblem] = useState(
+    findFirstUnsolvedProblem()
+  );
   const [selectedAnswer, setSelectedAnswer] = useState<string | number | null>(
     null
   );
@@ -53,6 +63,15 @@ export function PracticeProblems({
     };
     initValidator();
   }, []);
+
+  // Auto-skip to first unsolved problem when progress updates
+  useEffect(() => {
+    const firstUnsolved = findFirstUnsolvedProblem();
+    if (firstUnsolved !== currentProblem && !answered) {
+      setCurrentProblem(firstUnsolved);
+      resetProblemState();
+    }
+  }, [practiceScores]);
 
   // Show completion message if all problems are done - check this FIRST
   if (allProblemsCompleted) {
@@ -202,6 +221,25 @@ export function PracticeProblems({
     }
   };
 
+  const jumpToNextUnsolved = () => {
+    const nextUnsolved = problems.findIndex(
+      (problem, index) =>
+        index > currentProblem && practiceScores[problem.id] !== 1
+    );
+
+    if (nextUnsolved !== -1) {
+      setCurrentProblem(nextUnsolved);
+      resetProblemState();
+    } else {
+      // If no unsolved problems after current, jump to first unsolved overall
+      const firstUnsolved = findFirstUnsolvedProblem();
+      if (firstUnsolved !== currentProblem) {
+        setCurrentProblem(firstUnsolved);
+        resetProblemState();
+      }
+    }
+  };
+
   const resetProblemState = () => {
     setSelectedAnswer(null);
     setShowHint(false);
@@ -268,6 +306,33 @@ export function PracticeProblems({
               ✓ Completed
             </span>
           )}
+          {!allProblemsCompleted && (
+            <span className='ml-2 text-blue-600 dark:text-blue-400'>
+              (
+              {Object.values(practiceScores).filter(score => score !== 1)
+                .length +
+                (problems.length - Object.keys(practiceScores).length)}{' '}
+              unsolved)
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Study Tip */}
+      <div className='bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4'>
+        <div className='flex items-start space-x-3'>
+          <div className='text-amber-600 dark:text-amber-400 text-xl'>📝</div>
+          <div>
+            <h4 className='font-medium text-amber-800 dark:text-amber-200 mb-1'>
+              Study Tip
+            </h4>
+            <p className='text-sm text-amber-700 dark:text-amber-300'>
+              Don't be afraid to grab a pen and paper! Working through these
+              problems by hand helps build deeper understanding and strengthens
+              your problem-solving skills. The screen is great for checking your
+              work, but the real learning happens when you work it out yourself.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -438,7 +503,21 @@ export function PracticeProblems({
               <>
                 {isCorrect ? (
                   <button
-                    onClick={nextProblem}
+                    onClick={() => {
+                      // Try to jump to next unsolved, otherwise just go to next problem
+                      const nextUnsolved = problems.findIndex(
+                        (problem, index) =>
+                          index > currentProblem &&
+                          practiceScores[problem.id] !== 1
+                      );
+
+                      if (nextUnsolved !== -1) {
+                        setCurrentProblem(nextUnsolved);
+                        resetProblemState();
+                      } else {
+                        nextProblem();
+                      }
+                    }}
                     disabled={currentProblem === problems.length - 1}
                     className='flex items-center space-x-2 px-4 py-2 bg-green-500 text-white hover:bg-green-600 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed'
                   >
@@ -470,6 +549,17 @@ export function PracticeProblems({
             >
               Previous
             </button>
+
+            {/* Jump to Next Unsolved button - only show if there are unsolved problems */}
+            {!allProblemsCompleted && (
+              <button
+                onClick={jumpToNextUnsolved}
+                className='px-3 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-900/50 rounded-lg transition-colors flex items-center space-x-1'
+              >
+                <span>Skip to Unsolved</span>
+                <span className='text-xs'>⚡</span>
+              </button>
+            )}
 
             {/* Show navigation Next button for completed problems or unanswered problems */}
             {(isProblemCompleted || !answered || !isCorrect) && (
