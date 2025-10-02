@@ -1,7 +1,6 @@
 # Implementation Plan
 
 - [x] 1. Create drill problem generation utility
-
   - Create DrillGenerator utility class with problem generation logic
   - Implement addition problem generation with configurable number ranges
   - Implement subtraction problem generation ensuring positive results
@@ -9,7 +8,7 @@
   - Write unit tests for problem generation accuracy
   - _Requirements: 1.1, 2.2, 2.3, 2.4_
 
-- [ ] 2. Create DrillsSection component
+- [x] 2. Create DrillsSection component
   - Create DrillsSection.tsx component with operation selection (Addition/Subtraction)
   - Implement drill set generation and state management
   - Add 5×8 grid layout for displaying 40 math problems
