@@ -5,7 +5,8 @@
     "Understand the structure of numbers and the base-10 system",
     "Read, write, and compare whole numbers up to 1,000,000",
     "Recognize place values from units to millions",
-    "Round numbers to specified place values"
+    "Round numbers to specified place values",
+    "Understand the concept of negative numbers and their position on the number line"
   ],
   "prerequisites": [],
   "introduction": {
@@ -36,6 +37,12 @@
         "title": "Comparing Numbers",
         "content": "To compare numbers, start from the leftmost digit and compare place by place. The first position where digits differ determines which number is larger.",
         "visuals": ["ComparisonChart", "NumberLine"]
+      },
+      {
+        "title": "Introduction to Negative Numbers",
+        "content": "So far we've worked with positive numbers - numbers greater than zero. But what happens when we need to represent values less than zero? That's where negative numbers come in. Think of a thermometer: temperatures can go below zero degrees, or imagine owing money - if you have $0 and spend $5, you're $5 in debt, which we write as -$5. Negative numbers are written with a minus sign (-) in front, like -1, -5, or -100. They represent the opposite of positive numbers. On a number line, positive numbers extend to the right of zero, while negative numbers extend to the left. Zero itself is neither positive nor negative - it's the dividing point between them. Understanding negative numbers prepares you for more advanced math and helps you describe real-world situations like temperatures below freezing, depths below sea level, or financial debts. The number line becomes a powerful tool: moving right means increasing (more positive), while moving left means decreasing (more negative). This concept will become especially important when we learn about subtraction in later chapters, where we might subtract a larger number from a smaller one.",
+        "latex": "\\text{Number line: } \\ldots -3, -2, -1, 0, 1, 2, 3 \\ldots",
+        "visuals": ["NegativeNumbersIntro", "NumberLine"]
       }
     ]
   },
@@ -90,6 +97,23 @@
         "Rounding down when the digit is 5 or greater",
         "Forgetting to change all digits to the right to zero"
       ]
+    },
+    {
+      "problem": "Compare these numbers and arrange them from smallest to largest: 5, -2, 0, -7, 3",
+      "solution": "From smallest to largest: -7, -2, 0, 3, 5",
+      "steps": [
+        "Understand that negative numbers are smaller than zero and positive numbers",
+        "Among negative numbers, the one farther from zero is smaller: -7 < -2",
+        "Zero is between negative and positive numbers",
+        "Among positive numbers, compare normally: 3 < 5",
+        "Final order: -7, -2, 0, 3, 5"
+      ],
+      "commonErrors": [
+        "Thinking -7 is larger than -2 because 7 > 2",
+        "Forgetting that zero is between negative and positive numbers",
+        "Not understanding that negative numbers are smaller than positive numbers"
+      ],
+      "latex": "-7 < -2 < 0 < 3 < 5"
     }
   ],
   "practice": [
@@ -160,6 +184,47 @@
       ],
       "explanation": "Counting from right to left: 0 (ones), 9 (tens), 8 (hundreds), 7 (thousands), 6 (ten thousands). So 6 is in the ten thousands place.",
       "difficulty": 3
+    },
+    {
+      "id": "p1-6",
+      "type": "multiple-choice",
+      "problem": "Which number is the smallest?",
+      "options": ["-5", "0", "3", "-1"],
+      "correct": 0,
+      "hints": [
+        "Remember that negative numbers are smaller than positive numbers",
+        "Among negative numbers, the one farther from zero is smaller",
+        "Compare -5 and -1: which is farther from zero?"
+      ],
+      "explanation": "-5 is the smallest because it is farthest to the left on the number line. Negative numbers are smaller than zero and positive numbers.",
+      "difficulty": 2
+    },
+    {
+      "id": "p1-7",
+      "type": "fill-in",
+      "problem": "Arrange these numbers from largest to smallest: -3, 7, -8, 0, 2",
+      "correct": "7, 2, 0, -3, -8",
+      "hints": [
+        "Start with the largest positive number",
+        "Then smaller positive numbers, then zero",
+        "Then negative numbers, with those closer to zero being larger"
+      ],
+      "explanation": "From largest to smallest: 7, 2, 0, -3, -8. Positive numbers are largest, then zero, then negative numbers (with -3 > -8).",
+      "difficulty": 3
+    },
+    {
+      "id": "p1-8",
+      "type": "multiple-choice",
+      "problem": "On a number line, which direction do you move to go from 2 to -1?",
+      "options": ["Right", "Left", "Up", "Down"],
+      "correct": 1,
+      "hints": [
+        "Think about the number line: positive numbers are on the right, negative on the left",
+        "You're starting at 2 (positive) and going to -1 (negative)",
+        "Which direction takes you from positive to negative?"
+      ],
+      "explanation": "You move left on the number line to go from 2 to -1, because you're moving from a positive number toward zero and into negative numbers.",
+      "difficulty": 2
     }
   ],
   "tools": ["calculator", "place-value-chart"],

@@ -218,7 +218,7 @@ describe('DrillGenerator', () => {
   describe('Drill Set Generation', () => {
     it('should generate complete addition drill set', () => {
       const drillSet = generator.generateDrillSet(
-        'chapter-02',
+        'chapter-03',
         'addition',
         'Addition and Subtraction'
       );
@@ -226,13 +226,13 @@ describe('DrillGenerator', () => {
       expect(drillSet.operation).toBe('addition');
       expect(drillSet.problems).toHaveLength(40);
       expect(drillSet.title).toBe('Addition and Subtraction - Addition Drills');
-      expect(drillSet.chapterLevel).toBe(2);
+      expect(drillSet.chapterLevel).toBe(3);
       expect(drillSet.generatedAt).toBeInstanceOf(Date);
-      expect(drillSet.id).toMatch(/^drill-chapter-02-addition-\d+$/);
+      expect(drillSet.id).toMatch(/^drill-chapter-03-addition-\d+$/);
     });
 
     it('should generate complete subtraction drill set', () => {
-      const drillSet = generator.generateDrillSet('chapter-02', 'subtraction');
+      const drillSet = generator.generateDrillSet('chapter-03', 'subtraction');
 
       expect(drillSet.operation).toBe('subtraction');
       expect(drillSet.problems).toHaveLength(40);
@@ -502,19 +502,19 @@ describe('DrillGenerator', () => {
 
     it('should include digit info in drill set title', () => {
       const drillSet1 = generator.generateDrillSet(
-        'chapter-02',
+        'chapter-03',
         'addition',
         'Addition and Subtraction',
         'one'
       );
       const drillSet2 = generator.generateDrillSet(
-        'chapter-02',
+        'chapter-03',
         'subtraction',
         'Addition and Subtraction',
         'two'
       );
       const drillSet3 = generator.generateDrillSet(
-        'chapter-02',
+        'chapter-03',
         'addition',
         'Addition and Subtraction',
         'mixed'

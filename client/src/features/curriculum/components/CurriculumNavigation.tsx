@@ -38,11 +38,11 @@ export function CurriculumNavigation({
   const getChapterTitle = (chapterNumber: number): string => {
     const titles = [
       'Numbers and Place Value',
+      'Decimals Basics',
       'Addition and Subtraction',
       'Multiplication Basics',
       'Division Basics',
-      'Fractions',
-      'Decimals',
+      'Fractions Basics',
       'Percentages and Ratios',
       'Problem Solving and Applications',
     ];

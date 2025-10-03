@@ -1,202 +1,185 @@
 {
   "id": "chapter-06",
-  "title": "Decimals Basics",
+  "title": "Fractions Basics",
   "objectives": [
-    "Understand decimals as extensions of the base-10 system",
-    "Read, write, and compare decimal numbers",
-    "Convert between fractions and decimals",
-    "Add and subtract decimals with proper alignment",
-    "Multiply and divide decimals using place value rules"
+    "Understand fractions as parts of a whole",
+    "Compare and order fractions",
+    "Find equivalent fractions and simplify",
+    "Add and subtract fractions with like and unlike denominators",
+    "Multiply and divide fractions"
   ],
   "prerequisites": ["chapter-05"],
   "introduction": {
-    "context": "Decimals extend the base-10 system beyond whole numbers, providing a seamless way to represent fractions with powers of ten, facilitating precise calculations in measurement, money, and science. This chapter builds on all prior ones: place value from Chapter 1 structures decimal positions, operations from Chapters 2-4 apply directly, and fractions from Chapter 5 reveal decimals as equivalent notations (e.g., 0.5 = 1/2). Picture a merchant weighing goods: decimals allow fine-tuned accuracy, evolving from fractional approximations to streamlined notation.",
-    "connection": "Decimals are simply another way to write fractions - specifically fractions with denominators that are powers of 10. The place value system you learned in Chapter 1 extends naturally to the right of the decimal point, and all the operations from previous chapters work with decimals using the same fundamental principles."
+    "context": "Fractions represent the pinnacle of basic arithmetic, introducing parts of wholes and enabling precise measurements, ratios, and proportional thinking that underpin advanced mathematics like algebra and calculus. This chapter extends the operations from prior chapters: place value from Chapter 1 gives structure to decimal equivalents, addition/subtraction from Chapter 2 handles combining parts, multiplication from Chapter 3 scales fractions, and division from Chapter 4 forms their very definition (numerator divided by denominator).",
+    "connection": "Fractions build directly on division from Chapter 4. A fraction like 3/4 means 3 ÷ 4, representing 3 parts out of 4 equal parts. The operations you learned in previous chapters extend naturally to fractions, with some important modifications for handling different denominators."
   },
   "theory": {
     "concepts": [
       {
-        "title": "Understanding Decimals",
-        "content": "Decimals intuitively extend wholes rightward, representing parts via tenths, hundredths, like zooming into a number line beyond integers. Start with money: $0.25 as quarter dollar, or 25/100. Formally, a decimal is a number with integer and fractional parts separated by a point: 4.56 = 4 + 5/10 + 6/100, using negative powers of 10 (10^{-1}, 10^{-2}). Historically, Stevin (1585) popularized for surveying: decimals eased adding lengths. Earlier, Al-Kashi computed pi to 16 decimals. Applications: GPS coordinates - 37.7749 latitude. Cooking - 0.5 tsp salt.",
-        "latex": "4.56 = 4 + \\frac{5}{10} + \\frac{6}{100} = 4 + 5 \\times 10^{-1} + 6 \\times 10^{-2}",
+        "title": "Understanding Fractions",
+        "content": "Fractions begin with wholes divided into parts, intuitively like slicing a pie: one slice of four is 1/4. This part-whole relationship makes fractions essential for non-integer quantities. Formally, a fraction a/b represents a divided by b, where a is numerator, b denominator (b ≠ 0). Proper if |a| < |b|, improper otherwise (e.g., 5/3), mixed as whole + proper (1 2/3). Historically, Egyptians (2000 BCE) used eye of Horus for halves to 1/64. Babylonians had positional fractions. Greeks like Archimedes (200 BCE) approximated pi as fractions.",
+        "latex": "\\frac{a}{b} \\text{ where } a \\text{ is numerator, } b \\text{ is denominator } (b \\neq 0)",
         "visuals": []
       },
       {
-        "title": "Decimal Place Value and Equivalents",
-        "content": "Decimal places mirror whole-number ones but rightward, each ÷10 smaller. Intuitively, like zooming: units to tenths as dividing by 10. Formally, positions: ... hundreds, tens, units . tenths, hundredths...; 3.141 = 3×1 + 1×0.1 + 4×0.01 + 1×0.001. History: Stevin's exponents evolved to points. Decimals equated fractions post-1600s. Applications: Metrics - 1.5 km = 1500 m (shift point). Misconceptions: Misreading places - label charts; terminating vs. repeating confusion - explain 1/3=0.333...",
-        "latex": "3.141 = 3 \\times 10^0 + 1 \\times 10^{-1} + 4 \\times 10^{-2} + 1 \\times 10^{-3}",
+        "title": "Equivalent Fractions and Simplifying",
+        "content": "Equivalent fractions look different but equal value, like 1/2 = 2/4. Intuitively, halve a halved pie - same as quartering directly. Formally, a/b = c/d if a×d = b×c; generate by multiplying/dividing numerator/denominator by same k ≠ 0. History: Euclid proved equivalence via common measures. Arabs used for astronomy.",
+        "latex": "\\frac{a}{b} = \\frac{c}{d} \\text{ if } a \\times d = b \\times c",
         "visuals": []
       },
       {
-        "title": "Adding and Subtracting Decimals",
-        "content": "Align decimals by point for addition/subtraction, like wholes but with fractions. Intuitively, add 1.2 + 0.3 as 12 tenths + 3 tenths = 15 tenths = 1.5. Formally, align places, add/subtract column-wise, carry/borrow as needed. History: Stevin added decimals for bookkeeping. 1700s texts standardized alignment. Applications: Bills - $12.50 + $3.75 = $16.25. Heights - 1.75 m - 1.20 m = 0.55 m. Misconceptions: Ignoring point - align always; no zero-padding - add for clarity.",
-        "latex": "\\begin{align} 3.45 \\\\ + 1.20 \\\\ \\hline 4.65 \\end{align}",
+        "title": "Adding and Subtracting Fractions",
+        "content": "Combining fractions requires common denominators, intuitively like aligning units: add 1/2 + 1/3 by sixths (3/6 + 2/6 = 5/6). Formally, a/b + c/d = (a×d + b×c)/(b×d); subtract similarly minus. History: Egyptians added unit fractions. Al-Khwarizmi used LCD.",
+        "latex": "\\frac{a}{b} + \\frac{c}{d} = \\frac{a \\times d + b \\times c}{b \\times d}",
         "visuals": []
       },
       {
-        "title": "Multiplying Decimals",
-        "content": "Multiplying decimals ignores points initially, then places based on total decimals. Intuitively, 1.2 × 0.3 = area 1.2 by 0.3 = 0.36. Formally, multiply as wholes, count decimal places in factors, place in product. History: Stevin multiplied for commerce. Logarithms aided pre-calculators. Applications: Area - 2.5 m × 1.5 m = 3.75 m². Discounts - $10 × 0.2 = $2 off. Misconceptions: Fewer places in product - count always; point misalignment.",
-        "latex": "1.23 \\times 0.4 = \\frac{123 \\times 4}{100 \\times 10} = \\frac{492}{1000} = 0.492",
+        "title": "Multiplying Fractions",
+        "content": "Fraction multiplication scales parts: 1/2 × 3/4 = 3/8, intuitively half of three-quarters. Formally, (a/b) × (c/d) = (a×c)/(b×d); simplify before/after. History: Babylonians multiplied fractions positionally. Greeks geometrically.",
+        "latex": "\\frac{a}{b} \\times \\frac{c}{d} = \\frac{a \\times c}{b \\times d}",
         "visuals": []
       },
       {
-        "title": "Dividing Decimals",
-        "content": "Dividing decimals shifts to make divisor whole, adjusting dividend. Intuitively, 1.2 ÷ 0.3 = how many 0.3 in 1.2? (4). Formally, multiply divisor/dividend by 10^k to integerize divisor, divide. History: Stevin divided for weights. 1800s algorithms standardized shifts. Applications: Rates - 10.5 km ÷ 1.5 h = 7 km/h. Unit prices - $4.50 ÷ 1.5 kg = $3/kg. Misconceptions: Not shifting - results wrong magnitude; infinite decimals - round or note repeating.",
-        "latex": "1.5 \\div 0.3 = \\frac{1.5 \\times 10}{0.3 \\times 10} = \\frac{15}{3} = 5",
+        "title": "Dividing Fractions",
+        "content": "Dividing fractions inverts: 1/2 ÷ 1/3 = 3/2, intuitively how many thirds in half? (1.5). Formally, (a/b) ÷ (c/d) = (a/b) × (d/c). History: Rhind Papyrus inverted. Modern rule from 1800s texts.",
+        "latex": "\\frac{a}{b} \\div \\frac{c}{d} = \\frac{a}{b} \\times \\frac{d}{c}",
         "visuals": []
       }
     ]
   },
   "examples": [
     {
-      "problem": "What is the place value of 7 in the number 3.47?",
-      "solution": "The 7 is in the hundredths place",
+      "problem": "What fraction of the circle is shaded if 3 out of 8 equal parts are colored?",
+      "solution": "3/8",
       "steps": [
-        "Identify the decimal point in 3.47",
-        "Count places to the right: first place is tenths (4), second place is hundredths (7)",
-        "The 7 is in the hundredths place",
-        "This means 7 × 0.01 = 0.07"
+        "Count the total number of equal parts: 8",
+        "Count the shaded parts: 3",
+        "Write as fraction: 3/8",
+        "Check: 3 parts out of 8 total parts"
       ],
       "commonErrors": [
-        "Confusing tenths and hundredths places",
-        "Counting from the wrong direction"
+        "Writing 8/3 instead of 3/8",
+        "Confusing numerator and denominator"
       ],
-      "latex": "3.47 = 3 + 0.4 + 0.07 = 3 + \\frac{4}{10} + \\frac{7}{100}"
+      "latex": "\\frac{\\text{shaded parts}}{\\text{total parts}} = \\frac{3}{8}"
     },
     {
-      "problem": "Add 4.08 + 2.9",
-      "solution": "4.08 + 2.9 = 6.98",
+      "problem": "Add 1/4 + 1/3",
+      "solution": "1/4 + 1/3 = 7/12",
       "steps": [
-        "Align the decimal points vertically",
-        "Add trailing zero for clarity: 4.08 + 2.90",
-        "Add column by column from right to left",
-        "8 + 0 = 8, 0 + 9 = 9, 4 + 2 = 6",
-        "Result: 6.98"
+        "Find the least common denominator: LCM of 4 and 3 is 12",
+        "Convert to equivalent fractions: 1/4 = 3/12, 1/3 = 4/12",
+        "Add the numerators: 3 + 4 = 7",
+        "Keep the denominator: 7/12"
       ],
       "commonErrors": [
-        "Not aligning decimal points",
-        "Forgetting to add trailing zeros for clarity"
+        "Adding denominators: 1/4 + 1/3 ≠ 2/7",
+        "Not finding common denominator first"
       ],
-      "latex": "\\begin{align} 4.08 \\\\ + 2.90 \\\\ \\hline 6.98 \\end{align}"
+      "latex": "\\frac{1}{4} + \\frac{1}{3} = \\frac{3}{12} + \\frac{4}{12} = \\frac{7}{12}"
     },
     {
-      "problem": "Calculate 3.14 × 2",
-      "solution": "3.14 × 2 = 6.28",
+      "problem": "Calculate 2/3 × 3/4",
+      "solution": "2/3 × 3/4 = 1/2",
       "steps": [
-        "Multiply as if they were whole numbers: 314 × 2 = 628",
-        "Count decimal places in the factors: 3.14 has 2 decimal places, 2 has 0",
-        "Total decimal places: 2 + 0 = 2",
-        "Place decimal point 2 places from right: 6.28"
+        "Multiply numerators: 2 × 3 = 6",
+        "Multiply denominators: 3 × 4 = 12",
+        "Result: 6/12",
+        "Simplify: 6/12 = 1/2"
       ],
       "commonErrors": [
-        "Forgetting to count decimal places",
-        "Placing decimal point in wrong position"
+        "Adding instead of multiplying",
+        "Forgetting to simplify the result"
       ],
-      "latex": "3.14 \\times 2 = \\frac{314 \\times 2}{100} = \\frac{628}{100} = 6.28"
+      "latex": "\\frac{2}{3} \\times \\frac{3}{4} = \\frac{2 \\times 3}{3 \\times 4} = \\frac{6}{12} = \\frac{1}{2}"
     },
     {
-      "problem": "Divide 6.4 ÷ 0.8",
-      "solution": "6.4 ÷ 0.8 = 8",
+      "problem": "Calculate 3/4 ÷ 1/2",
+      "solution": "3/4 ÷ 1/2 = 3/2 = 1 1/2",
       "steps": [
-        "Make the divisor a whole number by multiplying both by 10",
-        "6.4 × 10 = 64, 0.8 × 10 = 8",
-        "Now divide: 64 ÷ 8 = 8",
-        "Check: 8 × 0.8 = 6.4 ✓"
+        "Keep the first fraction: 3/4",
+        "Change division to multiplication: ×",
+        "Flip the second fraction: 1/2 becomes 2/1",
+        "Multiply: 3/4 × 2/1 = 6/4 = 3/2 = 1 1/2"
       ],
       "commonErrors": [
-        "Not shifting both dividend and divisor",
-        "Shifting by wrong power of 10"
+        "Not flipping the second fraction",
+        "Flipping the first fraction instead"
       ],
-      "latex": "6.4 \\div 0.8 = \\frac{6.4 \\times 10}{0.8 \\times 10} = \\frac{64}{8} = 8"
-    },
-    {
-      "problem": "Convert 3/4 to a decimal",
-      "solution": "3/4 = 0.75",
-      "steps": [
-        "Divide the numerator by the denominator: 3 ÷ 4",
-        "Set up long division: 3.000 ÷ 4",
-        "4 goes into 30 seven times (7 × 4 = 28), remainder 2",
-        "4 goes into 20 five times (5 × 4 = 20), remainder 0",
-        "Result: 0.75"
-      ],
-      "commonErrors": [
-        "Stopping division too early",
-        "Misplacing the decimal point"
-      ],
-      "latex": "\\frac{3}{4} = 3 \\div 4 = 0.75"
+      "latex": "\\frac{3}{4} \\div \\frac{1}{2} = \\frac{3}{4} \\times \\frac{2}{1} = \\frac{6}{4} = \\frac{3}{2}"
     }
   ],
   "practice": [
     {
-      "id": "p6-1",
+      "id": "p5-1",
       "type": "multiple-choice",
-      "problem": "What is the place value of 5 in 2.35?",
-      "options": ["Ones", "Tenths", "Hundredths", "Thousandths"],
-      "correct": 2,
+      "problem": "Which fraction is equivalent to 1/2?",
+      "options": ["2/3", "2/4", "3/4", "1/3"],
+      "correct": 1,
       "hints": [
-        "Look at the position of 5 relative to the decimal point",
-        "Count places to the right of the decimal point",
-        "First place right is tenths, second is hundredths"
+        "Think about what fraction means the same as 1/2",
+        "1/2 means 1 part out of 2 equal parts",
+        "What other fraction represents half?"
       ],
-      "explanation": "The 5 is in the hundredths place because it's the second digit to the right of the decimal point.",
+      "explanation": "2/4 = 1/2 because both represent half of a whole. 2 out of 4 parts is the same as 1 out of 2 parts.",
       "difficulty": 2
     },
     {
-      "id": "p6-2",
+      "id": "p5-2",
       "type": "fill-in",
-      "problem": "Add: 1.7 + 0.8 = ?",
-      "correct": "2.5",
+      "problem": "Add: 2/5 + 1/5 = ?",
+      "correct": "3/5",
       "hints": [
-        "Align the decimal points",
-        "Add the tenths: 7 + 8 = 15",
-        "15 tenths = 1 whole + 5 tenths"
+        "The denominators are the same",
+        "Add only the numerators",
+        "Keep the denominator the same"
       ],
-      "explanation": "1.7 + 0.8 = 2.5. When adding 7 tenths + 8 tenths = 15 tenths = 1.5, plus the original 1 whole = 2.5",
+      "explanation": "When denominators are the same, add the numerators: 2 + 1 = 3, so 2/5 + 1/5 = 3/5",
       "difficulty": 2
     },
     {
-      "id": "p6-3",
+      "id": "p5-3",
       "type": "multiple-choice",
-      "problem": "What is 0.6 × 0.4?",
-      "options": ["0.24", "2.4", "0.024", "24"],
-      "correct": 0,
+      "problem": "What is 1/3 + 1/6?",
+      "options": ["2/9", "1/2", "2/6", "1/9"],
+      "correct": 1,
       "hints": [
-        "Multiply 6 × 4 = 24",
-        "Count decimal places: 0.6 has 1, 0.4 has 1",
-        "Total decimal places: 1 + 1 = 2"
+        "Find a common denominator first",
+        "The LCD of 3 and 6 is 6",
+        "Convert 1/3 to sixths"
       ],
-      "explanation": "0.6 × 0.4 = 0.24. Multiply 6 × 4 = 24, then place decimal point 2 places from right.",
+      "explanation": "1/3 = 2/6, so 1/3 + 1/6 = 2/6 + 1/6 = 3/6 = 1/2",
       "difficulty": 3
     },
     {
-      "id": "p6-4",
+      "id": "p5-4",
       "type": "fill-in",
-      "problem": "Divide: 2.5 ÷ 0.5 = ?",
-      "correct": "5",
+      "problem": "Multiply: 1/4 × 2/3 = ?",
+      "correct": "2/12",
       "hints": [
-        "Make the divisor whole by multiplying both by 10",
-        "2.5 × 10 = 25, 0.5 × 10 = 5",
-        "Now divide: 25 ÷ 5"
+        "Multiply numerators together",
+        "Multiply denominators together",
+        "1 × 2 = 2, and 4 × 3 = 12"
       ],
-      "explanation": "2.5 ÷ 0.5 = 5. Multiply both by 10 to get 25 ÷ 5 = 5",
+      "explanation": "To multiply fractions: (1 × 2)/(4 × 3) = 2/12, which can be simplified to 1/6",
       "difficulty": 3
     },
     {
-      "id": "p6-5",
+      "id": "p5-5",
       "type": "multiple-choice",
-      "problem": "Which decimal is equivalent to 1/4?",
-      "options": ["0.25", "0.4", "0.14", "0.75"],
-      "correct": 0,
+      "problem": "What is 1/2 ÷ 1/4?",
+      "options": ["1/8", "2", "1/6", "4"],
+      "correct": 1,
       "hints": [
-        "Divide 1 by 4",
-        "1 ÷ 4 = ?",
-        "Think about quarters: 1/4 of a dollar is 25 cents"
+        "Remember: keep, change, flip",
+        "1/2 × 4/1",
+        "How many quarters fit in a half?"
       ],
-      "explanation": "1/4 = 0.25 because 1 ÷ 4 = 0.25, or think of it as 25/100.",
-      "difficulty": 2
+      "explanation": "1/2 ÷ 1/4 = 1/2 × 4/1 = 4/2 = 2. There are 2 quarter-pieces in one half.",
+      "difficulty": 3
     }
   ],
-  "tools": ["calculator", "decimal-visualizer", "place-value-chart"],
+  "tools": ["calculator", "fraction-visualizer", "fraction-strips"],
   "assessment": {
     "masteryThreshold": 0.8,
     "requiredProblems": 5

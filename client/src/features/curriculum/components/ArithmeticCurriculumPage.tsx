@@ -65,6 +65,7 @@ export function ArithmeticCurriculumPage() {
         difficulty: question.difficulty as 1 | 2 | 3 | 4 | 5,
       })),
       tools: data.tools,
+      commonPitfalls: data.commonPitfalls || undefined,
       assessment: data.assessment,
     };
   };

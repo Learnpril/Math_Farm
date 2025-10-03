@@ -26,6 +26,12 @@ import {
   DivisionRemainderVisual,
   LongDivisionDemo,
   DivisionFactsTable,
+  ExponentVisualizer,
+  PowersOfTenChart,
+  ExponentGrowthChart,
+  ExponentComparison,
+  ExponentPatterns,
+  NegativeNumbersIntro,
 } from './visual-aids';
 
 interface TheorySectionProps {
@@ -170,6 +176,32 @@ export function TheorySection({
       case 'DivisionFactsTable':
       case 'division-facts-table':
         return 'The following table shows the relationship between multiplication and division facts, helping you understand how these operations are connected.';
+
+      // Exponent visuals
+      case 'ExponentVisualizer':
+      case 'exponent-visualizer':
+        return 'Below is an interactive tool that shows how exponents represent repeated multiplication, with visual blocks and step-by-step calculations.';
+
+      case 'PowersOfTenChart':
+      case 'powers-of-ten-chart':
+        return 'The following chart demonstrates how powers of 10 connect to place value, showing the pattern of adding zeros.';
+
+      case 'ExponentGrowthChart':
+      case 'exponent-growth-chart':
+        return 'Below is a dynamic visualization showing how exponential growth accelerates rapidly with interactive bar charts.';
+
+      case 'ExponentComparison':
+      case 'exponent-comparison':
+        return 'The following tool allows you to compare different exponential expressions side-by-side to see which is larger and why.';
+
+      case 'ExponentPatterns':
+      case 'exponent-patterns':
+        return 'Below is an interactive explorer showing patterns in powers of 2, powers of 10, perfect squares, and perfect cubes.';
+
+      // Negative numbers visual
+      case 'NegativeNumbersIntro':
+      case 'negative-numbers-intro':
+        return 'Below is an interactive number line that helps you explore positive and negative numbers with real-world examples.';
 
       // Other algorithms and procedures
       case 'standard-algorithm':
@@ -509,6 +541,32 @@ export function TheorySection({
             />
           );
 
+        // Exponent visuals
+        case 'ExponentVisualizer':
+        case 'exponent-visualizer':
+          return <ExponentVisualizer className='mt-4' />;
+
+        case 'PowersOfTenChart':
+        case 'powers-of-ten-chart':
+          return <PowersOfTenChart className='mt-4' />;
+
+        case 'ExponentGrowthChart':
+        case 'exponent-growth-chart':
+          return <ExponentGrowthChart className='mt-4' />;
+
+        case 'ExponentComparison':
+        case 'exponent-comparison':
+          return <ExponentComparison className='mt-4' />;
+
+        case 'ExponentPatterns':
+        case 'exponent-patterns':
+          return <ExponentPatterns className='mt-4' />;
+
+        // Negative numbers visual
+        case 'NegativeNumbersIntro':
+        case 'negative-numbers-intro':
+          return <NegativeNumbersIntro className='mt-4' />;
+
         // Other algorithms and procedures
         case 'standard-algorithm':
         case 'long-division-algorithm':
@@ -696,8 +754,8 @@ Students often err by thinking longer numbers are always bigger, or comparing fr
               }
             }
 
-            // Chapter 2: Addition and Subtraction
-            if (chapterNumber === 2) {
+            // Chapter 3: Addition and Subtraction
+            if (chapterNumber === 3) {
               switch (title) {
                 case 'Addition with Regrouping':
                   return `When combining quantities pushes a place value beyond its limit - like filling a cup to overflow - we "trade up," regrouping tens from units, hundreds from tens. Intuitively, imagine ten marbles filling a small box; add one more, and you bundle ten into a larger "ten" box, leaving one. This is addition with regrouping, or carrying, ensuring place value integrity.
@@ -842,12 +900,11 @@ Common errors include misaligning digits in the quotient, making arithmetic mist
 
               <div className='text-gray-700 dark:text-gray-300 leading-relaxed space-y-4 mb-8'>
                 {enhancedContent.split('\n\n').map((paragraph, pIndex) => {
-                  // Handle special formatting
+                  // Handle special formatting - only for very specific misconception sections
                   if (
-                    paragraph.includes('Common misconceptions') ||
-                    paragraph.includes('Watch out for') ||
-                    paragraph.includes('A common error') ||
-                    paragraph.includes('Students often err')
+                    paragraph.startsWith('Common misconceptions:') ||
+                    paragraph.startsWith('A common error is') ||
+                    paragraph.startsWith('Students often make the mistake of')
                   ) {
                     return (
                       <div

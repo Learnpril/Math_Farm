@@ -1,447 +1,402 @@
 {
   "id": "chapter-02",
-  "title": "Addition and Subtraction",
+  "title": "Decimals Basics",
   "objectives": [
-    "Master single-digit addition and subtraction facts and understand inverse relationships",
-    "Understand and apply the standard column method for addition and subtraction with multi-digit numbers",
-    "Master the mechanics of carrying in addition and borrowing in subtraction, including why these steps are necessary",
-    "Solve basic word problems involving addition and subtraction in everyday contexts",
-    "Develop habits for checking calculations to avoid and correct errors",
-    "Build fluency with larger numbers and special cases, such as subtracting across zeros"
+    "Understand decimals as extensions of the base-10 system",
+    "Read, write, and compare decimal numbers",
+    "Understand decimal place value (tenths, hundredths, thousandths)",
+    "Add and subtract decimals with proper alignment",
+    "Multiply and divide decimals using place value rules"
   ],
   "prerequisites": ["chapter-01"],
   "introduction": {
-    "context": "Addition and subtraction are the cornerstone operations of arithmetic, used in countless daily tasks - from adding up bills at a restaurant to subtracting hours worked from a timesheet. This chapter focuses exclusively on traditional methods, teaching you the reliable column approach step by step. We'll start with the fundamentals, explain regrouping in simple terms, and provide plenty of examples and practice to solidify your skills. By concentrating on these basics without distractions, you'll gain the precision needed for real-life applications, like managing a household budget or calculating distances on a map.",
-    "connection": "Regrouping relies on place value - carrying turns 10 ones into 1 ten, just as you learned in expanded form (e.g., 15 = 1 ten + 5 ones). This chapter builds directly on your understanding of place value from Chapter 1, using that knowledge to perform calculations with larger numbers accurately and efficiently."
+    "context": "Decimals are a way to write numbers that have parts smaller than 1, like half or a quarter. They use the same place value system you learned in Chapter 1, but extend it to the right of a decimal point to show tenths, hundredths, and smaller parts. This makes calculations with money, measurements, and science much easier and more precise. Think of a store clerk making change: decimals let them work with dollars and cents smoothly, making precise calculations simple and straightforward.",
+    "connection": "Decimals extend the place value system you learned in Chapter 1 to show parts smaller than 1. The place value system continues to the right of the decimal point, and all the math operations you know work the same way with decimals.",
+    "historicalContext": "Decimals were invented to make calculations with parts of whole numbers easier and more precise. Ancient civilizations like the Babylonians (1800 BCE) used a different system for astronomy, while Chinese mathematicians (300 BCE) used early decimal ideas for land surveys. The big breakthrough came in Europe when Persian mathematician Al-Kashi (1427 CE) wrote about decimal numbers in his 'Key to Arithmetic' for star charts. But Simon Stevin gets most of the credit for his 1585 book 'The Tenth,' which showed how decimals could make engineering and business calculations much easier. He wrote 3.75 as 3 7① 5② using circled numbers! The decimal point as we know it was standardized by Euler in the 1700s, and the French metric system in the 1790s made decimals essential for measurements. Schools started teaching decimals in the 1800s, and calculators in the 1900s made decimal math automatic.",
+    "realWorldApplications": "Decimals are everywhere in daily life! Money uses decimals: $12.34 means 12 dollars, 3 dimes, and 4 pennies. Sports use decimals for times: a 9.8-second sprint. Cooking uses decimals: 1.5 cups of flour. Gas prices, test scores, weather temperatures, and GPS coordinates all use decimals. They make precise measurements possible and calculations much simpler."
   },
   "theory": {
     "concepts": [
       {
-        "title": "Single-Digit Addition and Subtraction Basics",
-        "content": "Before tackling multi-digit problems, it's essential to master single-digit addition and subtraction. Addition means combining quantities: 3 + 4 means starting with 3 and adding 4 more, giving 7. Subtraction means taking away: 8 - 3 means starting with 8 and removing 3, leaving 5. These operations are inverse relationships - addition and subtraction undo each other. For example, if 5 + 3 = 8, then 8 - 3 = 5 and 8 - 5 = 3. Understanding these basic facts (like 7 + 6 = 13 or 15 - 8 = 7) through memorization and practice creates the foundation for all larger calculations. Use strategies like counting on (for 6 + 4, start at 6 and count up 4 more), counting back (for 9 - 2, start at 9 and count back 2), or using doubles (6 + 6 = 12, so 6 + 7 = 13).",
-        "latex": "3 + 4 = 7 \\text{ and } 8 - 3 = 5 \\text{ (inverse operations)}",
-        "visuals": ["NumberLine", "CountingDots"]
+        "title": "2.1 Understanding Decimals",
+        "content": "Think of decimals as extending the number line to the right, showing parts smaller than 1. Start with something familiar: $0.25 is a quarter dollar. A decimal number has two parts separated by a decimal point: the whole number part (like 4 in 4.56) and the decimal part (like .56, which means 5 tenths plus 6 hundredths). You can build decimals step by step: start with concrete examples like 0.5 (half), then use charts to see where digits go, and finally compare decimals by looking at each place value. Stevin made decimals popular in 1585 for land surveying because they made adding measurements much easier and more precise. Today we use decimals for GPS coordinates (like 37.7749° latitude) and cooking (0.5 teaspoon of salt). Watch out for common mistakes: more digits doesn't always mean a bigger number (0.9 is less than 1.0), and fewer decimal places doesn't mean bigger (0.25 is less than 0.3). Example: 2.75 inches of rainfall means 2 whole inches plus 7 tenths plus 5 hundredths.",
+        "latex": "4.56 = 4 + 0.5 + 0.06 = 4 + 5 \\times 10^{-1} + 6 \\times 10^{-2}",
+        "visuals": [],
+        "developmentStages": {
+          "concrete": "Use physical models like base-10 blocks where a flat square = 1, a long strip = 0.1, and a small cube = 0.01",
+          "semiAbstract": "Use place value charts with columns clearly labeled for tenths, hundredths, etc.",
+          "abstract": "Compare decimals by looking at each place value position from left to right"
+        },
+        "commonMisconceptions": [
+          "More digits means larger number (0.9 vs 1.0)",
+          "Fewer decimal places means larger (0.25 vs 0.3)"
+        ]
       },
       {
-        "title": "Addition Fundamentals and Regrouping",
-        "content": "Addition combines two or more numbers to find a total, or sum. The traditional column method ensures accuracy by keeping places aligned. When adding numbers, write them vertically with ones under ones, tens under tens, and so on. Add each column from right to left. When a column sums to 10 or more, you can't write two digits in one place, so write the ones digit and carry the 1 (representing 10) to the next column. This regrouping keeps the number correct in base-10. For example, when adding 47 + 38: in the ones column, 7 + 8 = 15, so write 5 and carry 1 to the tens column. Then 4 + 3 + 1 (carry) = 8. The result is 85.",
-        "latex": "\\begin{align} 47 \\\\ + 38 \\\\ \\hline 85 \\end{align} \\text{ where } 7 + 8 = 15 \\rightarrow \\text{write 5, carry 1}",
-        "visuals": ["AdditionAlgorithm", "PlaceValueChart"]
+        "title": "2.2 Decimal Place Value and Equivalents",
+        "content": "Decimal place values work just like whole number places, but they go to the right of the decimal point and get 10 times smaller each step. Think of it like zooming in: if you go from units to tenths, you're dividing by 10. The pattern is: hundreds, tens, units . tenths, hundredths, thousandths... So 3.141 means 3 ones + 1 tenth + 4 hundredths + 1 thousandth. You can practice by filling in place value charts with numbers like 4.56, then expanding them: 2.34 = 2 + 0.3 + 0.04. This connects to the metric system: 1.5 kilometers = 1500 meters (just move the decimal point). Be careful not to mix up place values - use labeled charts to help. Some decimals repeat forever, like 0.333... (we'll learn more about repeating decimals in Chapter 6). Example: 0.6 means 6 tenths.",
+        "latex": "3.141 = 3 \\times 10^0 + 1 \\times 10^{-1} + 4 \\times 10^{-2} + 1 \\times 10^{-3}",
+        "visuals": [],
+        "developmentStages": {
+          "concrete": "Practice filling in place value charts with decimal numbers",
+          "semiAbstract": "Break decimals apart: 2.34 = 2 + 0.3 + 0.04",
+          "abstract": "Understand place value relationships: 0.75 means 7 tenths and 5 hundredths"
+        },
+
+        "commonMisconceptions": [
+          "Confusing place value names (calling hundredths 'tenths')",
+          "Not understanding that 0.3 = 0.30 = 0.300 (same value, different notation)"
+        ]
       },
       {
-        "title": "Subtraction Fundamentals and Borrowing",
-        "content": "Subtraction removes one number (subtrahend) from another (minuend) to find the difference. Use the column method for reliability by aligning numbers and subtracting right to left. When the top digit is smaller than the bottom digit, borrow 1 from the left column, adding 10 to the top digit. This 'regrouping' converts higher places into lower ones (1 ten = 10 ones) to make subtraction possible. For example, in 52 - 27: since 2 < 7 in the ones place, borrow from tens (ones become 12, tens become 4), then 12 - 7 = 5 and 4 - 2 = 2, giving 25.",
-        "latex": "\\begin{align} 52 \\\\ - 27 \\\\ \\hline 25 \\end{align} \\text{ where } 2 < 7 \\rightarrow \\text{borrow: } 12 - 7 = 5",
-        "visuals": ["SubtractionAlgorithm", "PlaceValueChart"]
+        "title": "2.3 Adding and Subtracting Decimals",
+        "content": "Adding and subtracting decimals is just like adding whole numbers, but you must line up the decimal points first. Think of 1.2 + 0.3 as 12 tenths + 3 tenths = 15 tenths = 1.5. The key rule is: always line up the decimal points, then add or subtract column by column just like you learned in Chapter 1. You can add zeros to make it clearer: 3.45 + 1.2 becomes 3.45 + 1.20 = 4.65. For subtraction, you might need to borrow: 5.6 - 2.34 becomes 5.60 - 2.34 = 3.26. Stevin used decimal addition for bookkeeping in the 1500s, and by the 1700s it was standard practice. You see this everywhere: adding bills ($12.50 + $3.75 = $16.25) or measuring heights (1.75 m - 1.20 m = 0.55 m). The biggest mistake is not lining up decimal points - always do this first! Adding zeros for clarity helps too. Example: 4.08 + 2.9 = 4.08 + 2.90 = 6.98.",
+        "latex": "\\begin{align} 3.45 \\\\ + 1.20 \\\\ \\hline 4.65 \\end{align}",
+        "visuals": ["DecimalPlaceValueChart"],
+        "developmentStages": {
+          "concrete": "Use interactive decimal place value charts to see how decimal places align when adding",
+          "semiAbstract": "Line up decimal points and add trailing zeros to make columns clear",
+          "abstract": "Handle complex problems with borrowing and carrying across decimal places"
+        },
+        "keyRule": "Always align decimal points before adding or subtracting",
+        "commonMisconceptions": [
+          "Not aligning decimal points vertically",
+          "Forgetting to add trailing zeros for clarity (3.45 + 1.2 should become 3.45 + 1.20)"
+        ]
       },
       {
-        "title": "Common Core Concepts",
-        "content": "The Common Core approach offers a fresh perspective on addition and subtraction, prioritizing building a deeper intuition for numbers. Unlike purely traditional algorithms that emphasize rote steps like borrowing and carrying, Common Core focuses on conceptual grasp through place value, operation properties, and the link between addition and subtraction, helping you understand why methods work rather than just how to follow them. This can make calculations more flexible and less error-prone in real-life scenarios, such as estimating costs or analyzing data. This method encourages mental agility: instead of always lining up columns, you might use strategies like 'making ten' (e.g., for 8 + 5, break it as 8 + 2 = 10, then add the remaining 3 for 13), which speeds up quick computations without paper. Early lessons often incorporate everyday stories or visuals, like number lines for jumping sums or base-10 blocks to show regrouping physically, making abstract ideas tangible and relevant to practical needs, such as planning or conversions. Subtraction is taught with variety, avoiding early reliance on borrowing by using techniques like decomposition or treating it as 'adding up' to find differences (e.g., for 52 - 27, think 'how much to add to 27 to reach 52?'). The aim is to turn you into a versatile thinker who can adapt to problems, though some find the multiple strategies initially more complex than straightforward drills.",
-        "latex": "\\text{Making Ten: } 8 + 5 = 8 + 2 + 3 = 10 + 3 = 13",
-        "visuals": ["CommonCoreStrategies"]
+        "title": "2.4 Multiplying Decimals",
+        "content": "Multiplying decimals has a simple trick: ignore the decimal points at first, multiply like whole numbers, then count decimal places to put the point back. Think of 1.2 × 0.3 as finding the area of a rectangle 1.2 by 0.3, which equals 0.36. Here's how: multiply 12 × 3 = 36, then count decimal places (1.2 has 1 place, 0.3 has 1 place, so 1+1=2 total places), so the answer is 0.36. You can visualize this with area grids: 0.4 × 0.5 = 0.20. For bigger numbers like 1.23 × 4: multiply 123 × 4 = 492, then place the decimal 2 places from the right (since 1.23 has 2 decimal places) to get 4.92. Stevin used decimal multiplication for business in the 1500s. Today we use it for areas (2.5 m × 1.5 m = 3.75 m²) and discounts ($10 × 0.2 = $2 off). Always count decimal places carefully - this is the most common mistake! Example: 3.14 × 2 = 6.28 (multiply 314 × 2 = 628, then place decimal 2 places from right).",
+        "latex": "1.23 \\times 0.4 = 0.492",
+        "visuals": ["DecimalPlaceValueChart"],
+        "developmentStages": {
+          "concrete": "Use decimal place value charts to see how decimal places are counted and positioned in multiplication",
+          "semiAbstract": "Practice problems where only one number has decimals",
+          "abstract": "Handle problems where both numbers have decimals by counting total decimal places"
+        },
+        "keyRule": "Count total decimal places in factors, place in product",
+        "commonMisconceptions": [
+          "Forgetting to count decimal places and placing the decimal point incorrectly",
+          "Thinking the product should have the same number of decimal places as the larger factor"
+        ]
+      },
+      {
+        "title": "2.5 Dividing Decimals",
+        "content": "Dividing decimals uses a clever trick: move the decimal point to make the divisor (the number you're dividing by) a whole number, then move the decimal point the same number of places in the dividend (the number being divided). Think of 1.2 ÷ 0.3 as 'how many 0.3s fit into 1.2?' The answer is 4. Here's the method: to solve 1.5 ÷ 0.3, multiply both numbers by 10 to get 15 ÷ 3 = 5. For trickier problems like 0.625 ÷ 0.25, multiply both by 100 to get 625 ÷ 25 = 25, then divide normally. Stevin used decimal division for weighing goods in the 1500s, and by the 1800s the methods were standardized. We use this for rates (10.5 km ÷ 1.5 hours = 7 km/hour) and unit prices ($4.50 ÷ 1.5 kg = $3 per kg). The key is remembering to move both decimal points the same amount - if you forget, your answer will be way off! Some divisions create repeating decimals that go on forever (we'll learn about these in Chapter 6). Example: 6.4 ÷ 0.8 becomes 64 ÷ 8 = 8.",
+        "latex": "1.5 \\div 0.3 = 15 \\div 3 = 5",
+        "visuals": ["DecimalPlaceValueChart"],
+        "developmentStages": {
+          "concrete": "Use decimal place value charts to visualize how decimal points shift during division",
+          "semiAbstract": "Move decimal points to turn decimal division into whole number division",
+          "abstract": "Use long division when the answer has decimal places"
+        },
+        "keyRule": "Multiply both dividend and divisor by same power of 10",
+        "commonMisconceptions": [
+          "Moving only the divisor's decimal point and forgetting to move the dividend's",
+          "Getting confused about which direction to move decimal points"
+        ]
       }
     ]
   },
   "examples": [
     {
-      "problem": "Single-Digit Addition: 7 + 5",
-      "solution": "7 + 5 = 12",
+      "problem": "What is the place value of 7 in the number 3.47?",
+      "solution": "The 7 is in the hundredths place",
       "steps": [
-        "Start with the first number: 7",
-        "Count on 5 more: 8, 9, 10, 11, 12",
-        "Or use the fact that 7 + 5 = 12 (memorized addition fact)",
-        "The answer is 12"
+        "Identify the decimal point in 3.47",
+        "Count places to the right: first place is tenths (4), second place is hundredths (7)",
+        "The 7 is in the hundredths place",
+        "This means 7 × 0.01 = 0.07"
       ],
       "commonErrors": [
-        "Counting incorrectly when using fingers or mental counting",
-        "Confusing addition with subtraction"
+        "Confusing tenths and hundredths places",
+        "Counting from the wrong direction"
       ],
-      "latex": "7 + 5 = 12"
+      "latex": "3.47 = 3 + 0.4 + 0.07"
     },
     {
-      "problem": "Single-Digit Subtraction: 13 - 8",
-      "solution": "13 - 8 = 5",
+      "problem": "Add 4.08 + 2.9",
+      "solution": "4.08 + 2.9 = 6.98",
       "steps": [
-        "Start with 13",
-        "Count back 8: 12, 11, 10, 9, 8, 7, 6, 5",
-        "Or think: what plus 8 equals 13? Answer: 5",
-        "Check: 5 + 8 = 13 ✓"
+        "Align the decimal points vertically",
+        "Add trailing zero for clarity: 4.08 + 2.90",
+        "Add column by column from right to left",
+        "8 + 0 = 8, 0 + 9 = 9, 4 + 2 = 6",
+        "Result: 6.98"
       ],
       "commonErrors": [
-        "Counting in the wrong direction",
-        "Not checking the answer using addition"
+        "Not aligning decimal points",
+        "Forgetting to add trailing zeros for clarity"
       ],
-      "latex": "13 - 8 = 5 \\text{ (check: } 5 + 8 = 13 \\text{)}"
+      "latex": "\\begin{align} 4.08 \\\\ + 2.90 \\\\ \\hline 6.98 \\end{align}"
     },
     {
-      "problem": "Simple Addition: 23 + 45",
-      "solution": "23 + 45 = 68",
+      "problem": "Calculate 3.14 × 2",
+      "solution": "3.14 × 2 = 6.28",
       "steps": [
-        "Align the numbers vertically: ones under ones, tens under tens",
-        "Add the ones column: 3 + 5 = 8",
-        "Add the tens column: 2 + 4 = 6",
-        "Write the result: 68"
+        "Multiply as if they were whole numbers: 314 × 2 = 628",
+        "Count decimal places in the factors: 3.14 has 2 decimal places, 2 has 0",
+        "Total decimal places: 2 + 0 = 2",
+        "Place decimal point 2 places from right: 6.28"
       ],
       "commonErrors": [
-        "Misaligning the columns",
-        "Adding digits incorrectly (e.g., 3 + 4 = 7 instead of 3 + 5 = 8)"
+        "Forgetting to count decimal places",
+        "Placing decimal point in wrong position"
       ],
-      "latex": "\\begin{align} 23 \\\\ + 45 \\\\ \\hline 68 \\end{align}"
+      "latex": "3.14 \\times 2 = 6.28"
     },
     {
-      "problem": "Simple Subtraction: 56 - 23",
-      "solution": "56 - 23 = 33",
+      "problem": "Divide 6.4 ÷ 0.8",
+      "solution": "6.4 ÷ 0.8 = 8",
       "steps": [
-        "Align the numbers vertically with the larger number on top",
-        "Subtract the ones column: 6 - 3 = 3",
-        "Subtract the tens column: 5 - 2 = 3",
-        "Write the result: 33"
+        "Make the divisor a whole number by multiplying both by 10",
+        "6.4 × 10 = 64, 0.8 × 10 = 8",
+        "Now divide: 64 ÷ 8 = 8",
+        "Check: 8 × 0.8 = 6.4 ✓"
       ],
       "commonErrors": [
-        "Subtracting the top number from the bottom number",
-        "Misaligning the place values"
+        "Not shifting both dividend and divisor",
+        "Shifting by wrong power of 10"
       ],
-      "latex": "\\begin{align} 56 \\\\ - 23 \\\\ \\hline 33 \\end{align}"
+      "latex": "6.4 \\div 0.8 = \\frac{64}{8} = 8"
     },
     {
-      "problem": "Addition with Carrying: 47 + 38",
-      "solution": "47 + 38 = 85",
+      "problem": "Compare the decimals: Which is larger, 0.8 or 0.75?",
+      "solution": "0.8 is larger than 0.75",
       "steps": [
-        "Add the ones column: 7 + 8 = 15",
-        "Since 15 > 9, write 5 in the ones place and carry 1 to the tens",
-        "Add the tens column including the carry: 4 + 3 + 1 = 8",
-        "Write the result: 85"
+        "Line up the decimal points: 0.8 and 0.75",
+        "Add a zero to make them the same length: 0.80 and 0.75",
+        "Compare place by place from left to right",
+        "Both have 0 ones, so compare tenths: 8 tenths vs 7 tenths",
+        "Since 8 > 7, we know 0.8 > 0.75"
       ],
       "commonErrors": [
-        "Forgetting to carry the 1",
-        "Writing 15 in the ones place instead of carrying",
-        "Adding the carry to the wrong column"
+        "Thinking more digits means larger number",
+        "Not aligning decimal points when comparing"
       ],
-      "latex": "\\begin{align} \\phantom{+}47 \\\\ + 38 \\\\ \\hline 85 \\end{align} \\text{ (carry 1 from } 7+8=15 \\text{)}"
-    },
-    {
-      "problem": "Subtraction with Borrowing: 52 - 27",
-      "solution": "52 - 27 = 25",
-      "steps": [
-        "Look at ones column: 2 - 7 is not possible with positive result",
-        "Borrow 1 from the tens place: 5 becomes 4, and 2 becomes 12",
-        "Subtract ones: 12 - 7 = 5",
-        "Subtract tens: 4 - 2 = 2",
-        "Write the result: 25"
-      ],
-      "commonErrors": [
-        "Not borrowing when needed",
-        "Forgetting to reduce the tens place after borrowing",
-        "Borrowing incorrectly (e.g., making 2 become 11 instead of 12)"
-      ],
-      "latex": "\\begin{align} \\phantom{1}4\\phantom{1}12 \\\\ - 27 \\\\ \\hline 25 \\end{align} \\text{ (52 becomes 4 tens, 12 ones)}"
-    },
-    {
-      "problem": "Multi-digit Addition: 156 + 287",
-      "solution": "156 + 287 = 443",
-      "steps": [
-        "Add ones: 6 + 7 = 13, write 3 and carry 1",
-        "Add tens: 5 + 8 + 1(carry) = 14, write 4 and carry 1",
-        "Add hundreds: 1 + 2 + 1(carry) = 4",
-        "Write the result: 443"
-      ],
-      "commonErrors": [
-        "Losing track of carries across multiple columns",
-        "Adding the carry to the wrong column",
-        "Forgetting to add the final carry"
-      ],
-      "latex": "\\begin{align} \\phantom{+}156 \\\\ + 287 \\\\ \\hline 443 \\end{align} \\text{ (carries: ones→tens→hundreds)}"
-    },
-    {
-      "problem": "Subtraction with Zeros: 400 - 156",
-      "solution": "400 - 156 = 244",
-      "steps": [
-        "Ones: 0 - 6 requires borrowing, but tens place is 0",
-        "Borrow from hundreds: 4 becomes 3, middle 0 becomes 9, last 0 becomes 10",
-        "Now subtract: ones 10 - 6 = 4, tens 9 - 5 = 4, hundreds 3 - 1 = 2",
-        "Write the result: 244"
-      ],
-      "commonErrors": [
-        "Not borrowing through all the zeros",
-        "Stopping the borrowing process at the first zero",
-        "Incorrectly handling the chain of borrowing"
-      ],
-      "latex": "\\begin{align} 3\\phantom{1}9\\phantom{1}10 \\\\ - 156 \\\\ \\hline 244 \\end{align} \\text{ (400 becomes 3 hundreds, 9 tens, 10 ones)}"
+      "latex": "0.8 = 0.80 > 0.75"
     }
   ],
   "practice": [
     {
-      "id": "single-add-1",
-      "type": "fill-in",
-      "problem": "Calculate: 6 + 4 = ?",
-      "correct": "10",
-      "hints": [
-        "Count on from 6: 7, 8, 9, 10",
-        "Or use the doubles fact: 5 + 5 = 10, so 6 + 4 = 10",
-        "This is a basic addition fact to memorize"
-      ],
-      "explanation": "6 + 4 = 10. This is a fundamental addition fact that forms the basis for larger calculations.",
-      "difficulty": 1
-    },
-    {
-      "id": "single-sub-1",
+      "id": "p6-1",
       "type": "multiple-choice",
-      "problem": "What is 9 - 3?",
-      "options": ["5", "6", "7", "12"],
-      "correct": 1,
+      "problem": "What is the place value of 5 in 2.35?",
+      "options": ["Ones", "Tenths", "Hundredths", "Thousandths"],
+      "correct": 2,
       "hints": [
-        "Count back from 9: 8, 7, 6",
-        "Or think: 3 + ? = 9",
-        "Check your answer by adding: 6 + 3 = 9"
+        "Look at the position of 5 relative to the decimal point",
+        "Count places to the right of the decimal point",
+        "First place right is tenths, second is hundredths"
       ],
-      "explanation": "9 - 3 = 6. You can verify this by checking that 6 + 3 = 9.",
-      "difficulty": 1
-    },
-    {
-      "id": "single-add-2",
-      "type": "fill-in",
-      "problem": "Calculate: 8 + 7 = ?",
-      "correct": "15",
-      "hints": [
-        "This crosses over 10, so think 8 + 2 = 10, then 10 + 5 = 15",
-        "Or count on from 8: 9, 10, 11, 12, 13, 14, 15",
-        "Use the strategy: 8 + 7 = 8 + (2 + 5) = 10 + 5 = 15"
-      ],
-      "explanation": "8 + 7 = 15. Breaking it down: 8 + 2 = 10, then 10 + 5 = 15, using the remaining 5 from the 7.",
+      "explanation": "The 5 is in the hundredths place because it's the second digit to the right of the decimal point.",
       "difficulty": 2
     },
     {
-      "id": "single-sub-2",
+      "id": "p6-2",
       "type": "fill-in",
-      "problem": "Calculate: 14 - 6 = ?",
-      "correct": "8",
+      "problem": "Add: 1.7 + 0.8 = ?",
+      "correct": "2.5",
       "hints": [
-        "Think: 6 + ? = 14",
-        "Or count back from 14 six times",
-        "Use the relationship: 14 - 6 is the same as 14 - 4 - 2 = 10 - 2 = 8"
+        "Align the decimal points",
+        "Add the tenths: 7 + 8 = 15",
+        "15 tenths = 1 whole + 5 tenths"
       ],
-      "explanation": "14 - 6 = 8. You can check this: 8 + 6 = 14 ✓",
+      "explanation": "1.7 + 0.8 = 2.5. When adding 7 tenths + 8 tenths = 15 tenths = 1.5, plus the original 1 whole = 2.5",
       "difficulty": 2
     },
     {
-      "id": "fact-families-1",
+      "id": "p6-3",
       "type": "multiple-choice",
-      "problem": "If 9 + 4 = 13, what is 13 - 4?",
-      "options": ["4", "9", "13", "17"],
-      "correct": 1,
-      "hints": [
-        "Addition and subtraction are inverse operations",
-        "If 9 + 4 = 13, then 13 - 4 = 9",
-        "This is called a fact family"
-      ],
-      "explanation": "13 - 4 = 9. Since 9 + 4 = 13, we know that 13 - 4 = 9. These form a fact family.",
-      "difficulty": 2
-    },
-    {
-      "id": "add-basic-1",
-      "type": "fill-in",
-      "problem": "Calculate: 23 + 45 = ?",
-      "correct": "68",
-      "hints": [
-        "Add the ones place first: 3 + 5",
-        "Then add the tens place: 2 + 4",
-        "No carrying needed for this problem"
-      ],
-      "explanation": "3 + 5 = 8 in ones place, 2 + 4 = 6 in tens place. Answer: 68",
-      "difficulty": 1
-    },
-    {
-      "id": "sub-basic-1",
-      "type": "multiple-choice",
-      "problem": "What is 56 - 23?",
-      "options": ["33", "43", "23", "53"],
+      "problem": "What is 0.6 × 0.4?",
+      "options": ["0.24", "2.4", "0.024", "24"],
       "correct": 0,
       "hints": [
-        "Subtract ones first: 6 - 3",
-        "Then subtract tens: 5 - 2",
-        "No borrowing needed"
+        "Multiply 6 × 4 = 24",
+        "Count decimal places: 0.6 has 1, 0.4 has 1",
+        "Total decimal places: 1 + 1 = 2"
       ],
-      "explanation": "6 - 3 = 3 in ones place, 5 - 2 = 3 in tens place. Answer: 33",
-      "difficulty": 1
+      "explanation": "0.6 × 0.4 = 0.24. Multiply 6 × 4 = 24, then place decimal point 2 places from right.",
+      "difficulty": 3
     },
     {
-      "id": "add-carry-1",
+      "id": "p6-4",
       "type": "fill-in",
-      "problem": "Calculate: 47 + 38 = ?",
-      "correct": "85",
+      "problem": "Divide: 2.5 ÷ 0.5 = ?",
+      "correct": "5",
       "hints": [
-        "Add ones: 7 + 8 = 15",
-        "Write 5, carry 1 to tens place",
-        "Add tens: 4 + 3 + 1(carry) = 8"
+        "Make the divisor whole by multiplying both by 10",
+        "2.5 × 10 = 25, 0.5 × 10 = 5",
+        "Now divide: 25 ÷ 5"
       ],
-      "explanation": "7 + 8 = 15, write 5 and carry 1. Then 4 + 3 + 1 = 8. Answer: 85",
-      "difficulty": 2
+      "explanation": "2.5 ÷ 0.5 = 5. Multiply both by 10 to get 25 ÷ 5 = 5",
+      "difficulty": 3
     },
     {
-      "id": "sub-borrow-1",
-      "type": "fill-in",
-      "problem": "Calculate: 52 - 27 = ?",
-      "correct": "25",
-      "hints": [
-        "Ones: 2 < 7, so borrow from tens",
-        "2 becomes 12, 5 becomes 4",
-        "Now subtract: 12 - 7 = 5, 4 - 2 = 2"
-      ],
-      "explanation": "Borrow 1 ten: 12 - 7 = 5 in ones, 4 - 2 = 2 in tens. Answer: 25",
-      "difficulty": 2
-    },
-    {
-      "id": "add-large-1",
+      "id": "p6-5",
       "type": "multiple-choice",
-      "problem": "What is 156 + 287?",
-      "options": ["433", "443", "453", "463"],
+      "problem": "What does 0.25 represent?",
+      "options": [
+        "25 tenths",
+        "25 hundredths",
+        "2 tenths and 5 ones",
+        "2 ones and 5 tenths"
+      ],
       "correct": 1,
       "hints": [
-        "Add ones: 6 + 7 = 13, carry 1",
-        "Add tens: 5 + 8 + 1 = 14, carry 1",
-        "Add hundreds: 1 + 2 + 1 = 4"
+        "Look at the place value of each digit",
+        "The 2 is in the tenths place, the 5 is in the hundredths place",
+        "Count: 2 tenths + 5 hundredths = 25 hundredths total"
       ],
-      "explanation": "Ones: 6+7=13 (write 3, carry 1). Tens: 5+8+1=14 (write 4, carry 1). Hundreds: 1+2+1=4. Answer: 443",
-      "difficulty": 3
-    },
-    {
-      "id": "sub-zeros-1",
-      "type": "fill-in",
-      "problem": "Calculate: 400 - 156 = ?",
-      "correct": "244",
-      "hints": [
-        "Need to borrow through the zeros",
-        "400 becomes 3, 9, 10 after borrowing",
-        "Then subtract normally: 10-6, 9-5, 3-1"
-      ],
-      "explanation": "Chain borrow: 400→3,9,10. Then 10-6=4, 9-5=4, 3-1=2. Answer: 244",
-      "difficulty": 3
-    },
-    {
-      "id": "word-problem-1",
-      "type": "fill-in",
-      "problem": "You drive 1,234 miles total. You've already driven 567 miles. How many miles are left?",
-      "correct": "667",
-      "hints": [
-        "This is a subtraction problem: total - driven = left",
-        "Set up: 1,234 - 567",
-        "You'll need to borrow in multiple places"
-      ],
-      "explanation": "1,234 - 567 = 667 miles remaining. This requires borrowing in the tens and hundreds places.",
-      "difficulty": 4
-    },
-    {
-      "id": "add-multiple-1",
-      "type": "fill-in",
-      "problem": "Calculate: 999 + 123 = ?",
-      "correct": "1122",
-      "hints": [
-        "Add ones: 9 + 3 = 12, carry 1",
-        "Add tens: 9 + 2 + 1 = 12, carry 1",
-        "Add hundreds: 9 + 1 + 1 = 11, write 11"
-      ],
-      "explanation": "Multiple carries: 9+3=12 (write 2, carry 1), 9+2+1=12 (write 2, carry 1), 9+1+1=11. Answer: 1,122",
-      "difficulty": 4
-    },
-    {
-      "id": "word-problem-2",
-      "type": "fill-in",
-      "problem": "Your bank balance is $5,678. You spend $2,345. What's your remaining balance?",
-      "correct": "3333",
-      "hints": [
-        "Subtract the amount spent from the balance",
-        "Set up: 5,678 - 2,345",
-        "Work carefully through the borrowing"
-      ],
-      "explanation": "$5,678 - $2,345 = $3,333 remaining balance. Requires borrowing in multiple columns.",
-      "difficulty": 5
-    },
-    {
-      "id": "sub-complex-1",
-      "type": "fill-in",
-      "problem": "Calculate: 92 - 58 = ?",
-      "correct": "34",
-      "hints": [
-        "Ones: 2 < 8, borrow from tens",
-        "2 becomes 12, 9 becomes 8",
-        "Subtract: 12 - 8 = 4, 8 - 5 = 3"
-      ],
-      "explanation": "Borrow: 92→8,12. Then 12-8=4 and 8-5=3. Answer: 34",
-      "difficulty": 3
-    },
-    {
-      "id": "add-large-2",
-      "type": "multiple-choice",
-      "problem": "What is 345 + 678?",
-      "options": ["1013", "1023", "1033", "1043"],
-      "correct": 1,
-      "hints": [
-        "Add ones: 5 + 8 = 13, carry 1",
-        "Add tens: 4 + 7 + 1 = 12, carry 1",
-        "Add hundreds: 3 + 6 + 1 = 10"
-      ],
-      "explanation": "5+8=13 (write 3, carry 1), 4+7+1=12 (write 2, carry 1), 3+6+1=10. Answer: 1,023",
-      "difficulty": 4
-    },
-    {
-      "id": "sub-large-1",
-      "type": "fill-in",
-      "problem": "Calculate: 1,000 - 432 = ?",
-      "correct": "568",
-      "hints": [
-        "Borrow from the thousands place through all zeros",
-        "1,000 becomes 0, 9, 9, 10 after borrowing",
-        "Then subtract: 10-2, 9-3, 9-4, 0-0"
-      ],
-      "explanation": "Chain borrow through zeros: 1,000→0,9,9,10. Then 10-2=8, 9-3=6, 9-4=5. Answer: 568",
-      "difficulty": 4
-    },
-    {
-      "id": "word-problem-3",
-      "type": "fill-in",
-      "problem": "Recipe calls for 250g flour. You add 175g more flour. How much flour total?",
-      "correct": "425",
-      "hints": [
-        "This is addition: original + added = total",
-        "Set up: 250 + 175",
-        "Add column by column"
-      ],
-      "explanation": "250g + 175g = 425g total flour. Simple addition with one carry in the tens place.",
+      "explanation": "0.25 represents 25 hundredths because it has 2 tenths and 5 hundredths, which equals 25 hundredths total.",
       "difficulty": 2
     },
     {
-      "id": "sub-practice-1",
+      "id": "p6-6",
       "type": "fill-in",
-      "problem": "Calculate: 789 - 456 = ?",
-      "correct": "333",
+      "problem": "Write 0.4 in expanded form using place values.",
+      "correct": "0.4 = 4 tenths",
       "hints": [
-        "Ones: 9 - 6 = 3 (no borrowing needed)",
-        "Tens: 8 - 5 = 3 (no borrowing needed)",
-        "Hundreds: 7 - 4 = 3 (no borrowing needed)"
+        "Look at which place value the 4 is in",
+        "The 4 is in the tenths place",
+        "So 0.4 means 4 tenths"
       ],
-      "explanation": "No borrowing needed: 9-6=3, 8-5=3, 7-4=3. Answer: 333",
+      "explanation": "0.4 = 4 tenths because the digit 4 is in the tenths place.",
       "difficulty": 3
     },
     {
-      "id": "word-problem-4",
+      "id": "p6-7",
       "type": "multiple-choice",
-      "problem": "Monthly budget is $5,000. Rent costs $1,234. How much is left for other expenses?",
-      "options": ["$3,766", "$3,776", "$3,866", "$3,876"],
+      "problem": "Compare: Which is larger, 0.9 or 0.75?",
+      "options": ["0.9", "0.75", "They are equal", "Cannot determine"],
       "correct": 0,
       "hints": [
-        "Subtract rent from total budget",
-        "Set up: 5,000 - 1,234",
-        "Borrow through the zeros carefully"
+        "Compare place by place from left to right",
+        "0.9 = 0.90 for easier comparison",
+        "9 tenths vs 7 tenths"
       ],
-      "explanation": "$5,000 - $1,234 = $3,766 remaining for other expenses. Chain borrowing required.",
-      "difficulty": 5
+      "explanation": "0.9 > 0.75 because 9 tenths is greater than 7 tenths (comparing the tenths place).",
+      "difficulty": 2
+    },
+    {
+      "id": "p6-8",
+      "type": "fill-in",
+      "problem": "Calculate: 12.5 - 7.38 = ?",
+      "correct": "5.12",
+      "hints": [
+        "Align decimal points: 12.50 - 7.38",
+        "Subtract column by column from right",
+        "Borrow when necessary: 0 - 8 requires borrowing"
+      ],
+      "explanation": "12.50 - 7.38 = 5.12. Align decimals, then subtract: 0-8 (borrow), 4-3=1, 2-7 (borrow), 11-7=4.",
+      "difficulty": 3
+    },
+    {
+      "id": "p6-9",
+      "type": "multiple-choice",
+      "problem": "What is 0.125 × 8?",
+      "options": ["1", "0.8", "1.25", "10"],
+      "correct": 0,
+      "hints": [
+        "Multiply 125 × 8 = 1000",
+        "0.125 has 3 decimal places",
+        "Place decimal point 3 places from right in 1000"
+      ],
+      "explanation": "0.125 × 8 = 1.000 = 1. Multiply 125 × 8 = 1000, then place decimal 3 places from right.",
+      "difficulty": 3
+    },
+    {
+      "id": "p6-10",
+      "type": "fill-in",
+      "problem": "Round 2.75 to the nearest tenth.",
+      "correct": "2.8",
+      "hints": [
+        "Look at the hundredths place to decide whether to round up or down",
+        "The hundredths digit is 5",
+        "When the digit is 5 or greater, round up"
+      ],
+      "explanation": "2.75 rounds to 2.8 because the hundredths digit (5) is 5 or greater, so we round the tenths place up from 7 to 8.",
+      "difficulty": 4
     }
   ],
   "tools": [
     "calculator",
-    "column-practice-tool",
-    "addition-subtraction-checker"
+    "decimal-visualizer",
+    "place-value-chart",
+    "decimal-number-line",
+    "decimal-comparison-tool"
   ],
+  "commonPitfalls": {
+    "title": "Common Pitfalls and How to Avoid Them",
+    "pitfalls": [
+      {
+        "misconception": "More digits after the decimal point means a larger number",
+        "example": "Thinking 0.9999 is larger than 1.0",
+        "explanation": "The number of decimal places doesn't determine size. Compare place by place from left to right: 0.9999 has 0 ones while 1.0 has 1 one, so 1.0 is larger.",
+        "correction": "Always compare decimals by looking at each place value position, starting from the left (ones, then tenths, then hundredths, etc.)"
+      },
+      {
+        "misconception": "Fewer decimal places means a larger number",
+        "example": "Thinking 0.5 is smaller than 0.25 because it has fewer digits",
+        "explanation": "0.5 = 0.50, which has 5 tenths, while 0.25 has only 2 tenths. So 0.5 > 0.25.",
+        "correction": "Add zeros to make decimal places equal for easier comparison: 0.50 vs 0.25"
+      },
+      {
+        "misconception": "Ignoring decimal point alignment in addition and subtraction",
+        "example": "Adding 1.2 + 0.34 as 12 + 34 = 46",
+        "explanation": "This treats decimals like whole numbers and ignores place value. The correct alignment is 1.20 + 0.34 = 1.54.",
+        "correction": "Always line up decimal points vertically before adding or subtracting, and add trailing zeros for clarity"
+      },
+      {
+        "misconception": "Forgetting to count decimal places in multiplication",
+        "example": "Calculating 1.2 × 0.3 = 36 instead of 0.36",
+        "explanation": "Students multiply 12 × 3 = 36 but forget to place the decimal point. 1.2 has 1 decimal place, 0.3 has 1 decimal place, so the answer needs 2 decimal places: 0.36.",
+        "correction": "Count total decimal places in both factors, then place the decimal point that many places from the right in your answer"
+      },
+      {
+        "misconception": "Moving only one decimal point in division",
+        "example": "For 1.5 ÷ 0.3, moving only the divisor: 1.5 ÷ 3 = 0.5 instead of 5",
+        "explanation": "Both the dividend and divisor must be multiplied by the same power of 10. The correct calculation is (1.5 × 10) ÷ (0.3 × 10) = 15 ÷ 3 = 5.",
+        "correction": "When making the divisor a whole number, multiply both the dividend and divisor by the same power of 10"
+      },
+      {
+        "misconception": "Confusing decimal place names",
+        "example": "Calling the 7 in 3.47 the 'tenths place' instead of 'hundredths place'",
+        "explanation": "Students often count from the wrong direction or mix up the place names. The first place right of the decimal is tenths, second is hundredths, third is thousandths.",
+        "correction": "Use memory devices: 'tenths' comes first (like 'ten' comes before 'hundred'), and practice with place value charts"
+      }
+    ],
+    "preventionStrategies": [
+      "Use place value charts consistently to visualize decimal positions",
+      "Practice decimal comparison with numbers that have different numbers of decimal places",
+      "Always show your work when aligning decimal points in operations",
+      "Double-check decimal point placement by estimating the reasonable size of your answer",
+      "Connect decimals to money examples (dollars and cents) for concrete understanding"
+    ]
+  },
+  "summary": {
+    "keyTakeaways": [
+      "Decimals use place value to show parts smaller than 1, like tenths and hundredths",
+      "Decimal math works just like whole number math, but you need to watch where the decimal point goes",
+      "Decimals are a special way to write parts of whole numbers using the place value system",
+      "We use decimals every day for money, measurements, sports scores, and cooking",
+      "Learning decimals well helps you understand percentages, ratios, and more advanced math later"
+    ],
+    "connectionsToPriorChapters": [
+      "Chapter 1: Place value system extends naturally to decimal places",
+      "Operations learned in previous chapters apply directly to decimals"
+    ],
+    "connectionsToFutureChapters": [
+      "Chapter 6: Understanding how decimals relate to other number representations",
+      "Future chapters: Percentages, ratios, and algebraic expressions"
+    ],
+    "historicalSignificance": "Decimals changed the world by making calculations with parts and wholes much easier, which helped advance science, business, and everyday math.",
+    "reflectionQuestions": [
+      "How do you think people did precise calculations before decimals were invented?",
+      "Why might decimals be easier to use than other number systems for everyday math?",
+      "How do decimals make the metric system and scientific measurements work better?"
+    ]
+  },
   "assessment": {
     "masteryThreshold": 0.8,
     "requiredProblems": 8

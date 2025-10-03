@@ -11,6 +11,19 @@ export interface CurriculumMetadata {
   difficulty?: string | undefined;
 }
 
+export interface CommonPitfall {
+  misconception: string;
+  example: string;
+  explanation: string;
+  correction: string;
+}
+
+export interface CommonPitfalls {
+  title: string;
+  pitfalls: CommonPitfall[];
+  preventionStrategies: string[];
+}
+
 export interface ChapterContent {
   id: string;
   title: string;
@@ -26,6 +39,7 @@ export interface ChapterContent {
   examples: WorkedExample[];
   practice: PracticeProblem[];
   tools: string[];
+  commonPitfalls?: CommonPitfalls | undefined;
   assessment: {
     masteryThreshold: number;
     requiredProblems: number;

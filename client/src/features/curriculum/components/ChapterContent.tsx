@@ -7,6 +7,7 @@ import {
   RotateCcw,
   FileText,
   FileCheck,
+  AlertTriangle,
 } from 'lucide-react';
 import {
   ChapterContent as ChapterContentType,
@@ -15,6 +16,7 @@ import {
 import { TheorySection } from './TheorySection';
 import { WorkedExamples } from './WorkedExamples';
 import { PracticeProblems } from './PracticeProblems';
+import { CommonPitfallsSection } from './CommonPitfallsSection';
 import { DrillsSection } from './DrillsSection';
 import { DrillAnswersSection } from './DrillAnswersSection';
 import { DrillProvider } from '../contexts/DrillContext';
@@ -33,6 +35,7 @@ type SectionType =
   | 'theory'
   | 'examples'
   | 'practice'
+  | 'pitfalls'
   | 'drills'
   | 'drill-answers';
 
@@ -120,11 +123,20 @@ export function ChapterContent({
     currentChapterProgressString,
   ]);
 
-  // Show drills for Chapter 2 (Addition and Subtraction), Chapter 3 (Multiplication Basics), and Chapter 4 (Division Basics)
+  // Show drills for Chapter 3 (Addition and Subtraction), Chapter 4 (Multiplication Basics), and Chapter 5 (Division Basics)
   const baseSections = [
     { id: 'theory' as SectionType, label: 'Reading', icon: BookOpen },
     { id: 'examples' as SectionType, label: 'Examples', icon: PenTool },
     { id: 'practice' as SectionType, label: 'Practice', icon: PenTool },
+    ...(chapter.commonPitfalls
+      ? [
+          {
+            id: 'pitfalls' as SectionType,
+            label: 'Common Pitfalls',
+            icon: AlertTriangle,
+          },
+        ]
+      : []),
   ];
 
   const drillSections = [
@@ -137,9 +149,9 @@ export function ChapterContent({
   ];
 
   const sections =
-    chapter.id === 'chapter-02' ||
     chapter.id === 'chapter-03' ||
-    chapter.id === 'chapter-04'
+    chapter.id === 'chapter-04' ||
+    chapter.id === 'chapter-05'
       ? [...baseSections, ...drillSections]
       : baseSections;
 
@@ -170,31 +182,42 @@ export function ChapterContent({
           />
         );
 
+      case 'pitfalls':
+        return chapter.commonPitfalls ? (
+          <CommonPitfallsSection pitfalls={chapter.commonPitfalls} />
+        ) : (
+          <div className='text-center py-12'>
+            <p className='text-gray-600 dark:text-gray-400'>
+              No common pitfalls defined for this chapter.
+            </p>
+          </div>
+        );
+
       case 'drills':
-        // Render drills for Chapter 2 (Addition and Subtraction), Chapter 3 (Multiplication Basics), and Chapter 4 (Division Basics)
+        // Render drills for Chapter 3 (Addition and Subtraction), Chapter 4 (Multiplication Basics), and Chapter 5 (Division Basics)
         if (
-          chapter.id === 'chapter-02' ||
           chapter.id === 'chapter-03' ||
-          chapter.id === 'chapter-04'
+          chapter.id === 'chapter-04' ||
+          chapter.id === 'chapter-05'
         ) {
           return <DrillsSection />;
         }
         return (
           <div className='text-center py-12'>
             <p className='text-gray-600 dark:text-gray-400'>
-              Drills are available for Addition and Subtraction (Chapter 2),
-              Multiplication Basics (Chapter 3), and Division Basics (Chapter
-              4).
+              Drills are available for Addition and Subtraction (Chapter 3),
+              Multiplication Basics (Chapter 4), and Division Basics (Chapter
+              5).
             </p>
           </div>
         );
 
       case 'drill-answers':
-        // Render drill answers for Chapter 2 (Addition and Subtraction), Chapter 3 (Multiplication Basics), and Chapter 4 (Division Basics)
+        // Render drill answers for Chapter 3 (Addition and Subtraction), Chapter 4 (Multiplication Basics), and Chapter 5 (Division Basics)
         if (
-          chapter.id === 'chapter-02' ||
           chapter.id === 'chapter-03' ||
-          chapter.id === 'chapter-04'
+          chapter.id === 'chapter-04' ||
+          chapter.id === 'chapter-05'
         ) {
           return <DrillAnswersSection />;
         }
@@ -202,8 +225,8 @@ export function ChapterContent({
           <div className='text-center py-12'>
             <p className='text-gray-600 dark:text-gray-400'>
               Drill answers are available for Addition and Subtraction (Chapter
-              2), Multiplication Basics (Chapter 3), and Division Basics
-              (Chapter 4).
+              3), Multiplication Basics (Chapter 4), and Division Basics
+              (Chapter 5).
             </p>
           </div>
         );
@@ -317,9 +340,9 @@ export function ChapterContent({
 
       {/* Section Content */}
       <div className='p-6'>
-        {chapter.id === 'chapter-02' ||
-        chapter.id === 'chapter-03' ||
-        chapter.id === 'chapter-04' ? (
+        {chapter.id === 'chapter-03' ||
+        chapter.id === 'chapter-04' ||
+        chapter.id === 'chapter-05' ? (
           <DrillProvider chapterId={chapter.id} chapterTitle={chapter.title}>
             {renderSectionContent()}
           </DrillProvider>

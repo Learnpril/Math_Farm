@@ -1,233 +1,443 @@
 {
   "id": "chapter-04",
-  "title": "Division Basics",
+  "title": "Multiplication Basics",
   "objectives": [
-    "Understand division as partitioning into equal groups",
-    "Master basic division facts as inverse of multiplication",
-    "Perform long division with single and multi-digit divisors",
-    "Interpret remainders in real-world contexts"
+    "Understand multiplication as repeated addition and scaling",
+    "Master basic multiplication facts (times tables)",
+    "Apply the distributive property for multi-digit multiplication",
+    "Solve real-world problems involving multiplication",
+    "Understand exponents as repeated multiplication and apply basic exponent rules"
   ],
   "prerequisites": ["chapter-01", "chapter-02", "chapter-03"],
   "introduction": {
-    "context": "Division is essential for sharing quantities equally, calculating rates and ratios, and solving problems involving measurement and time. It's the inverse operation of multiplication and appears in everyday situations like splitting bills, measuring portions, and determining speeds.",
-    "connection": "Building on multiplication facts, division helps us work backwards from products to factors and introduces concepts of remainders and fractional parts."
+    "context": "Multiplication is fundamental for calculating areas, scaling recipes, determining costs for multiple items, and understanding patterns in mathematics. It's the foundation for more advanced topics like division, fractions, and algebra.",
+    "connection": "Building on addition skills, multiplication provides a faster way to add equal groups and opens the door to understanding mathematical relationships and proportional thinking."
   },
   "theory": {
     "concepts": [
       {
-        "title": "Understanding Division",
-        "content": "Division partitions into equal groups (a ÷ b or a / b), inverse of multiplication. Components: dividend ÷ divisor = quotient, possible remainder R (if not even). Long division: e.g., 456 ÷ 4: 4 into 4=1, subtract 0; into 5=1 (remainder 1), into 16=4. Notation: ÷, /, or fraction bar. Remainder < divisor. Real-world: sharing costs, measuring portions.",
-        "latex": "456 \\div 4 = 114 \\text{ (exactly)}",
-        "visuals": ["DivisionGroupingVisual", "DivisionFactsTable"]
+        "title": "Understanding Multiplication",
+        "content": "Multiplication is repeated addition or scaling (a × b = a + a + ... b times). For basics, use times tables (e.g., 5×6=30) and extend to multi-digit via partial products or standard algorithm. Arrays visualize (3×4 as 3 rows of 4). Notation: × or ⋅. Commutative (a × b = b × a). Real-world: area (l × w), scaling recipes.",
+        "latex": "5 \\times 6 = 5 + 5 + 5 + 5 + 5 + 5 = 30",
+        "visuals": ["RepeatedAdditionVisual", "MultiplicationGrid"]
       },
       {
-        "title": "Division with Remainders",
-        "content": "When numbers don't divide evenly, we have a remainder. The remainder must always be less than the divisor. In real-world problems, we need to interpret what the remainder means.",
-        "latex": "17 \\div 5 = 3 \\text{ R } 2 \\text{ because } 3 \\times 5 + 2 = 17",
-        "visuals": ["DivisionRemainderVisual"]
+        "title": "Multiplication Tables (Times Tables)",
+        "content": "The multiplication table is a systematic way to organize and memorize basic multiplication facts from 1×1 to 12×12. Each row represents multiples of a number, and each column shows the same. The intersection of any row and column gives the product. Learning these facts by heart makes all future multiplication much faster and easier. Notice patterns: even numbers always give even products when multiplied by even numbers, and the table is symmetric (3×4 = 4×3) due to the commutative property.",
+        "latex": "\\begin{array}{c|cccccc} \\times & 1 & 2 & 3 & 4 & 5 & 6 \\\\ \\hline 1 & 1 & 2 & 3 & 4 & 5 & 6 \\\\ 2 & 2 & 4 & 6 & 8 & 10 & 12 \\\\ 3 & 3 & 6 & 9 & 12 & 15 & 18 \\end{array}",
+        "visuals": ["MultiplicationTable"]
       },
       {
-        "title": "Long Division Algorithm",
-        "content": "For larger numbers, we use the long division algorithm: divide, multiply, subtract, bring down. This process repeats until we've used all digits in the dividend.",
-        "latex": "789 \\div 23 = 34 \\text{ R } 7",
-        "visuals": ["LongDivisionDemo"]
+        "title": "Distributive Property",
+        "content": "The distributive property allows us to break apart numbers to make multiplication easier. We can multiply each part separately and then add the results together.",
+        "latex": "23 \\times 4 = (20 + 3) \\times 4 = 20 \\times 4 + 3 \\times 4 = 80 + 12 = 92",
+        "visuals": ["DistributivePropertyDemo"]
+      },
+      {
+        "title": "Multi-digit Multiplication",
+        "content": "For larger numbers, we use the standard algorithm or break numbers into place values. Each digit is multiplied by each digit in the other number, keeping track of place values.",
+        "latex": "56 \\times 78 = 56 \\times 70 + 56 \\times 8 = 3,920 + 448 = 4,368",
+        "visuals": ["TwoDigitMultiplicationDemo"]
+      },
+      {
+        "title": "Exponents - Shorthand for Repeated Multiplication",
+        "content": "As we explore multiplication properties, it makes sense to think about repeating the operation over and over - that's where exponents come in, a shorthand way to show repeated multiplication. Remember how multiplication is like repeated addition (5 × 3 = 5 + 5 + 5 = 15)? Exponents go one step further, packing multiple multiplications into one notation. Picture it simply: if something doubles each time (×2), after three times it's 2 × 2 × 2 = 8 times the original - or just 2³ = 8. This notation not only saves space but helps spot patterns, like powers of 10 connecting back to place value (10² = 100 for hundreds). An exponent (or power) means multiplying a number by itself a set number of times: aⁿ is 'a' times itself 'n' times, with 'a' as the base (the number you repeat) and 'n' as the exponent (how many repeats). When reading exponents aloud, we say them as 'to the power of' or 'to the -th power': 2³ is read as '2 to the power of 3' or '2 to the 3rd power', 5⁴ becomes '5 to the 4th power', and 10² is '10 to the 2nd power' (also called '10 squared'). For example, 3⁴ = 3 × 3 × 3 × 3 = 81. Special cases: a¹ = a (multiplying once), and a⁰ = 1 for any non-zero 'a' (multiplying zero times leaves the starting point). Negative exponents flip things around: they mean the reciprocal, or the flipped fraction (like 2 to the negative 3 power = 1 divided by (2 × 2 × 2) = 1/8) - it's a handy shortcut for dividing by the power instead of multiplying, and you'll run into it more when we talk about fractions in the Fractions Basics section. Intuitively, think of it as 'how many times to divide into 1': If 2³ = 8, then 2 to the negative 3 power shrinks back to 1/8. This keeps math patterns smooth - like how dividing undoes adding in the Addition and Subtraction section. Exponents appear in daily life: compound interest ($100 at 5% yearly for 3 years = 100 × 1.05³ ≈ $115.76), population growth (bacteria doubling gives 2ⁿ after n generations), and technology (a kilobyte is 2¹⁰ ≈ 1000 bytes).",
+        "latex": "2^3 = 2 \\times 2 \\times 2 = 8 \\text{ and } 2^{-3} = \\frac{1}{2^3} = \\frac{1}{8}",
+        "visuals": [
+          "ExponentVisualizer",
+          "PowersOfTenChart",
+          "ExponentPatterns"
+        ]
       }
     ]
   },
   "examples": [
     {
-      "problem": "Calculate 12 ÷ 3",
-      "solution": "3 groups of 4 = 12, quotient 4",
+      "problem": "Multiply 4 × 3",
+      "solution": "4 groups of 3 = 12",
       "steps": [
-        "Think: what number times 3 equals 12?",
-        "3 × 4 = 12, so 12 ÷ 3 = 4",
-        "Check: 4 × 3 = 12 ✓"
+        "Think of 4 × 3 as 4 groups of 3",
+        "Add: 3 + 3 + 3 + 3 = 12",
+        "Or recall from times table: 4 × 3 = 12"
       ],
-      "commonErrors": [
-        "Confusing dividend and divisor",
-        "Not checking the answer"
-      ],
-      "latex": "12 \\div 3 = 4 \\text{ because } 4 \\times 3 = 12"
+      "commonErrors": ["Confusing with addition", "Mixing up the order"],
+      "latex": "4 \\times 3 = 3 + 3 + 3 + 3 = 12"
     },
     {
-      "problem": "Find 456 ÷ 4",
-      "solution": "4 into 4=1 (4), subtract 0; bring 5, 4 into 5=1 (4), subtract 1; bring 6, 4 into 16=4. Quotient 114",
+      "problem": "Calculate 23 × 4",
+      "solution": "Break as (20 + 3) × 4 = 80 + 12 = 92",
       "steps": [
-        "4 goes into 4 exactly 1 time, write 1",
-        "4 goes into 5 once with remainder 1, write 1",
-        "Bring down 6 to make 16",
-        "4 goes into 16 exactly 4 times, write 4",
-        "Final answer: 114"
-      ],
-      "commonErrors": ["Bringing down wrong digits", "Subtraction errors"],
-      "latex": "456 \\div 4 = 114"
-    },
-    {
-      "problem": "Calculate 789 ÷ 23 with remainder",
-      "solution": "23 into 78=3 (69), subtract 9; bring 9=99, 23 into 99=4 (92), subtract 7. Quotient 34 R7",
-      "steps": [
-        "23 goes into 78 three times (3 × 23 = 69)",
-        "78 - 69 = 9, bring down the 9 to make 99",
-        "23 goes into 99 four times (4 × 23 = 92)",
-        "99 - 92 = 7, which is less than 23",
-        "Final answer: 34 R7"
+        "Break 23 into 20 + 3",
+        "Multiply each part: 20 × 4 = 80, 3 × 4 = 12",
+        "Add the results: 80 + 12 = 92"
       ],
       "commonErrors": [
-        "Wrong trial multipliers",
-        "Arithmetic errors in subtraction"
+        "Not carrying in partial products",
+        "Misaligning place values"
       ],
-      "latex": "789 \\div 23 = 34 \\text{ R } 7"
+      "latex": "23 \\times 4 = (20 + 3) \\times 4 = 80 + 12 = 92"
+    },
+    {
+      "problem": "Find 56 × 78",
+      "solution": "56 × 70 = 3,920; 56 × 8 = 448; total 4,368",
+      "steps": [
+        "Break 78 into 70 + 8",
+        "Calculate 56 × 70 = 3,920",
+        "Calculate 56 × 8 = 448",
+        "Add: 3,920 + 448 = 4,368"
+      ],
+      "commonErrors": [
+        "Misaligning partial products",
+        "Addition errors in final step"
+      ],
+      "latex": "56 \\times 78 = 56 \\times (70 + 8) = 3,920 + 448 = 4,368"
+    },
+    {
+      "problem": "Calculate 2⁴",
+      "solution": "2⁴ = 2 × 2 × 2 × 2 = 16",
+      "steps": [
+        "Write out the repeated multiplication: 2 × 2 × 2 × 2",
+        "Calculate step by step: 2 × 2 = 4",
+        "Continue: 4 × 2 = 8",
+        "Finish: 8 × 2 = 16"
+      ],
+      "commonErrors": [
+        "Confusing with multiplication: 2⁴ ≠ 2 × 4 = 8",
+        "Miscounting the number of multiplications"
+      ],
+      "latex": "2^4 = 2 \\times 2 \\times 2 \\times 2 = 16"
+    },
+    {
+      "problem": "Find 10³",
+      "solution": "10³ = 10 × 10 × 10 = 1,000",
+      "steps": [
+        "Recognize this as a power of 10",
+        "Write out: 10 × 10 × 10",
+        "Calculate: 10 × 10 = 100",
+        "Finish: 100 × 10 = 1,000"
+      ],
+      "commonErrors": [
+        "Thinking 10³ = 30 (confusing with multiplication)",
+        "Miscounting zeros in the result"
+      ],
+      "latex": "10^3 = 10 \\times 10 \\times 10 = 1,000"
+    },
+    {
+      "problem": "A town doubles in population each year. Starting with 100 people, what's the population after 4 years?",
+      "solution": "Population = 100 × 2⁴ = 100 × 16 = 1,600 people",
+      "steps": [
+        "Identify this as exponential growth: doubling means multiplying by 2",
+        "After 4 years: original × 2⁴",
+        "Calculate 2⁴ = 2 × 2 × 2 × 2 = 16",
+        "Final calculation: 100 × 16 = 1,600"
+      ],
+      "commonErrors": [
+        "Using addition instead: 100 + 2 × 4 = 108",
+        "Forgetting the original population in the calculation"
+      ],
+      "latex": "\\text{Population} = 100 \\times 2^4 = 100 \\times 16 = 1,600"
+    },
+    {
+      "problem": "Calculate 3 to the negative 2 power",
+      "solution": "3 to the negative 2 power = 1 / 3² = 1 / 9",
+      "steps": [
+        "Recognize this as a negative exponent: 3 to the negative 2 power",
+        "Apply the rule: negative exponents mean 1 divided by the positive power",
+        "Calculate the positive exponent: 3² = 3 × 3 = 9",
+        "Take the reciprocal: 3 to the negative 2 power = 1/9"
+      ],
+      "commonErrors": [
+        "Thinking negative exponents give negative results (like -9)",
+        "Forgetting to take the reciprocal (1 divided by the positive power)"
+      ],
+      "latex": "3^{-2} = \\frac{1}{3^2} = \\frac{1}{9}"
     }
   ],
   "practice": [
     {
-      "id": "div-basic-1",
+      "id": "mult-basic-1",
       "type": "fill-in",
-      "problem": "Calculate 15 ÷ 5",
-      "correct": "3",
+      "problem": "Calculate 5 × 6",
+      "correct": "30",
       "hints": [
-        "Think of equal groups: how many groups of 5 make 15?",
-        "Use the inverse: what times 5 equals 15?",
-        "5 × 3 = 15, so 15 ÷ 5 = 3"
+        "Think of repeated addition: 5 + 5 + 5 + 5 + 5 + 5",
+        "Or recall from times table",
+        "Visualize as an array: 5 rows of 6 dots"
       ],
-      "explanation": "15 ÷ 5 = 3. This is a basic division fact that relates to the multiplication table.",
+      "explanation": "5 × 6 = 30. This is a basic multiplication fact that should be memorized.",
       "difficulty": 1
     },
     {
-      "id": "div-basic-2",
+      "id": "mult-basic-2",
       "type": "fill-in",
-      "problem": "Find 24 ÷ 4",
-      "correct": "6",
+      "problem": "Find 7 × 8",
+      "correct": "56",
       "hints": [
-        "Think of sharing 24 items equally among 4 groups",
-        "Draw 24 dots and circle groups of 4",
-        "Check: 6 × 4 = 24"
+        "Skip count by 7s: 7, 14, 21, 28, 35, 42, 49, 56",
+        "Or skip count by 8s: 8, 16, 24, 32, 40, 48, 56",
+        "Draw a 7×8 grid to visualize"
       ],
-      "explanation": "24 ÷ 4 = 6. Visualizing division as sharing helps understand the concept.",
+      "explanation": "7 × 8 = 56. This is an important times table fact to memorize.",
       "difficulty": 1
     },
     {
-      "id": "div-powers-1",
+      "id": "mult-distribute-1",
       "type": "fill-in",
-      "problem": "Calculate 100 ÷ 25",
-      "correct": "4",
+      "problem": "Calculate 12 × 5 using the distributive property",
+      "correct": "60",
       "hints": [
-        "Think about quarters: how many 25s make 100?",
-        "25 × 4 = 100",
-        "Pattern: dividing by 25 is like finding how many quarters"
+        "Break 12 into 10 + 2",
+        "Calculate (10 + 2) × 5 = 10 × 5 + 2 × 5",
+        "Add the parts: 50 + 10 = 60"
       ],
-      "explanation": "100 ÷ 25 = 4. Recognizing patterns with common numbers makes division easier.",
+      "explanation": "12 × 5 = (10 + 2) × 5 = 50 + 10 = 60. The distributive property makes larger multiplications easier.",
       "difficulty": 2
     },
     {
-      "id": "div-long-1",
+      "id": "mult-two-digit-1",
       "type": "fill-in",
-      "problem": "Find 567 ÷ 3",
-      "correct": "189",
+      "problem": "Find 34 × 2",
+      "correct": "68",
       "hints": [
-        "Use long division: 3 into 5 goes 1 time",
-        "3 into 26 goes 8 times (remainder 2)",
-        "3 into 27 goes 9 times exactly"
+        "Use the standard algorithm or partial products",
+        "34 × 2 = (30 + 4) × 2 = 60 + 8",
+        "Check: 30 × 2 = 60, 4 × 2 = 8"
       ],
-      "explanation": "567 ÷ 3 = 189. This demonstrates long division with no remainder.",
+      "explanation": "34 × 2 = 68. This introduces multi-digit multiplication with a single-digit multiplier.",
+      "difficulty": 2
+    },
+    {
+      "id": "mult-area-1",
+      "type": "fill-in",
+      "problem": "Find the area of a rectangle that is 15m by 4m",
+      "correct": "60",
+      "hints": [
+        "Area = length × width",
+        "Break 15 into easier parts: 15 = 10 + 5",
+        "Calculate: (10 + 5) × 4 = 40 + 20 = 60"
+      ],
+      "explanation": "Area = 15 × 4 = 60 m². This shows a real-world application of multiplication.",
       "difficulty": 3
     },
     {
-      "id": "div-remainder-1",
-      "type": "multiple-choice",
-      "problem": "Share 45 candies among 7 kids. How many does each get and how many are left?",
-      "options": [
-        "6 each, 3 left",
-        "7 each, 1 left",
-        "5 each, 10 left",
-        "6 each, 2 left"
+      "id": "mult-large-1",
+      "type": "fill-in",
+      "problem": "Calculate 45 × 67",
+      "correct": "3015",
+      "hints": [
+        "Use long multiplication or break into parts",
+        "45 × 67 = 45 × (60 + 7) = 45 × 60 + 45 × 7",
+        "Calculate: 2700 + 315 = 3015"
       ],
+      "explanation": "45 × 67 = 3,015. This requires careful attention to place values and partial products.",
+      "difficulty": 4
+    },
+    {
+      "id": "mult-pattern-1",
+      "type": "fill-in",
+      "problem": "Find 99 × 10",
+      "correct": "990",
+      "hints": [
+        "Look for patterns when multiplying by 10",
+        "Think of 99 as (100 - 1)",
+        "99 × 10 = (100 - 1) × 10 = 1000 - 10 = 990"
+      ],
+      "explanation": "99 × 10 = 990. Multiplying by 10 adds a zero, and recognizing patterns makes calculation easier.",
+      "difficulty": 4
+    },
+    {
+      "id": "mult-word-1",
+      "type": "fill-in",
+      "problem": "A library has 25 shelves with 36 books on each shelf. How many books total?",
+      "correct": "900",
+      "hints": [
+        "This is 25 × 36",
+        "Estimate first: 25 × 40 = 1000, so answer should be close",
+        "Calculate: 25 × 36 = 25 × (30 + 6) = 750 + 150 = 900"
+      ],
+      "explanation": "25 × 36 = 900 books. Always estimate first to check if your answer is reasonable.",
+      "difficulty": 5
+    },
+    {
+      "id": "exp-basic-1",
+      "type": "fill-in",
+      "problem": "Calculate 3²",
+      "correct": "9",
+      "hints": [
+        "3² means 3 × 3",
+        "This is 3 multiplied by itself once",
+        "Don't confuse with 3 × 2 = 6"
+      ],
+      "explanation": "3² = 3 × 3 = 9. The exponent tells you how many times to multiply the base by itself.",
+      "difficulty": 2
+    },
+    {
+      "id": "exp-basic-2",
+      "type": "multiple-choice",
+      "problem": "What is 2⁵?",
+      "options": ["10", "25", "32", "52"],
+      "correct": 2,
+      "hints": [
+        "2⁵ means 2 × 2 × 2 × 2 × 2",
+        "Calculate step by step: 2×2=4, 4×2=8, 8×2=16, 16×2=32",
+        "Don't confuse with 2 × 5 = 10"
+      ],
+      "explanation": "2⁵ = 2 × 2 × 2 × 2 × 2 = 32. Count carefully - five 2's multiplied together.",
+      "difficulty": 3
+    },
+    {
+      "id": "exp-reading-1",
+      "type": "multiple-choice",
+      "problem": "How do you read 4³ aloud?",
+      "options": [
+        "4 times 3",
+        "4 to the 3rd power",
+        "4 plus 3",
+        "4 cubed only"
+      ],
+      "correct": 1,
+      "hints": [
+        "Exponents are read as 'to the power of' or 'to the -th power'",
+        "The small number on top tells you the power",
+        "4³ can be read as '4 to the 3rd power' or '4 cubed'"
+      ],
+      "explanation": "4³ is read as '4 to the 3rd power' or '4 cubed'. Both ways are correct for reading exponents aloud.",
+      "difficulty": 2
+    },
+    {
+      "id": "exp-powers-ten-1",
+      "type": "fill-in",
+      "problem": "Calculate 10⁴",
+      "correct": "10000",
+      "hints": [
+        "Powers of 10 follow a pattern",
+        "10⁴ = 10 × 10 × 10 × 10",
+        "Count the zeros: 10⁴ has 4 zeros after the 1"
+      ],
+      "explanation": "10⁴ = 10,000. Powers of 10 are easy - just write 1 followed by as many zeros as the exponent.",
+      "difficulty": 2
+    },
+    {
+      "id": "exp-special-1",
+      "type": "multiple-choice",
+      "problem": "What is 7¹?",
+      "options": ["1", "7", "14", "49"],
+      "correct": 1,
+      "hints": [
+        "Any number to the power of 1 equals itself",
+        "7¹ means multiply 7 by itself once, which is just 7",
+        "This is a special rule for exponent 1"
+      ],
+      "explanation": "7¹ = 7. Any number raised to the power of 1 equals the number itself.",
+      "difficulty": 2
+    },
+    {
+      "id": "exp-zero-1",
+      "type": "fill-in",
+      "problem": "Calculate 5⁰",
+      "correct": "1",
+      "hints": [
+        "Any non-zero number to the power of 0 equals 1",
+        "This is a special rule that might seem strange at first",
+        "Think of it as 'no multiplications' leaving the starting point"
+      ],
+      "explanation": "5⁰ = 1. Any non-zero number raised to the power of 0 equals 1. This is a fundamental rule of exponents.",
+      "difficulty": 3
+    },
+    {
+      "id": "exp-compare-1",
+      "type": "multiple-choice",
+      "problem": "Which is larger: 3⁴ or 4³?",
+      "options": ["3⁴", "4³", "They are equal", "Cannot determine"],
       "correct": 0,
       "hints": [
-        "Calculate 45 ÷ 7",
-        "7 × 6 = 42, so 6 each with some left over",
-        "45 - 42 = 3 candies left"
+        "Calculate both: 3⁴ = 3 × 3 × 3 × 3",
+        "And 4³ = 4 × 4 × 4",
+        "3⁴ = 81 and 4³ = 64"
       ],
-      "explanation": "45 ÷ 7 = 6 R3, so each child gets 6 candies and 3 are left over.",
+      "explanation": "3⁴ = 81 is larger than 4³ = 64. Even though 4 > 3, the higher exponent makes 3⁴ larger.",
+      "difficulty": 4
+    },
+    {
+      "id": "exp-word-1",
+      "type": "fill-in",
+      "problem": "A bacteria culture doubles every hour. Starting with 1 bacterium, how many are there after 6 hours?",
+      "correct": "64",
+      "hints": [
+        "Doubling means multiplying by 2 each time",
+        "After 6 hours: 1 × 2⁶",
+        "Calculate 2⁶ = 2 × 2 × 2 × 2 × 2 × 2 = 64"
+      ],
+      "explanation": "After 6 hours: 1 × 2⁶ = 1 × 64 = 64 bacteria. This shows exponential growth in nature.",
+      "difficulty": 4
+    },
+    {
+      "id": "exp-pattern-1",
+      "type": "fill-in",
+      "problem": "Complete the pattern: 2¹ = 2, 2² = 4, 2³ = 8, 2⁴ = ?",
+      "correct": "16",
+      "hints": [
+        "Notice each result doubles the previous one",
+        "2⁴ = 2³ × 2 = 8 × 2",
+        "Or calculate directly: 2⁴ = 2 × 2 × 2 × 2"
+      ],
+      "explanation": "2⁴ = 16. Powers of 2 double each time: 2, 4, 8, 16, 32, 64...",
       "difficulty": 3
-    },
-    {
-      "id": "div-large-1",
-      "type": "fill-in",
-      "problem": "Calculate 1,234 ÷ 12, if there is a remainder put R before it (Example: 5 ÷ 2 would be 2 R1)",
-      "correct": "102 R10",
-      "hints": [
-        "Use long division with a two-digit divisor",
-        "12 goes into 123 about 10 times (12 × 10 = 120)",
-        "Continue the process: 1,234 - 1,224 = 10 remainder"
-      ],
-      "explanation": "1,234 ÷ 12 = 102 R10. Using long division: 12 goes into 123 ten times (120), leaving 3. Bring down 4 to get 34. 12 goes into 34 twice (24), leaving remainder 10.",
-      "difficulty": 4
-    },
-    {
-      "id": "div-pattern-1",
-      "type": "fill-in",
-      "problem": "Find 999 ÷ 9",
-      "correct": "111",
-      "hints": [
-        "Look for patterns with 9",
-        "Each digit in 999 is divisible by 9",
-        "9 + 9 + 9 = 27, and 2 + 7 = 9 (divisibility rule)"
-      ],
-      "explanation": "999 ÷ 9 = 111. The divisibility rule for 9 helps: if digits sum to a multiple of 9, the number is divisible by 9.",
-      "difficulty": 4
-    },
-    {
-      "id": "div-word-1",
-      "type": "fill-in",
-      "problem": "A car travels 560km in 8 hours. What is the average speed in km/h?",
-      "correct": "70",
-      "hints": [
-        "Speed = distance ÷ time",
-        "Calculate 560 ÷ 8",
-        "560 ÷ 8 = 70 km/h"
-      ],
-      "explanation": "560 ÷ 8 = 70 km/h. Division is used to find rates like speed, where we divide total distance by total time.",
-      "difficulty": 5
     }
   ],
-  "tools": ["calculator", "long-division-helper"],
+  "tools": ["calculator", "array-visualizer", "exponent-calculator"],
   "assessment": {
     "masteryThreshold": 0.8,
     "requiredProblems": 6
   },
   "drills": {
-    "title": "Division Practice Drills",
-    "description": "Printable worksheets for division practice with basic division facts and simple division problems.",
-    "operations": ["division"],
+    "title": "Multiplication Practice Drills",
+    "description": "Printable worksheets for multiplication practice with times tables and basic multiplication facts.",
+    "operations": ["multiplication"],
     "configurations": [
       {
-        "name": "Basic Division Facts (1-5)",
-        "operation": "division",
+        "name": "Times Tables (1-5)",
+        "operation": "multiplication",
         "digitSelection": "one",
         "numberRange": { "min": 1, "max": 5 },
-        "description": "Simple division facts with divisors 1-5"
+        "description": "Basic multiplication facts with factors 1-5"
       },
       {
-        "name": "Division Facts (1-10)",
-        "operation": "division",
+        "name": "Times Tables (1-10)",
+        "operation": "multiplication",
         "digitSelection": "one",
         "numberRange": { "min": 1, "max": 10 },
-        "description": "Standard division facts up to 10"
+        "description": "Standard times tables up to 10×10"
       },
       {
-        "name": "Division Facts (1-12)",
-        "operation": "division",
+        "name": "Times Tables (1-12)",
+        "operation": "multiplication",
         "digitSelection": "one",
         "numberRange": { "min": 1, "max": 12 },
-        "description": "Complete division facts including 11s and 12s"
+        "description": "Complete times tables including 11s and 12s"
       },
       {
-        "name": "Mixed Division",
-        "operation": "division",
+        "name": "Mixed Multiplication",
+        "operation": "multiplication",
         "digitSelection": "mixed",
         "numberRange": { "min": 1, "max": 12 },
-        "description": "Mix of single and double digit division"
+        "description": "Mix of single and double digit multiplication"
+      },
+      {
+        "name": "Basic Exponents",
+        "operation": "exponents",
+        "digitSelection": "one",
+        "numberRange": { "min": 2, "max": 5 },
+        "exponentRange": { "min": 1, "max": 4 },
+        "description": "Simple exponent calculations with small bases and exponents"
+      },
+      {
+        "name": "Powers of Ten",
+        "operation": "exponents",
+        "digitSelection": "special",
+        "numberRange": { "min": 10, "max": 10 },
+        "exponentRange": { "min": 0, "max": 6 },
+        "description": "Powers of 10 to reinforce place value connections"
       }
     ]
   }

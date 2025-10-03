@@ -100,6 +100,7 @@ describe('CurriculumNavigation', () => {
 
     const expectedTitles = [
       'Numbers and Place Value',
+      'Decimals Basics',
       'Addition and Subtraction',
       'Multiplication Basics',
       'Division Basics',

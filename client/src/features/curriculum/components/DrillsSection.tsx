@@ -249,7 +249,7 @@ export function DrillsSection() {
           {/* First Row: Operation and Digit Selection */}
           <div className='flex flex-col sm:flex-row sm:items-center gap-4'>
             {/* Operation Selection - Chapter 2 shows all operations, Chapter 3 shows only multiplication */}
-            {chapterId === 'chapter-02' ? (
+            {chapterId === 'chapter-03' ? (
               <div className='flex items-center space-x-4'>
                 <span className='text-sm font-medium text-gray-700 dark:text-gray-300'>
                   Operation:
@@ -279,7 +279,7 @@ export function DrillsSection() {
                   </button>
                 </div>
               </div>
-            ) : chapterId === 'chapter-03' ? (
+            ) : chapterId === 'chapter-04' ? (
               <div className='flex items-center space-x-4'>
                 <span className='text-sm font-medium text-gray-700 dark:text-gray-300'>
                   Operation:
@@ -291,7 +291,7 @@ export function DrillsSection() {
                   </button>
                 </div>
               </div>
-            ) : chapterId === 'chapter-04' ? (
+            ) : chapterId === 'chapter-05' ? (
               <div className='flex items-center space-x-4'>
                 <span className='text-sm font-medium text-gray-700 dark:text-gray-300'>
                   Operation:
@@ -331,8 +331,8 @@ export function DrillsSection() {
                 >
                   2-Digit
                 </button>
-                {/* Only show 3-Digit for Chapter 2 */}
-                {chapterId === 'chapter-02' && (
+                {/* Only show 3-Digit for Chapter 3 */}
+                {chapterId === 'chapter-03' && (
                   <button
                     onClick={() => handleDigitChange('three')}
                     className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${

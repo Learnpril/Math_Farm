@@ -1,231 +1,449 @@
 {
   "id": "chapter-03",
-  "title": "Multiplication Basics",
+  "title": "Addition and Subtraction",
   "objectives": [
-    "Understand multiplication as repeated addition and scaling",
-    "Master basic multiplication facts (times tables)",
-    "Apply the distributive property for multi-digit multiplication",
-    "Solve real-world problems involving multiplication"
+    "Master single-digit addition and subtraction facts and understand inverse relationships",
+    "Understand and apply the standard column method for addition and subtraction with multi-digit numbers",
+    "Master the mechanics of carrying in addition and borrowing in subtraction, including why these steps are necessary",
+    "Solve basic word problems involving addition and subtraction in everyday contexts",
+    "Develop habits for checking calculations to avoid and correct errors",
+    "Build fluency with larger numbers and special cases, such as subtracting across zeros"
   ],
   "prerequisites": ["chapter-01", "chapter-02"],
   "introduction": {
-    "context": "Multiplication is fundamental for calculating areas, scaling recipes, determining costs for multiple items, and understanding patterns in mathematics. It's the foundation for more advanced topics like division, fractions, and algebra.",
-    "connection": "Building on addition skills, multiplication provides a faster way to add equal groups and opens the door to understanding mathematical relationships and proportional thinking."
+    "context": "Addition and subtraction are the cornerstone operations of arithmetic, used in countless daily tasks - from adding up bills at a restaurant to subtracting hours worked from a timesheet. This chapter focuses exclusively on traditional methods, teaching you the reliable column approach step by step. We'll start with the fundamentals, explain regrouping in simple terms, and provide plenty of examples and practice to solidify your skills. By concentrating on these basics without distractions, you'll gain the precision needed for real-life applications, like managing a household budget or calculating distances on a map.",
+    "connection": "Regrouping relies on place value - carrying turns 10 ones into 1 ten, just as you learned in expanded form (e.g., 15 = 1 ten + 5 ones). This chapter builds directly on your understanding of place value from Chapter 1, using that knowledge to perform calculations with larger numbers accurately and efficiently."
   },
   "theory": {
     "concepts": [
       {
-        "title": "Understanding Multiplication",
-        "content": "Multiplication is repeated addition or scaling (a × b = a + a + ... b times). For basics, use times tables (e.g., 5×6=30) and extend to multi-digit via partial products or standard algorithm. Arrays visualize (3×4 as 3 rows of 4). Notation: × or ⋅. Commutative (a × b = b × a). Real-world: area (l × w), scaling recipes.",
-        "latex": "5 \\times 6 = 5 + 5 + 5 + 5 + 5 + 5 = 30",
-        "visuals": ["RepeatedAdditionVisual", "MultiplicationGrid"]
+        "title": "Single-Digit Addition and Subtraction Basics",
+        "content": "Before tackling multi-digit problems, it's essential to master single-digit addition and subtraction. Addition means combining quantities: 3 + 4 means starting with 3 and adding 4 more, giving 7. Subtraction means taking away: 8 - 3 means starting with 8 and removing 3, leaving 5. These operations are inverse relationships - addition and subtraction undo each other. For example, if 5 + 3 = 8, then 8 - 3 = 5 and 8 - 5 = 3. Understanding these basic facts (like 7 + 6 = 13 or 15 - 8 = 7) through memorization and practice creates the foundation for all larger calculations. Use strategies like counting on (for 6 + 4, start at 6 and count up 4 more), counting back (for 9 - 2, start at 9 and count back 2), or using doubles (6 + 6 = 12, so 6 + 7 = 13).",
+        "latex": "3 + 4 = 7 \\text{ and } 8 - 3 = 5 \\text{ (inverse operations)}",
+        "visuals": ["NumberLine", "CountingDots"]
       },
       {
-        "title": "Multiplication Tables (Times Tables)",
-        "content": "The multiplication table is a systematic way to organize and memorize basic multiplication facts from 1×1 to 12×12. Each row represents multiples of a number, and each column shows the same. The intersection of any row and column gives the product. Learning these facts by heart makes all future multiplication much faster and easier. Notice patterns: even numbers always give even products when multiplied by even numbers, and the table is symmetric (3×4 = 4×3) due to the commutative property.",
-        "latex": "\\begin{array}{c|cccccc} \\times & 1 & 2 & 3 & 4 & 5 & 6 \\\\ \\hline 1 & 1 & 2 & 3 & 4 & 5 & 6 \\\\ 2 & 2 & 4 & 6 & 8 & 10 & 12 \\\\ 3 & 3 & 6 & 9 & 12 & 15 & 18 \\end{array}",
-        "visuals": ["MultiplicationTable"]
+        "title": "Addition Fundamentals and Regrouping",
+        "content": "Addition combines two or more numbers to find a total, or sum. The traditional column method ensures accuracy by keeping places aligned. When adding numbers, write them vertically with ones under ones, tens under tens, and so on. Add each column from right to left. When a column sums to 10 or more, you can't write two digits in one place, so write the ones digit and carry the 1 (representing 10) to the next column. This regrouping keeps the number correct in base-10. For example, when adding 47 + 38: in the ones column, 7 + 8 = 15, so write 5 and carry 1 to the tens column. Then 4 + 3 + 1 (carry) = 8. The result is 85.",
+        "latex": "\\begin{align} 47 \\\\ + 38 \\\\ \\hline 85 \\end{align} \\text{ where } 7 + 8 = 15 \\rightarrow \\text{write 5, carry 1}",
+        "visuals": ["AdditionAlgorithm", "PlaceValueChart"]
       },
       {
-        "title": "Distributive Property",
-        "content": "The distributive property allows us to break apart numbers to make multiplication easier. We can multiply each part separately and then add the results together.",
-        "latex": "23 \\times 4 = (20 + 3) \\times 4 = 20 \\times 4 + 3 \\times 4 = 80 + 12 = 92",
-        "visuals": ["DistributivePropertyDemo"]
+        "title": "Subtraction Fundamentals and Borrowing",
+        "content": "Subtraction removes one number (subtrahend) from another (minuend) to find the difference. Use the column method for reliability by aligning numbers and subtracting right to left. When the top digit is smaller than the bottom digit, borrow 1 from the left column, adding 10 to the top digit. This 'regrouping' converts higher places into lower ones (1 ten = 10 ones) to make subtraction possible. For example, in 52 - 27: since 2 < 7 in the ones place, borrow from tens (ones become 12, tens become 4), then 12 - 7 = 5 and 4 - 2 = 2, giving 25.",
+        "latex": "\\begin{align} 52 \\\\ - 27 \\\\ \\hline 25 \\end{align} \\text{ where } 2 < 7 \\rightarrow \\text{borrow: } 12 - 7 = 5",
+        "visuals": ["SubtractionAlgorithm", "PlaceValueChart"]
       },
       {
-        "title": "Multi-digit Multiplication",
-        "content": "For larger numbers, we use the standard algorithm or break numbers into place values. Each digit is multiplied by each digit in the other number, keeping track of place values.",
-        "latex": "56 \\times 78 = 56 \\times 70 + 56 \\times 8 = 3,920 + 448 = 4,368",
-        "visuals": ["TwoDigitMultiplicationDemo"]
+        "title": "Common Core Concepts",
+        "content": "The Common Core approach offers a fresh perspective on addition and subtraction, prioritizing building a deeper intuition for numbers. Unlike purely traditional algorithms that emphasize rote steps like borrowing and carrying, Common Core focuses on conceptual grasp through place value, operation properties, and the link between addition and subtraction, helping you understand why methods work rather than just how to follow them. This can make calculations more flexible and less error-prone in real-life scenarios, such as estimating costs or analyzing data. This method encourages mental agility: instead of always lining up columns, you might use strategies like 'making ten' (e.g., for 8 + 5, break it as 8 + 2 = 10, then add the remaining 3 for 13), which speeds up quick computations without paper. Early lessons often incorporate everyday stories or visuals, like number lines for jumping sums or base-10 blocks to show regrouping physically, making abstract ideas tangible and relevant to practical needs, such as planning or conversions. Subtraction is taught with variety, avoiding early reliance on borrowing by using techniques like decomposition or treating it as 'adding up' to find differences (e.g., for 52 - 27, think 'how much to add to 27 to reach 52?'). The aim is to turn you into a versatile thinker who can adapt to problems, though some find the multiple strategies initially more complex than straightforward drills.",
+        "latex": "\\text{Making Ten: } 8 + 5 = 8 + 2 + 3 = 10 + 3 = 13",
+        "visuals": ["CommonCoreStrategies"]
       }
     ]
   },
   "examples": [
     {
-      "problem": "Multiply 4 × 3",
-      "solution": "4 groups of 3 = 12",
+      "problem": "Single-Digit Addition: 7 + 5",
+      "solution": "7 + 5 = 12",
       "steps": [
-        "Think of 4 × 3 as 4 groups of 3",
-        "Add: 3 + 3 + 3 + 3 = 12",
-        "Or recall from times table: 4 × 3 = 12"
-      ],
-      "commonErrors": ["Confusing with addition", "Mixing up the order"],
-      "latex": "4 \\times 3 = 3 + 3 + 3 + 3 = 12"
-    },
-    {
-      "problem": "Calculate 23 × 4",
-      "solution": "Break as (20 + 3) × 4 = 80 + 12 = 92",
-      "steps": [
-        "Break 23 into 20 + 3",
-        "Multiply each part: 20 × 4 = 80, 3 × 4 = 12",
-        "Add the results: 80 + 12 = 92"
+        "Start with the first number: 7",
+        "Count on 5 more: 8, 9, 10, 11, 12",
+        "Or use the fact that 7 + 5 = 12 (memorized addition fact)",
+        "The answer is 12"
       ],
       "commonErrors": [
-        "Not carrying in partial products",
-        "Misaligning place values"
+        "Counting incorrectly when using fingers or mental counting",
+        "Confusing addition with subtraction"
       ],
-      "latex": "23 \\times 4 = (20 + 3) \\times 4 = 80 + 12 = 92"
+      "latex": "7 + 5 = 12"
     },
     {
-      "problem": "Find 56 × 78",
-      "solution": "56 × 70 = 3,920; 56 × 8 = 448; total 4,368",
+      "problem": "Single-Digit Subtraction: 13 - 8",
+      "solution": "13 - 8 = 5",
       "steps": [
-        "Break 78 into 70 + 8",
-        "Calculate 56 × 70 = 3,920",
-        "Calculate 56 × 8 = 448",
-        "Add: 3,920 + 448 = 4,368"
+        "Start with 13",
+        "Count back 8: 12, 11, 10, 9, 8, 7, 6, 5",
+        "Or think: what plus 8 equals 13? Answer: 5",
+        "Check: 5 + 8 = 13 ✓"
       ],
       "commonErrors": [
-        "Misaligning partial products",
-        "Addition errors in final step"
+        "Counting in the wrong direction",
+        "Not checking the answer using addition"
       ],
-      "latex": "56 \\times 78 = 56 \\times (70 + 8) = 3,920 + 448 = 4,368"
+      "latex": "13 - 8 = 5 \\text{ (check: } 5 + 8 = 13 \\text{)}"
+    },
+    {
+      "problem": "Simple Addition: 23 + 45",
+      "solution": "23 + 45 = 68",
+      "steps": [
+        "Align the numbers vertically: ones under ones, tens under tens",
+        "Add the ones column: 3 + 5 = 8",
+        "Add the tens column: 2 + 4 = 6",
+        "Write the result: 68"
+      ],
+      "commonErrors": [
+        "Misaligning the columns",
+        "Adding digits incorrectly (e.g., 3 + 4 = 7 instead of 3 + 5 = 8)"
+      ],
+      "latex": "\\begin{align} 23 \\\\ + 45 \\\\ \\hline 68 \\end{align}"
+    },
+    {
+      "problem": "Simple Subtraction: 56 - 23",
+      "solution": "56 - 23 = 33",
+      "steps": [
+        "Align the numbers vertically with the larger number on top",
+        "Subtract the ones column: 6 - 3 = 3",
+        "Subtract the tens column: 5 - 2 = 3",
+        "Write the result: 33"
+      ],
+      "commonErrors": [
+        "Subtracting the top number from the bottom number",
+        "Misaligning the place values"
+      ],
+      "latex": "\\begin{align} 56 \\\\ - 23 \\\\ \\hline 33 \\end{align}"
+    },
+    {
+      "problem": "Addition with Carrying: 47 + 38",
+      "solution": "47 + 38 = 85",
+      "steps": [
+        "Add the ones column: 7 + 8 = 15",
+        "Since 15 > 9, write 5 in the ones place and carry 1 to the tens",
+        "Add the tens column including the carry: 4 + 3 + 1 = 8",
+        "Write the result: 85"
+      ],
+      "commonErrors": [
+        "Forgetting to carry the 1",
+        "Writing 15 in the ones place instead of carrying",
+        "Adding the carry to the wrong column"
+      ],
+      "latex": "\\begin{align} \\phantom{+}47 \\\\ + 38 \\\\ \\hline 85 \\end{align} \\text{ (carry 1 from } 7+8=15 \\text{)}"
+    },
+    {
+      "problem": "Subtraction with Borrowing: 52 - 27",
+      "solution": "52 - 27 = 25",
+      "steps": [
+        "Look at ones column: 2 - 7 is not possible with positive result",
+        "Borrow 1 from the tens place: 5 becomes 4, and 2 becomes 12",
+        "Subtract ones: 12 - 7 = 5",
+        "Subtract tens: 4 - 2 = 2",
+        "Write the result: 25"
+      ],
+      "commonErrors": [
+        "Not borrowing when needed",
+        "Forgetting to reduce the tens place after borrowing",
+        "Borrowing incorrectly (e.g., making 2 become 11 instead of 12)"
+      ],
+      "latex": "\\begin{align} \\phantom{1}4\\phantom{1}12 \\\\ - 27 \\\\ \\hline 25 \\end{align} \\text{ (52 becomes 4 tens, 12 ones)}"
+    },
+    {
+      "problem": "Multi-digit Addition: 156 + 287",
+      "solution": "156 + 287 = 443",
+      "steps": [
+        "Add ones: 6 + 7 = 13, write 3 and carry 1",
+        "Add tens: 5 + 8 + 1(carry) = 14, write 4 and carry 1",
+        "Add hundreds: 1 + 2 + 1(carry) = 4",
+        "Write the result: 443"
+      ],
+      "commonErrors": [
+        "Losing track of carries across multiple columns",
+        "Adding the carry to the wrong column",
+        "Forgetting to add the final carry"
+      ],
+      "latex": "\\begin{align} \\phantom{+}156 \\\\ + 287 \\\\ \\hline 443 \\end{align} \\text{ (carries: ones→tens→hundreds)}"
+    },
+    {
+      "problem": "Subtraction with Zeros: 400 - 156",
+      "solution": "400 - 156 = 244",
+      "steps": [
+        "Ones: 0 - 6 requires borrowing, but tens place is 0",
+        "Borrow from hundreds: 4 becomes 3, middle 0 becomes 9, last 0 becomes 10",
+        "Now subtract: ones 10 - 6 = 4, tens 9 - 5 = 4, hundreds 3 - 1 = 2",
+        "Write the result: 244"
+      ],
+      "commonErrors": [
+        "Not borrowing through all the zeros",
+        "Stopping the borrowing process at the first zero",
+        "Incorrectly handling the chain of borrowing"
+      ],
+      "latex": "\\begin{align} 3\\phantom{1}9\\phantom{1}10 \\\\ - 156 \\\\ \\hline 244 \\end{align} \\text{ (400 becomes 3 hundreds, 9 tens, 10 ones)}"
     }
   ],
   "practice": [
     {
-      "id": "mult-basic-1",
+      "id": "single-add-1",
       "type": "fill-in",
-      "problem": "Calculate 5 × 6",
-      "correct": "30",
+      "problem": "Calculate: 6 + 4 = ?",
+      "correct": "10",
       "hints": [
-        "Think of repeated addition: 5 + 5 + 5 + 5 + 5 + 5",
-        "Or recall from times table",
-        "Visualize as an array: 5 rows of 6 dots"
+        "Count on from 6: 7, 8, 9, 10",
+        "Or use the doubles fact: 5 + 5 = 10, so 6 + 4 = 10",
+        "This is a basic addition fact to memorize"
       ],
-      "explanation": "5 × 6 = 30. This is a basic multiplication fact that should be memorized.",
+      "explanation": "6 + 4 = 10. This is a fundamental addition fact that forms the basis for larger calculations.",
       "difficulty": 1
     },
     {
-      "id": "mult-basic-2",
-      "type": "fill-in",
-      "problem": "Find 7 × 8",
-      "correct": "56",
+      "id": "single-sub-1",
+      "type": "multiple-choice",
+      "problem": "What is 9 - 3?",
+      "options": ["5", "6", "7", "12"],
+      "correct": 1,
       "hints": [
-        "Skip count by 7s: 7, 14, 21, 28, 35, 42, 49, 56",
-        "Or skip count by 8s: 8, 16, 24, 32, 40, 48, 56",
-        "Draw a 7×8 grid to visualize"
+        "Count back from 9: 8, 7, 6",
+        "Or think: 3 + ? = 9",
+        "Check your answer by adding: 6 + 3 = 9"
       ],
-      "explanation": "7 × 8 = 56. This is an important times table fact to memorize.",
+      "explanation": "9 - 3 = 6. You can verify this by checking that 6 + 3 = 9.",
       "difficulty": 1
     },
     {
-      "id": "mult-distribute-1",
+      "id": "single-add-2",
       "type": "fill-in",
-      "problem": "Calculate 12 × 5 using the distributive property",
-      "correct": "60",
+      "problem": "Calculate: 8 + 7 = ?",
+      "correct": "15",
       "hints": [
-        "Break 12 into 10 + 2",
-        "Calculate (10 + 2) × 5 = 10 × 5 + 2 × 5",
-        "Add the parts: 50 + 10 = 60"
+        "This crosses over 10, so think 8 + 2 = 10, then 10 + 5 = 15",
+        "Or count on from 8: 9, 10, 11, 12, 13, 14, 15",
+        "Use the strategy: 8 + 7 = 8 + (2 + 5) = 10 + 5 = 15"
       ],
-      "explanation": "12 × 5 = (10 + 2) × 5 = 50 + 10 = 60. The distributive property makes larger multiplications easier.",
+      "explanation": "8 + 7 = 15. Breaking it down: 8 + 2 = 10, then 10 + 5 = 15, using the remaining 5 from the 7.",
       "difficulty": 2
     },
     {
-      "id": "mult-two-digit-1",
+      "id": "single-sub-2",
       "type": "fill-in",
-      "problem": "Find 34 × 2",
+      "problem": "Calculate: 14 - 6 = ?",
+      "correct": "8",
+      "hints": [
+        "Think: 6 + ? = 14",
+        "Or count back from 14 six times",
+        "Use the relationship: 14 - 6 is the same as 14 - 4 - 2 = 10 - 2 = 8"
+      ],
+      "explanation": "14 - 6 = 8. You can check this: 8 + 6 = 14 ✓",
+      "difficulty": 2
+    },
+    {
+      "id": "fact-families-1",
+      "type": "multiple-choice",
+      "problem": "If 9 + 4 = 13, what is 13 - 4?",
+      "options": ["4", "9", "13", "17"],
+      "correct": 1,
+      "hints": [
+        "Addition and subtraction are inverse operations",
+        "If 9 + 4 = 13, then 13 - 4 = 9",
+        "This is called a fact family"
+      ],
+      "explanation": "13 - 4 = 9. Since 9 + 4 = 13, we know that 13 - 4 = 9. These form a fact family.",
+      "difficulty": 2
+    },
+    {
+      "id": "add-basic-1",
+      "type": "fill-in",
+      "problem": "Calculate: 23 + 45 = ?",
       "correct": "68",
       "hints": [
-        "Use the standard algorithm or partial products",
-        "34 × 2 = (30 + 4) × 2 = 60 + 8",
-        "Check: 30 × 2 = 60, 4 × 2 = 8"
+        "Add the ones place first: 3 + 5",
+        "Then add the tens place: 2 + 4",
+        "No carrying needed for this problem"
       ],
-      "explanation": "34 × 2 = 68. This introduces multi-digit multiplication with a single-digit multiplier.",
+      "explanation": "3 + 5 = 8 in ones place, 2 + 4 = 6 in tens place. Answer: 68",
+      "difficulty": 1
+    },
+    {
+      "id": "sub-basic-1",
+      "type": "multiple-choice",
+      "problem": "What is 56 - 23?",
+      "options": ["33", "43", "23", "53"],
+      "correct": 0,
+      "hints": [
+        "Subtract ones first: 6 - 3",
+        "Then subtract tens: 5 - 2",
+        "No borrowing needed"
+      ],
+      "explanation": "6 - 3 = 3 in ones place, 5 - 2 = 3 in tens place. Answer: 33",
+      "difficulty": 1
+    },
+    {
+      "id": "add-carry-1",
+      "type": "fill-in",
+      "problem": "Calculate: 47 + 38 = ?",
+      "correct": "85",
+      "hints": [
+        "Add ones: 7 + 8 = 15",
+        "Write 5, carry 1 to tens place",
+        "Add tens: 4 + 3 + 1(carry) = 8"
+      ],
+      "explanation": "7 + 8 = 15, write 5 and carry 1. Then 4 + 3 + 1 = 8. Answer: 85",
       "difficulty": 2
     },
     {
-      "id": "mult-area-1",
+      "id": "sub-borrow-1",
       "type": "fill-in",
-      "problem": "Find the area of a rectangle that is 15m by 4m",
-      "correct": "60",
+      "problem": "Calculate: 52 - 27 = ?",
+      "correct": "25",
       "hints": [
-        "Area = length × width",
-        "Break 15 into easier parts: 15 = 10 + 5",
-        "Calculate: (10 + 5) × 4 = 40 + 20 = 60"
+        "Ones: 2 < 7, so borrow from tens",
+        "2 becomes 12, 5 becomes 4",
+        "Now subtract: 12 - 7 = 5, 4 - 2 = 2"
       ],
-      "explanation": "Area = 15 × 4 = 60 m². This shows a real-world application of multiplication.",
+      "explanation": "Borrow 1 ten: 12 - 7 = 5 in ones, 4 - 2 = 2 in tens. Answer: 25",
+      "difficulty": 2
+    },
+    {
+      "id": "add-large-1",
+      "type": "multiple-choice",
+      "problem": "What is 156 + 287?",
+      "options": ["433", "443", "453", "463"],
+      "correct": 1,
+      "hints": [
+        "Add ones: 6 + 7 = 13, carry 1",
+        "Add tens: 5 + 8 + 1 = 14, carry 1",
+        "Add hundreds: 1 + 2 + 1 = 4"
+      ],
+      "explanation": "Ones: 6+7=13 (write 3, carry 1). Tens: 5+8+1=14 (write 4, carry 1). Hundreds: 1+2+1=4. Answer: 443",
       "difficulty": 3
     },
     {
-      "id": "mult-large-1",
+      "id": "sub-zeros-1",
       "type": "fill-in",
-      "problem": "Calculate 45 × 67",
-      "correct": "3015",
+      "problem": "Calculate: 400 - 156 = ?",
+      "correct": "244",
       "hints": [
-        "Use long multiplication or break into parts",
-        "45 × 67 = 45 × (60 + 7) = 45 × 60 + 45 × 7",
-        "Calculate: 2700 + 315 = 3015"
+        "Need to borrow through the zeros",
+        "400 becomes 3, 9, 10 after borrowing",
+        "Then subtract normally: 10-6, 9-5, 3-1"
       ],
-      "explanation": "45 × 67 = 3,015. This requires careful attention to place values and partial products.",
+      "explanation": "Chain borrow: 400→3,9,10. Then 10-6=4, 9-5=4, 3-1=2. Answer: 244",
+      "difficulty": 3
+    },
+    {
+      "id": "word-problem-1",
+      "type": "fill-in",
+      "problem": "You drive 1,234 miles total. You've already driven 567 miles. How many miles are left?",
+      "correct": "667",
+      "hints": [
+        "This is a subtraction problem: total - driven = left",
+        "Set up: 1,234 - 567",
+        "You'll need to borrow in multiple places"
+      ],
+      "explanation": "1,234 - 567 = 667 miles remaining. This requires borrowing in the tens and hundreds places.",
       "difficulty": 4
     },
     {
-      "id": "mult-pattern-1",
+      "id": "add-multiple-1",
       "type": "fill-in",
-      "problem": "Find 99 × 10",
-      "correct": "990",
+      "problem": "Calculate: 999 + 123 = ?",
+      "correct": "1122",
       "hints": [
-        "Look for patterns when multiplying by 10",
-        "Think of 99 as (100 - 1)",
-        "99 × 10 = (100 - 1) × 10 = 1000 - 10 = 990"
+        "Add ones: 9 + 3 = 12, carry 1",
+        "Add tens: 9 + 2 + 1 = 12, carry 1",
+        "Add hundreds: 9 + 1 + 1 = 11, write 11"
       ],
-      "explanation": "99 × 10 = 990. Multiplying by 10 adds a zero, and recognizing patterns makes calculation easier.",
+      "explanation": "Multiple carries: 9+3=12 (write 2, carry 1), 9+2+1=12 (write 2, carry 1), 9+1+1=11. Answer: 1,122",
       "difficulty": 4
     },
     {
-      "id": "mult-word-1",
+      "id": "word-problem-2",
       "type": "fill-in",
-      "problem": "A library has 25 shelves with 36 books on each shelf. How many books total?",
-      "correct": "900",
+      "problem": "Your bank balance is $5,678. You spend $2,345. What's your remaining balance?",
+      "correct": "3333",
       "hints": [
-        "This is 25 × 36",
-        "Estimate first: 25 × 40 = 1000, so answer should be close",
-        "Calculate: 25 × 36 = 25 × (30 + 6) = 750 + 150 = 900"
+        "Subtract the amount spent from the balance",
+        "Set up: 5,678 - 2,345",
+        "Work carefully through the borrowing"
       ],
-      "explanation": "25 × 36 = 900 books. Always estimate first to check if your answer is reasonable.",
+      "explanation": "$5,678 - $2,345 = $3,333 remaining balance. Requires borrowing in multiple columns.",
+      "difficulty": 5
+    },
+    {
+      "id": "sub-complex-1",
+      "type": "fill-in",
+      "problem": "Calculate: 92 - 58 = ?",
+      "correct": "34",
+      "hints": [
+        "Ones: 2 < 8, borrow from tens",
+        "2 becomes 12, 9 becomes 8",
+        "Subtract: 12 - 8 = 4, 8 - 5 = 3"
+      ],
+      "explanation": "Borrow: 92→8,12. Then 12-8=4 and 8-5=3. Answer: 34",
+      "difficulty": 3
+    },
+    {
+      "id": "add-large-2",
+      "type": "multiple-choice",
+      "problem": "What is 345 + 678?",
+      "options": ["1013", "1023", "1033", "1043"],
+      "correct": 1,
+      "hints": [
+        "Add ones: 5 + 8 = 13, carry 1",
+        "Add tens: 4 + 7 + 1 = 12, carry 1",
+        "Add hundreds: 3 + 6 + 1 = 10"
+      ],
+      "explanation": "5+8=13 (write 3, carry 1), 4+7+1=12 (write 2, carry 1), 3+6+1=10. Answer: 1,023",
+      "difficulty": 4
+    },
+    {
+      "id": "sub-large-1",
+      "type": "fill-in",
+      "problem": "Calculate: 1,000 - 432 = ?",
+      "correct": "568",
+      "hints": [
+        "Borrow from the thousands place through all zeros",
+        "1,000 becomes 0, 9, 9, 10 after borrowing",
+        "Then subtract: 10-2, 9-3, 9-4, 0-0"
+      ],
+      "explanation": "Chain borrow through zeros: 1,000→0,9,9,10. Then 10-2=8, 9-3=6, 9-4=5. Answer: 568",
+      "difficulty": 4
+    },
+    {
+      "id": "word-problem-3",
+      "type": "fill-in",
+      "problem": "Recipe calls for 250g flour. You add 175g more flour. How much flour total?",
+      "correct": "425",
+      "hints": [
+        "This is addition: original + added = total",
+        "Set up: 250 + 175",
+        "Add column by column"
+      ],
+      "explanation": "250g + 175g = 425g total flour. Simple addition with one carry in the tens place.",
+      "difficulty": 2
+    },
+    {
+      "id": "sub-practice-1",
+      "type": "fill-in",
+      "problem": "Calculate: 789 - 456 = ?",
+      "correct": "333",
+      "hints": [
+        "Ones: 9 - 6 = 3 (no borrowing needed)",
+        "Tens: 8 - 5 = 3 (no borrowing needed)",
+        "Hundreds: 7 - 4 = 3 (no borrowing needed)"
+      ],
+      "explanation": "No borrowing needed: 9-6=3, 8-5=3, 7-4=3. Answer: 333",
+      "difficulty": 3
+    },
+    {
+      "id": "word-problem-4",
+      "type": "multiple-choice",
+      "problem": "Monthly budget is $5,000. Rent costs $1,234. How much is left for other expenses?",
+      "options": ["$3,766", "$3,776", "$3,866", "$3,876"],
+      "correct": 0,
+      "hints": [
+        "Subtract rent from total budget",
+        "Set up: 5,000 - 1,234",
+        "Borrow through the zeros carefully"
+      ],
+      "explanation": "$5,000 - $1,234 = $3,766 remaining for other expenses. Chain borrowing required.",
       "difficulty": 5
     }
   ],
-  "tools": ["calculator", "array-visualizer"],
+  "tools": [
+    "calculator",
+    "column-practice-tool",
+    "addition-subtraction-checker"
+  ],
   "assessment": {
     "masteryThreshold": 0.8,
-    "requiredProblems": 6
-  },
-  "drills": {
-    "title": "Multiplication Practice Drills",
-    "description": "Printable worksheets for multiplication practice with times tables and basic multiplication facts.",
-    "operations": ["multiplication"],
-    "configurations": [
-      {
-        "name": "Times Tables (1-5)",
-        "operation": "multiplication",
-        "digitSelection": "one",
-        "numberRange": { "min": 1, "max": 5 },
-        "description": "Basic multiplication facts with factors 1-5"
-      },
-      {
-        "name": "Times Tables (1-10)",
-        "operation": "multiplication",
-        "digitSelection": "one",
-        "numberRange": { "min": 1, "max": 10 },
-        "description": "Standard times tables up to 10×10"
-      },
-      {
-        "name": "Times Tables (1-12)",
-        "operation": "multiplication",
-        "digitSelection": "one",
-        "numberRange": { "min": 1, "max": 12 },
-        "description": "Complete times tables including 11s and 12s"
-      },
-      {
-        "name": "Mixed Multiplication",
-        "operation": "multiplication",
-        "digitSelection": "mixed",
-        "numberRange": { "min": 1, "max": 12 },
-        "description": "Mix of single and double digit multiplication"
-      }
-    ]
+    "requiredProblems": 8
   }
 }

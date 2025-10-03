@@ -30,8 +30,8 @@ export function useDrillState(
   const getDefaultOperation = (
     chapterId: string
   ): 'addition' | 'subtraction' | 'multiplication' | 'division' => {
-    if (chapterId === 'chapter-03') return 'multiplication';
-    if (chapterId === 'chapter-04') return 'division';
+    if (chapterId === 'chapter-04') return 'multiplication';
+    if (chapterId === 'chapter-05') return 'division';
     return 'addition';
   };
 
@@ -42,8 +42,8 @@ export function useDrillState(
 
   // Custom setter that prevents 'three' selection in Chapter 3
   const handleSetSelectedDigits = (digits: DigitSelection) => {
-    // If Chapter 3 and trying to set 'three', default to 'one' instead
-    if (chapterId === 'chapter-03' && digits === 'three') {
+    // If Chapter 4 and trying to set 'three', default to 'one' instead
+    if (chapterId === 'chapter-04' && digits === 'three') {
       setSelectedDigits('one');
     } else {
       setSelectedDigits(digits);

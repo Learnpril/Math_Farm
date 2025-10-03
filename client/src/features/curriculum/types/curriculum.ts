@@ -55,6 +55,19 @@ export interface ChapterAssessment {
   requiredProblems: number;
 }
 
+export interface CommonPitfall {
+  misconception: string;
+  example: string;
+  explanation: string;
+  correction: string;
+}
+
+export interface CommonPitfalls {
+  title: string;
+  pitfalls: CommonPitfall[];
+  preventionStrategies: string[];
+}
+
 export interface ChapterData {
   id: string;
   title: string;
@@ -65,6 +78,7 @@ export interface ChapterData {
   examples: WorkedExample[];
   practice: PracticeQuestion[];
   tools: string[];
+  commonPitfalls?: CommonPitfalls | undefined;
   assessment: ChapterAssessment;
 }
 

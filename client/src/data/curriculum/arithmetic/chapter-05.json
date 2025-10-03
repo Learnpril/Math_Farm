@@ -1,187 +1,234 @@
 {
   "id": "chapter-05",
-  "title": "Fractions Basics",
+  "title": "Division Basics",
   "objectives": [
-    "Understand fractions as parts of a whole",
-    "Compare and order fractions",
-    "Find equivalent fractions and simplify",
-    "Add and subtract fractions with like and unlike denominators",
-    "Multiply and divide fractions"
+    "Understand division as partitioning into equal groups",
+    "Master basic division facts as inverse of multiplication",
+    "Perform long division with single and multi-digit divisors",
+    "Interpret remainders in real-world contexts"
   ],
-  "prerequisites": ["chapter-04"],
+  "prerequisites": ["chapter-01", "chapter-02", "chapter-03", "chapter-04"],
   "introduction": {
-    "context": "Fractions represent the pinnacle of basic arithmetic, introducing parts of wholes and enabling precise measurements, ratios, and proportional thinking that underpin advanced mathematics like algebra and calculus. This chapter extends the operations from prior chapters: place value from Chapter 1 gives structure to decimal equivalents, addition/subtraction from Chapter 2 handles combining parts, multiplication from Chapter 3 scales fractions, and division from Chapter 4 forms their very definition (numerator divided by denominator).",
-    "connection": "Fractions build directly on division from Chapter 4. A fraction like 3/4 means 3 ÷ 4, representing 3 parts out of 4 equal parts. The operations you learned in previous chapters extend naturally to fractions, with some important modifications for handling different denominators."
+    "context": "Division is essential for sharing quantities equally, calculating rates and ratios, and solving problems involving measurement and time. It's the inverse operation of multiplication and appears in everyday situations like splitting bills, measuring portions, and determining speeds.",
+    "connection": "Building on multiplication facts, division helps us work backwards from products to factors and introduces concepts of remainders and fractional parts."
   },
   "theory": {
     "concepts": [
       {
-        "title": "Understanding Fractions",
-        "content": "Fractions begin with wholes divided into parts, intuitively like slicing a pie: one slice of four is 1/4. This part-whole relationship makes fractions essential for non-integer quantities. Formally, a fraction a/b represents a divided by b, where a is numerator, b denominator (b ≠ 0). Proper if |a| < |b|, improper otherwise (e.g., 5/3), mixed as whole + proper (1 2/3). Historically, Egyptians (2000 BCE) used eye of Horus for halves to 1/64. Babylonians had positional fractions. Greeks like Archimedes (200 BCE) approximated pi as fractions.",
-        "latex": "\\frac{a}{b} \\text{ where } a \\text{ is numerator, } b \\text{ is denominator } (b \\neq 0)",
-        "visuals": []
+        "title": "Understanding Division",
+        "content": "Division partitions into equal groups (a ÷ b or a / b), inverse of multiplication. Components: dividend ÷ divisor = quotient, possible remainder R (if not even). Long division: e.g., 456 ÷ 4: 4 into 4=1, subtract 0; into 5=1 (remainder 1), into 16=4. Notation: ÷, /, or fraction bar. Remainder < divisor. Real-world: sharing costs, measuring portions.",
+        "latex": "456 \\div 4 = 114 \\text{ (exactly)}",
+        "visuals": ["DivisionGroupingVisual", "DivisionFactsTable"]
       },
       {
-        "title": "Equivalent Fractions and Simplifying",
-        "content": "Equivalent fractions look different but equal value, like 1/2 = 2/4. Intuitively, halve a halved pie - same as quartering directly. Formally, a/b = c/d if a×d = b×c; generate by multiplying/dividing numerator/denominator by same k ≠ 0. History: Euclid proved equivalence via common measures. Arabs used for astronomy.",
-        "latex": "\\frac{a}{b} = \\frac{c}{d} \\text{ if } a \\times d = b \\times c",
-        "visuals": []
+        "title": "Division with Remainders",
+        "content": "When numbers don't divide evenly, we have a remainder. The remainder must always be less than the divisor. In real-world problems, we need to interpret what the remainder means.",
+        "latex": "17 \\div 5 = 3 \\text{ R } 2 \\text{ because } 3 \\times 5 + 2 = 17",
+        "visuals": ["DivisionRemainderVisual"]
       },
       {
-        "title": "Adding and Subtracting Fractions",
-        "content": "Combining fractions requires common denominators, intuitively like aligning units: add 1/2 + 1/3 by sixths (3/6 + 2/6 = 5/6). Formally, a/b + c/d = (a×d + b×c)/(b×d); subtract similarly minus. History: Egyptians added unit fractions. Al-Khwarizmi used LCD.",
-        "latex": "\\frac{a}{b} + \\frac{c}{d} = \\frac{a \\times d + b \\times c}{b \\times d}",
-        "visuals": []
-      },
-      {
-        "title": "Multiplying Fractions",
-        "content": "Fraction multiplication scales parts: 1/2 × 3/4 = 3/8, intuitively half of three-quarters. Formally, (a/b) × (c/d) = (a×c)/(b×d); simplify before/after. History: Babylonians multiplied fractions positionally. Greeks geometrically.",
-        "latex": "\\frac{a}{b} \\times \\frac{c}{d} = \\frac{a \\times c}{b \\times d}",
-        "visuals": []
-      },
-      {
-        "title": "Dividing Fractions",
-        "content": "Dividing fractions inverts: 1/2 ÷ 1/3 = 3/2, intuitively how many thirds in half? (1.5). Formally, (a/b) ÷ (c/d) = (a/b) × (d/c). History: Rhind Papyrus inverted. Modern rule from 1800s texts.",
-        "latex": "\\frac{a}{b} \\div \\frac{c}{d} = \\frac{a}{b} \\times \\frac{d}{c}",
-        "visuals": []
+        "title": "Long Division Algorithm",
+        "content": "For larger numbers, we use the long division algorithm: divide, multiply, subtract, bring down. This process repeats until we've used all digits in the dividend.",
+        "latex": "789 \\div 23 = 34 \\text{ R } 7",
+        "visuals": ["LongDivisionDemo"]
       }
     ]
   },
   "examples": [
     {
-      "problem": "What fraction of the circle is shaded if 3 out of 8 equal parts are colored?",
-      "solution": "3/8",
+      "problem": "Calculate 12 ÷ 3",
+      "solution": "3 groups of 4 = 12, quotient 4",
       "steps": [
-        "Count the total number of equal parts: 8",
-        "Count the shaded parts: 3",
-        "Write as fraction: 3/8",
-        "Check: 3 parts out of 8 total parts"
+        "Think: what number times 3 equals 12?",
+        "3 × 4 = 12, so 12 ÷ 3 = 4",
+        "Check: 4 × 3 = 12 ✓"
       ],
       "commonErrors": [
-        "Writing 8/3 instead of 3/8",
-        "Confusing numerator and denominator"
+        "Confusing dividend and divisor",
+        "Not checking the answer"
       ],
-      "latex": "\\frac{\\text{shaded parts}}{\\text{total parts}} = \\frac{3}{8}"
+      "latex": "12 \\div 3 = 4 \\text{ because } 4 \\times 3 = 12"
     },
     {
-      "problem": "Add 1/4 + 1/3",
-      "solution": "1/4 + 1/3 = 7/12",
+      "problem": "Find 456 ÷ 4",
+      "solution": "4 into 4=1 (4), subtract 0; bring 5, 4 into 5=1 (4), subtract 1; bring 6, 4 into 16=4. Quotient 114",
       "steps": [
-        "Find the least common denominator: LCM of 4 and 3 is 12",
-        "Convert to equivalent fractions: 1/4 = 3/12, 1/3 = 4/12",
-        "Add the numerators: 3 + 4 = 7",
-        "Keep the denominator: 7/12"
+        "4 goes into 4 exactly 1 time, write 1",
+        "4 goes into 5 once with remainder 1, write 1",
+        "Bring down 6 to make 16",
+        "4 goes into 16 exactly 4 times, write 4",
+        "Final answer: 114"
       ],
-      "commonErrors": [
-        "Adding denominators: 1/4 + 1/3 ≠ 2/7",
-        "Not finding common denominator first"
-      ],
-      "latex": "\\frac{1}{4} + \\frac{1}{3} = \\frac{3}{12} + \\frac{4}{12} = \\frac{7}{12}"
+      "commonErrors": ["Bringing down wrong digits", "Subtraction errors"],
+      "latex": "456 \\div 4 = 114"
     },
     {
-      "problem": "Calculate 2/3 × 3/4",
-      "solution": "2/3 × 3/4 = 1/2",
+      "problem": "Calculate 789 ÷ 23 with remainder",
+      "solution": "23 into 78=3 (69), subtract 9; bring 9=99, 23 into 99=4 (92), subtract 7. Quotient 34 R7",
       "steps": [
-        "Multiply numerators: 2 × 3 = 6",
-        "Multiply denominators: 3 × 4 = 12",
-        "Result: 6/12",
-        "Simplify: 6/12 = 1/2"
+        "23 goes into 78 three times (3 × 23 = 69)",
+        "78 - 69 = 9, bring down the 9 to make 99",
+        "23 goes into 99 four times (4 × 23 = 92)",
+        "99 - 92 = 7, which is less than 23",
+        "Final answer: 34 R7"
       ],
       "commonErrors": [
-        "Adding instead of multiplying",
-        "Forgetting to simplify the result"
+        "Wrong trial multipliers",
+        "Arithmetic errors in subtraction"
       ],
-      "latex": "\\frac{2}{3} \\times \\frac{3}{4} = \\frac{2 \\times 3}{3 \\times 4} = \\frac{6}{12} = \\frac{1}{2}"
-    },
-    {
-      "problem": "Calculate 3/4 ÷ 1/2",
-      "solution": "3/4 ÷ 1/2 = 3/2 = 1 1/2",
-      "steps": [
-        "Keep the first fraction: 3/4",
-        "Change division to multiplication: ×",
-        "Flip the second fraction: 1/2 becomes 2/1",
-        "Multiply: 3/4 × 2/1 = 6/4 = 3/2 = 1 1/2"
-      ],
-      "commonErrors": [
-        "Not flipping the second fraction",
-        "Flipping the first fraction instead"
-      ],
-      "latex": "\\frac{3}{4} \\div \\frac{1}{2} = \\frac{3}{4} \\times \\frac{2}{1} = \\frac{6}{4} = \\frac{3}{2}"
+      "latex": "789 \\div 23 = 34 \\text{ R } 7"
     }
   ],
   "practice": [
     {
-      "id": "p5-1",
-      "type": "multiple-choice",
-      "problem": "Which fraction is equivalent to 1/2?",
-      "options": ["2/3", "2/4", "3/4", "1/3"],
-      "correct": 1,
+      "id": "div-basic-1",
+      "type": "fill-in",
+      "problem": "Calculate 15 ÷ 5",
+      "correct": "3",
       "hints": [
-        "Think about what fraction means the same as 1/2",
-        "1/2 means 1 part out of 2 equal parts",
-        "What other fraction represents half?"
+        "Think of equal groups: how many groups of 5 make 15?",
+        "Use the inverse: what times 5 equals 15?",
+        "5 × 3 = 15, so 15 ÷ 5 = 3"
       ],
-      "explanation": "2/4 = 1/2 because both represent half of a whole. 2 out of 4 parts is the same as 1 out of 2 parts.",
+      "explanation": "15 ÷ 5 = 3. This is a basic division fact that relates to the multiplication table.",
+      "difficulty": 1
+    },
+    {
+      "id": "div-basic-2",
+      "type": "fill-in",
+      "problem": "Find 24 ÷ 4",
+      "correct": "6",
+      "hints": [
+        "Think of sharing 24 items equally among 4 groups",
+        "Draw 24 dots and circle groups of 4",
+        "Check: 6 × 4 = 24"
+      ],
+      "explanation": "24 ÷ 4 = 6. Visualizing division as sharing helps understand the concept.",
+      "difficulty": 1
+    },
+    {
+      "id": "div-powers-1",
+      "type": "fill-in",
+      "problem": "Calculate 100 ÷ 25",
+      "correct": "4",
+      "hints": [
+        "Think about quarters: how many 25s make 100?",
+        "25 × 4 = 100",
+        "Pattern: dividing by 25 is like finding how many quarters"
+      ],
+      "explanation": "100 ÷ 25 = 4. Recognizing patterns with common numbers makes division easier.",
       "difficulty": 2
     },
     {
-      "id": "p5-2",
+      "id": "div-long-1",
       "type": "fill-in",
-      "problem": "Add: 2/5 + 1/5 = ?",
-      "correct": "3/5",
+      "problem": "Find 567 ÷ 3",
+      "correct": "189",
       "hints": [
-        "The denominators are the same",
-        "Add only the numerators",
-        "Keep the denominator the same"
+        "Use long division: 3 into 5 goes 1 time",
+        "3 into 26 goes 8 times (remainder 2)",
+        "3 into 27 goes 9 times exactly"
       ],
-      "explanation": "When denominators are the same, add the numerators: 2 + 1 = 3, so 2/5 + 1/5 = 3/5",
-      "difficulty": 2
-    },
-    {
-      "id": "p5-3",
-      "type": "multiple-choice",
-      "problem": "What is 1/3 + 1/6?",
-      "options": ["2/9", "1/2", "2/6", "1/9"],
-      "correct": 1,
-      "hints": [
-        "Find a common denominator first",
-        "The LCD of 3 and 6 is 6",
-        "Convert 1/3 to sixths"
-      ],
-      "explanation": "1/3 = 2/6, so 1/3 + 1/6 = 2/6 + 1/6 = 3/6 = 1/2",
+      "explanation": "567 ÷ 3 = 189. This demonstrates long division with no remainder.",
       "difficulty": 3
     },
     {
-      "id": "p5-4",
+      "id": "div-remainder-1",
+      "type": "multiple-choice",
+      "problem": "Share 45 candies among 7 kids. How many does each get and how many are left?",
+      "options": [
+        "6 each, 3 left",
+        "7 each, 1 left",
+        "5 each, 10 left",
+        "6 each, 2 left"
+      ],
+      "correct": 0,
+      "hints": [
+        "Calculate 45 ÷ 7",
+        "7 × 6 = 42, so 6 each with some left over",
+        "45 - 42 = 3 candies left"
+      ],
+      "explanation": "45 ÷ 7 = 6 R3, so each child gets 6 candies and 3 are left over.",
+      "difficulty": 3
+    },
+    {
+      "id": "div-large-1",
       "type": "fill-in",
-      "problem": "Multiply: 1/4 × 2/3 = ?",
-      "correct": "2/12",
+      "problem": "Calculate 1,234 ÷ 12, if there is a remainder put R before it (Example: 5 ÷ 2 would be 2 R1)",
+      "correct": "102 R10",
       "hints": [
-        "Multiply numerators together",
-        "Multiply denominators together",
-        "1 × 2 = 2, and 4 × 3 = 12"
+        "Use long division with a two-digit divisor",
+        "12 goes into 123 about 10 times (12 × 10 = 120)",
+        "Continue the process: 1,234 - 1,224 = 10 remainder"
       ],
-      "explanation": "To multiply fractions: (1 × 2)/(4 × 3) = 2/12, which can be simplified to 1/6",
-      "difficulty": 3
+      "explanation": "1,234 ÷ 12 = 102 R10. Using long division: 12 goes into 123 ten times (120), leaving 3. Bring down 4 to get 34. 12 goes into 34 twice (24), leaving remainder 10.",
+      "difficulty": 4
     },
     {
-      "id": "p5-5",
-      "type": "multiple-choice",
-      "problem": "What is 1/2 ÷ 1/4?",
-      "options": ["1/8", "2", "1/6", "4"],
-      "correct": 1,
+      "id": "div-pattern-1",
+      "type": "fill-in",
+      "problem": "Find 999 ÷ 9",
+      "correct": "111",
       "hints": [
-        "Remember: keep, change, flip",
-        "1/2 × 4/1",
-        "How many quarters fit in a half?"
+        "Look for patterns with 9",
+        "Each digit in 999 is divisible by 9",
+        "9 + 9 + 9 = 27, and 2 + 7 = 9 (divisibility rule)"
       ],
-      "explanation": "1/2 ÷ 1/4 = 1/2 × 4/1 = 4/2 = 2. There are 2 quarter-pieces in one half.",
-      "difficulty": 3
+      "explanation": "999 ÷ 9 = 111. The divisibility rule for 9 helps: if digits sum to a multiple of 9, the number is divisible by 9.",
+      "difficulty": 4
+    },
+    {
+      "id": "div-word-1",
+      "type": "fill-in",
+      "problem": "A car travels 560km in 8 hours. What is the average speed in km/h?",
+      "correct": "70",
+      "hints": [
+        "Speed = distance ÷ time",
+        "Calculate 560 ÷ 8",
+        "560 ÷ 8 = 70 km/h"
+      ],
+      "explanation": "560 ÷ 8 = 70 km/h. Division is used to find rates like speed, where we divide total distance by total time.",
+      "difficulty": 5
     }
   ],
-  "tools": ["calculator", "fraction-visualizer", "fraction-strips"],
+  "tools": ["calculator", "long-division-helper"],
   "assessment": {
     "masteryThreshold": 0.8,
-    "requiredProblems": 5
+    "requiredProblems": 6
+  },
+  "drills": {
+    "title": "Division Practice Drills",
+    "description": "Printable worksheets for division practice with basic division facts and simple division problems.",
+    "operations": ["division"],
+    "configurations": [
+      {
+        "name": "Basic Division Facts (1-5)",
+        "operation": "division",
+        "digitSelection": "one",
+        "numberRange": { "min": 1, "max": 5 },
+        "description": "Simple division facts with divisors 1-5"
+      },
+      {
+        "name": "Division Facts (1-10)",
+        "operation": "division",
+        "digitSelection": "one",
+        "numberRange": { "min": 1, "max": 10 },
+        "description": "Standard division facts up to 10"
+      },
+      {
+        "name": "Division Facts (1-12)",
+        "operation": "division",
+        "digitSelection": "one",
+        "numberRange": { "min": 1, "max": 12 },
+        "description": "Complete division facts including 11s and 12s"
+      },
+      {
+        "name": "Mixed Division",
+        "operation": "division",
+        "digitSelection": "mixed",
+        "numberRange": { "min": 1, "max": 12 },
+        "description": "Mix of single and double digit division"
+      }
+    ]
   }
 }

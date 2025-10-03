@@ -1,6 +1,6 @@
 /**
  * DrillGenerator utility class for generating printable math drill problems
- * Supports addition and subtraction with configurable difficulty levels
+ * Supports addition, subtraction, multiplication, and division with configurable difficulty levels
  */
 
 import type {
@@ -12,13 +12,13 @@ import type {
 
 /**
  * Chapter-based difficulty configurations
- * Chapter 2: Addition and Subtraction
- * Chapter 3: Multiplication Basics
- * Chapter 4: Division Basics
+ * Chapter 3: Addition and Subtraction (was Chapter 2)
+ * Chapter 4: Multiplication Basics (was Chapter 3)
+ * Chapter 5: Division Basics (was Chapter 4)
  * Future chapters will have their own drill types (fractions, etc.)
  */
 const CHAPTER_CONFIGURATIONS: Record<string, DrillConfiguration> = {
-  'chapter-02': {
+  'chapter-03': {
     problemCount: 20,
     gridColumns: 4,
     gridRows: 5,
@@ -26,7 +26,7 @@ const CHAPTER_CONFIGURATIONS: Record<string, DrillConfiguration> = {
     allowNegativeResults: false,
     mixedDifficulty: false,
   },
-  'chapter-03': {
+  'chapter-04': {
     problemCount: 20,
     gridColumns: 4,
     gridRows: 5,
@@ -34,7 +34,7 @@ const CHAPTER_CONFIGURATIONS: Record<string, DrillConfiguration> = {
     allowNegativeResults: false,
     mixedDifficulty: false,
   },
-  'chapter-04': {
+  'chapter-05': {
     problemCount: 20,
     gridColumns: 4,
     gridRows: 5,
@@ -453,8 +453,8 @@ export class DrillGenerator {
     if (digitCount === 1) {
       return this.generateRandomNumber(1, 9);
     } else if (digitCount === 2) {
-      // For Chapter 4 (Division), use smaller 2-digit numbers to keep problems manageable
-      if (chapterId === 'chapter-04') {
+      // For Chapter 5 (Division), use smaller 2-digit numbers to keep problems manageable
+      if (chapterId === 'chapter-05') {
         return this.generateRandomNumber(10, 25); // Much smaller range for division
       }
       return this.generateRandomNumber(10, 99);
@@ -491,9 +491,9 @@ export class DrillGenerator {
           operand2: this.generateNumberByDigits(3, chapterId),
         };
       case 'mixed':
-        // Mix of 1, 2, and 3 digit numbers (but exclude 3-digit for Chapter 3 and 4)
+        // Mix of 1, 2, and 3 digit numbers (but exclude 3-digit for Chapter 4 and 5)
         const availableDigits =
-          chapterId === 'chapter-03' || chapterId === 'chapter-04'
+          chapterId === 'chapter-04' || chapterId === 'chapter-05'
             ? [1, 2]
             : [1, 2, 3];
         const digits1 = availableDigits[
