@@ -103,16 +103,34 @@ export interface CurriculumState {
 export interface DrillProblem {
   id: string;
   operand1: number;
-  operand2: number;
-  operation: 'addition' | 'subtraction' | 'multiplication' | 'division';
-  answer: number;
+  operand2?: number;
+  operation:
+    | 'addition'
+    | 'subtraction'
+    | 'multiplication'
+    | 'division'
+    | 'ratio-simplify'
+    | 'percentage-convert'
+    | 'percentage-of'
+    | 'percentage-change';
+  answer: number | string;
   difficulty: 'easy' | 'medium' | 'hard';
+  problem?: string; // For complex problems that need custom formatting
+  solution?: string; // For showing work/steps
 }
 
 export interface DrillSet {
   id: string;
   title: string;
-  operation: 'addition' | 'subtraction' | 'multiplication' | 'division';
+  operation:
+    | 'addition'
+    | 'subtraction'
+    | 'multiplication'
+    | 'division'
+    | 'ratio-simplify'
+    | 'percentage-convert'
+    | 'percentage-of'
+    | 'percentage-change';
   problems: DrillProblem[];
   generatedAt: Date;
   chapterLevel: number;

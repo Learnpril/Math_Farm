@@ -32,6 +32,15 @@ import {
   ExponentComparison,
   ExponentPatterns,
   NegativeNumbersIntro,
+  FractionCircles,
+  FractionBars,
+  EquivalentFractionBars,
+  FractionAdditionBars,
+  FractionMultiplicationGrid,
+  FractionDivisionBars,
+  EquivalentRatiosBars,
+  PercentageChangeVisualizer,
+  RatioToPercentageConverter,
 } from './visual-aids';
 
 interface TheorySectionProps {
@@ -202,6 +211,53 @@ export function TheorySection({
       case 'NegativeNumbersIntro':
       case 'negative-numbers-intro':
         return 'Below is an interactive number line that helps you explore positive and negative numbers with real-world examples.';
+
+      // Fraction visuals
+      case 'FractionCircles':
+      case 'fraction-circles':
+        return 'Below is an interactive circle diagram that shows fractions as parts of a whole, with real-time decimal and percentage conversions.';
+
+      case 'FractionBars':
+      case 'fraction-bars':
+        return 'The following bar model shows fractions as shaded parts of a rectangle, helping you visualize what fractions represent.';
+
+      case 'EquivalentFractionBars':
+      case 'equivalent-fraction-bars':
+        return 'Below are multiple fraction bars that demonstrate how different fractions can represent the same value.';
+
+      case 'FractionAdditionBars':
+      case 'fraction-addition-bars':
+        return 'The following step-by-step visualization shows how to add fractions using common denominators with interactive bar models.';
+
+      case 'FractionMultiplicationGrid':
+      case 'fraction-multiplication-grid':
+        return 'Below is an interactive grid that shows fraction multiplication as finding the area where two fractions overlap.';
+
+      case 'FractionDivisionBars':
+      case 'fraction-division-bars':
+        return 'The following demonstration shows fraction division as "how many groups fit?" using the invert-and-multiply method.';
+
+      // Chapter 7: Percentages and Ratios visual descriptions
+      case 'EquivalentRatiosBars':
+      case 'equivalent-ratios-bars':
+        return 'This interactive visualization shows how ratios remain equivalent when both parts are scaled by the same factor.';
+
+      case 'PercentageChangeVisualizer':
+      case 'percentage-change-visualizer':
+        return 'The following tool demonstrates how percentage increases and decreases affect values, with visual bars showing the changes.';
+
+      case 'RatioToPercentageConverter':
+      case 'ratio-to-percentage-converter':
+        return 'This converter shows the relationship between ratios and percentages using both pie charts and bar models.';
+
+      // Legacy/fallback cases for fraction visuals
+      case 'FractionSimplifier':
+      case 'fraction-simplifier':
+        return 'Below are multiple fraction bars that demonstrate how different fractions can represent the same value and how to simplify fractions.';
+
+      case 'CommonDenominatorVisual':
+      case 'common-denominator-visual':
+        return 'The following step-by-step visualization shows how to add fractions using common denominators with interactive bar models.';
 
       // Other algorithms and procedures
       case 'standard-algorithm':
@@ -566,6 +622,53 @@ export function TheorySection({
         case 'NegativeNumbersIntro':
         case 'negative-numbers-intro':
           return <NegativeNumbersIntro className='mt-4' />;
+
+        // Fraction visuals
+        case 'FractionCircles':
+        case 'fraction-circles':
+          return <FractionCircles className='mt-4' />;
+
+        case 'FractionBars':
+        case 'fraction-bars':
+          return <FractionBars className='mt-4' />;
+
+        case 'EquivalentFractionBars':
+        case 'equivalent-fraction-bars':
+          return <EquivalentFractionBars className='mt-4' />;
+
+        case 'FractionAdditionBars':
+        case 'fraction-addition-bars':
+          return <FractionAdditionBars className='mt-4' />;
+
+        case 'FractionMultiplicationGrid':
+        case 'fraction-multiplication-grid':
+          return <FractionMultiplicationGrid className='mt-4' />;
+
+        case 'FractionDivisionBars':
+        case 'fraction-division-bars':
+          return <FractionDivisionBars className='mt-4' />;
+
+        // Chapter 7: Percentages and Ratios visuals
+        case 'EquivalentRatiosBars':
+        case 'equivalent-ratios-bars':
+          return <EquivalentRatiosBars className='mt-4' />;
+
+        case 'PercentageChangeVisualizer':
+        case 'percentage-change-visualizer':
+          return <PercentageChangeVisualizer className='mt-4' />;
+
+        case 'RatioToPercentageConverter':
+        case 'ratio-to-percentage-converter':
+          return <RatioToPercentageConverter className='mt-4' />;
+
+        // Legacy/fallback cases for fraction visuals
+        case 'FractionSimplifier':
+        case 'fraction-simplifier':
+          return <EquivalentFractionBars className='mt-4' />;
+
+        case 'CommonDenominatorVisual':
+        case 'common-denominator-visual':
+          return <FractionAdditionBars className='mt-4' />;
 
         // Other algorithms and procedures
         case 'standard-algorithm':

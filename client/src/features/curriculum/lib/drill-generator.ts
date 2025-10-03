@@ -42,6 +42,14 @@ const CHAPTER_CONFIGURATIONS: Record<string, DrillConfiguration> = {
     allowNegativeResults: false,
     mixedDifficulty: false,
   },
+  'chapter-07': {
+    problemCount: 15,
+    gridColumns: 3,
+    gridRows: 5,
+    numberRange: { min: 1, max: 100 }, // For percentages and ratios
+    allowNegativeResults: false,
+    mixedDifficulty: false,
+  },
   // Default configuration (fallback for Chapter 2)
   default: {
     problemCount: 20,
@@ -326,7 +334,15 @@ export class DrillGenerator {
    */
   public generateDrillSet(
     chapterId: string,
-    operation: 'addition' | 'subtraction' | 'multiplication' | 'division',
+    operation:
+      | 'addition'
+      | 'subtraction'
+      | 'multiplication'
+      | 'division'
+      | 'ratio-simplify'
+      | 'percentage-convert'
+      | 'percentage-of'
+      | 'percentage-change',
     chapterTitle?: string,
     digitSelection?: DigitSelection
   ): DrillSet {
@@ -350,6 +366,18 @@ export class DrillGenerator {
         break;
       case 'division':
         problems = this.generateDivisionProblems(config, chapterId);
+        break;
+      case 'ratio-simplify':
+        problems = this.generateRatioSimplifyProblems(config, chapterId);
+        break;
+      case 'percentage-convert':
+        problems = this.generatePercentageConvertProblems(config, chapterId);
+        break;
+      case 'percentage-of':
+        problems = this.generatePercentageOfProblems(config, chapterId);
+        break;
+      case 'percentage-change':
+        problems = this.generatePercentageChangeProblems(config, chapterId);
         break;
       default:
         problems = this.generateAdditionProblems(config, chapterId);
@@ -565,6 +593,155 @@ export class DrillGenerator {
       config.numberRange.max > config.numberRange.min &&
       config.gridColumns * config.gridRows >= config.problemCount
     );
+  }
+
+  /**
+   * Generate ratio simplification problems
+   */
+  private generateRatioSimplifyProblems(
+    config: DrillConfiguration,
+    chapterId: string
+  ): DrillProblem[] {
+    const problems: DrillProblem[] = [];
+
+    for (let i = 0; i < config.problemCount; i++) {
+      const factor = this.generateRandomNumber(2, 6);
+      const a = this.generateRandomNumber(1, 8);
+      const b = this.generateRandomNumber(1, 8);
+      const numerator = a * factor;
+      const denominator = b * factor;
+
+      problems.push({
+        id: `ratio-${i + 1}`,
+        operation: 'ratio-simplify',
+        operand1: numerator,
+        operand2: denominator,
+        answer: `${a}:${b}`,
+        difficulty: 'medium',
+        problem: `Simplify ${numerator}:${denominator}`,
+        solution: `${numerator}:${denominator} = ${a}:${b}`,
+      });
+    }
+
+    return problems;
+  }
+
+  /**
+   * Generate percentage conversion problems
+   */
+  private generatePercentageConvertProblems(
+    config: DrillConfiguration,
+    chapterId: string
+  ): DrillProblem[] {
+    const problems: DrillProblem[] = [];
+
+    const fractions = [
+      { num: 1, den: 2, percent: 50 },
+      { num: 1, den: 4, percent: 25 },
+      { num: 3, den: 4, percent: 75 },
+      { num: 1, den: 5, percent: 20 },
+      { num: 2, den: 5, percent: 40 },
+      { num: 3, den: 5, percent: 60 },
+      { num: 4, den: 5, percent: 80 },
+      { num: 1, den: 10, percent: 10 },
+      { num: 3, den: 10, percent: 30 },
+      { num: 7, den: 10, percent: 70 },
+    ];
+
+    for (let i = 0; i < config.problemCount; i++) {
+      const fraction = fractions[i % fractions.length]!;
+      const isToPercent = Math.random() < 0.5;
+
+      if (isToPercent) {
+        problems.push({
+          id: `percent-convert-${i + 1}`,
+          operation: 'percentage-convert',
+          operand1: fraction.num,
+          operand2: fraction.den,
+          answer: `${fraction.percent}%`,
+          difficulty: 'medium',
+          problem: `Convert ${fraction.num}/${fraction.den} to a percentage`,
+          solution: `${fraction.num}/${fraction.den} = ${fraction.percent}%`,
+        });
+      } else {
+        problems.push({
+          id: `percent-convert-${i + 1}`,
+          operation: 'percentage-convert',
+          operand1: fraction.percent,
+          answer: `${fraction.num}/${fraction.den}`,
+          difficulty: 'medium',
+          problem: `Convert ${fraction.percent}% to a fraction`,
+          solution: `${fraction.percent}% = ${fraction.num}/${fraction.den}`,
+        });
+      }
+    }
+
+    return problems;
+  }
+
+  /**
+   * Generate percentage of number problems
+   */
+  private generatePercentageOfProblems(
+    config: DrillConfiguration,
+    chapterId: string
+  ): DrillProblem[] {
+    const problems: DrillProblem[] = [];
+
+    const percentages = [10, 20, 25, 30, 40, 50, 60, 70, 75, 80, 90];
+
+    for (let i = 0; i < config.problemCount; i++) {
+      const percent = percentages[i % percentages.length]!;
+      const number = this.generateRandomNumber(20, 200);
+      const answer = (number * percent) / 100;
+
+      problems.push({
+        id: `percent-of-${i + 1}`,
+        operation: 'percentage-of',
+        operand1: percent,
+        operand2: number,
+        answer: answer.toString(),
+        difficulty: 'medium',
+        problem: `What is ${percent}% of ${number}?`,
+        solution: `${percent}% of ${number} = ${answer}`,
+      });
+    }
+
+    return problems;
+  }
+
+  /**
+   * Generate percentage change problems
+   */
+  private generatePercentageChangeProblems(
+    config: DrillConfiguration,
+    chapterId: string
+  ): DrillProblem[] {
+    const problems: DrillProblem[] = [];
+
+    for (let i = 0; i < config.problemCount; i++) {
+      const original = this.generateRandomNumber(50, 200);
+      const changePercent = [10, 15, 20, 25, 30, 50][i % 6]!;
+      const isIncrease = Math.random() < 0.5;
+
+      const changeAmount = (original * changePercent) / 100;
+      const newValue = isIncrease
+        ? original + changeAmount
+        : original - changeAmount;
+
+      problems.push({
+        id: `percent-change-${i + 1}`,
+        operation: 'percentage-change',
+        operand1: original,
+        operand2: changePercent,
+        answer: newValue.toString(),
+        difficulty: 'medium',
+        problem: `${original} ${isIncrease ? 'increased' : 'decreased'} by ${changePercent}%`,
+        solution: `${original} ${isIncrease ? '+' : '-'} ${changeAmount} = ${newValue}`,
+      });
+    }
+
+    return problems;
   }
 
   /**

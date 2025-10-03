@@ -2,203 +2,206 @@
   "id": "chapter-07",
   "title": "Percentages and Ratios",
   "objectives": [
-    "Understand ratios as comparisons between quantities",
-    "Find equivalent ratios and simplify them",
-    "Convert between fractions, decimals, and percentages",
-    "Calculate percentage increases and decreases",
-    "Apply ratios and percentages to solve real-world problems"
+    "Understand ratios as comparisons between quantities and their real-world applications",
+    "Create and identify equivalent ratios through scaling and simplification",
+    "Convert between fractions, decimals, and percentages fluently",
+    "Calculate percentage increases and decreases in practical contexts",
+    "Connect ratios and percentages to solve proportional reasoning problems"
   ],
-  "prerequisites": ["chapter-06"],
+  "prerequisites": ["chapter-06", "chapter-02"],
+  "tools": ["ratio-visualizer", "percentage-grid", "calculator"],
   "introduction": {
-    "context": "Percentages and ratios deepen our understanding of proportional relationships, transforming abstract comparisons into practical tools for analysis, decision-making, and real-world problem-solving. This chapter integrates seamlessly with prior ones: place value and decimals from Chapters 1 and 6 provide the base for percentage calculations (e.g., 25% = 0.25), fractions from Chapter 5 equate directly (50% = 1/2), and operations from Chapters 2-4 enable finding ratios or percentage changes. Imagine a merchant comparing profits: ratios quantify efficiency, percentages communicate growth - both evolving from ancient proportional thinking.",
-    "connection": "Ratios and percentages are extensions of the fraction and decimal concepts you've already mastered. A ratio is simply a way to compare two quantities, while a percentage is a special ratio that compares to 100. These tools help us make sense of proportional relationships in everything from cooking recipes to financial calculations."
+    "context": "Percentages and ratios help us make sense of how things relate to each other, turning tricky comparisons into everyday tools for figuring things out, making choices, and tackling real-life puzzles. This section pulls together what you've learned so far: place value and decimals from the Decimals Basics section give you the groundwork for working out percentages (like 25% = 0.25), fractions from the Fractions Basics section match up nicely (50% = 1/2), and the operations from the Addition and Subtraction, Multiplication Basics, and Division Basics sections let you calculate ratios or spot percentage shifts.",
+    "connection": "Picture a shop owner eyeing sales: ratios show how well things balance, percentages highlight changes - both grew from old-time ways of weighing up value. Over the years, these ideas came from needs in buying, taxing, and studying the world.",
+    "historicalContext": "The Babylonians around 1800 BCE scratched ratios on clay for splitting family goods (say, 2:3 shares), and their number setup made easy splits for star tracking. The ancient Egyptians in 2000 BCE used ratios for building pyramids, with simple setups like 3:4:5 for straight corners, and early percentages from fractions for taxes (a tenth skimmed off). The Greeks took it further: Pythagoras in 500 BCE checked ratios in music strings (2:1 for an octave jump), and Euclid in 300 BCE explained ratios as size match-ups in his big book, proving shapes line up. Romans borrowed for building: Vitruvius around 1st century BCE set rules like column height to width. The word 'percent' comes from Latin 'per centum' (per hundred), popping up in 1400s Italy for loan fees (5 per cento = 5%). Fibonacci's 1202 math book tossed in ratio challenges for traders, like blending metals. By the 1500s, percentages locked in for banks, and Simon Stevin in 1585 tied them to decimals for smoother work. The % mark grew from shorthand in 1600s notes. In the 1700s, Euler wove ratios into growth math, and 1800s stats (like body size indexes as ratios) plus money talk made percentages key for numbers like price hikes. Today, ratios shape screens (width:height) and polls use percentages.",
+    "realWorldApplications": "In daily life, they size up connections. Percentages: deals (20% off $50 saves $10), scores (85% right), boosts (5% extra cash). Ratios: baking (2:1 flour to water), maps (1:100 for distances), bets (3:1 odds). Health: weight to height squared for body mass. Business: profit slice as percentage. These link back - ratios use fraction steps from the Fractions Basics section, percentages divide by 100 like decimals."
   },
   "theory": {
     "concepts": [
       {
-        "title": "Understanding Ratios",
-        "content": "Ratios compare quantities, intuitively like mixing paint: 2 parts red to 3 blue - the relationship, not totals. This part-to-part or part-to-whole sets ratios apart from raw numbers. Formally, a ratio a:b = a/b, comparing a to b (order matters unless equivalent). Historically, Babylonians used for recipes (e.g., 1:2 bronze alloy). Greeks like Aristotle (300 BCE) philosophized ratios as equality of proportions. Applications: Sports - batting average 3:10 hits. Finance - debt:income 1:3. Misconceptions: Ratios as addition - clarify comparison (2:3 ≠5); reversing order - 3:2 ≠2:3, show with examples.",
-        "latex": "\\text{Ratio } a:b = \\frac{a}{b} \\text{ where order matters}",
-        "visuals": []
+        "title": "7.1 Understanding Ratios",
+        "content": "Ratios size up amounts side by side, like blending juice: 2 cups water to 3 cups concentrate - the mix, not the full jug. This side-by-side or part-of-whole view makes ratios different from plain counts. In straightforward terms, a ratio a:b means a to b, or a/b - the link between a and b (keep the order unless they're the same). Step by step: Hands-on - grab counters: 4 apples to 6 oranges = 4:6. Next, jot as fraction 4/6, but remember ratios compare, fractions stand for bits. Deeper - speeds: 60 miles in 2 hours = 30:1 miles per hour. From history, Babylonians mixed recipes with ratios (1:2 for metal blends). Greeks like Aristotle in 300 BCE saw ratios as balanced pairs. Uses: Games - hit rate 3:10. Money - debt to pay 1:3. Mix-ups: Ratios as sums - clear it's about match (2:3 ≠5); flip order - 3:2 ≠2:3, try examples. Build: Hands-on items. Speeds next. Unit links (cost per one). Example: Squad wins 5, drops 3 - 5:3.",
+        "latex": "a:b = \\frac{a}{b} \\text{ where order matters}",
+        "visuals": ["RatioVisualizer"],
+        "developmentStages": {
+          "concrete": "Use physical counters and objects to create and compare ratios",
+          "semiAbstract": "Connect ratios to fractions and unit rates",
+          "abstract": "Apply ratios to solve proportional reasoning problems"
+        },
+        "commonMisconceptions": [
+          "Thinking ratios represent totals (2:3 doesn't mean 5 items)",
+          "Ignoring order in ratios (2:3 ≠ 3:2)"
+        ]
       },
       {
-        "title": "Equivalent Ratios and Simplifying",
-        "content": "Equivalent ratios maintain proportion, like 2:4 = 1:2 - same relationship, scaled. Intuitively, double recipe 1:2 sugar:flour to 2:4 - unchanged taste. Formally, a:b = c:d if a/d = b/c (cross-multiply ad=bc); simplify by dividing by GCD. History: Euclid proved equivalence for geometry. Medieval merchants used for currency. Applications: Maps - scale 1:100000, equivalent distances. Diets - nutrient ratios scaled. Misconceptions: Adding to simplify - wrong (4:6 ≠5:7); use multiplication check.",
-        "latex": "a:b = c:d \\text{ if } ad = bc \\text{ (cross multiplication)}",
-        "visuals": []
+        "title": "7.2 Equivalent Ratios and Simplifying",
+        "content": "Equivalent ratios keep the same balance but scaled, like 2:4 = 1:2 - same feel, just bigger. Picture doubling a 1:2 mix to 2:4 - tastes the same. In clear terms, a:b = c:d if a/d = b/c (cross-check ad=bc); trim by shared factors. Step by step: Hands-on - make charts: 1:3, times 2=2:6, times 3=3:9. Next, trim: 4:12 split by 4=1:3. Deeper - find gap: 2:5 = x:15, x=6 (cross). History: Euclid showed matches for shapes. Old traders for coins. Uses: Maps - 1:100000 same as stretched miles. Meals - food ratios grown. Mix-ups: Sum to trim - off (4:6 ≠5:7); check with times. Build: Hands-on grows. Trim next. Solve gaps. Example: 10:15 = 2:3 trimmed.",
+        "latex": "\\frac{a}{b} = \\frac{c}{d} \\iff a \\times d = b \\times c",
+        "visuals": ["EquivalentRatiosBars"],
+        "developmentStages": {
+          "concrete": "Use visual bars to show equivalent ratios at different scales",
+          "semiAbstract": "Apply cross multiplication to check equivalence",
+          "abstract": "Use GCD to simplify complex ratios systematically"
+        },
+        "commonMisconceptions": [
+          "Adding same number to both parts (1:2 ≠ 2:3)",
+          "Not simplifying ratios to lowest terms"
+        ]
       },
       {
-        "title": "Understanding Percentages",
-        "content": "Percentages are ratios per 100, intuitively 50% as 50/100=1/2 - half the whole. Like shading half a 100-square grid. Formally, p% = p/100; convert fraction f to % as (f×100)%. History: Roman 'per centum' for taxes (8 per centum). 1400s Italians abbreviated; % symbol from 1650. Applications: Tips - 15% of $40= $6. Polls - 60% approval. Misconceptions: % as addition - 20% + 30% ≠50% if bases differ; clarify.",
-        "latex": "p\\% = \\frac{p}{100} \\text{ and } \\frac{a}{b} = \\frac{a \\times 100}{b}\\%",
-        "visuals": []
+        "title": "7.3 Understanding Percentages",
+        "content": "Percentages are ratios out of 100, easy like 50% = 50/100=1/2 - half full. Shade half a 100-grid square. In plain speak, p% = p/100; turn fraction f to % by f×100. Step by step: Hands-on - percent bar: Shade 25% =1/4. Next, switch: 3/5=0.6=60%. Deeper - spot: 20% of 150=30 (0.2×150). History: Romans took 'per hundred' for dues (8 per hundred). 1400s Italy shorted it; % from 1650. Uses: Tips - 15% on $40=$6. Votes - 60% yes. Mix-ups: % as sum - 20% + 30% ≠50% on different starts; sort it. Build: Hands-on bars. Switches next. Parts deeper. Example: 40% of 50=20.",
+        "latex": "p\\% = \\frac{p}{100} = 0.01p",
+        "visuals": ["PercentageGrid"],
+        "developmentStages": {
+          "concrete": "Use 100-square grids to visualize percentages",
+          "semiAbstract": "Convert between fractions, decimals, and percentages",
+          "abstract": "Calculate percentages of quantities in real contexts"
+        },
+        "commonMisconceptions": [
+          "Forgetting to convert percentage to decimal for calculations",
+          "Confusing 'of' with addition (25% of 80 ≠ 25 + 80)"
+        ]
       },
       {
-        "title": "Percentage Increase and Decrease",
-        "content": "Percentage change measures relative shift: increase from 100 to 120=20% up. Intuitively, sale 20% off - multiply by 0.8. Formally, change = (new - old)/old ×100%; decrease similar negative. History: 1700s economists used for growth. Statistics formalized. Applications: Inflation - 3% rise. Stocks - 5% drop. Misconceptions: % change additive - 50% up then down ≠original (100+50=150-75=75); show math.",
-        "latex": "\\text{Percentage Change} = \\frac{\\text{new} - \\text{old}}{\\text{old}} \\times 100\\%",
-        "visuals": []
+        "title": "7.4 Percentage Increase and Decrease",
+        "content": "Percentage shift tracks relative move: up from 100 to 120=20% gain. Picture a sale: 20% cut - times by 0.8. In terms, shift = (new - old)/old ×100%; down is minus. Step by step: Hands-on - bar grow: 50 up 20%=10 more, 60 total. Next, formula: 80 down 25%=(80×0.25)=20 less, 60. Deeper - stack: 100 +10% =110, then -5%=110×0.95=104.5. History: 1700s money folks for ups. Stats set it. Uses: Price rise - 3% more. Shares - 5% dip. Mix-ups: Shifts add - 50% up then down ≠ start (100+50=150-75=75); math it out. Build: Hands-on easy. Stack next. Back-shift (80 to 100=25% up?). Example: 200 down 15%=30 less=170.",
+        "latex": "\\text{Change} = \\frac{\\text{new} - \\text{old}}{\\text{old}} \\times 100\\%",
+        "visuals": ["PercentageChangeVisualizer"],
+        "developmentStages": {
+          "concrete": "Use visual bars to show before and after values",
+          "semiAbstract": "Apply percentage change formulas to real scenarios",
+          "abstract": "Understand compound percentage changes don't commute"
+        },
+        "commonMisconceptions": [
+          "Using wrong base for percentage calculation",
+          "Thinking percentage changes are commutative (50% up then 50% down ≠ original)"
+        ]
       },
       {
-        "title": "Relating Percentages and Ratios",
-        "content": "Percentages are ratios to 100, e.g., 2:5=40:100=40%. Intuitively, ratio 3:7 as (3/10)×100=30%, 70%. Formally, ratio a:b to % - (a/(a+b))×100% for a, similar for b. History: Renaissance linked for proportions. Modern stats use. Applications: Pie charts - ratios as %. Mixtures - 2:3 solution=40% one. Misconceptions: Direct ratio=% - 1:2≠1%, but 33.3:66.7%.",
-        "latex": "\\text{Ratio } a:b \\text{ gives } \\frac{a}{a+b} \\times 100\\% \\text{ and } \\frac{b}{a+b} \\times 100\\%",
-        "visuals": []
+        "title": "7.5 Relating Percentages and Ratios",
+        "content": "Percentages are ratios to 100, say 2:5=40:100=40%. Picture ratio 3:7 as (3/10)×100=30%, rest 70%. In terms, ratio a:b to % - (a/(a+b))×100 for a, same for b. Step by step: Hands-on - sketch: 2:3=40%,60%. Next, switch: 1:4=20%? Wait, 1:4=25:100=25%. Deeper - fix: Ratio 3:2, first %=(3/5)×100=60%. History: 1500s tied for balances. New stats use. Uses: Charts - ratios as %. Blends - 2:3 mix=40% one. Mix-ups: Ratio straight to % - 1:2≠1%, but 33.3:66.7%. Build: Hands-on switches. Parts next. Puzzles deeper. Example: Ratio 5:3, first %=5/8×100=62.5%. In short: Ratios match, percentages level - pair up strong.",
+        "latex": "a:b \\rightarrow \\frac{a}{a+b} \\times 100\\% : \\frac{b}{a+b} \\times 100\\%",
+        "visuals": ["RatioToPercentageConverter"],
+        "developmentStages": {
+          "concrete": "Use pie charts and bar models to show ratio-percentage connections",
+          "semiAbstract": "Convert ratios to percentages systematically",
+          "abstract": "Apply ratio-percentage relationships to solve complex problems"
+        },
+        "commonMisconceptions": [
+          "Converting ratio parts directly to percentages (1:2 ≠ 1% and 2%)",
+          "Forgetting percentages from ratios must sum to 100%"
+        ]
       }
     ]
   },
   "examples": [
     {
-      "problem": "A team wins 5 games and loses 3 games. What is the ratio of wins to losses?",
-      "solution": "The ratio of wins to losses is 5:3",
+      "problem": "In a fruit bowl, there are 4 apples and 6 oranges. What is the ratio of apples to oranges?",
+      "solution": "The ratio of apples to oranges is 4:6, which can be simplified to 2:3",
       "steps": [
-        "Identify the quantities being compared: wins = 5, losses = 3",
-        "Write the ratio in the order requested: wins to losses",
-        "Express as ratio notation: 5:3",
-        "Check: This means for every 5 wins, there are 3 losses"
+        "Count the apples: 4",
+        "Count the oranges: 6",
+        "Write the ratio: 4:6",
+        "Find GCD of 4 and 6: GCD(4,6) = 2",
+        "Simplify: 4÷2 : 6÷2 = 2:3"
       ],
+      "latex": "4:6 = \\frac{4}{6} = \\frac{2}{3} = 2:3",
       "commonErrors": [
-        "Reversing the order (3:5 instead of 5:3)",
-        "Adding the numbers together instead of comparing"
-      ],
-      "latex": "\\text{Wins : Losses} = 5:3"
-    },
-    {
-      "problem": "Simplify the ratio 10:15",
-      "solution": "10:15 = 2:3",
-      "steps": [
-        "Find the GCD of 10 and 15",
-        "Factors of 10: 1, 2, 5, 10",
-        "Factors of 15: 1, 3, 5, 15",
-        "GCD = 5",
-        "Divide both terms by 5: 10÷5 = 2, 15÷5 = 3",
-        "Simplified ratio: 2:3"
-      ],
-      "commonErrors": [
-        "Not finding the correct GCD",
-        "Only dividing one term by the GCD"
-      ],
-      "latex": "10:15 = \\frac{10 \\div 5}{15 \\div 5} = \\frac{2}{3} = 2:3"
+        "Writing 6:4 instead of 4:6 (order matters)",
+        "Not simplifying to lowest terms"
+      ]
     },
     {
       "problem": "Convert 3/5 to a percentage",
-      "solution": "3/5 = 60%",
+      "solution": "3/5 = 0.6 = 60%",
       "steps": [
-        "Convert the fraction to a decimal: 3 ÷ 5 = 0.6",
-        "Multiply by 100 to get percentage: 0.6 × 100 = 60",
-        "Add the percent symbol: 60%",
-        "Check: 60/100 = 3/5 ✓"
+        "Divide numerator by denominator: 3 ÷ 5 = 0.6",
+        "Convert decimal to percentage: 0.6 × 100 = 60",
+        "Add percentage symbol: 60%"
       ],
+      "latex": "\\frac{3}{5} = 0.6 = 60\\%",
       "commonErrors": [
         "Forgetting to multiply by 100",
-        "Misplacing the decimal point"
-      ],
-      "latex": "\\frac{3}{5} = 0.6 = 0.6 \\times 100\\% = 60\\%"
+        "Writing 0.6% instead of 60%"
+      ]
     },
     {
-      "problem": "A shirt originally costs $40. It's on sale for 25% off. What is the sale price?",
-      "solution": "The sale price is $30",
+      "problem": "A price increases from $50 to $60. What is the percentage increase?",
+      "solution": "Percentage increase = (60 - 50) / 50 × 100% = 20%",
       "steps": [
-        "Calculate the discount amount: 25% of $40 = 0.25 × $40 = $10",
-        "Subtract the discount from original price: $40 - $10 = $30",
-        "Alternative method: Sale price = 75% of original = 0.75 × $40 = $30",
-        "Check: $30 + $10 = $40 ✓"
+        "Find the change: $60 - $50 = $10",
+        "Divide by original value: $10 ÷ $50 = 0.2",
+        "Convert to percentage: 0.2 × 100% = 20%"
       ],
+      "latex": "\\text{Increase} = \\frac{60-50}{50} \\times 100\\% = 20\\%",
       "commonErrors": [
-        "Calculating 25% but forgetting to subtract from original",
-        "Adding the discount instead of subtracting"
-      ],
-      "latex": "\\text{Sale Price} = \\$40 - (0.25 \\times \\$40) = \\$40 - \\$10 = \\$30"
-    },
-    {
-      "problem": "A population increases from 200 to 250. What is the percentage increase?",
-      "solution": "The percentage increase is 25%",
-      "steps": [
-        "Find the change: 250 - 200 = 50",
-        "Divide by the original amount: 50 ÷ 200 = 0.25",
-        "Convert to percentage: 0.25 × 100% = 25%",
-        "Check: 200 + (25% of 200) = 200 + 50 = 250 ✓"
-      ],
-      "commonErrors": [
-        "Dividing by the new amount instead of original",
-        "Forgetting to multiply by 100 for percentage"
-      ],
-      "latex": "\\text{Percentage Increase} = \\frac{250 - 200}{200} \\times 100\\% = \\frac{50}{200} \\times 100\\% = 25\\%"
+        "Using new value as base: (60-50)/60",
+        "Forgetting to multiply by 100"
+      ]
     }
   ],
   "practice": [
     {
-      "id": "p7-1",
+      "id": "ratio-basics-1",
       "type": "multiple-choice",
-      "problem": "What is the ratio 12:18 in simplest form?",
-      "options": ["6:9", "4:6", "2:3", "1:2"],
+      "problem": "What is the ratio of 12 to 18 in simplest form?",
+      "options": ["12:18", "2:3", "3:2", "6:9"],
+      "correct": 1,
+      "explanation": "Divide both 12 and 18 by their GCD of 6 to get 2:3",
+      "hints": [
+        "Find the greatest common divisor of 12 and 18",
+        "Divide both numbers by the GCD"
+      ],
+      "difficulty": 2
+    },
+    {
+      "id": "ratio-basics-2",
+      "type": "fill-in",
+      "problem": "If the ratio of cats to dogs is 4:7, and there are 28 dogs, how many cats are there?",
+      "correct": "16",
+      "explanation": "Set up proportion: 4:7 = x:28. Cross multiply: 7x = 4×28 = 112, so x = 16",
+      "hints": ["Set up a proportion", "Use cross multiplication"],
+      "difficulty": 3
+    },
+    {
+      "id": "percentage-conversion-1",
+      "type": "multiple-choice",
+      "problem": "What is 3/8 as a percentage?",
+      "options": ["30%", "37.5%", "38%", "40%"],
+      "correct": 1,
+      "explanation": "3/8 = 0.375 = 37.5%",
+      "hints": ["Divide 3 by 8 first", "Multiply the decimal by 100"],
+      "difficulty": 2
+    },
+    {
+      "id": "percentage-change-1",
+      "type": "fill-in",
+      "problem": "A population increases from 200 to 250. What is the percentage increase?",
+      "correct": "25",
+      "explanation": "Percentage increase = (250-200)/200 × 100% = 50/200 × 100% = 25%",
+      "hints": ["Find the change amount first", "Divide by the original value"],
+      "difficulty": 3
+    },
+    {
+      "id": "ratio-to-percentage-1",
+      "type": "multiple-choice",
+      "problem": "If the ratio is 2:3, what percentage does the first part represent?",
+      "options": ["20%", "30%", "40%", "60%"],
       "correct": 2,
+      "explanation": "Total parts = 2+3 = 5. First part = 2/5 × 100% = 40%",
       "hints": [
-        "Find the GCD of 12 and 18",
-        "The GCD is 6",
-        "Divide both terms by 6"
+        "Find the total number of parts",
+        "Calculate what fraction the first part represents"
       ],
-      "explanation": "12:18 = (12÷6):(18÷6) = 2:3. The GCD of 12 and 18 is 6.",
       "difficulty": 2
-    },
-    {
-      "id": "p7-2",
-      "type": "fill-in",
-      "problem": "Convert 0.75 to a percentage: ?",
-      "correct": "75%",
-      "hints": [
-        "Multiply the decimal by 100",
-        "0.75 × 100 = ?",
-        "Don't forget the % symbol"
-      ],
-      "explanation": "To convert a decimal to percentage, multiply by 100: 0.75 × 100 = 75%",
-      "difficulty": 2
-    },
-    {
-      "id": "p7-3",
-      "type": "multiple-choice",
-      "problem": "What is 20% of 150?",
-      "options": ["20", "30", "25", "35"],
-      "correct": 1,
-      "hints": [
-        "Convert 20% to decimal: 0.20",
-        "Multiply: 0.20 × 150",
-        "20% means 20 out of 100"
-      ],
-      "explanation": "20% of 150 = 0.20 × 150 = 30",
-      "difficulty": 2
-    },
-    {
-      "id": "p7-4",
-      "type": "fill-in",
-      "problem": "A price increases from $80 to $100. What is the percentage increase? ?",
-      "correct": "25%",
-      "hints": [
-        "Find the change: $100 - $80 = $20",
-        "Divide by original: $20 ÷ $80 = 0.25",
-        "Convert to percentage: 0.25 × 100%"
-      ],
-      "explanation": "Percentage increase = (100-80)/80 × 100% = 20/80 × 100% = 25%",
-      "difficulty": 3
-    },
-    {
-      "id": "p7-5",
-      "type": "multiple-choice",
-      "problem": "In a class of 30 students, the ratio of boys to girls is 2:3. How many boys are there?",
-      "options": ["10", "12", "15", "18"],
-      "correct": 1,
-      "hints": [
-        "The ratio 2:3 means 2 parts boys, 3 parts girls",
-        "Total parts = 2 + 3 = 5",
-        "Boys = (2/5) × 30"
-      ],
-      "explanation": "Ratio 2:3 means 2 out of 5 parts are boys. Boys = (2/5) × 30 = 12",
-      "difficulty": 3
     }
   ],
-  "tools": ["calculator", "ratio-visualizer", "percentage-grid"],
   "assessment": {
     "masteryThreshold": 0.8,
-    "requiredProblems": 5
+    "requiredProblems": 10,
+    "adaptiveDifficulty": true,
+    "timeLimit": 1800,
+    "retakePolicy": "unlimited"
   }
 }

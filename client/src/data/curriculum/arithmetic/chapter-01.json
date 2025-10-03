@@ -41,7 +41,6 @@
       {
         "title": "Introduction to Negative Numbers",
         "content": "So far we've worked with positive numbers - numbers greater than zero. But what happens when we need to represent values less than zero? That's where negative numbers come in. Think of a thermometer: temperatures can go below zero degrees, or imagine owing money - if you have $0 and spend $5, you're $5 in debt, which we write as -$5. Negative numbers are written with a minus sign (-) in front, like -1, -5, or -100. They represent the opposite of positive numbers. On a number line, positive numbers extend to the right of zero, while negative numbers extend to the left. Zero itself is neither positive nor negative - it's the dividing point between them. Understanding negative numbers prepares you for more advanced math and helps you describe real-world situations like temperatures below freezing, depths below sea level, or financial debts. The number line becomes a powerful tool: moving right means increasing (more positive), while moving left means decreasing (more negative). This concept will become especially important when we learn about subtraction in later chapters, where we might subtract a larger number from a smaller one.",
-        "latex": "\\text{Number line: } \\ldots -3, -2, -1, 0, 1, 2, 3 \\ldots",
         "visuals": ["NegativeNumbersIntro", "NumberLine"]
       }
     ]
