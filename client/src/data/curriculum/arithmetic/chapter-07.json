@@ -145,12 +145,12 @@
     {
       "id": "ratio-basics-1",
       "type": "multiple-choice",
-      "problem": "What is the ratio of 12 to 18 in simplest form?",
-      "options": ["12:18", "2:3", "3:2", "6:9"],
+      "problem": "What is the ratio of 15 to 25 in simplest form?",
+      "options": ["15:25", "3:5", "5:3", "6:10"],
       "correct": 1,
-      "explanation": "Divide both 12 and 18 by their GCD of 6 to get 2:3",
+      "explanation": "Divide both 15 and 25 by their GCD of 5 to get 3:5",
       "hints": [
-        "Find the greatest common divisor of 12 and 18",
+        "Find the greatest common divisor of 15 and 25",
         "Divide both numbers by the GCD"
       ],
       "difficulty": 2
@@ -177,9 +177,9 @@
     {
       "id": "percentage-change-1",
       "type": "fill-in",
-      "problem": "A population increases from 200 to 250. What is the percentage increase?",
-      "correct": "25",
-      "explanation": "Percentage increase = (250-200)/200 × 100% = 50/200 × 100% = 25%",
+      "problem": "A population increases from 180 to 216. What is the percentage increase?",
+      "correct": "20",
+      "explanation": "Percentage increase = (216-180)/180 × 100% = 36/180 × 100% = 20%",
       "hints": ["Find the change amount first", "Divide by the original value"],
       "difficulty": 3
     },

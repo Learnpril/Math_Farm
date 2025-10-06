@@ -3,15 +3,15 @@ import { MathExpression } from './MathExpression';
 import { renderVisualComponent } from './visual-aids/VisualComponentRegistry';
 import { getVisualDescription } from '../lib/visual-descriptions';
 
-interface TheorySectionProps {
+interface ReadingSectionProps {
   concepts: TheoryConcept[];
   chapterNumber?: number;
 }
 
-export function TheorySection({
+export function ReadingSection({
   concepts,
   chapterNumber = 1,
-}: TheorySectionProps) {
+}: ReadingSectionProps) {
   // Track used visuals to prevent reuse
   const usedVisuals = new Set<string>();
   let globalVisualCounter = 0;

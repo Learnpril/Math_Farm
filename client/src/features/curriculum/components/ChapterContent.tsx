@@ -13,7 +13,7 @@ import {
   ChapterContent as ChapterContentType,
   ChapterProgress,
 } from '../types';
-import { TheorySection } from './TheorySection';
+import { ReadingSection } from './TheorySection';
 import { WorkedExamples } from './WorkedExamples';
 import { PracticeProblems } from './PracticeProblems';
 import { CommonPitfallsSection } from './CommonPitfallsSection';
@@ -159,7 +159,7 @@ export function ChapterContent({
     switch (activeSection) {
       case 'theory':
         return (
-          <TheorySection
+          <ReadingSection
             concepts={chapter.theory.concepts}
             chapterNumber={currentChapter}
           />

@@ -183,21 +183,21 @@
     {
       "id": "mult-distribute-1",
       "type": "fill-in",
-      "problem": "Calculate 12 × 5 using the distributive property",
-      "correct": "60",
+      "problem": "Calculate 18 × 4 using the distributive property",
+      "correct": "72",
       "hints": [
-        "Break 12 into 10 + 2",
-        "Calculate (10 + 2) × 5 = 10 × 5 + 2 × 5",
-        "Add the parts: 50 + 10 = 60"
+        "Break 18 into 10 + 8",
+        "Calculate (10 + 8) × 4 = 10 × 4 + 8 × 4",
+        "Add the parts: 40 + 32 = 72"
       ],
-      "explanation": "12 × 5 = (10 + 2) × 5 = 50 + 10 = 60. The distributive property makes larger multiplications easier.",
+      "explanation": "18 × 4 = (10 + 8) × 4 = 40 + 32 = 72. The distributive property makes larger multiplications easier.",
       "difficulty": 2
     },
     {
       "id": "mult-two-digit-1",
       "type": "fill-in",
-      "problem": "Find 34 × 2",
-      "correct": "68",
+      "problem": "Find 27 × 3",
+      "correct": "81",
       "hints": [
         "Use the standard algorithm or partial products",
         "34 × 2 = (30 + 4) × 2 = 60 + 8",

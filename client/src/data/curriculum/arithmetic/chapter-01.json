@@ -119,42 +119,42 @@
     {
       "id": "p1-1",
       "type": "multiple-choice",
-      "problem": "What is the value of the digit 7 in the number 3,742?",
-      "options": ["7", "70", "700", "7,000"],
+      "problem": "What is the value of the digit 8 in the number 5,821?",
+      "options": ["8", "80", "800", "8,000"],
       "correct": 2,
       "hints": [
-        "Look at the position of the digit 7 in the number",
+        "Look at the position of the digit 8 in the number",
         "Count the place values from right to left: ones, tens, hundreds, thousands",
-        "The 7 is in the third position from the right"
+        "The 8 is in the third position from the right"
       ],
-      "explanation": "The digit 7 is in the hundreds place, so its value is 7 × 100 = 700.",
+      "explanation": "The digit 8 is in the hundreds place, so its value is 8 × 100 = 800.",
       "difficulty": 2
     },
     {
       "id": "p1-2",
       "type": "fill-in",
-      "problem": "Write 23,456 in expanded form: 23,456 = _____ + _____ + _____ + _____ + _____",
-      "correct": "20,000 + 3,000 + 400 + 50 + 6",
+      "problem": "Write 47,293 in expanded form: 47,293 = _____ + _____ + _____ + _____ + _____",
+      "correct": "40,000 + 7,000 + 200 + 90 + 3",
       "hints": [
         "Break down each digit by its place value",
-        "2 is in ten thousands, 3 is in thousands, 4 is in hundreds, 5 is in tens, 6 is in ones",
-        "Multiply each digit by its place value: 2×10,000, 3×1,000, 4×100, 5×10, 6×1"
+        "4 is in ten thousands, 7 is in thousands, 2 is in hundreds, 9 is in tens, 3 is in ones",
+        "Multiply each digit by its place value: 4×10,000, 7×1,000, 2×100, 9×10, 3×1"
       ],
-      "explanation": "23,456 = 20,000 + 3,000 + 400 + 50 + 6. Each digit is multiplied by its place value.",
+      "explanation": "47,293 = 40,000 + 7,000 + 200 + 90 + 3. Each digit is multiplied by its place value.",
       "difficulty": 3
     },
     {
       "id": "p1-3",
       "type": "multiple-choice",
-      "problem": "Which number is larger: 45,678 or 45,687?",
-      "options": ["45,678", "45,687", "They are equal", "Cannot determine"],
+      "problem": "Which number is larger: 62,419 or 62,491?",
+      "options": ["62,419", "62,491", "They are equal", "Cannot determine"],
       "correct": 1,
       "hints": [
         "Compare the numbers digit by digit from left to right",
-        "The first three digits are the same: 4, 5, 6",
-        "Look at the tens place: 7 vs 8"
+        "The first three digits are the same: 6, 2, 4",
+        "Look at the tens place: 1 vs 9"
       ],
-      "explanation": "45,687 is larger because when comparing digit by digit, 8 > 7 in the tens place.",
+      "explanation": "62,491 is larger because when comparing digit by digit, 9 > 1 in the tens place.",
       "difficulty": 2
     },
     {

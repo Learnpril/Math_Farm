@@ -104,12 +104,12 @@
       "latex": "\\begin{align} 56 \\\\ - 23 \\\\ \\hline 33 \\end{align}"
     },
     {
-      "problem": "Addition with Carrying: 47 + 38",
-      "solution": "47 + 38 = 85",
+      "problem": "Addition with Carrying: 59 + 26",
+      "solution": "59 + 26 = 85",
       "steps": [
-        "Add the ones column: 7 + 8 = 15",
+        "Add the ones column: 9 + 6 = 15",
         "Since 15 > 9, write 5 in the ones place and carry 1 to the tens",
-        "Add the tens column including the carry: 4 + 3 + 1 = 8",
+        "Add the tens column including the carry: 5 + 2 + 1 = 8",
         "Write the result: 85"
       ],
       "commonErrors": [
@@ -117,7 +117,7 @@
         "Writing 15 in the ones place instead of carrying",
         "Adding the carry to the wrong column"
       ],
-      "latex": "\\begin{align} \\phantom{+}47 \\\\ + 38 \\\\ \\hline 85 \\end{align} \\text{ (carry 1 from } 7+8=15 \\text{)}"
+      "latex": "\\begin{align} \\phantom{+}59 \\\\ + 26 \\\\ \\hline 85 \\end{align} \\text{ (carry 1 from } 9+6=15 \\text{)}"
     },
     {
       "problem": "Subtraction with Borrowing: 52 - 27",
@@ -137,20 +137,20 @@
       "latex": "\\begin{align} \\phantom{1}4\\phantom{1}12 \\\\ - 27 \\\\ \\hline 25 \\end{align} \\text{ (52 becomes 4 tens, 12 ones)}"
     },
     {
-      "problem": "Multi-digit Addition: 156 + 287",
-      "solution": "156 + 287 = 443",
+      "problem": "Multi-digit Addition: 248 + 175",
+      "solution": "248 + 175 = 423",
       "steps": [
-        "Add ones: 6 + 7 = 13, write 3 and carry 1",
-        "Add tens: 5 + 8 + 1(carry) = 14, write 4 and carry 1",
-        "Add hundreds: 1 + 2 + 1(carry) = 4",
-        "Write the result: 443"
+        "Add ones: 8 + 5 = 13, write 3 and carry 1",
+        "Add tens: 4 + 7 + 1(carry) = 12, write 2 and carry 1",
+        "Add hundreds: 2 + 1 + 1(carry) = 4",
+        "Write the result: 423"
       ],
       "commonErrors": [
         "Losing track of carries across multiple columns",
         "Adding the carry to the wrong column",
         "Forgetting to add the final carry"
       ],
-      "latex": "\\begin{align} \\phantom{+}156 \\\\ + 287 \\\\ \\hline 443 \\end{align} \\text{ (carries: ones→tens→hundreds)}"
+      "latex": "\\begin{align} \\phantom{+}248 \\\\ + 175 \\\\ \\hline 423 \\end{align} \\text{ (carries: ones→tens→hundreds)}"
     },
     {
       "problem": "Subtraction with Zeros: 400 - 156",
