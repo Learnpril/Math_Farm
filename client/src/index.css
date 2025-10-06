@@ -154,12 +154,12 @@
 
   /* Responsive font sizes for reading section math expressions */
   .reading-section-math .math-expression mjx-math {
-    font-size: 1rem !important;
+    font-size: 0.9rem !important;
   }
 
   @media (min-width: 1024px) {
     .reading-section-math .math-expression mjx-math {
-      font-size: 1.5rem !important;
+      font-size: 1rem !important;
     }
   }
 
