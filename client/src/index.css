@@ -4,11 +4,13 @@
 
 /* Avatar Animation Keyframes */
 @keyframes sparkle {
+
   0%,
   100% {
     opacity: 0;
     transform: scale(0.8) rotate(0deg);
   }
+
   50% {
     opacity: 1;
     transform: scale(1.2) rotate(180deg);
@@ -19,19 +21,23 @@
   0% {
     filter: brightness(1) drop-shadow(0 0 5px rgba(139, 92, 246, 0.3));
   }
+
   100% {
     filter: brightness(1.3) drop-shadow(0 0 15px rgba(139, 92, 246, 0.6));
   }
 }
 
 @keyframes float {
+
   0%,
   100% {
     transform: translateY(0px) rotate(0deg);
   }
+
   33% {
     transform: translateY(-3px) rotate(5deg);
   }
+
   66% {
     transform: translateY(-1px) rotate(-3deg);
   }
@@ -41,17 +47,20 @@
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
 
 @keyframes math-pulse {
+
   0%,
   100% {
     opacity: 0.4;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.8;
     transform: scale(1.1);
@@ -103,12 +112,15 @@
 
   /* Hide scrollbars while maintaining scroll functionality */
   .scrollbar-hide {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
   }
 
   .scrollbar-hide::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, and Opera */
+    display: none;
+    /* Chrome, Safari, and Opera */
   }
 
   /* Touch-friendly scrolling */
@@ -119,6 +131,7 @@
 }
 
 @layer components {
+
   /* Math expression styling for topic cards */
   .math-expression {
     max-width: 100%;
@@ -137,6 +150,17 @@
   .math-expression mjx-math {
     font-size: 0.875rem !important;
     max-width: 100%;
+  }
+
+  /* Responsive font sizes for reading section math expressions */
+  .reading-section-math .math-expression mjx-math {
+    font-size: 1rem !important;
+  }
+
+  @media (min-width: 1024px) {
+    .reading-section-math .math-expression mjx-math {
+      font-size: 1.5rem !important;
+    }
   }
 
   /* Ensure MathJax containers don't break layout */
@@ -353,6 +377,7 @@
 
   /* Touch-friendly interactions on mobile */
   @media (hover: none) and (pointer: coarse) {
+
     button,
     [role='button'],
     input[type='button'],
@@ -458,6 +483,7 @@
 
   /* Ensure sufficient spacing for touch targets */
   @media (pointer: coarse) {
+
     button,
     [role='button'],
     a,
@@ -482,6 +508,7 @@
       height: 0;
       opacity: 0;
     }
+
     to {
       height: var(--radix-accordion-content-height);
       opacity: 1;
@@ -493,6 +520,7 @@
       height: var(--radix-accordion-content-height);
       opacity: 1;
     }
+
     to {
       height: 0;
       opacity: 0;

@@ -53,9 +53,9 @@ export function ReadingSection({
               {concept.title}
             </h3>
 
-            <div className='text-gray-700 dark:text-gray-300 leading-relaxed mb-6'>
+            <div className='text-gray-700 dark:text-gray-300 leading-relaxed mb-6 text-lg'>
               {concept.content.split('\n\n').map((paragraph, pIndex) => (
-                <p key={pIndex} className='mb-4'>
+                <p key={pIndex} className='mb-4 text-lg'>
                   {paragraph}
                 </p>
               ))}
@@ -63,7 +63,7 @@ export function ReadingSection({
 
             {/* LaTeX expressions */}
             {concept.latex && (
-              <div className='my-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800'>
+              <div className='my-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800 reading-section-math'>
                 <MathExpression>{concept.latex}</MathExpression>
               </div>
             )}

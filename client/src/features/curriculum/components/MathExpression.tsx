@@ -130,7 +130,8 @@ export function MathExpression({
         display: inline ? 'inline-block' : 'block',
         textAlign: inline ? 'inherit' : 'center',
         margin: inline ? '0 2px' : '1rem 0',
-        fontSize: inline ? '1.1em' : '1.25em',
+        // Only set fontSize if no text size class is provided in className
+        fontSize: className.includes('text-') ? 'inherit' : (inline ? '1.1em' : '1.25em'),
         lineHeight: inline ? '1.4' : '1.5',
       }}
     />
