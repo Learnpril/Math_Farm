@@ -1,52 +1,149 @@
 import React from 'react';
 
 /**
- * Simple text formatter that supports basic markdown-like syntax:
+ * Enhanced text formatter that creates textbook-like readable content:
  * **bold** -> <strong>bold</strong>
  * *italic* -> <em>italic</em>
  * __underline__ -> <u>underline</u>
  *
- * Also preserves line breaks and bullet points
+ * Groups content into natural paragraphs for better readability
  */
 export function formatText(text: string): React.ReactNode[] {
-  const lines = text.split('\n');
+  // Split by double line breaks to identify natural paragraph breaks
+  const paragraphs = text.split('\n\n').filter(p => p.trim().length > 0);
 
-  return lines.map((line, lineIndex) => {
-    if (line.trim() === '') {
-      return <br key={lineIndex} />;
-    }
+  return paragraphs.map((paragraph, paragraphIndex) => {
+    return formatParagraph(paragraph.trim(), paragraphIndex);
+  });
+}
 
-    // Check if it's a header (standalone line that doesn't start with bullet or lowercase)
-    const isHeader =
-      line.trim() &&
-      !line.trim().startsWith('•') &&
-      !line.trim().startsWith('-') &&
-      !line.trim().startsWith('The ') &&
-      !line.trim().startsWith('A ') &&
-      !line.trim().startsWith('In ') &&
-      !line.trim().startsWith('Beyond ') &&
-      line.trim().length < 50 &&
-      /^[A-Z]/.test(line.trim());
+function formatParagraph(
+  paragraphText: string,
+  paragraphIndex: number
+): React.ReactNode {
+  const lines = paragraphText
+    .split('\n')
+    .map(line => line.trim())
+    .filter(line => line.length > 0);
 
-    const formattedContent = formatInlineText(line);
+  if (lines.length === 0) {
+    return null;
+  }
 
-    if (isHeader) {
+  // Check if this is a header paragraph (single line, short, starts with capital, no period)
+  if (lines.length === 1) {
+    const line = lines[0];
+    const isHeaderLine = line ? isHeader(line) : false;
+
+    if (isHeaderLine) {
       return (
         <h4
-          key={lineIndex}
-          className='text-xl font-semibold text-gray-900 dark:text-gray-100 mt-6 mb-3 first:mt-0'
+          key={paragraphIndex}
+          className='text-xl font-semibold text-gray-900 dark:text-gray-100 mt-6 mb-4 first:mt-0'
         >
-          {formattedContent}
+          {line ? formatInlineText(line) : ''}
         </h4>
       );
     }
+  }
+
+  // Check if this paragraph contains bullet points
+  const hasBullets = lines.some(line => isBulletPoint(line));
+
+  if (hasBullets) {
+    // Split into bullet items and regular text
+    const elements: React.ReactNode[] = [];
+    let currentBullets: string[] = [];
+    let currentText: string[] = [];
+
+    const flushText = () => {
+      if (currentText.length > 0) {
+        elements.push(
+          <p
+            key={`text-${elements.length}`}
+            className='mb-4 text-lg leading-relaxed text-gray-800 dark:text-gray-200'
+          >
+            {formatInlineText(currentText.join(' '))}
+          </p>
+        );
+        currentText = [];
+      }
+    };
+
+    const flushBullets = () => {
+      if (currentBullets.length > 0) {
+        elements.push(
+          <ul
+            key={`bullets-${elements.length}`}
+            className='mb-4 ml-6 space-y-2'
+          >
+            {currentBullets.map((bullet, bulletIndex) => (
+              <li
+                key={bulletIndex}
+                className='text-lg leading-relaxed text-gray-800 dark:text-gray-200 list-disc'
+              >
+                {formatInlineText(bullet.replace(/^[•\-]\s*/, ''))}
+              </li>
+            ))}
+          </ul>
+        );
+        currentBullets = [];
+      }
+    };
+
+    lines.forEach(line => {
+      if (isBulletPoint(line)) {
+        flushText();
+        currentBullets.push(line);
+      } else {
+        flushBullets();
+        currentText.push(line);
+      }
+    });
+
+    // Flush any remaining content
+    flushText();
+    flushBullets();
 
     return (
-      <p key={lineIndex} className='mb-3 text-lg leading-relaxed'>
-        {formattedContent}
+      <div key={paragraphIndex} className='mb-6'>
+        {elements}
+      </div>
+    );
+  } else {
+    // Regular paragraph - join all lines with spaces
+    const combinedText = lines.join(' ');
+    return (
+      <p
+        key={paragraphIndex}
+        className='mb-4 text-lg leading-relaxed text-gray-800 dark:text-gray-200'
+      >
+        {formatInlineText(combinedText)}
       </p>
     );
-  });
+  }
+}
+
+function isHeader(line: string): boolean {
+  const trimmed = line.trim();
+  return (
+    trimmed.length > 0 &&
+    !trimmed.startsWith('•') &&
+    !trimmed.startsWith('-') &&
+    !trimmed.startsWith('The ') &&
+    !trimmed.startsWith('A ') &&
+    !trimmed.startsWith('In ') &&
+    !trimmed.startsWith('Beyond ') &&
+    !trimmed.startsWith('Understanding ') &&
+    !trimmed.startsWith('This ') &&
+    trimmed.length < 60 &&
+    /^[A-Z]/.test(trimmed) &&
+    !trimmed.includes('.')
+  );
+}
+
+function isBulletPoint(line: string): boolean {
+  return line.trim().startsWith('•') || line.trim().startsWith('-');
 }
 
 function formatInlineText(text: string): React.ReactNode[] {
