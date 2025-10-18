@@ -163,6 +163,47 @@
     }
   }
 
+  /* Mobile-friendly number line scrolling */
+  .number-line {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .number-line .overflow-x-auto {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+    /* Add padding to prevent content cutoff */
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .number-line .overflow-x-auto::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .number-line .overflow-x-auto::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .number-line .overflow-x-auto::-webkit-scrollbar-thumb {
+    background-color: rgba(156, 163, 175, 0.5);
+    border-radius: 2px;
+  }
+
+  .number-line .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(156, 163, 175, 0.7);
+  }
+
+  /* Ensure number line content doesn't overflow */
+  .number-line .overflow-x-auto>div {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* General mobile scrolling for all overflow-x-auto elements */
+  .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+  }
+
   /* Ensure MathJax containers don't break layout */
   .math-expression .MathJax {
     max-width: 100% !important;

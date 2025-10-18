@@ -30,8 +30,8 @@ export const CommonCoreStrategies: React.FC<CommonCoreStrategiesProps> = ({
 
   // Parse the problem
   const [num1, operator, num2] = problem.split(' ');
-  const a = parseInt(num1);
-  const b = parseInt(num2);
+  const a = parseInt(num1 || '0');
+  const b = parseInt(num2 || '0');
   const result = operator === '+' ? a + b : a - b;
 
   const strategies =
@@ -96,7 +96,7 @@ export const CommonCoreStrategies: React.FC<CommonCoreStrategiesProps> = ({
         ];
 
   const currentStrat = strategies[currentStrategy];
-  const maxSteps = currentStrat.steps.length;
+  const maxSteps = currentStrat?.steps.length || 0;
 
   const nextStep = () => {
     if (currentStep < maxSteps - 1) {
@@ -176,29 +176,31 @@ export const CommonCoreStrategies: React.FC<CommonCoreStrategiesProps> = ({
   };
 
   const renderVisual = () => {
+    if (!currentStrat) return null;
     const step = currentStrat.steps[currentStep];
+    if (!step) return null;
 
     if (operation === 'addition' && currentStrategy === 0) {
       // Making Ten Strategy Visual
       if (step.visual === 'problem') {
         return (
-          <div className='flex items-center justify-center space-x-4 p-4'>
-            <div className='flex space-x-1'>
+          <div className='flex items-center justify-center space-x-2 sm:space-x-4 p-4 min-w-fit'>
+            <div className='flex space-x-1 flex-shrink-0'>
               {Array.from({ length: a }, (_, i) => (
                 <div
                   key={i}
-                  className='w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs'
+                  className='w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs flex-shrink-0'
                 >
                   {i + 1}
                 </div>
               ))}
             </div>
-            <span className='text-2xl font-bold text-primary'>+</span>
-            <div className='flex space-x-1'>
+            <span className='text-xl sm:text-2xl font-bold text-primary flex-shrink-0'>+</span>
+            <div className='flex space-x-1 flex-shrink-0'>
               {Array.from({ length: b }, (_, i) => (
                 <div
                   key={i}
-                  className='w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs'
+                  className='w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs flex-shrink-0'
                 >
                   {i + 1}
                 </div>
@@ -210,24 +212,24 @@ export const CommonCoreStrategies: React.FC<CommonCoreStrategiesProps> = ({
         const needed = Math.max(0, 10 - a);
         const remaining = Math.max(0, b - needed);
         return (
-          <div className='flex flex-col items-center space-y-4 p-4'>
-            <div className='flex items-center space-x-4'>
-              <div className='flex space-x-1'>
+          <div className='flex flex-col items-center space-y-4 p-4 min-w-fit'>
+            <div className='flex items-center space-x-2 sm:space-x-4'>
+              <div className='flex space-x-1 flex-shrink-0'>
                 {Array.from({ length: a }, (_, i) => (
                   <div
                     key={i}
-                    className='w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs'
+                    className='w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs flex-shrink-0'
                   >
                     {i + 1}
                   </div>
                 ))}
               </div>
-              <span className='text-lg'>+</span>
-              <div className='flex space-x-1'>
+              <span className='text-lg flex-shrink-0'>+</span>
+              <div className='flex space-x-1 flex-shrink-0'>
                 {Array.from({ length: Math.min(needed, b) }, (_, i) => (
                   <div
                     key={i}
-                    className='w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center text-white text-xs'
+                    className='w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center text-white text-xs flex-shrink-0'
                   >
                     {i + 1}
                   </div>
@@ -236,14 +238,14 @@ export const CommonCoreStrategies: React.FC<CommonCoreStrategiesProps> = ({
                   Array.from({ length: remaining }, (_, i) => (
                     <div
                       key={i + needed}
-                      className='w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs'
+                      className='w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs flex-shrink-0'
                     >
                       {i + 1}
                     </div>
                   ))}
               </div>
             </div>
-            <div className='text-sm text-muted-foreground'>
+            <div className='text-sm text-muted-foreground text-center'>
               Break {b} into {Math.min(needed, b)} (to make 10) + {remaining}
             </div>
           </div>
@@ -251,13 +253,13 @@ export const CommonCoreStrategies: React.FC<CommonCoreStrategiesProps> = ({
       } else if (step.visual === 'make10') {
         const needed = Math.max(0, 10 - a);
         return (
-          <div className='flex flex-col items-center space-y-4 p-4'>
+          <div className='flex flex-col items-center space-y-4 p-4 min-w-fit'>
             <div className='flex items-center space-x-2'>
-              <div className='flex space-x-1 p-2 border-2 border-primary rounded-lg'>
+              <div className='flex space-x-1 p-2 border-2 border-primary rounded-lg flex-shrink-0'>
                 {Array.from({ length: 10 }, (_, i) => (
                   <div
                     key={i}
-                    className={`w-6 h-6 rounded-full flex items-center justify-center text-white text-xs ${
+                    className={`w-6 h-6 rounded-full flex items-center justify-center text-white text-xs flex-shrink-0 ${
                       i < a ? 'bg-blue-500' : 'bg-yellow-500'
                     }`}
                   >
@@ -270,29 +272,28 @@ export const CommonCoreStrategies: React.FC<CommonCoreStrategiesProps> = ({
           </div>
         );
       } else if (step.visual === 'final') {
-        const needed = Math.max(0, 10 - a);
-        const remaining = Math.max(0, b - needed);
+        const remaining = Math.max(0, b - Math.max(0, 10 - a));
         return (
-          <div className='flex flex-col items-center space-y-4 p-4'>
-            <div className='flex items-center space-x-4'>
-              <div className='flex space-x-1 p-2 border-2 border-primary rounded-lg'>
+          <div className='flex flex-col items-center space-y-4 p-4 min-w-fit'>
+            <div className='flex items-center space-x-2 sm:space-x-4'>
+              <div className='flex space-x-1 p-2 border-2 border-primary rounded-lg flex-shrink-0'>
                 <div className='w-12 h-6 bg-primary rounded flex items-center justify-center text-white text-sm font-bold'>
                   10
                 </div>
               </div>
-              <span className='text-lg'>+</span>
-              <div className='flex space-x-1'>
+              <span className='text-lg flex-shrink-0'>+</span>
+              <div className='flex space-x-1 flex-shrink-0'>
                 {Array.from({ length: remaining }, (_, i) => (
                   <div
                     key={i}
-                    className='w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs'
+                    className='w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs flex-shrink-0'
                   >
                     {i + 1}
                   </div>
                 ))}
               </div>
-              <span className='text-lg'>=</span>
-              <div className='text-2xl font-bold text-primary'>{result}</div>
+              <span className='text-lg flex-shrink-0'>=</span>
+              <div className='text-xl sm:text-2xl font-bold text-primary flex-shrink-0'>{result}</div>
             </div>
           </div>
         );
@@ -307,10 +308,10 @@ export const CommonCoreStrategies: React.FC<CommonCoreStrategiesProps> = ({
       );
 
       return (
-        <div className='flex flex-col items-center space-y-4 p-4'>
+        <div className='flex flex-col items-center space-y-4 p-4 min-w-fit'>
           <div className='flex items-center space-x-1'>
             {positions.map(pos => (
-              <div key={pos} className='flex flex-col items-center'>
+              <div key={pos} className='flex flex-col items-center flex-shrink-0'>
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
                     pos === a && step.visual === 'start'
@@ -331,7 +332,7 @@ export const CommonCoreStrategies: React.FC<CommonCoreStrategiesProps> = ({
             ))}
           </div>
           {step.visual === 'jump' && (
-            <div className='text-sm text-muted-foreground'>
+            <div className='text-sm text-muted-foreground text-center'>
               Jump {b} spaces forward
             </div>
           )}
@@ -372,21 +373,30 @@ export const CommonCoreStrategies: React.FC<CommonCoreStrategiesProps> = ({
           <div className='space-y-6'>
             <div className='text-center'>
               <h3 className='text-lg font-semibold text-primary mb-2'>
-                {currentStrat.name}
+                {currentStrat?.name}
               </h3>
               <p className='text-sm text-muted-foreground mb-4'>
-                {currentStrat.description}
+                {currentStrat?.description}
               </p>
             </div>
 
-            <div className='bg-muted/30 rounded-lg p-6 min-h-[200px] flex items-center justify-center'>
-              {renderVisual()}
+            <div className='bg-muted/30 rounded-lg p-6 min-h-[200px] flex items-center justify-center overflow-x-auto'>
+              <div className='min-w-fit'>
+                {renderVisual()}
+              </div>
+            </div>
+            
+            {/* Mobile scroll hint */}
+            <div className='sm:hidden mt-2 p-2 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg'>
+              <p className='text-xs text-yellow-800 dark:text-yellow-200 text-center'>
+                📱 <strong>Tip:</strong> Scroll horizontally to see the full strategy visualization
+              </p>
             </div>
 
             <div className='text-center'>
               <div className='bg-background border rounded-lg p-4 mb-4'>
                 <p className='text-lg font-medium'>
-                  Step {currentStep + 1}: {currentStrat.steps[currentStep].text}
+                  Step {currentStep + 1}: {currentStrat?.steps[currentStep]?.text}
                 </p>
               </div>
 
@@ -419,7 +429,7 @@ export const CommonCoreStrategies: React.FC<CommonCoreStrategiesProps> = ({
 
               <div className='flex justify-center mt-4'>
                 <div className='flex space-x-1'>
-                  {currentStrat.steps.map((_, index) => (
+                  {currentStrat?.steps.map((_, index) => (
                     <div
                       key={index}
                       className={`w-2 h-2 rounded-full ${

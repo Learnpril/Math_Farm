@@ -67,39 +67,48 @@ export const NegativeNumbersIntro: React.FC<NegativeNumbersIntroProps> = ({
           </div>
 
           {/* The Number Line */}
-          <div className='relative'>
-            {/* Line */}
-            <div className='absolute top-1/2 left-0 right-0 h-0.5 bg-gray-300 dark:bg-gray-600 transform -translate-y-1/2'></div>
+          <div className='relative overflow-x-auto pb-2'>
+            <div className='relative min-w-[500px]'>
+              {/* Line */}
+              <div className='absolute top-1/2 left-4 right-4 h-0.5 bg-gray-300 dark:bg-gray-600 transform -translate-y-1/2'></div>
 
-            {/* Arrow */}
-            <div className='absolute top-1/2 right-0 transform -translate-y-1/2'>
-              <div className='w-0 h-0 border-l-[8px] border-l-gray-300 dark:border-l-gray-600 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent'></div>
-            </div>
+              {/* Arrow */}
+              <div className='absolute top-1/2 right-4 transform -translate-y-1/2'>
+                <div className='w-0 h-0 border-l-[8px] border-l-gray-300 dark:border-l-gray-600 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent'></div>
+              </div>
 
-            {/* Numbers */}
-            <div className='flex justify-between items-center py-8'>
-              {numbers.map(num => (
-                <div key={num} className='flex flex-col items-center'>
-                  <button
-                    onClick={() => setSelectedNumber(num)}
-                    className={`w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-bold transition-all hover:scale-110 ${
-                      selectedNumber === num
-                        ? 'bg-primary text-primary-foreground border-primary'
-                        : num === 0
-                          ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 border-blue-300 dark:border-blue-700'
-                          : num > 0
-                            ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 border-green-300 dark:border-green-700'
-                            : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 border-red-300 dark:border-red-700'
-                    }`}
-                  >
-                    {num}
-                  </button>
-                  <div className='text-xs text-muted-foreground mt-1'>
-                    {num === 0 ? 'zero' : num > 0 ? 'positive' : 'negative'}
+              {/* Numbers */}
+              <div className='flex justify-between items-center py-8 px-4'>
+                {numbers.map(num => (
+                  <div key={num} className='flex flex-col items-center flex-shrink-0'>
+                    <button
+                      onClick={() => setSelectedNumber(num)}
+                      className={`w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-bold transition-all hover:scale-110 ${
+                        selectedNumber === num
+                          ? 'bg-primary text-primary-foreground border-primary'
+                          : num === 0
+                            ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 border-blue-300 dark:border-blue-700'
+                            : num > 0
+                              ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 border-green-300 dark:border-green-700'
+                              : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 border-red-300 dark:border-red-700'
+                      }`}
+                    >
+                      {num}
+                    </button>
+                    <div className='text-xs text-muted-foreground mt-1 whitespace-nowrap'>
+                      {num === 0 ? 'zero' : num > 0 ? 'positive' : 'negative'}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
+          </div>
+
+          {/* Mobile scroll hint */}
+          <div className='sm:hidden mt-2 p-2 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg'>
+            <p className='text-xs text-yellow-800 dark:text-yellow-200 text-center'>
+              📱 <strong>Tip:</strong> Scroll horizontally to see all numbers
+            </p>
           </div>
 
           {/* Direction Labels */}
