@@ -2,6 +2,7 @@ import { TheoryConcept } from '../types';
 import { MathExpression } from './MathExpression';
 import { renderVisualComponent } from './visual-aids/VisualComponentRegistry';
 import { getVisualDescription } from '../lib/visual-descriptions';
+import { formatText } from '../lib/text-formatter';
 
 interface ReadingSectionProps {
   concepts: TheoryConcept[];
@@ -53,12 +54,8 @@ export function ReadingSection({
               {concept.title}
             </h3>
 
-            <div className='text-gray-700 dark:text-gray-300 leading-relaxed mb-6 text-lg'>
-              {concept.content.split('\n\n').map((paragraph, pIndex) => (
-                <p key={pIndex} className='mb-4 text-lg'>
-                  {paragraph}
-                </p>
-              ))}
+            <div className='text-gray-700 dark:text-gray-300 leading-relaxed mb-6'>
+              {formatText(concept.content)}
             </div>
 
             {/* LaTeX expressions */}

@@ -11,10 +11,10 @@ interface NumberLineProps {
 
 export function NumberLine({
   min = 0,
-  max = 100,
-  step = 10,
+  max = 10,
+  step = 1,
   highlightNumbers = [],
-  interactive = false,
+  interactive = true,
   className = '',
 }: NumberLineProps) {
   // Auto-adjust range for negative numbers if highlights include negatives
@@ -73,6 +73,7 @@ export function NumberLine({
   const handleMouseDown = useCallback(
     (e: React.MouseEvent) => {
       if (!interactive) return;
+      e.preventDefault();
       setIsDragging(true);
       const newNumber = getNumberFromPosition(e.clientX);
       setSelectedNumber(newNumber);
@@ -80,11 +81,39 @@ export function NumberLine({
     [interactive, getNumberFromPosition]
   );
 
+  const handleTouchStart = useCallback(
+    (e: React.TouchEvent) => {
+      if (!interactive) return;
+      e.preventDefault();
+      setIsDragging(true);
+      const touch = e.touches[0];
+      if (touch) {
+        const newNumber = getNumberFromPosition(touch.clientX);
+        setSelectedNumber(newNumber);
+      }
+    },
+    [interactive, getNumberFromPosition]
+  );
+
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
       if (!isDragging || !interactive) return;
+      e.preventDefault();
       const newNumber = getNumberFromPosition(e.clientX);
       setSelectedNumber(newNumber);
+    },
+    [isDragging, interactive, getNumberFromPosition]
+  );
+
+  const handleTouchMove = useCallback(
+    (e: TouchEvent) => {
+      if (!isDragging || !interactive) return;
+      e.preventDefault();
+      const touch = e.touches[0];
+      if (touch) {
+        const newNumber = getNumberFromPosition(touch.clientX);
+        setSelectedNumber(newNumber);
+      }
     },
     [isDragging, interactive, getNumberFromPosition]
   );
@@ -93,18 +122,34 @@ export function NumberLine({
     setIsDragging(false);
   }, []);
 
-  // Add global mouse event listeners for dragging
+  const handleTouchEnd = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  // Add global mouse and touch event listeners for dragging
   useEffect(() => {
     if (isDragging) {
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
+      document.addEventListener('touchmove', handleTouchMove, {
+        passive: false,
+      });
+      document.addEventListener('touchend', handleTouchEnd);
       return () => {
         document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
+        document.removeEventListener('touchmove', handleTouchMove);
+        document.removeEventListener('touchend', handleTouchEnd);
       };
     }
     return undefined;
-  }, [isDragging, handleMouseMove, handleMouseUp]);
+  }, [
+    isDragging,
+    handleMouseMove,
+    handleMouseUp,
+    handleTouchMove,
+    handleTouchEnd,
+  ]);
 
   return (
     <div
@@ -114,9 +159,9 @@ export function NumberLine({
         Number Line ({finalMin} to {finalMax})
       </h4>
 
-      {/* Mobile-friendly container with horizontal scroll */}
+      {/* Mobile-friendly container */}
       <div className='overflow-x-auto pb-2 sm:overflow-x-visible'>
-        <div className='relative h-20 mb-4 min-w-[480px] sm:min-w-[520px] md:min-w-0 px-4'>
+        <div className='relative h-20 mb-4 min-w-[320px] sm:min-w-0 px-4'>
           {/* Main line */}
           <div
             ref={lineRef}
@@ -124,6 +169,7 @@ export function NumberLine({
               interactive ? 'cursor-pointer' : ''
             }`}
             onMouseDown={handleMouseDown}
+            onTouchStart={handleTouchStart}
           ></div>
 
           {/* Tick marks and labels */}
@@ -181,19 +227,18 @@ export function NumberLine({
               }}
             >
               <div
-                className={`w-4 h-4 bg-purple-600 dark:bg-purple-400 rounded-full border-2 border-white dark:border-gray-800 shadow-lg ${
+                className={`w-5 h-5 sm:w-4 sm:h-4 bg-purple-600 dark:bg-purple-400 rounded-full border-2 border-white dark:border-gray-800 shadow-lg ${
                   interactive
-                    ? 'cursor-grab active:cursor-grabbing hover:scale-110'
+                    ? 'cursor-grab active:cursor-grabbing hover:scale-110 touch-manipulation'
                     : ''
                 } transition-transform duration-150`}
                 onMouseDown={handleMouseDown}
+                onTouchStart={handleTouchStart}
               ></div>
             </div>
           )}
         </div>
       </div>
-
-
 
       {selectedNumber !== null && (
         <div className='mt-4 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg'>
@@ -207,12 +252,6 @@ export function NumberLine({
         <p className='text-xs md:text-sm text-blue-800 dark:text-blue-200 text-center'>
           💡 <strong>Remember:</strong> Moving right (→) is addition, moving
           left (←) is subtraction
-        </p>
-      </div>
-
-      <div className='mt-2 p-2 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg sm:hidden'>
-        <p className='text-xs text-yellow-800 dark:text-yellow-200 text-center'>
-          📱 <strong>Tip:</strong> Scroll horizontally to see the full number line
         </p>
       </div>
 

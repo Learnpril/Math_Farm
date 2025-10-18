@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 
 interface CountingDotsProps {
   problem?: string;
-  operation?: 'addition' | 'subtraction';
+  operation?: 'addition' | 'subtraction' | 'counting';
   firstNumber?: number;
   secondNumber?: number;
   showAnswer?: boolean;
+  maxCount?: number;
 }
 
 export const CountingDots: React.FC<CountingDotsProps> = ({
@@ -14,9 +15,11 @@ export const CountingDots: React.FC<CountingDotsProps> = ({
   firstNumber = 7,
   secondNumber = 5,
   showAnswer = false,
+  maxCount = 15,
 }) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const maxSteps = operation === 'addition' ? 3 : 3;
+  const maxSteps =
+    operation === 'addition' ? 3 : operation === 'subtraction' ? 3 : maxCount;
 
   const renderDots = (count: number, color: string, startIndex: number = 0) => {
     return Array.from({ length: count }, (_, i) => (
@@ -161,9 +164,61 @@ export const CountingDots: React.FC<CountingDotsProps> = ({
     );
   };
 
+  const renderCounting = () => {
+    return (
+      <div className='space-y-4'>
+        <div className='text-center'>
+          <h3 className='text-lg font-semibold mb-2 text-black dark:text-white'>
+            Basic Counting: Count to {maxCount}
+          </h3>
+          <p className='text-sm text-gray-600 dark:text-gray-300'>
+            Watch as we count each object one by one. Currently showing:{' '}
+            {currentStep}
+          </p>
+        </div>
+
+        <div className='flex flex-col items-center space-y-4'>
+          <div className='flex flex-wrap justify-center max-w-md gap-2'>
+            {Array.from({ length: maxCount }, (_, i) => (
+              <div
+                key={i}
+                className={`w-8 h-8 rounded-full border-2 border-gray-400 flex items-center justify-center text-sm font-bold transition-all duration-300
+                  ${
+                    i < currentStep
+                      ? 'bg-blue-500 text-white scale-100 opacity-100'
+                      : 'bg-gray-200 text-gray-400 scale-75 opacity-50'
+                  }
+                `}
+                style={{
+                  animationDelay: `${i * 100}ms`,
+                }}
+              >
+                {i + 1}
+              </div>
+            ))}
+          </div>
+
+          <div className='text-center'>
+            <div className='text-2xl font-bold text-blue-600'>
+              {currentStep} object{currentStep !== 1 ? 's' : ''}
+            </div>
+            <div className='text-sm text-gray-500 mt-2'>
+              {currentStep === 1 && "We start counting with 'one'"}
+              {currentStep > 1 &&
+                currentStep < maxCount &&
+                `Keep counting: ${Array.from({ length: currentStep }, (_, i) => i + 1).join(', ')}`}
+              {currentStep === maxCount &&
+                `We've counted all ${maxCount} objects!`}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className='bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm'>
-      <style jsx>{`
+      <style>{`
         @keyframes fadeIn {
           from {
             opacity: 0;
@@ -176,7 +231,11 @@ export const CountingDots: React.FC<CountingDotsProps> = ({
         }
       `}</style>
 
-      {operation === 'addition' ? renderAddition() : renderSubtraction()}
+      {operation === 'addition'
+        ? renderAddition()
+        : operation === 'subtraction'
+          ? renderSubtraction()
+          : renderCounting()}
 
       <div className='flex justify-center space-x-2 mt-6'>
         <button
