@@ -189,7 +189,13 @@ function validatePracticeQuestion(
     });
   }
 
-  const validTypes = ['multiple-choice', 'fill-in', 'true-false', 'drag-drop'];
+  const validTypes = [
+    'multiple-choice',
+    'fill-in',
+    'true-false',
+    'drag-drop',
+    'step-by-step',
+  ];
   if (!question.type || !validTypes.includes(question.type)) {
     errors.push({
       field: `${prefix}.type`,

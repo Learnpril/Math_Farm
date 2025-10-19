@@ -203,6 +203,16 @@ export function TopicPage() {
     return () => clearTimeout(timer);
   }, [topic, topicId]);
 
+  // Auto-redirect to curriculum for topics that have structured curricula
+  useEffect(() => {
+    if (topic && !isLoading) {
+      if (topic.id === 'arithmetic' || topic.id === 'pre-algebra') {
+        // Redirect to curriculum page
+        window.location.href = `/topic/${topic.id}/curriculum/1`;
+      }
+    }
+  }, [topic, isLoading]);
+
   // Track topic visit and update streak
   useEffect(() => {
     if (topic && !isLoading && topicId && !sessionInitialized.current) {
@@ -458,10 +468,19 @@ export function TopicPage() {
                       </Badge>
                     </div>
 
-                    {/* Curriculum Link for Arithmetic */}
+                    {/* Curriculum Links for Arithmetic and Pre-Algebra */}
                     {topic.id === 'arithmetic' && (
                       <Link
                         href={`/topic/arithmetic/curriculum/1`}
+                        className='flex items-center gap-2 px-3 py-2 bg-purple-100 hover:bg-purple-200 text-purple-800 rounded-lg text-sm font-medium transition-colors border border-purple-200'
+                      >
+                        <BookOpen className='w-4 h-4' />
+                        Start Curriculum
+                      </Link>
+                    )}
+                    {topic.id === 'pre-algebra' && (
+                      <Link
+                        href={`/topic/pre-algebra/curriculum/1`}
                         className='flex items-center gap-2 px-3 py-2 bg-purple-100 hover:bg-purple-200 text-purple-800 rounded-lg text-sm font-medium transition-colors border border-purple-200'
                       >
                         <BookOpen className='w-4 h-4' />

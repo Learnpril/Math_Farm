@@ -1,0 +1,78 @@
+{
+  "id": "chapter-07",
+  "title": "Data and Statistics Basics",
+  "objectives": [
+    "Read and interpret various types of graphs and charts",
+    "Calculate measures of central tendency (mean, median, mode)",
+    "Understand and calculate basic probability"
+  ],
+  "prerequisites": [
+    "Basic arithmetic operations",
+    "Working with fractions and decimals"
+  ],
+  "introduction": {
+    "context": "Every day we see statistics: weather forecasts, sports scores, election polls, and social media analytics. Understanding data helps us make informed decisions!",
+    "connection": "Data analysis skills are essential for interpreting news, making business decisions, understanding scientific research, and even managing personal finances."
+  },
+  "theory": {
+    "concepts": [
+      {
+        "title": "Mean, Median, Mode",
+        "content": "Mean is the average (sum divided by count). Median is the middle value when data is ordered. Mode is the most frequent value. These measures help us understand the center of data.",
+        "latex": "\\text{Mean} = \\frac{\\sum x}{n}",
+        "visuals": ["NumberLine"]
+      },
+      {
+        "title": "Probability",
+        "content": "The likelihood that an event will occur, expressed as a fraction, decimal, or percentage. Probability ranges from 0 (impossible) to 1 (certain).",
+        "latex": "P(\\text{event}) = \\frac{\\text{favorable outcomes}}{\\text{total possible outcomes}}",
+        "visuals": ["NumberLine"]
+      }
+    ]
+  },
+  "examples": [
+    {
+      "problem": "Find the mean of: 4, 6, 8, 10, 12",
+      "solution": "8",
+      "steps": [
+        "Add all values: 4 + 6 + 8 + 10 + 12 = 40",
+        "Count the values: 5 numbers",
+        "Divide sum by count: 40 ÷ 5 = 8"
+      ],
+      "commonErrors": [
+        "Forgetting to divide by the count",
+        "Adding incorrectly"
+      ],
+      "latex": "\\text{Mean} = \\frac{40}{5} = 8"
+    }
+  ],
+  "practice": [
+    {
+      "id": "stats-01",
+      "type": "fill-in",
+      "difficulty": 1,
+      "problem": "Find the mean of: 2, 4, 6, 8",
+      "correct": "5",
+      "explanation": "Mean = (2+4+6+8) ÷ 4 = 20 ÷ 4 = 5.",
+      "hints": ["Add all values first", "Then divide by the count"]
+    },
+    {
+      "id": "stats-02",
+      "type": "multiple-choice",
+      "difficulty": 2,
+      "problem": "What is the mode of: 2, 5, 3, 5, 1, 5, 4?",
+      "options": ["2", "3", "5", "No mode"],
+      "correct": 2,
+      "explanation": "The mode is 5 because it appears 3 times, more than any other value.",
+      "hints": [
+        "Look for the most frequent value",
+        "Count how many times each number appears"
+      ]
+    }
+  ],
+  "tools": ["calculator"],
+  "assessment": {
+    "masteryThreshold": 0.8,
+    "requiredProblems": 2
+  }
+}

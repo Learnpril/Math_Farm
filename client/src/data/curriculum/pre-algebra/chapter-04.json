@@ -1,0 +1,78 @@
+{
+  "id": "chapter-04",
+  "title": "Algebraic Proportions",
+  "objectives": [
+    "Solve proportions containing variables",
+    "Set up and solve percent equations with unknowns",
+    "Apply proportional reasoning to real-world problems"
+  ],
+  "prerequisites": [
+    "Arithmetic ratios and percentages",
+    "Solving basic equations"
+  ],
+  "introduction": {
+    "context": "If a recipe for 4 people calls for 2 cups of flour, how much flour do you need for 6 people? This scaling problem uses algebraic proportions!",
+    "connection": "Proportions with variables help us solve problems involving scaling recipes, calculating discounts, determining medication dosages, and converting between units."
+  },
+  "theory": {
+    "concepts": [
+      {
+        "title": "Algebraic Proportions",
+        "content": "An equation stating that two ratios are equal, where at least one ratio contains a variable. Like arithmetic proportions, but now we solve for unknown values using algebra.",
+        "latex": "\\frac{2}{5} = \\frac{x}{10} \\text{ where } x \\text{ is unknown}",
+        "visuals": ["NumberLine"]
+      },
+      {
+        "title": "Cross-Multiplication",
+        "content": "Multiplying diagonally across a proportion to create an equation to solve. If a/b = c/d, then ad = bc. This works even when variables are involved.",
+        "latex": "\\frac{a}{b} = \\frac{c}{d} \\Rightarrow ad = bc",
+        "visuals": ["NumberLine"]
+      }
+    ]
+  },
+  "examples": [
+    {
+      "problem": "Solve: 2/5 = x/10",
+      "solution": "4",
+      "steps": [
+        "Set up cross-multiplication: 2 × 10 = 5 × x",
+        "Multiply: 20 = 5x",
+        "Solve for x: x = 20 ÷ 5 = 4",
+        "Check: 2/5 = 4/10 = 2/5 ✓"
+      ],
+      "commonErrors": [
+        "Multiplying incorrectly in cross-multiplication",
+        "Forgetting to check the solution"
+      ],
+      "latex": "\\frac{2}{5} = \\frac{x}{10} \\Rightarrow x = 4"
+    }
+  ],
+  "practice": [
+    {
+      "id": "proportions-01",
+      "type": "fill-in",
+      "difficulty": 1,
+      "problem": "Solve: 3/4 = x/8",
+      "correct": "6",
+      "explanation": "Cross-multiply: 3 × 8 = 4 × x, so 24 = 4x, therefore x = 6.",
+      "hints": ["Use cross-multiplication", "3 × 8 = 4 × x"]
+    },
+    {
+      "id": "proportions-02",
+      "type": "fill-in",
+      "difficulty": 2,
+      "problem": "What percent of 25 is 5?",
+      "correct": "20",
+      "explanation": "Set up proportion: 5/25 = x/100. Cross-multiply: 500 = 25x, so x = 20%.",
+      "hints": [
+        "Set up as a proportion with 100",
+        "5 out of 25 is what out of 100?"
+      ]
+    }
+  ],
+  "tools": ["calculator"],
+  "assessment": {
+    "masteryThreshold": 0.8,
+    "requiredProblems": 2
+  }
+}

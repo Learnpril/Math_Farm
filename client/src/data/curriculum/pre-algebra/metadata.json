@@ -1,0 +1,30 @@
+{
+  "topic": "pre-algebra",
+  "title": "Pre-Algebra Fundamentals",
+  "estimatedHours": 35,
+  "difficulty": "intermediate",
+  "prerequisites": ["arithmetic"],
+  "objectives": [
+    "Manipulate integers and expressions using order of operations and properties",
+    "Solve and graph equations and inequalities for real-world scenarios",
+    "Apply algebraic proportions and geometry formulas to measurements and designs",
+    "Interpret data and coordinate graphs to analyze patterns and trends",
+    "Build problem-solving skills through multi-step applications"
+  ],
+  "chapters": 7,
+  "tools": [
+    "calculator",
+    "equation-solver",
+    "graph-plotter",
+    "coordinate-plane"
+  ],
+  "chapterFiles": [
+    "chapter-01.json",
+    "chapter-02.json",
+    "chapter-03.json",
+    "chapter-04.json",
+    "chapter-05.json",
+    "chapter-06.json",
+    "chapter-07.json"
+  ]
+}

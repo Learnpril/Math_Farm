@@ -1,0 +1,71 @@
+{
+  "id": "chapter-05",
+  "title": "Geometry Basics",
+  "objectives": [
+    "Apply area and perimeter formulas for basic shapes",
+    "Calculate volume and surface area of simple solids",
+    "Use the Pythagorean theorem for right triangles"
+  ],
+  "prerequisites": ["Basic arithmetic operations", "Working with formulas"],
+  "introduction": {
+    "context": "Planning to paint a room? You'll need to calculate wall area minus windows and doors. Buying carpet? You need floor area. Geometry formulas help us solve these everyday problems!",
+    "connection": "Geometry calculations are essential for construction, interior design, packaging, landscaping, and any project involving space and materials."
+  },
+  "theory": {
+    "concepts": [
+      {
+        "title": "Area and Perimeter",
+        "content": "Perimeter is the distance around the outside of a 2D shape. Area is the amount of space inside a 2D shape, measured in square units.",
+        "latex": "P_{\\text{rectangle}} = 2(l + w), \\quad A_{\\text{rectangle}} = lw",
+        "visuals": ["NumberLine"]
+      },
+      {
+        "title": "Pythagorean Theorem",
+        "content": "In a right triangle, the square of the hypotenuse equals the sum of squares of the other two sides. This theorem helps us find missing side lengths in right triangles.",
+        "latex": "a^2 + b^2 = c^2",
+        "visuals": ["NumberLine"]
+      }
+    ]
+  },
+  "examples": [
+    {
+      "problem": "Find the area of a rectangle with length 12 ft and width 8 ft",
+      "solution": "96 square feet",
+      "steps": [
+        "Identify given information: l = 12 ft, w = 8 ft",
+        "Apply area formula: A = l × w",
+        "Calculate: A = 12 × 8 = 96 ft²"
+      ],
+      "commonErrors": [
+        "Forgetting to include units in the answer",
+        "Confusing perimeter and area formulas"
+      ],
+      "latex": "A = 12 \\times 8 = 96 \\text{ ft}^2"
+    }
+  ],
+  "practice": [
+    {
+      "id": "geometry-01",
+      "type": "fill-in",
+      "difficulty": 1,
+      "problem": "Find the area of a rectangle with length 6 m and width 4 m",
+      "correct": "24",
+      "explanation": "Area = length × width = 6 × 4 = 24 m².",
+      "hints": ["Use A = l × w", "Multiply length by width"]
+    },
+    {
+      "id": "geometry-02",
+      "type": "fill-in",
+      "difficulty": 2,
+      "problem": "Find the volume of a box with length 5 in, width 3 in, and height 4 in",
+      "correct": "60",
+      "explanation": "Volume = length × width × height = 5 × 3 × 4 = 60 in³.",
+      "hints": ["Use V = l × w × h", "Multiply all three dimensions"]
+    }
+  ],
+  "tools": ["calculator"],
+  "assessment": {
+    "masteryThreshold": 0.8,
+    "requiredProblems": 2
+  }
+}

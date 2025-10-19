@@ -6,6 +6,7 @@ interface CurriculumNavigationProps {
   progress: CurriculumProgress;
   currentChapter: number;
   onChapterSelect: (chapterNumber: number) => void;
+  chapterTitles?: string[];
   className?: string;
 }
 
@@ -14,6 +15,7 @@ export function CurriculumNavigation({
   progress,
   currentChapter,
   onChapterSelect,
+  chapterTitles,
   className = '',
 }: CurriculumNavigationProps) {
   const getChapterStatus = (chapterNumber: number) => {
@@ -36,7 +38,13 @@ export function CurriculumNavigation({
   };
 
   const getChapterTitle = (chapterNumber: number): string => {
-    const titles = [
+    // Use provided chapter titles if available, otherwise fall back to default arithmetic titles
+    const providedTitle = chapterTitles?.[chapterNumber - 1];
+    if (providedTitle) {
+      return providedTitle;
+    }
+
+    const defaultTitles = [
       'Numbers and Place Value',
       'Decimals',
       'Addition and Subtraction',
@@ -47,7 +55,7 @@ export function CurriculumNavigation({
       'Problem Solving and Applications',
     ];
 
-    return titles[chapterNumber - 1] || `Chapter ${chapterNumber}`;
+    return defaultTitles[chapterNumber - 1] || `Chapter ${chapterNumber}`;
   };
 
   const getMasteryLevel = (chapterNumber: number): number => {

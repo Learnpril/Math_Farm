@@ -9,13 +9,22 @@
     "prerequisites": []
   },
   {
+    "id": "pre-algebra",
+    "title": "Pre-Algebra",
+    "description": "Bridge arithmetic and algebra with integers, equations, and coordinate graphing",
+    "level": "intermediate",
+    "icon": "Hash",
+    "mathExpression": "2x + 3 = 11 \\Rightarrow x = 4",
+    "prerequisites": ["arithmetic"]
+  },
+  {
     "id": "algebra",
     "title": "Algebra",
     "description": "Explore variables, equations, and algebraic expressions",
     "level": "middle",
     "icon": "Variable",
     "mathExpression": "x^2 + 5x - 6 = (x + 6)(x - 1)",
-    "prerequisites": ["arithmetic"]
+    "prerequisites": ["pre-algebra"]
   },
   {
     "id": "geometry",

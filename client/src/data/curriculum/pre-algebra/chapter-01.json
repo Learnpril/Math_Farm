@@ -1,0 +1,140 @@
+{
+  "id": "chapter-01",
+  "title": "Integers and Operations",
+  "objectives": [
+    "Understand positive and negative integers on a number line",
+    "Calculate absolute value of integers",
+    "Apply sign rules for integer operations",
+    "Use order of operations with integers"
+  ],
+  "prerequisites": [
+    "Basic arithmetic operations",
+    "Understanding of whole numbers"
+  ],
+  "introduction": {
+    "context": "Have you ever checked the weather and seen temperatures below zero? Or noticed your bank account go negative after a purchase? These situations involve negative numbers, which we call integers when combined with positive whole numbers.",
+    "connection": "Integers appear everywhere: elevator floors (basement levels are negative), temperature readings, financial transactions (debts as negative amounts), and even in games where you can lose points. We'll start by placing integers on a number line, then learn the rules for adding, subtracting, multiplying, and dividing them."
+  },
+  "theory": {
+    "concepts": [
+      {
+        "title": "Integer Number Line",
+        "content": "A number line that extends in both directions from zero, with positive integers to the right and negative integers to the left. Think of zero as the starting point. Positive integers (1, 2, 3...) go to the right, while negative integers (-1, -2, -3...) go to the left. The farther from zero, the larger the absolute value.",
+        "latex": "... -3, -2, -1, 0, 1, 2, 3 ...",
+        "visuals": ["NumberLine"]
+      },
+      {
+        "title": "Absolute Value",
+        "content": "The distance of a number from zero on the number line, always positive. Absolute value tells us 'how far' a number is from zero, ignoring direction. Both 5 and -5 are 5 units from zero.",
+        "latex": "|5| = 5 \\text{ and } |-5| = 5",
+        "visuals": ["NumberLine"]
+      },
+      {
+        "title": "Integer Operations",
+        "content": "When adding integers: same signs add and keep the sign, different signs subtract and use the sign of the larger absolute value. When multiplying: same signs give positive results, different signs give negative results.",
+        "latex": "(-3) + (-2) = -5 \\text{ and } (-2) \\times (-3) = 6",
+        "visuals": ["NumberLine"]
+      }
+    ]
+  },
+  "examples": [
+    {
+      "problem": "Calculate: (-3) + 5",
+      "solution": "2",
+      "steps": [
+        "Identify the signs: -3 (negative) and +5 (positive)",
+        "Since signs are different, subtract smaller absolute value from larger: |5| - |-3| = 5 - 3 = 2",
+        "Use the sign of the number with larger absolute value (5 is positive)",
+        "Therefore: (-3) + 5 = 2"
+      ],
+      "commonErrors": [
+        "Adding the absolute values instead of subtracting when signs differ",
+        "Using the wrong sign for the result"
+      ],
+      "latex": "(-3) + 5 = 2"
+    },
+    {
+      "problem": "Calculate: (-4) × (-6)",
+      "solution": "24",
+      "steps": [
+        "Identify both numbers are negative",
+        "Apply the rule: negative × negative = positive",
+        "Calculate: 4 × 6 = 24",
+        "Therefore: (-4) × (-6) = 24"
+      ],
+      "commonErrors": [
+        "Forgetting that negative × negative = positive",
+        "Confusing multiplication and addition rules"
+      ],
+      "latex": "(-4) \\times (-6) = 24"
+    }
+  ],
+  "practice": [
+    {
+      "id": "integers-01",
+      "type": "multiple-choice",
+      "difficulty": 1,
+      "problem": "What is the absolute value of -7?",
+      "options": ["-7", "7", "0", "14"],
+      "correct": 1,
+      "explanation": "Absolute value is always positive and represents distance from zero. |-7| = 7.",
+      "hints": [
+        "Absolute value is always positive",
+        "Think about distance from zero on a number line"
+      ]
+    },
+    {
+      "id": "integers-02",
+      "type": "fill-in",
+      "difficulty": 1,
+      "problem": "Calculate: (-5) + 8",
+      "correct": "3",
+      "explanation": "Different signs: subtract smaller absolute value from larger (8 - 5 = 3) and use sign of larger absolute value (positive).",
+      "hints": [
+        "Different signs mean subtract",
+        "Use the sign of the number with larger absolute value"
+      ]
+    },
+    {
+      "id": "integers-03",
+      "type": "fill-in",
+      "difficulty": 2,
+      "problem": "Calculate: (-3) × 4",
+      "correct": "-12",
+      "explanation": "Different signs in multiplication give a negative result: (-3) × 4 = -12.",
+      "hints": [
+        "Different signs in multiplication = negative result",
+        "Multiply the absolute values, then apply the sign"
+      ]
+    },
+    {
+      "id": "integers-04",
+      "type": "fill-in",
+      "difficulty": 2,
+      "problem": "Calculate: (-6) ÷ (-2)",
+      "correct": "3",
+      "explanation": "Same signs in division give a positive result: (-6) ÷ (-2) = 3.",
+      "hints": [
+        "Same signs in division = positive result",
+        "Divide the absolute values"
+      ]
+    },
+    {
+      "id": "integers-05",
+      "type": "step-by-step",
+      "difficulty": 3,
+      "problem": "Calculate: 2 × (-3) + (-4) × (-1)",
+      "correct": "2",
+      "explanation": "Follow order of operations: multiply first, then add. 2×(-3) = -6 and (-4)×(-1) = 4, so -6 + 4 = -2.",
+      "hints": [
+        "Multiply first, then add",
+        "Remember: negative × negative = positive"
+      ]
+    }
+  ],
+  "tools": ["calculator"],
+  "assessment": {
+    "masteryThreshold": 0.8,
+    "requiredProblems": 4
+  }
+}

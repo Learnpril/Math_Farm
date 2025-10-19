@@ -1,0 +1,115 @@
+{
+  "id": "chapter-03",
+  "title": "Equations and Inequalities",
+  "objectives": [
+    "Solve one-step and two-step equations",
+    "Understand and graph inequalities on number lines",
+    "Apply equation-solving to real-world problems",
+    "Check solutions by substitution"
+  ],
+  "prerequisites": ["Integer operations", "Order of operations"],
+  "introduction": {
+    "context": "Imagine you're planning a budget: 'If I spend x dollars on groceries and $30 on gas, and my total budget is $100, how much can I spend on groceries?' This is an equation waiting to be solved!",
+    "connection": "Equations help us find unknown values in countless situations: calculating tips, determining travel time, balancing budgets, and solving engineering problems."
+  },
+  "theory": {
+    "concepts": [
+      {
+        "title": "Equations",
+        "content": "A mathematical statement that two expressions are equal, containing an unknown variable to solve for. An equation is like a balanced scale - whatever you do to one side, you must do to the other to keep it balanced.",
+        "latex": "x + 3 = 7 \\text{ means } x = 4",
+        "visuals": ["NumberLine"]
+      },
+      {
+        "title": "Inequalities",
+        "content": "A mathematical statement comparing two expressions using <, >, ≤, or ≥. Inequalities show relationships where one side is greater than, less than, or equal to the other.",
+        "latex": "x > 5 \\text{ means } x \\text{ can be any number greater than 5}",
+        "visuals": ["NumberLine"]
+      }
+    ]
+  },
+  "examples": [
+    {
+      "problem": "Solve: x + 4 = 10",
+      "solution": "6",
+      "steps": [
+        "Identify what operation is being done to x: 4 is added to x",
+        "Use inverse operation: subtract 4 from both sides",
+        "Simplify: x = 10 - 4 = 6",
+        "Check: 6 + 4 = 10 ✓"
+      ],
+      "commonErrors": [
+        "Only subtracting from one side of the equation",
+        "Forgetting to check the solution"
+      ],
+      "latex": "x + 4 = 10 \\Rightarrow x = 6"
+    },
+    {
+      "problem": "Solve: 2x - 3 = 7",
+      "solution": "5",
+      "steps": [
+        "Add 3 to both sides: 2x = 10",
+        "Divide both sides by 2: x = 5",
+        "Check: 2(5) - 3 = 10 - 3 = 7 ✓"
+      ],
+      "commonErrors": [
+        "Trying to divide first instead of adding/subtracting",
+        "Making arithmetic errors in the checking step"
+      ],
+      "latex": "2x - 3 = 7 \\Rightarrow x = 5"
+    }
+  ],
+  "practice": [
+    {
+      "id": "equations-01",
+      "type": "fill-in",
+      "difficulty": 1,
+      "problem": "Solve: x - 5 = 8",
+      "correct": "13",
+      "explanation": "Add 5 to both sides: x = 8 + 5 = 13.",
+      "hints": ["What operation undoes subtraction?", "Add 5 to both sides"]
+    },
+    {
+      "id": "equations-02",
+      "type": "fill-in",
+      "difficulty": 2,
+      "problem": "Solve: 3x = 15",
+      "correct": "5",
+      "explanation": "Divide both sides by 3: x = 15 ÷ 3 = 5.",
+      "hints": [
+        "What operation undoes multiplication?",
+        "Divide both sides by 3"
+      ]
+    },
+    {
+      "id": "equations-03",
+      "type": "fill-in",
+      "difficulty": 2,
+      "problem": "Solve: 2x + 3 = 11",
+      "correct": "4",
+      "explanation": "First subtract 3: 2x = 8, then divide by 2: x = 4.",
+      "hints": [
+        "Undo addition/subtraction first",
+        "Then undo multiplication/division"
+      ]
+    },
+    {
+      "id": "equations-04",
+      "type": "multiple-choice",
+      "difficulty": 2,
+      "problem": "Which inequality symbol means 'greater than or equal to'?",
+      "options": [">", "<", "≥", "≤"],
+      "correct": 2,
+      "explanation": "The symbol ≥ means 'greater than or equal to', combining > and =.",
+      "hints": [
+        "Look for the symbol that combines > and =",
+        "Think about 'at least'"
+      ]
+    }
+  ],
+  "tools": ["calculator", "equation-solver"],
+  "assessment": {
+    "masteryThreshold": 0.8,
+    "requiredProblems": 3
+  }
+}

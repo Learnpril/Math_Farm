@@ -1,0 +1,76 @@
+{
+  "id": "chapter-06",
+  "title": "Coordinate Plane and Graphing",
+  "objectives": [
+    "Plot points on the coordinate plane using ordered pairs",
+    "Graph linear equations and identify key features",
+    "Calculate and interpret slope as rate of change"
+  ],
+  "prerequisites": [
+    "Solving linear equations",
+    "Understanding negative numbers"
+  ],
+  "introduction": {
+    "context": "GPS navigation, weather maps, and video game graphics all use coordinate systems to pinpoint locations. The coordinate plane is your mathematical GPS!",
+    "connection": "Coordinate planes help us map locations, track trends in data, design computer graphics, and analyze relationships between variables in science and business."
+  },
+  "theory": {
+    "concepts": [
+      {
+        "title": "Coordinate Plane",
+        "content": "A two-dimensional grid formed by two perpendicular number lines called axes. The horizontal axis is called the x-axis, and the vertical axis is the y-axis. They intersect at the origin (0,0).",
+        "latex": "\\text{Point: } (x, y) \\text{ where } x \\text{ is horizontal, } y \\text{ is vertical}",
+        "visuals": ["NumberLine"]
+      },
+      {
+        "title": "Slope",
+        "content": "The steepness of a line, calculated as rise over run or change in y over change in x. Slope tells us how much y changes for each unit change in x.",
+        "latex": "m = \\frac{\\text{rise}}{\\text{run}} = \\frac{y_2 - y_1}{x_2 - x_1}",
+        "visuals": ["NumberLine"]
+      }
+    ]
+  },
+  "examples": [
+    {
+      "problem": "Plot the point A(2, 3) on a coordinate plane",
+      "solution": "Point plotted at 2 right, 3 up from origin",
+      "steps": [
+        "Start at origin (0,0)",
+        "Move 2 units right (positive x-direction)",
+        "Move 3 units up (positive y-direction)",
+        "Mark the point A(2, 3)"
+      ],
+      "commonErrors": [
+        "Confusing x and y coordinates",
+        "Moving in wrong direction for negative coordinates"
+      ],
+      "latex": "A(2, 3) \\text{ means right 2, up 3}"
+    }
+  ],
+  "practice": [
+    {
+      "id": "graphing-01",
+      "type": "multiple-choice",
+      "difficulty": 1,
+      "problem": "In which quadrant is the point (-3, 2)?",
+      "options": ["Quadrant I", "Quadrant II", "Quadrant III", "Quadrant IV"],
+      "correct": 1,
+      "explanation": "Quadrant II has negative x-coordinates and positive y-coordinates.",
+      "hints": ["x is negative, y is positive", "Quadrant II: (-,+)"]
+    },
+    {
+      "id": "graphing-02",
+      "type": "fill-in",
+      "difficulty": 2,
+      "problem": "What is the slope of the line y = 3x - 4?",
+      "correct": "3",
+      "explanation": "In y = mx + b form, m is the slope. Here m = 3.",
+      "hints": ["Look at the coefficient of x", "In y = mx + b, m is the slope"]
+    }
+  ],
+  "tools": ["calculator", "graph-plotter"],
+  "assessment": {
+    "masteryThreshold": 0.8,
+    "requiredProblems": 2
+  }
+}

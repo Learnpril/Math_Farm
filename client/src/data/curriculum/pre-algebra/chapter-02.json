@@ -1,0 +1,129 @@
+{
+  "id": "chapter-02",
+  "title": "Order of Operations and Expressions",
+  "objectives": [
+    "Apply PEMDAS to evaluate complex expressions",
+    "Identify terms, coefficients, and constants in expressions",
+    "Combine like terms to simplify expressions",
+    "Use the distributive property correctly"
+  ],
+  "prerequisites": ["Integer operations", "Basic arithmetic operations"],
+  "introduction": {
+    "context": "When following a recipe, order matters - you can't frost a cake before baking it! Mathematics has a similar 'recipe' for solving expressions called the order of operations.",
+    "connection": "Order of operations appears in calculating costs (tax and discounts), programming formulas, and even in everyday calculations like determining total expenses. We'll master PEMDAS and learn to work with algebraic expressions containing variables."
+  },
+  "theory": {
+    "concepts": [
+      {
+        "title": "PEMDAS Order of Operations",
+        "content": "The standard order for performing mathematical operations: Parentheses, Exponents, Multiplication and Division (left to right), Addition and Subtraction (left to right). PEMDAS ensures everyone gets the same answer when evaluating expressions.",
+        "latex": "2 + 3 \\times 4 = 2 + 12 = 14 \\text{ (not } 20\\text{)}",
+        "visuals": ["NumberLine"]
+      },
+      {
+        "title": "Algebraic Terms",
+        "content": "Parts of an expression separated by addition or subtraction signs. In 3x + 5 - 2y, the terms are 3x, +5, and -2y. Each term can contain numbers, variables, or both.",
+        "latex": "3x + 5 - 2y \\text{ has terms: } 3x, +5, -2y",
+        "visuals": ["NumberLine"]
+      },
+      {
+        "title": "Distributive Property",
+        "content": "Multiplying a number by a sum equals multiplying the number by each addend separately. This property lets us 'distribute' multiplication over addition or subtraction inside parentheses.",
+        "latex": "a(b + c) = ab + ac",
+        "visuals": ["NumberLine"]
+      }
+    ]
+  },
+  "examples": [
+    {
+      "problem": "Calculate: 2 + 3 × 4",
+      "solution": "14",
+      "steps": [
+        "Identify operations: addition and multiplication",
+        "Apply PEMDAS: multiplication before addition",
+        "Calculate: 3 × 4 = 12",
+        "Complete: 2 + 12 = 14"
+      ],
+      "commonErrors": [
+        "Working left to right: 2 + 3 = 5, then 5 × 4 = 20 (incorrect)",
+        "Forgetting that multiplication comes before addition"
+      ],
+      "latex": "2 + 3 \\times 4 = 14"
+    },
+    {
+      "problem": "Simplify: 3(2 + x) for x = 1",
+      "solution": "9",
+      "steps": [
+        "Apply distributive property: 3(2 + x) = 6 + 3x",
+        "Substitute x = 1: 6 + 3(1)",
+        "Calculate: 6 + 3 = 9"
+      ],
+      "commonErrors": [
+        "Only multiplying by one term inside parentheses",
+        "Substituting the variable before applying distributive property"
+      ],
+      "latex": "3(2 + x) = 6 + 3x = 9 \\text{ when } x = 1"
+    }
+  ],
+  "practice": [
+    {
+      "id": "order-ops-01",
+      "type": "multiple-choice",
+      "difficulty": 1,
+      "problem": "What operation should be performed first in: 8 + 2 × 3?",
+      "options": [
+        "Addition: 8 + 2",
+        "Multiplication: 2 × 3",
+        "Work left to right",
+        "Both at the same time"
+      ],
+      "correct": 1,
+      "explanation": "According to PEMDAS, multiplication comes before addition.",
+      "hints": ["Remember PEMDAS", "Multiplication comes before addition"]
+    },
+    {
+      "id": "order-ops-02",
+      "type": "fill-in",
+      "difficulty": 1,
+      "problem": "Calculate: 12 ÷ 3 + 2",
+      "correct": "6",
+      "explanation": "Division first: 12 ÷ 3 = 4, then addition: 4 + 2 = 6.",
+      "hints": [
+        "Division comes before addition",
+        "Work left to right for same-level operations"
+      ]
+    },
+    {
+      "id": "order-ops-03",
+      "type": "fill-in",
+      "difficulty": 2,
+      "problem": "Calculate: (5 + 3) × 2",
+      "correct": "16",
+      "explanation": "Parentheses first: 5 + 3 = 8, then multiplication: 8 × 2 = 16.",
+      "hints": ["Parentheses first", "Then multiply the result"]
+    },
+    {
+      "id": "order-ops-04",
+      "type": "fill-in",
+      "difficulty": 2,
+      "problem": "Simplify: 4x + 2x",
+      "correct": "6x",
+      "explanation": "These are like terms. Add the coefficients: 4 + 2 = 6, so 4x + 2x = 6x.",
+      "hints": ["These are like terms", "Add the coefficients"]
+    },
+    {
+      "id": "order-ops-05",
+      "type": "fill-in",
+      "difficulty": 3,
+      "problem": "Apply distributive property: 3(x + 4)",
+      "correct": "3x + 12",
+      "explanation": "Distribute 3 to both terms: 3 × x + 3 × 4 = 3x + 12.",
+      "hints": ["Multiply 3 by each term inside", "3 × x = 3x and 3 × 4 = 12"]
+    }
+  ],
+  "tools": ["calculator"],
+  "assessment": {
+    "masteryThreshold": 0.8,
+    "requiredProblems": 4
+  }
+}
