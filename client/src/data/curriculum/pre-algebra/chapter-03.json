@@ -2,114 +2,299 @@
   "id": "chapter-03",
   "title": "Equations and Inequalities",
   "objectives": [
-    "Solve one-step and two-step equations",
-    "Understand and graph inequalities on number lines",
-    "Apply equation-solving to real-world problems",
-    "Check solutions by substitution"
+    "Master the fundamental concept of equations as mathematical statements of equality",
+    "Develop systematic strategies for solving one-step and two-step linear equations",
+    "Understand inequalities and their graphical representation on number lines",
+    "Apply inverse operations and the balance method to maintain equation equality",
+    "Translate real-world problems into mathematical equations and inequalities",
+    "Check solutions by substitution and verify their reasonableness in context",
+    "Solve compound inequalities and understand their solution sets"
   ],
-  "prerequisites": ["Integer operations", "Order of operations"],
+  "prerequisites": [
+    "Mastery of integer operations and order of operations",
+    "Understanding of algebraic expressions and combining like terms",
+    "Familiarity with the distributive property and variable manipulation"
+  ],
   "introduction": {
-    "context": "Imagine you're planning a budget: 'If I spend x dollars on groceries and $30 on gas, and my total budget is $100, how much can I spend on groceries?' This is an equation waiting to be solved!",
-    "connection": "Equations help us find unknown values in countless situations: calculating tips, determining travel time, balancing budgets, and solving engineering problems."
+    "context": "Equations and inequalities are the fundamental tools that transform algebra from abstract symbol manipulation into a powerful problem-solving language. Every time we ask 'What value makes this statement true?' or 'What range of values satisfies this condition?', we're entering the world of equations and inequalities. These mathematical statements allow us to model real-world relationships and find precise answers to practical questions.",
+    "connection": "Equations and inequalities appear everywhere in modern life: calculating loan payments (finding monthly payment amounts), determining break-even points in business (when revenue equals costs), optimizing resource allocation (maximizing profit while minimizing costs), analyzing scientific data (finding relationships between variables), and making informed decisions (comparing options with multiple constraints). Mastering these concepts opens the door to advanced mathematics, science, engineering, and quantitative reasoning in any field.",
+    "historicalContext": "The concept of equations dates back to ancient civilizations. Babylonian mathematicians (2000 BCE) solved quadratic equations using geometric methods. The word 'algebra' comes from the Arabic 'al-jabr,' meaning 'reunion of broken parts,' from the title of Al-Khwarizmi's 9th-century treatise. The equals sign (=) wasn't invented until 1557 by Robert Recorde, who chose it because 'no two things can be more equal' than parallel lines. Inequality symbols developed much later, with < and > introduced by Thomas Harriot in 1631.",
+    "realWorldApplications": "Equations and inequalities are essential in: finance (calculating interest, loan payments, investment growth), science (modeling physical relationships, chemical reactions, population dynamics), engineering (designing structures, optimizing systems, analyzing circuits), business (profit analysis, cost optimization, market research), healthcare (dosage calculations, treatment planning, statistical analysis), and daily decision-making (comparing prices, planning schedules, managing resources). These tools transform complex real-world problems into solvable mathematical statements."
   },
   "theory": {
     "concepts": [
       {
-        "title": "Equations",
-        "content": "A mathematical statement that two expressions are equal, containing an unknown variable to solve for. An equation is like a balanced scale - whatever you do to one side, you must do to the other to keep it balanced.",
-        "latex": "x + 3 = 7 \\text{ means } x = 4",
+        "title": "Understanding Equations: Mathematical Balance",
+        "content": "An equation is a mathematical statement that declares two expressions are equal, connected by an equals sign (=). Think of an equation as a perfectly balanced scale - whatever is on the left side has exactly the same value as what's on the right side. This balance is the key to understanding how equations work and how to solve them.\n\n**The Anatomy of an Equation:**\n\nEvery equation has three essential parts:\n1. **Left side (Left-hand side)**: The expression before the equals sign\n2. **Equals sign (=)**: The symbol that declares equality\n3. **Right side (Right-hand side)**: The expression after the equals sign\n\nFor example, in the equation 3x + 5 = 14:\n• Left side: 3x + 5\n• Equals sign: =\n• Right side: 14\n\n**Types of Equations:**\n\n**True equations**: Statements that are always true, like 5 + 3 = 8 or 2(4) = 8\n**False equations**: Statements that are never true, like 5 + 3 = 10 or 7 = 9\n**Conditional equations**: Statements that are true only for specific values of the variable, like x + 3 = 7 (true only when x = 4)\n**Identity equations**: Statements that are true for all values of the variable, like x + 0 = x\n\n**The Balance Principle:**\nThe fundamental rule of equation solving is maintaining balance. Whatever operation you perform on one side of the equation, you must perform the same operation on the other side. This keeps the equation 'balanced' and preserves the equality.\n\nValid balance operations:\n• Add the same number to both sides\n• Subtract the same number from both sides\n• Multiply both sides by the same non-zero number\n• Divide both sides by the same non-zero number\n\nThis balance principle is why we can systematically solve equations - we're not changing the relationship, just revealing what value of the variable makes the statement true.",
+        "latex": "\\text{If } a = b \\text{, then } a + c = b + c \\text{ and } a - c = b - c",
         "visuals": ["NumberLine"]
       },
       {
-        "title": "Inequalities",
-        "content": "A mathematical statement comparing two expressions using <, >, ≤, or ≥. Inequalities show relationships where one side is greater than, less than, or equal to the other.",
-        "latex": "x > 5 \\text{ means } x \\text{ can be any number greater than 5}",
+        "title": "Solving One-Step Equations: Inverse Operations",
+        "content": "One-step equations require exactly one operation to isolate the variable and find the solution. The key strategy is using **inverse operations** - operations that 'undo' each other to get the variable by itself on one side of the equation.\n\n**The Four Types of One-Step Equations:**\n\n**1. Addition Equations (x + a = b)**\nTo solve x + 7 = 12, we subtract 7 from both sides:\nx + 7 - 7 = 12 - 7\nx = 5\n\n**2. Subtraction Equations (x - a = b)**\nTo solve x - 4 = 9, we add 4 to both sides:\nx - 4 + 4 = 9 + 4\nx = 13\n\n**3. Multiplication Equations (ax = b)**\nTo solve 3x = 15, we divide both sides by 3:\n3x ÷ 3 = 15 ÷ 3\nx = 5\n\n**4. Division Equations (x/a = b)**\nTo solve x/2 = 8, we multiply both sides by 2:\n(x/2) × 2 = 8 × 2\nx = 16\n\n**Inverse Operation Pairs:**\n• Addition ↔ Subtraction\n• Multiplication ↔ Division\n• Squaring ↔ Taking square root\n• Applying a function ↔ Applying its inverse function\n\n**The Goal: Isolate the Variable**\nIn every equation, our goal is to get the variable by itself on one side of the equation. We ask: 'What operation is being performed on the variable?' Then we apply the inverse operation to both sides.\n\n**Checking Solutions:**\nAlways verify your answer by substituting it back into the original equation. If both sides equal the same value, your solution is correct. This step catches arithmetic errors and confirms your reasoning.",
+        "latex": "\\text{Inverse operations: } +a \\leftrightarrow -a \\text{ and } \\times a \\leftrightarrow \\div a",
+        "visuals": ["NumberLine"]
+      },
+      {
+        "title": "Solving Two-Step Equations: Systematic Approach",
+        "content": "Two-step equations require exactly two operations to solve, typically involving both addition/subtraction and multiplication/division. These equations follow the pattern ax + b = c or similar variations. The key is working systematically and following the reverse order of operations.\n\n**The Standard Form: ax + b = c**\n\nMost two-step equations can be written in this form, where:\n• a is the coefficient of the variable\n• x is the variable we're solving for\n• b is a constant added to or subtracted from the variable term\n• c is the constant on the right side\n\n**The Two-Step Solution Process:**\n\n**Step 1: Eliminate the constant term (±b)**\nUse addition or subtraction to move the constant term to the other side of the equation. This isolates the variable term.\n\n**Step 2: Eliminate the coefficient**\nUse multiplication or division to get the variable by itself.\n\n**Example Walkthrough:**\nSolve: 3x + 7 = 22\n\nStep 1: Subtract 7 from both sides\n3x + 7 - 7 = 22 - 7\n3x = 15\n\nStep 2: Divide both sides by 3\n3x ÷ 3 = 15 ÷ 3\nx = 5\n\nCheck: 3(5) + 7 = 15 + 7 = 22 ✓\n\n**Why This Order Matters:**\nWe follow the reverse order of operations (PEMDAS backwards). In the expression 3x + 7, multiplication happens before addition, so when solving, we undo addition first, then multiplication.\n\n**Variations and Special Cases:**\n• Negative coefficients: -2x + 5 = 11\n• Subtraction: 4x - 9 = 7\n• Division: x/3 + 2 = 8\n• Variables on both sides: 2x + 3 = x + 8\n\nThe systematic approach works for all variations - identify what operations are affecting the variable, then apply inverse operations in the correct order.",
+        "latex": "ax + b = c \\Rightarrow ax = c - b \\Rightarrow x = \\frac{c - b}{a}",
+        "visuals": ["NumberLine"]
+      },
+      {
+        "title": "Introduction to Inequalities: Relationships Beyond Equality",
+        "content": "While equations express exact equality, inequalities describe relationships where one quantity is greater than, less than, or possibly equal to another. Inequalities are essential for describing ranges, constraints, and conditions in real-world situations where exact equality isn't required or possible.\n\n**Inequality Symbols and Their Meanings:**\n\n**< (Less than)**: The left side is smaller than the right side\nExample: 3 < 7 means '3 is less than 7'\n\n**> (Greater than)**: The left side is larger than the right side\nExample: 9 > 4 means '9 is greater than 4'\n\n**≤ (Less than or equal to)**: The left side is smaller than or equal to the right side\nExample: x ≤ 5 means 'x is less than or equal to 5'\n\n**≥ (Greater than or equal to)**: The left side is larger than or equal to the right side\nExample: y ≥ -2 means 'y is greater than or equal to -2'\n\n**Reading Inequalities:**\nInequalities can be read from left to right or right to left:\n• x < 5 reads as 'x is less than 5' or '5 is greater than x'\n• 10 ≥ y reads as '10 is greater than or equal to y' or 'y is less than or equal to 10'\n\n**Solution Sets:**\nUnlike equations (which typically have one solution), inequalities usually have infinitely many solutions forming a **solution set**. For example:\n• x > 3 has solutions: 4, 5, 6, 3.1, 3.001, 100, etc.\n• y ≤ -1 has solutions: -1, -2, -3, -1.5, -100, etc.\n\n**Graphing Inequalities on Number Lines:**\n• **Open circle (○)**: Use for < or > (the endpoint is not included)\n• **Closed circle (●)**: Use for ≤ or ≥ (the endpoint is included)\n• **Arrow direction**: Points toward the values that satisfy the inequality\n\nInequalities model real-world constraints like speed limits (speed ≤ 65 mph), age requirements (age ≥ 18), temperature ranges (32°F ≤ temp ≤ 100°F), and budget constraints (cost ≤ $500).",
+        "latex": "x < a \\text{ or } x > a \\text{ or } x \\leq a \\text{ or } x \\geq a",
+        "visuals": ["NumberLine"]
+      },
+      {
+        "title": "Solving Linear Inequalities: Preserving Direction",
+        "content": "Solving linear inequalities follows the same basic principles as solving equations, with one crucial difference: when we multiply or divide both sides by a negative number, we must reverse the inequality symbol. This rule ensures the inequality relationship remains true.\n\n**Standard Inequality Operations:**\n\nMost operations preserve the inequality direction:\n• **Adding or subtracting** the same number to both sides: direction stays the same\n• **Multiplying or dividing** by a positive number: direction stays the same\n• **Multiplying or dividing** by a negative number: direction reverses\n\n**Why the Direction Reverses:**\nConsider the true inequality 3 < 5. If we multiply both sides by -1:\n(-1)(3) ? (-1)(5)\n-3 ? -5\n\nSince -3 > -5, the direction must reverse to maintain truth: -3 > -5.\n\n**Solving Process:**\n\n**Example 1: 2x + 3 > 11**\nStep 1: Subtract 3 from both sides\n2x + 3 - 3 > 11 - 3\n2x > 8\n\nStep 2: Divide both sides by 2 (positive, so direction stays)\n2x ÷ 2 > 8 ÷ 2\nx > 4\n\n**Example 2: -3x + 7 ≤ 16**\nStep 1: Subtract 7 from both sides\n-3x + 7 - 7 ≤ 16 - 7\n-3x ≤ 9\n\nStep 2: Divide both sides by -3 (negative, so direction reverses)\n-3x ÷ (-3) ≥ 9 ÷ (-3)\nx ≥ -3\n\n**Checking Inequality Solutions:**\nTest values from your solution set in the original inequality:\n• Pick a value that should work (from the solution set)\n• Pick a value that shouldn't work (outside the solution set)\n• Verify both give expected results\n\n**Compound Inequalities:**\nSome problems involve multiple constraints:\n• **AND conditions**: -2 < x < 5 (x is between -2 and 5)\n• **OR conditions**: x < -1 or x > 3 (x is less than -1 OR greater than 3)\n\nMastering inequality solving is essential for optimization problems, constraint analysis, and understanding ranges in real-world applications.",
+        "latex": "\\text{If } a < b \\text{ and } c < 0\\text{, then } ac > bc",
         "visuals": ["NumberLine"]
       }
     ]
   },
   "examples": [
     {
-      "problem": "Solve: x + 4 = 10",
-      "solution": "6",
+      "problem": "A cell phone plan costs $25 per month plus $0.10 per text message. If Maria's bill was $32.50, how many text messages did she send?",
+      "solution": "75 text messages",
       "steps": [
-        "Identify what operation is being done to x: 4 is added to x",
-        "Use inverse operation: subtract 4 from both sides",
-        "Simplify: x = 10 - 4 = 6",
-        "Check: 6 + 4 = 10 ✓"
+        "Identify the components: $25 monthly fee + $0.10 per text = $32.50 total",
+        "Let x = number of text messages sent",
+        "Set up the equation: 25 + 0.10x = 32.50",
+        "Subtract 25 from both sides: 0.10x = 32.50 - 25",
+        "Simplify: 0.10x = 7.50",
+        "Divide both sides by 0.10: x = 7.50 ÷ 0.10",
+        "Calculate: x = 75",
+        "Check: 25 + 0.10(75) = 25 + 7.50 = 32.50 ✓"
       ],
       "commonErrors": [
-        "Only subtracting from one side of the equation",
-        "Forgetting to check the solution"
+        "Forgetting to include the monthly fee in the equation",
+        "Setting up the equation as 25x + 0.10 = 32.50",
+        "Making arithmetic errors when dividing by 0.10"
       ],
-      "latex": "x + 4 = 10 \\Rightarrow x = 6"
+      "latex": "25 + 0.10x = 32.50 \\Rightarrow x = 75"
     },
     {
-      "problem": "Solve: 2x - 3 = 7",
-      "solution": "5",
+      "problem": "Solve and graph: 3x - 7 ≤ 8",
+      "solution": "x ≤ 5",
       "steps": [
-        "Add 3 to both sides: 2x = 10",
-        "Divide both sides by 2: x = 5",
-        "Check: 2(5) - 3 = 10 - 3 = 7 ✓"
+        "Start with the inequality: 3x - 7 ≤ 8",
+        "Add 7 to both sides: 3x - 7 + 7 ≤ 8 + 7",
+        "Simplify: 3x ≤ 15",
+        "Divide both sides by 3: 3x ÷ 3 ≤ 15 ÷ 3",
+        "Solution: x ≤ 5",
+        "Graph: Draw a closed circle at 5 (since ≤ includes 5)",
+        "Draw an arrow pointing left (toward smaller values)",
+        "Check: Try x = 3: 3(3) - 7 = 2 ≤ 8 ✓"
       ],
       "commonErrors": [
-        "Trying to divide first instead of adding/subtracting",
-        "Making arithmetic errors in the checking step"
+        "Using an open circle instead of closed for ≤",
+        "Drawing the arrow in the wrong direction",
+        "Forgetting to check the solution"
       ],
-      "latex": "2x - 3 = 7 \\Rightarrow x = 5"
+      "latex": "3x - 7 \\leq 8 \\Rightarrow 3x \\leq 15 \\Rightarrow x \\leq 5"
+    },
+    {
+      "problem": "Solve: -2x + 9 = 3x - 6",
+      "solution": "x = 3",
+      "steps": [
+        "Start with variables on both sides: -2x + 9 = 3x - 6",
+        "Subtract 3x from both sides: -2x - 3x + 9 = 3x - 3x - 6",
+        "Simplify left side: -5x + 9 = -6",
+        "Subtract 9 from both sides: -5x + 9 - 9 = -6 - 9",
+        "Simplify: -5x = -15",
+        "Divide both sides by -5: x = -15 ÷ (-5)",
+        "Solution: x = 3",
+        "Check: -2(3) + 9 = -6 + 9 = 3, and 3(3) - 6 = 9 - 6 = 3 ✓"
+      ],
+      "commonErrors": [
+        "Making sign errors when moving terms",
+        "Forgetting to combine like terms properly",
+        "Arithmetic errors with negative numbers"
+      ],
+      "latex": "-2x + 9 = 3x - 6 \\Rightarrow -5x = -15 \\Rightarrow x = 3"
+    },
+    {
+      "problem": "A movie theater charges $8 for adults and $5 for children. If 120 tickets were sold for a total of $750, how many adult tickets were sold?",
+      "solution": "50 adult tickets",
+      "steps": [
+        "Let a = number of adult tickets, c = number of child tickets",
+        "Set up two equations from the given information:",
+        "Total tickets: a + c = 120",
+        "Total revenue: 8a + 5c = 750",
+        "From the first equation: c = 120 - a",
+        "Substitute into the second equation: 8a + 5(120 - a) = 750",
+        "Distribute: 8a + 600 - 5a = 750",
+        "Combine like terms: 3a + 600 = 750",
+        "Subtract 600: 3a = 150",
+        "Divide by 3: a = 50",
+        "Check: 50 adults + 70 children = 120 tickets ✓",
+        "Revenue: 8(50) + 5(70) = 400 + 350 = 750 ✓"
+      ],
+      "commonErrors": [
+        "Confusing which variable represents which quantity",
+        "Setting up incorrect equations from the word problem",
+        "Making substitution errors"
+      ],
+      "latex": "\\begin{cases} a + c = 120 \\\\ 8a + 5c = 750 \\end{cases} \\Rightarrow a = 50"
     }
   ],
   "practice": [
     {
       "id": "equations-01",
-      "type": "fill-in",
+      "type": "multiple-choice",
       "difficulty": 1,
-      "problem": "Solve: x - 5 = 8",
-      "correct": "13",
-      "explanation": "Add 5 to both sides: x = 8 + 5 = 13.",
-      "hints": ["What operation undoes subtraction?", "Add 5 to both sides"]
+      "problem": "What is the first step to solve: x + 7 = 12?",
+      "options": [
+        "Add 7 to both sides",
+        "Subtract 7 from both sides",
+        "Multiply both sides by 7",
+        "Divide both sides by 7"
+      ],
+      "correct": 1,
+      "explanation": "To isolate x, we need to undo the addition of 7 by subtracting 7 from both sides.",
+      "hints": [
+        "What operation is being performed on x?",
+        "What's the inverse of addition?",
+        "We want to get x by itself"
+      ]
     },
     {
       "id": "equations-02",
       "type": "fill-in",
       "difficulty": 2,
-      "problem": "Solve: 3x = 15",
-      "correct": "5",
-      "explanation": "Divide both sides by 3: x = 15 ÷ 3 = 5.",
+      "problem": "Solve: 3x = 21. x = ____",
+      "correct": "7",
+      "explanation": "Divide both sides by 3: 3x ÷ 3 = 21 ÷ 3, so x = 7.",
       "hints": [
-        "What operation undoes multiplication?",
-        "Divide both sides by 3"
+        "What operation undoes multiplication by 3?",
+        "Apply the same operation to both sides",
+        "21 ÷ 3 = ?"
       ]
     },
     {
       "id": "equations-03",
-      "type": "fill-in",
+      "type": "multiple-choice",
       "difficulty": 2,
-      "problem": "Solve: 2x + 3 = 11",
-      "correct": "4",
-      "explanation": "First subtract 3: 2x = 8, then divide by 2: x = 4.",
+      "problem": "Which inequality symbol means 'greater than or equal to'?",
+      "options": ["<", ">", "≤", "≥"],
+      "correct": 3,
+      "explanation": "The symbol ≥ means 'greater than or equal to' - it combines > (greater than) with = (equal to).",
       "hints": [
-        "Undo addition/subtraction first",
-        "Then undo multiplication/division"
+        "Look for the symbol that combines > with =",
+        "The line under the symbol indicates 'or equal to'",
+        "Think about which direction the symbol points"
       ]
     },
     {
       "id": "equations-04",
-      "type": "multiple-choice",
-      "difficulty": 2,
-      "problem": "Which inequality symbol means 'greater than or equal to'?",
-      "options": [">", "<", "≥", "≤"],
-      "correct": 2,
-      "explanation": "The symbol ≥ means 'greater than or equal to', combining > and =.",
+      "type": "fill-in",
+      "difficulty": 3,
+      "problem": "Solve: 2x + 5 = 13. x = ____",
+      "correct": "4",
+      "explanation": "First subtract 5: 2x = 8. Then divide by 2: x = 4.",
       "hints": [
-        "Look for the symbol that combines > and =",
-        "Think about 'at least'"
+        "This is a two-step equation",
+        "First eliminate the constant term (+5)",
+        "Then eliminate the coefficient (2)"
+      ]
+    },
+    {
+      "id": "equations-05",
+      "type": "multiple-choice",
+      "difficulty": 3,
+      "problem": "When solving -3x > 12, what happens to the inequality symbol?",
+      "options": [
+        "It stays the same",
+        "It reverses direction",
+        "It becomes an equals sign",
+        "It disappears"
+      ],
+      "correct": 1,
+      "explanation": "When dividing both sides by -3 (a negative number), the inequality symbol reverses: x < -4.",
+      "hints": [
+        "What happens when you multiply or divide by a negative?",
+        "Think about the rule for inequality direction",
+        "Does -3 count as a negative number?"
+      ]
+    },
+    {
+      "id": "equations-06",
+      "type": "fill-in",
+      "difficulty": 4,
+      "problem": "Solve: x - 8 = -3. x = ____",
+      "correct": "5",
+      "explanation": "Add 8 to both sides: x - 8 + 8 = -3 + 8, so x = 5.",
+      "hints": [
+        "What's the inverse of subtracting 8?",
+        "Be careful with the negative numbers",
+        "-3 + 8 = ?"
+      ]
+    },
+    {
+      "id": "equations-07",
+      "type": "step-by-step",
+      "difficulty": 4,
+      "problem": "Solve and graph: 2x - 3 ≤ 7",
+      "correct": "x ≤ 5",
+      "explanation": "Add 3 to both sides: 2x ≤ 10. Divide by 2: x ≤ 5. Graph with closed circle at 5, arrow left.",
+      "hints": [
+        "Follow the same steps as solving an equation",
+        "Be careful about the inequality direction",
+        "Remember: ≤ means closed circle on the graph"
+      ]
+    },
+    {
+      "id": "equations-08",
+      "type": "multiple-choice",
+      "difficulty": 4,
+      "problem": "A gym membership costs $30 per month plus a $50 enrollment fee. If the total cost for one year is $410, which equation represents this situation?",
+      "options": [
+        "30x + 50 = 410",
+        "50x + 30 = 410",
+        "30 + 50x = 410",
+        "(30 + 50)x = 410"
+      ],
+      "correct": 0,
+      "explanation": "Monthly cost ($30) times 12 months plus enrollment fee ($50) equals total cost: 30(12) + 50 = 410, which simplifies to 360 + 50 = 410. But if x represents months, then 30x + 50 = 410.",
+      "hints": [
+        "Identify what varies (monthly payments) vs. what's fixed (enrollment fee)",
+        "Monthly cost gets multiplied by number of months",
+        "One-time fees are added separately"
+      ]
+    },
+    {
+      "id": "equations-09",
+      "type": "fill-in",
+      "difficulty": 5,
+      "problem": "Solve: 4x - 7 = 2x + 9. x = ____",
+      "correct": "8",
+      "explanation": "Subtract 2x from both sides: 2x - 7 = 9. Add 7: 2x = 16. Divide by 2: x = 8.",
+      "hints": [
+        "Get all x terms on one side",
+        "Get all constants on the other side",
+        "Work systematically step by step"
+      ]
+    },
+    {
+      "id": "equations-10",
+      "type": "step-by-step",
+      "difficulty": 5,
+      "problem": "A rectangle has a perimeter of 24 inches. If the length is 3 inches more than the width, find the width.",
+      "correct": "4.5 inches",
+      "explanation": "Let w = width, then length = w + 3. Perimeter: 2w + 2(w + 3) = 24. Solve: 4w + 6 = 24, so w = 4.5 inches.",
+      "hints": [
+        "Perimeter of rectangle = 2(length + width)",
+        "Express length in terms of width",
+        "Set up equation using perimeter formula"
       ]
     }
   ],
-  "tools": ["calculator", "equation-solver"],
+  "tools": ["calculator", "equation-solver", "graph-plotter"],
   "assessment": {
     "masteryThreshold": 0.8,
-    "requiredProblems": 3
+    "requiredProblems": 5
   }
 }

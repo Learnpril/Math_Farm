@@ -2,70 +2,279 @@
   "id": "chapter-05",
   "title": "Geometry Basics",
   "objectives": [
-    "Apply area and perimeter formulas for basic shapes",
-    "Calculate volume and surface area of simple solids",
-    "Use the Pythagorean theorem for right triangles"
+    "Master fundamental geometric concepts including points, lines, angles, and planes",
+    "Calculate perimeter and area of basic shapes using appropriate formulas",
+    "Understand and apply the Pythagorean theorem to solve right triangle problems",
+    "Classify triangles and quadrilaterals based on their properties and measurements",
+    "Solve real-world problems involving geometric measurements and spatial reasoning",
+    "Use geometric formulas to find missing dimensions in practical applications",
+    "Understand similarity and congruence in geometric figures"
   ],
-  "prerequisites": ["Basic arithmetic operations", "Working with formulas"],
+  "prerequisites": [
+    "Mastery of algebraic equations and formula manipulation",
+    "Understanding of square roots and exponents",
+    "Familiarity with proportional relationships and scaling"
+  ],
   "introduction": {
-    "context": "Planning to paint a room? You'll need to calculate wall area minus windows and doors. Buying carpet? You need floor area. Geometry formulas help us solve these everyday problems!",
-    "connection": "Geometry calculations are essential for construction, interior design, packaging, landscaping, and any project involving space and materials."
+    "context": "Geometry surrounds us in every aspect of daily life, from the rectangular screens we view to the circular wheels that transport us, from the triangular roofs that shelter us to the spherical planets we inhabit. Geometric thinking helps us understand spatial relationships, measure our world, and solve practical problems involving shape, size, and position. This branch of mathematics bridges the abstract and the concrete, providing tools for everything from home improvement projects to architectural design.",
+    "connection": "Geometric concepts appear constantly in practical applications: calculating how much paint is needed for a room (area), determining if furniture will fit through a doorway (measurement and spatial reasoning), designing gardens and landscapes (perimeter and area), planning construction projects (angles and measurements), creating art and graphics (proportions and similarity), and navigating using maps and GPS systems (coordinate geometry and distance). Understanding geometry enhances spatial reasoning skills essential for STEM fields, trades, and everyday problem-solving.",
+    "historicalContext": "Geometry is one of humanity's oldest mathematical disciplines, with roots in ancient civilizations' practical needs for land measurement, construction, and astronomy. The word 'geometry' comes from Greek words meaning 'earth measurement.' Ancient Egyptians used geometric principles to build pyramids and survey land after Nile floods. Greek mathematicians, particularly Euclid around 300 BCE, formalized geometric principles in 'Elements,' which remained the standard geometry textbook for over 2,000 years. The Pythagorean theorem, though known to Babylonians earlier, was proven by the Greeks and remains one of mathematics' most famous and useful results.",
+    "realWorldApplications": "Geometry is essential in: architecture and construction (designing buildings, calculating materials), engineering (structural analysis, mechanical design), art and design (proportions, perspective, layout), navigation and mapping (GPS systems, surveying), manufacturing (product design, quality control), sports (field dimensions, trajectory analysis), medicine (medical imaging, surgical planning), computer graphics (3D modeling, game design), and everyday tasks (home improvement, gardening, packing and shipping). Geometric reasoning develops spatial intelligence crucial for success in technical fields and practical problem-solving."
   },
   "theory": {
     "concepts": [
       {
-        "title": "Area and Perimeter",
-        "content": "Perimeter is the distance around the outside of a 2D shape. Area is the amount of space inside a 2D shape, measured in square units.",
-        "latex": "P_{\\text{rectangle}} = 2(l + w), \\quad A_{\\text{rectangle}} = lw",
+        "title": "Fundamental Geometric Elements",
+        "content": "Geometry begins with basic building blocks that combine to create all geometric figures. Understanding these fundamental elements provides the foundation for more complex geometric concepts and problem-solving.\n\n**Point:**\nA point represents a specific location in space with no size, length, width, or height. Points are typically labeled with capital letters (A, B, C) and shown as small dots. While we draw points as tiny circles, mathematically they have no dimensions - they simply mark position.\n\n**Line:**\nA line is a straight path that extends infinitely in both directions, having length but no width or height. Lines are named using two points on the line (line AB or AB̄) or with a single lowercase letter. A line contains infinitely many points.\n\n**Line Segment:**\nA line segment is a portion of a line between two specific endpoints. Unlike a line, a segment has finite length. We denote segments using their endpoints (segment AB or AB̅).\n\n**Ray:**\nA ray starts at one point (the endpoint) and extends infinitely in one direction. Rays are named using the endpoint first, then any other point on the ray (ray AB or AB⃗).\n\n**Plane:**\nA plane is a flat surface that extends infinitely in all directions, having length and width but no thickness. Planes are typically named with capital letters or three non-collinear points that lie on the plane.\n\n**Angle:**\nAn angle is formed by two rays that share a common endpoint called the vertex. Angles are measured in degrees (°) and classified by their measure:\n• **Acute angle**: Less than 90°\n• **Right angle**: Exactly 90°\n• **Obtuse angle**: Between 90° and 180°\n• **Straight angle**: Exactly 180°\n• **Reflex angle**: Between 180° and 360°\n\n**Parallel and Perpendicular Lines:**\n• **Parallel lines**: Lines in the same plane that never intersect, maintaining constant distance\n• **Perpendicular lines**: Lines that intersect at right angles (90°)\n\n**Understanding Relationships:**\nThese elements combine to form all geometric shapes:\n• Three or more line segments can form polygons\n• Angles determine the shape and properties of figures\n• Parallel and perpendicular relationships create special properties in shapes\n\nMastering these fundamentals enables understanding of more complex geometric concepts and real-world applications.",
+        "latex": "\\angle ABC = 90° \\text{ (right angle)}",
         "visuals": ["NumberLine"]
       },
       {
-        "title": "Pythagorean Theorem",
-        "content": "In a right triangle, the square of the hypotenuse equals the sum of squares of the other two sides. This theorem helps us find missing side lengths in right triangles.",
-        "latex": "a^2 + b^2 = c^2",
+        "title": "Perimeter: Measuring Boundaries",
+        "content": "Perimeter is the distance around the outside edge of a two-dimensional shape, representing the total length of the boundary. Understanding perimeter is essential for practical applications like fencing, framing, and determining material needs for borders and edges.\n\n**Definition and Concept:**\nPerimeter measures the total distance around a shape's boundary. Imagine walking around the edge of a shape - the distance you travel is the perimeter. Perimeter is always measured in linear units (inches, feet, meters, etc.).\n\n**Perimeter Formulas for Common Shapes:**\n\n**Rectangle:**\nP = 2l + 2w or P = 2(l + w)\nwhere l = length and w = width\n\n**Square:**\nP = 4s\nwhere s = side length\n\n**Triangle:**\nP = a + b + c\nwhere a, b, and c are the three side lengths\n\n**Regular Polygon:**\nP = n × s\nwhere n = number of sides and s = length of each side\n\n**Circle (Circumference):**\nC = 2πr or C = πd\nwhere r = radius and d = diameter\n\n**Problem-Solving Strategies:**\n\n**Finding Perimeter:**\n1. Identify the shape\n2. Measure or identify all side lengths\n3. Apply the appropriate formula\n4. Include proper units\n\n**Finding Missing Dimensions:**\nWhen perimeter is known but a dimension is missing:\n1. Set up the perimeter formula\n2. Substitute known values\n3. Solve for the unknown dimension\n\n**Example**: A rectangular garden has a perimeter of 40 feet and a width of 8 feet. Find the length.\nP = 2l + 2w\n40 = 2l + 2(8)\n40 = 2l + 16\n24 = 2l\nl = 12 feet\n\n**Real-World Applications:**\n• **Fencing**: How much fencing is needed to enclose a yard?\n• **Framing**: How much molding is needed around a room's ceiling?\n• **Sports**: What's the distance around a track or field?\n• **Crafts**: How much ribbon is needed to go around a picture frame?\n• **Construction**: How much weatherstripping is needed for windows?\n\n**Important Considerations:**\n• Always use consistent units\n• For irregular shapes, measure each side separately\n• Consider whether openings (like doors) should be subtracted\n• Round appropriately for practical applications\n\nPerimeter calculations are fundamental to many real-world projects and provide a foundation for understanding more complex geometric measurements.",
+        "latex": "P_{\\text{rectangle}} = 2l + 2w \\quad P_{\\text{circle}} = 2\\pi r",
+        "visuals": ["NumberLine"]
+      },
+      {
+        "title": "Area: Measuring Surface Coverage",
+        "content": "Area measures the amount of surface covered by a two-dimensional shape, representing the space inside the boundary. Understanding area is crucial for applications involving coverage, such as painting, flooring, landscaping, and material estimation.\n\n**Definition and Concept:**\nArea quantifies the amount of space inside a shape's boundary. Think of area as how much material (paint, carpet, grass seed) would be needed to cover the surface. Area is always measured in square units (square inches, square feet, square meters, etc.).\n\n**Area Formulas for Common Shapes:**\n\n**Rectangle:**\nA = l × w\nwhere l = length and w = width\n\n**Square:**\nA = s²\nwhere s = side length\n\n**Triangle:**\nA = ½ × b × h\nwhere b = base and h = height (perpendicular to base)\n\n**Parallelogram:**\nA = b × h\nwhere b = base and h = height (perpendicular distance between parallel sides)\n\n**Trapezoid:**\nA = ½ × (b₁ + b₂) × h\nwhere b₁ and b₂ are the parallel bases and h = height\n\n**Circle:**\nA = πr²\nwhere r = radius\n\n**Problem-Solving Strategies:**\n\n**Finding Area:**\n1. Identify the shape\n2. Measure or identify necessary dimensions\n3. Apply the appropriate formula\n4. Calculate and include square units\n\n**Complex Shapes:**\nFor irregular shapes:\n1. Break into simpler shapes (rectangles, triangles, circles)\n2. Calculate area of each part\n3. Add areas together (or subtract if there are holes)\n\n**Example**: Find the area of an L-shaped room that can be divided into two rectangles: one 12 ft × 8 ft and another 6 ft × 4 ft.\nArea₁ = 12 × 8 = 96 sq ft\nArea₂ = 6 × 4 = 24 sq ft\nTotal Area = 96 + 24 = 120 sq ft\n\n**Finding Missing Dimensions:**\nWhen area is known but a dimension is missing:\n1. Set up the area formula\n2. Substitute known values\n3. Solve for the unknown dimension\n\n**Example**: A triangle has an area of 24 square inches and a base of 8 inches. Find the height.\nA = ½ × b × h\n24 = ½ × 8 × h\n24 = 4h\nh = 6 inches\n\n**Real-World Applications:**\n• **Home Improvement**: How much paint or flooring is needed?\n• **Landscaping**: How much grass seed or mulch to buy?\n• **Agriculture**: How much fertilizer for a field?\n• **Manufacturing**: Material requirements for production\n• **Architecture**: Space planning and building design\n\n**Key Relationships:**\n• Doubling all dimensions quadruples the area\n• Area and perimeter are independent (shapes can have same area but different perimeters)\n• Units matter: always use square units for area\n\nMastering area calculations enables solving practical problems involving space, materials, and coverage in countless real-world situations.",
+        "latex": "A_{\\text{rectangle}} = lw \\quad A_{\\text{triangle}} = \\frac{1}{2}bh \\quad A_{\\text{circle}} = \\pi r^2",
+        "visuals": ["NumberLine"]
+      },
+      {
+        "title": "The Pythagorean Theorem: Right Triangle Relationships",
+        "content": "The Pythagorean theorem is one of mathematics' most famous and useful results, describing the fundamental relationship between the sides of right triangles. This theorem has countless applications in construction, navigation, engineering, and everyday problem-solving involving distances and measurements.\n\n**The Theorem Statement:**\nIn any right triangle, the square of the length of the hypotenuse (the longest side, opposite the right angle) equals the sum of the squares of the lengths of the other two sides (called legs).\n\n**Mathematical Formula:**\na² + b² = c²\n\nwhere:\n• a and b are the lengths of the legs (the two shorter sides)\n• c is the length of the hypotenuse (the longest side, opposite the 90° angle)\n\n**Understanding the Components:**\n\n**Right Triangle**: A triangle containing exactly one 90° angle\n**Legs**: The two sides that form the right angle\n**Hypotenuse**: The side opposite the right angle (always the longest side)\n\n**Using the Pythagorean Theorem:**\n\n**Finding the Hypotenuse:**\nWhen you know both legs, find the hypotenuse:\nc = √(a² + b²)\n\n**Example**: If the legs are 3 and 4 units:\nc = √(3² + 4²) = √(9 + 16) = √25 = 5 units\n\n**Finding a Leg:**\nWhen you know the hypotenuse and one leg, find the other leg:\na = √(c² - b²) or b = √(c² - a²)\n\n**Example**: If the hypotenuse is 13 and one leg is 5:\nb = √(13² - 5²) = √(169 - 25) = √144 = 12 units\n\n**Pythagorean Triples:**\nSets of three positive integers that satisfy the theorem:\n• (3, 4, 5) and its multiples: (6, 8, 10), (9, 12, 15), etc.\n• (5, 12, 13) and its multiples: (10, 24, 26), etc.\n• (8, 15, 17), (7, 24, 25), (20, 21, 29), etc.\n\n**Real-World Applications:**\n\n**Construction**: Ensuring corners are square (3-4-5 method)\n**Navigation**: Finding direct distances when you know north-south and east-west distances\n**Ladder Safety**: Determining safe ladder placement angles\n**Screen Sizes**: TV and monitor diagonal measurements\n**Sports**: Field dimensions and distance calculations\n**Engineering**: Structural analysis and design\n\n**Problem-Solving Strategy:**\n1. Identify that you have a right triangle\n2. Label the sides (legs as a and b, hypotenuse as c)\n3. Identify what you're looking for\n4. Substitute known values into a² + b² = c²\n5. Solve for the unknown\n6. Check that your answer makes sense\n\n**Example Application**: A ladder leans against a wall. The bottom of the ladder is 6 feet from the wall, and the ladder reaches 8 feet up the wall. How long is the ladder?\n\nThis forms a right triangle:\n• One leg = 6 feet (distance from wall)\n• Other leg = 8 feet (height on wall)\n• Hypotenuse = ladder length\n\nc² = 6² + 8² = 36 + 64 = 100\nc = √100 = 10 feet\n\n**Verification Methods:**\n• Check that c is the longest side\n• Verify that a² + b² = c²\n• Ensure the answer is reasonable in context\n\nThe Pythagorean theorem provides a powerful tool for solving distance and measurement problems in countless practical situations.",
+        "latex": "a^2 + b^2 = c^2 \\text{ where } c \\text{ is the hypotenuse}",
+        "visuals": ["NumberLine"]
+      },
+      {
+        "title": "Classifying Triangles and Quadrilaterals",
+        "content": "Understanding how to classify geometric shapes based on their properties helps us recognize patterns, apply appropriate formulas, and solve problems efficiently. Classification systems organize shapes by their sides, angles, and special characteristics.\n\n**Triangle Classification:**\n\nTriangles can be classified by their sides or their angles:\n\n**By Side Lengths:**\n• **Equilateral Triangle**: All three sides are equal in length, and all angles are 60°\n• **Isosceles Triangle**: Exactly two sides are equal in length, and the angles opposite the equal sides are equal\n• **Scalene Triangle**: All three sides have different lengths, and all angles are different\n\n**By Angle Measures:**\n• **Acute Triangle**: All three angles are less than 90°\n• **Right Triangle**: One angle is exactly 90°\n• **Obtuse Triangle**: One angle is greater than 90°\n\n**Important Triangle Properties:**\n• The sum of all angles in any triangle is always 180°\n• The longest side is always opposite the largest angle\n• The shortest side is always opposite the smallest angle\n• In a right triangle, the hypotenuse is always the longest side\n\n**Quadrilateral Classification:**\n\nQuadrilaterals are four-sided polygons with specific properties:\n\n**Parallelogram**: Opposite sides are parallel and equal; opposite angles are equal\n• Area = base × height\n• Perimeter = 2(a + b) where a and b are adjacent sides\n\n**Rectangle**: A parallelogram with four right angles\n• All angles are 90°\n• Opposite sides are equal and parallel\n• Diagonals are equal in length\n• Area = length × width\n\n**Square**: A rectangle with all sides equal\n• All sides are equal\n• All angles are 90°\n• Diagonals are equal and perpendicular\n• Area = side²\n\n**Rhombus**: A parallelogram with all sides equal\n• All sides are equal\n• Opposite angles are equal\n• Diagonals bisect each other at right angles\n• Area = base × height or ½ × d₁ × d₂ (where d₁ and d₂ are diagonals)\n\n**Trapezoid**: Exactly one pair of parallel sides\n• The parallel sides are called bases\n• Area = ½ × (b₁ + b₂) × h where b₁ and b₂ are the bases and h is the height\n\n**Kite**: Two pairs of adjacent sides are equal\n• Diagonals are perpendicular\n• One diagonal bisects the other\n\n**Classification Hierarchy:**\nShapes can belong to multiple categories:\n• Every square is also a rectangle, rhombus, and parallelogram\n• Every rectangle is also a parallelogram\n• Every rhombus is also a parallelogram\n\n**Problem-Solving Applications:**\n\n**Identifying Shapes**: Use given measurements and properties to classify shapes\n**Choosing Formulas**: Classification determines which area or perimeter formula to use\n**Finding Missing Information**: Properties of classified shapes help find unknown measurements\n\n**Example**: A quadrilateral has four equal sides and four right angles. What is it?\nAnswer: It's a square (which is also a rectangle, rhombus, and parallelogram)\n\n**Real-World Connections:**\n• **Architecture**: Different shapes provide different structural properties\n• **Design**: Shape classification affects aesthetic and functional choices\n• **Manufacturing**: Shape properties determine material usage and strength\n• **Art**: Understanding shape relationships enhances composition and proportion\n\n**Key Relationships:**\n• More specific classifications inherit properties from general classifications\n• Knowing one property often allows you to determine others\n• Classification helps predict behavior and choose appropriate methods\n\nMastering shape classification provides a systematic approach to geometric problem-solving and enhances spatial reasoning skills.",
+        "latex": "\\text{Triangle: } \\alpha + \\beta + \\gamma = 180°",
         "visuals": ["NumberLine"]
       }
     ]
   },
   "examples": [
     {
-      "problem": "Find the area of a rectangle with length 12 ft and width 8 ft",
-      "solution": "96 square feet",
+      "problem": "A rectangular garden is 15 feet long and 8 feet wide. How much fencing is needed to enclose it, and what is the area for planting?",
+      "solution": "Perimeter: 46 feet of fencing; Area: 120 square feet",
       "steps": [
-        "Identify given information: l = 12 ft, w = 8 ft",
-        "Apply area formula: A = l × w",
-        "Calculate: A = 12 × 8 = 96 ft²"
+        "Identify the shape: rectangle with length = 15 ft, width = 8 ft",
+        "Calculate perimeter (fencing needed): P = 2l + 2w",
+        "Substitute values: P = 2(15) + 2(8) = 30 + 16 = 46 feet",
+        "Calculate area (planting space): A = l × w",
+        "Substitute values: A = 15 × 8 = 120 square feet",
+        "Answer: 46 feet of fencing needed, 120 sq ft for planting"
       ],
       "commonErrors": [
-        "Forgetting to include units in the answer",
-        "Confusing perimeter and area formulas"
+        "Confusing perimeter and area formulas",
+        "Forgetting to double both length and width for perimeter",
+        "Using wrong units (linear for perimeter, square for area)"
       ],
-      "latex": "A = 12 \\times 8 = 96 \\text{ ft}^2"
+      "latex": "P = 2(15) + 2(8) = 46 \\text{ ft}, \\quad A = 15 \\times 8 = 120 \\text{ ft}^2"
+    },
+    {
+      "problem": "A ladder is placed against a wall. The bottom of the ladder is 5 feet from the wall, and the top reaches 12 feet up the wall. How long is the ladder?",
+      "solution": "13 feet",
+      "steps": [
+        "Recognize this as a right triangle problem",
+        "Identify the sides: one leg = 5 ft (distance from wall), other leg = 12 ft (height)",
+        "The ladder is the hypotenuse (c)",
+        "Apply Pythagorean theorem: a² + b² = c²",
+        "Substitute: 5² + 12² = c²",
+        "Calculate: 25 + 144 = c²",
+        "Simplify: 169 = c²",
+        "Solve: c = √169 = 13 feet"
+      ],
+      "commonErrors": [
+        "Not recognizing this as a right triangle",
+        "Confusing which side is the hypotenuse",
+        "Making arithmetic errors with squares and square roots"
+      ],
+      "latex": "5^2 + 12^2 = c^2 \\Rightarrow 25 + 144 = 169 \\Rightarrow c = 13"
+    },
+    {
+      "problem": "Find the area of a triangle with a base of 10 inches and a height of 6 inches.",
+      "solution": "30 square inches",
+      "steps": [
+        "Identify the shape: triangle",
+        "Identify given measurements: base = 10 inches, height = 6 inches",
+        "Apply triangle area formula: A = ½ × base × height",
+        "Substitute values: A = ½ × 10 × 6",
+        "Calculate: A = ½ × 60 = 30 square inches",
+        "Check units: area should be in square units ✓"
+      ],
+      "commonErrors": [
+        "Forgetting the ½ in the triangle area formula",
+        "Using the wrong measurements for base and height",
+        "Not using square units for area"
+      ],
+      "latex": "A = \\frac{1}{2} \\times 10 \\times 6 = 30 \\text{ in}^2"
+    },
+    {
+      "problem": "A circular pizza has a diameter of 14 inches. What is its circumference and area?",
+      "solution": "Circumference: 44 inches (approximately); Area: 154 square inches (approximately)",
+      "steps": [
+        "Identify the shape: circle with diameter = 14 inches",
+        "Find radius: r = diameter ÷ 2 = 14 ÷ 2 = 7 inches",
+        "Calculate circumference: C = πd or C = 2πr",
+        "Using C = πd: C = π × 14 ≈ 3.14 × 14 ≈ 44 inches",
+        "Calculate area: A = πr²",
+        "Substitute: A = π × 7² = π × 49 ≈ 3.14 × 49 ≈ 154 square inches"
+      ],
+      "commonErrors": [
+        "Confusing radius and diameter",
+        "Using wrong formula (circumference vs area)",
+        "Forgetting to square the radius in area formula"
+      ],
+      "latex": "C = \\pi d = 14\\pi \\approx 44 \\text{ in}, \\quad A = \\pi r^2 = 49\\pi \\approx 154 \\text{ in}^2"
     }
   ],
   "practice": [
     {
       "id": "geometry-01",
-      "type": "fill-in",
+      "type": "multiple-choice",
       "difficulty": 1,
-      "problem": "Find the area of a rectangle with length 6 m and width 4 m",
-      "correct": "24",
-      "explanation": "Area = length × width = 6 × 4 = 24 m².",
-      "hints": ["Use A = l × w", "Multiply length by width"]
+      "problem": "What is the perimeter of a rectangle with length 8 cm and width 5 cm?",
+      "options": ["13 cm", "26 cm", "40 cm", "26 square cm"],
+      "correct": 1,
+      "explanation": "Perimeter = 2l + 2w = 2(8) + 2(5) = 16 + 10 = 26 cm.",
+      "hints": [
+        "Perimeter is the distance around the outside",
+        "Use P = 2l + 2w for rectangles",
+        "Perimeter uses linear units, not square units"
+      ]
     },
     {
       "id": "geometry-02",
       "type": "fill-in",
       "difficulty": 2,
-      "problem": "Find the volume of a box with length 5 in, width 3 in, and height 4 in",
-      "correct": "60",
-      "explanation": "Volume = length × width × height = 5 × 3 × 4 = 60 in³.",
-      "hints": ["Use V = l × w × h", "Multiply all three dimensions"]
+      "problem": "The area of a square with side length 7 meters is ____ square meters.",
+      "correct": "49",
+      "explanation": "Area of a square = s² = 7² = 49 square meters.",
+      "hints": [
+        "For a square, all sides are equal",
+        "Area of square = side × side = s²",
+        "7 × 7 = ?"
+      ]
+    },
+    {
+      "id": "geometry-03",
+      "type": "multiple-choice",
+      "difficulty": 2,
+      "problem": "In a right triangle, which side is always the longest?",
+      "options": [
+        "The base",
+        "The height",
+        "The hypotenuse",
+        "Any side can be longest"
+      ],
+      "correct": 2,
+      "explanation": "The hypotenuse is the side opposite the right angle and is always the longest side in a right triangle.",
+      "hints": [
+        "Think about the Pythagorean theorem",
+        "Which side is opposite the 90° angle?",
+        "The hypotenuse is across from the right angle"
+      ]
+    },
+    {
+      "id": "geometry-04",
+      "type": "fill-in",
+      "difficulty": 3,
+      "problem": "A triangle has a base of 12 cm and a height of 8 cm. Its area is ____ square cm.",
+      "correct": "48",
+      "explanation": "Area of triangle = ½ × base × height = ½ × 12 × 8 = ½ × 96 = 48 square cm.",
+      "hints": [
+        "Triangle area formula includes ½",
+        "A = ½ × b × h",
+        "Don't forget to multiply by ½"
+      ]
+    },
+    {
+      "id": "geometry-05",
+      "type": "multiple-choice",
+      "difficulty": 3,
+      "problem": "A right triangle has legs of 6 and 8 units. What is the length of the hypotenuse?",
+      "options": ["10 units", "14 units", "100 units", "28 units"],
+      "correct": 0,
+      "explanation": "Using Pythagorean theorem: c² = 6² + 8² = 36 + 64 = 100, so c = 10 units.",
+      "hints": [
+        "Use the Pythagorean theorem: a² + b² = c²",
+        "6² + 8² = 36 + 64 = 100",
+        "What's the square root of 100?"
+      ]
+    },
+    {
+      "id": "geometry-06",
+      "type": "fill-in",
+      "difficulty": 4,
+      "problem": "A circle has a radius of 5 inches. Its area is approximately ____ square inches. (Use π ≈ 3.14)",
+      "correct": "78.5",
+      "explanation": "Area = πr² = 3.14 × 5² = 3.14 × 25 = 78.5 square inches.",
+      "hints": [
+        "Circle area formula: A = πr²",
+        "First calculate r² = 5² = 25",
+        "Then multiply by π ≈ 3.14"
+      ]
+    },
+    {
+      "id": "geometry-07",
+      "type": "multiple-choice",
+      "difficulty": 4,
+      "problem": "Which quadrilateral has all sides equal and all angles equal to 90°?",
+      "options": ["Rectangle", "Rhombus", "Square", "Parallelogram"],
+      "correct": 2,
+      "explanation": "A square has all sides equal (like a rhombus) and all angles equal to 90° (like a rectangle).",
+      "hints": [
+        "Think about which shape has both properties",
+        "Equal sides AND right angles",
+        "This shape is a special type of both rectangle and rhombus"
+      ]
+    },
+    {
+      "id": "geometry-08",
+      "type": "step-by-step",
+      "difficulty": 4,
+      "problem": "A rectangular room is 12 feet long and 9 feet wide. How much carpet is needed to cover the floor?",
+      "correct": "108 square feet",
+      "explanation": "Area = length × width = 12 × 9 = 108 square feet of carpet needed.",
+      "hints": [
+        "This is asking for area (coverage)",
+        "Use A = l × w for rectangles",
+        "Area is measured in square units"
+      ]
+    },
+    {
+      "id": "geometry-09",
+      "type": "fill-in",
+      "difficulty": 5,
+      "problem": "A right triangle has a hypotenuse of 15 cm and one leg of 9 cm. The other leg is ____ cm.",
+      "correct": "12",
+      "explanation": "Using Pythagorean theorem: 9² + b² = 15², so 81 + b² = 225, therefore b² = 144, and b = 12 cm.",
+      "hints": [
+        "Use a² + b² = c² where c = 15 and a = 9",
+        "Solve for b: b² = c² - a²",
+        "b² = 15² - 9² = 225 - 81 = 144"
+      ]
+    },
+    {
+      "id": "geometry-10",
+      "type": "step-by-step",
+      "difficulty": 5,
+      "problem": "A trapezoid has parallel bases of 8 cm and 12 cm, with a height of 5 cm. Find its area.",
+      "correct": "50 square cm",
+      "explanation": "Area of trapezoid = ½ × (b₁ + b₂) × h = ½ × (8 + 12) × 5 = ½ × 20 × 5 = 50 square cm.",
+      "hints": [
+        "Trapezoid area: A = ½ × (b₁ + b₂) × h",
+        "Add the two bases: 8 + 12 = 20",
+        "Then multiply by ½ and the height"
+      ]
     }
   ],
-  "tools": ["calculator"],
+  "tools": ["calculator", "geometry-visualizer"],
   "assessment": {
     "masteryThreshold": 0.8,
-    "requiredProblems": 2
+    "requiredProblems": 5
   }
 }

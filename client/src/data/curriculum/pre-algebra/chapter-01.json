@@ -2,71 +2,186 @@
   "id": "chapter-01",
   "title": "Integers and Operations",
   "objectives": [
-    "Understand positive and negative integers on a number line",
-    "Calculate absolute value of integers",
-    "Apply sign rules for integer operations",
-    "Use order of operations with integers"
+    "Master the concept of integers as an extension of whole numbers to include negatives",
+    "Understand the historical development and practical necessity of negative numbers",
+    "Visualize integers on the number line and understand their ordering relationships",
+    "Calculate absolute value and understand its geometric interpretation as distance",
+    "Apply sign rules systematically for all four integer operations",
+    "Use order of operations (PEMDAS) confidently with positive and negative integers",
+    "Solve real-world problems involving integer operations and negative quantities"
   ],
   "prerequisites": [
-    "Basic arithmetic operations",
-    "Understanding of whole numbers"
+    "Mastery of basic arithmetic operations with whole numbers",
+    "Understanding of place value and number comparison",
+    "Familiarity with the number line for positive numbers"
   ],
   "introduction": {
-    "context": "Have you ever checked the weather and seen temperatures below zero? Or noticed your bank account go negative after a purchase? These situations involve negative numbers, which we call integers when combined with positive whole numbers.",
-    "connection": "Integers appear everywhere: elevator floors (basement levels are negative), temperature readings, financial transactions (debts as negative amounts), and even in games where you can lose points. We'll start by placing integers on a number line, then learn the rules for adding, subtracting, multiplying, and dividing them."
+    "context": "Mathematics constantly evolves to solve real-world problems, and integers represent one of humanity's most important mathematical innovations. While ancient civilizations could count objects and measure distances using positive numbers, they struggled with concepts like debt, temperature below freezing, or depths below sea level. The development of negative numbers revolutionized mathematics and opened doors to algebra, advanced calculations, and scientific understanding.",
+    "connection": "Integers surround us in countless daily situations: checking bank account balances (where overdrafts show as negative amounts), reading weather reports (temperatures below zero), using elevators (basement levels marked as negative floors), playing games (where you can lose points), measuring altitude (below sea level), and understanding time zones (hours behind or ahead of a reference point). This chapter bridges the gap between elementary arithmetic and algebraic thinking by extending our number system to include these essential negative values.",
+    "historicalContext": "The concept of negative numbers developed slowly across different cultures. Ancient Chinese mathematicians used red and black counting rods to represent positive and negative quantities around 200 BCE, primarily for accounting purposes. Indian mathematician Brahmagupta (628 CE) was among the first to establish formal rules for computing with negative numbers, treating them as 'debts' opposite to 'fortunes' (positive numbers). However, European mathematicians resisted negative numbers for centuries, calling them 'fictitious' or 'absurd' numbers. It wasn't until the Renaissance that mathematicians like Cardano and later Descartes fully embraced negative numbers as legitimate mathematical objects. Today, we recognize integers as fundamental to mathematics, science, and everyday problem-solving.",
+    "realWorldApplications": "Integers appear in virtually every quantitative field: finance (profits and losses, credits and debits), science (temperatures, electric charges, elevation changes), sports (scoring systems, golf strokes, football yardage), technology (computer memory addresses, coordinate systems), and daily life (time zones, floor numbers, game scores). Understanding integer operations is essential for success in algebra, where variables can represent any integer value, and for interpreting data in statistics, physics, chemistry, and economics."
   },
   "theory": {
     "concepts": [
       {
-        "title": "Integer Number Line",
-        "content": "A number line that extends in both directions from zero, with positive integers to the right and negative integers to the left. Think of zero as the starting point. Positive integers (1, 2, 3...) go to the right, while negative integers (-1, -2, -3...) go to the left. The farther from zero, the larger the absolute value.",
-        "latex": "... -3, -2, -1, 0, 1, 2, 3 ...",
+        "title": "The Complete Integer Number Line",
+        "content": "The integer number line is a powerful mathematical tool that extends our familiar counting numbers in both directions from zero, creating a complete system for representing all whole number quantities, whether positive, negative, or zero. Unlike the limited number line we used for counting (which only went in one direction), the integer number line stretches infinitely in both directions, with zero serving as the central reference point.\n\nPositive integers (1, 2, 3, 4, 5, ...) extend to the right of zero, representing quantities we can count or measure in the 'forward' direction - things like gains, increases, heights above sea level, or temperatures above freezing. Negative integers (-1, -2, -3, -4, -5, ...) extend to the left of zero, representing quantities in the 'opposite' direction - things like losses, decreases, depths below sea level, or temperatures below freezing.\n\nZero itself holds a special position as neither positive nor negative. It represents the absence of quantity, the neutral point, or the boundary between positive and negative. In real-world terms, zero might represent sea level (the reference point for measuring altitude), the freezing point of water (the reference for temperature), or a balanced bank account (neither in debt nor in credit).\n\nThe beauty of the integer number line lies in its **symmetry** around zero. For every positive integer, there exists a corresponding negative integer at the same distance from zero but in the opposite direction. This creates pairs like (1, -1), (5, -5), and (100, -100). These pairs are called **opposites** or **additive inverses** because they cancel each other out when added together: 3 + (-3) = 0.\n\nMovement on the number line follows consistent rules: moving to the right means increasing (becoming more positive or less negative), while moving to the left means decreasing (becoming less positive or more negative). This directional consistency helps us visualize and understand integer operations geometrically, making abstract concepts concrete and intuitive.",
+        "latex": "\\ldots -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, \\ldots",
+        "visuals": ["NumberLine", "NegativeNumbersIntro"]
+      },
+      {
+        "title": "Absolute Value: Distance and Magnitude",
+        "content": "Absolute value is one of the most important concepts in mathematics, representing the **distance** of a number from zero on the number line, regardless of direction. The absolute value of a number is always non-negative (positive or zero) because distance cannot be negative - you can't be a 'negative distance' away from something.\n\nMathematically, we denote absolute value using vertical bars: |x| means 'the absolute value of x.' For any number, its absolute value tells us its **magnitude** - how 'big' it is without considering whether it's positive or negative. For example, |7| = 7 and |-7| = 7, because both 7 and -7 are exactly 7 units away from zero on the number line.\n\nTo find the absolute value of any integer:\n• If the number is positive or zero, its absolute value is the number itself: |5| = 5, |0| = 0\n• If the number is negative, its absolute value is the number without the negative sign: |-8| = 8, |-15| = 15\n\nAbsolute value has crucial real-world applications. When we say 'the temperature dropped 10 degrees,' we're using absolute value - we care about the magnitude of change (10 degrees) regardless of whether it went from 30° to 20° or from -5° to -15°. In finance, if you owe $50 or have $50, the absolute value in both cases is $50 - the magnitude of money involved.\n\nAbsolute value also helps us compare the 'size' of numbers without worrying about their signs. While -100 < 5 (negative one hundred is less than five), we have |-100| > |5| (the absolute value of negative one hundred is greater than the absolute value of five). This distinction becomes crucial in advanced mathematics, where we often need to separate the concepts of 'direction' (sign) and 'magnitude' (absolute value).\n\nGeometrically, absolute value represents the shortest distance between two points on the number line. The distance between any two numbers a and b is |a - b| or |b - a| (both give the same result). For instance, the distance between -3 and 5 is |(-3) - 5| = |-8| = 8 units, or |5 - (-3)| = |8| = 8 units.",
+        "latex": "|a| = \\begin{cases} a & \\text{if } a \\geq 0 \\\\ -a & \\text{if } a < 0 \\end{cases}",
         "visuals": ["NumberLine"]
       },
       {
-        "title": "Absolute Value",
-        "content": "The distance of a number from zero on the number line, always positive. Absolute value tells us 'how far' a number is from zero, ignoring direction. Both 5 and -5 are 5 units from zero.",
-        "latex": "|5| = 5 \\text{ and } |-5| = 5",
+        "title": "Integer Addition: Combining Quantities",
+        "content": "Adding integers extends our basic addition skills to include negative numbers, requiring us to think about **combining quantities** that can be positive (gains) or negative (losses). The key insight is that addition with integers follows logical, consistent rules based on the concept of 'net change' or 'total effect.'\n\n**Rule 1: Adding integers with the same sign**\nWhen both integers have the same sign (both positive or both negative), we add their absolute values and keep the common sign. This makes intuitive sense:\n• Adding two gains: (+3) + (+5) = +8 (gaining 3, then gaining 5 more, gives a total gain of 8)\n• Adding two losses: (-3) + (-5) = -8 (losing 3, then losing 5 more, gives a total loss of 8)\n\n**Rule 2: Adding integers with different signs**\nWhen integers have different signs (one positive, one negative), we subtract the smaller absolute value from the larger absolute value and use the sign of the number with the larger absolute value. This represents the 'net effect' of combining a gain and a loss:\n• (+7) + (-3) = +4 (gaining 7 but losing 3 gives a net gain of 4)\n• (-7) + (+3) = -4 (losing 7 but gaining 3 gives a net loss of 4)\n• (+5) + (-5) = 0 (equal gains and losses cancel out completely)\n\n**Geometric interpretation on the number line:**\nAddition can be visualized as movement on the number line. Start at the first number, then move right (for positive) or left (for negative) by the amount of the second number. Where you end up is the sum.\n\nThese rules work because they reflect how quantities actually combine in real life. If you have $20 and spend $7, you end up with $13: (+20) + (-7) = +13. If you owe $15 and borrow another $8, you owe $23 total: (-15) + (-8) = -23.",
+        "latex": "\\begin{align} (+a) + (+b) &= +(a + b) \\\\ (-a) + (-b) &= -(a + b) \\\\ (+a) + (-b) &= \\text{sign of larger} \\times |a - b| \\end{align}",
         "visuals": ["NumberLine"]
       },
       {
-        "title": "Integer Operations",
-        "content": "When adding integers: same signs add and keep the sign, different signs subtract and use the sign of the larger absolute value. When multiplying: same signs give positive results, different signs give negative results.",
-        "latex": "(-3) + (-2) = -5 \\text{ and } (-2) \\times (-3) = 6",
+        "title": "Integer Subtraction: Finding Differences",
+        "content": "Subtraction with integers initially seems more complex than addition, but it becomes simple once we understand the fundamental relationship: **subtraction is the same as adding the opposite**. This insight transforms every subtraction problem into an addition problem, which we already know how to solve.\n\n**The key rule: a - b = a + (-b)**\nTo subtract any integer, we add its opposite (additive inverse). This works because subtraction asks 'what's the difference?' or 'how far apart are these numbers?' and adding the opposite gives us exactly that information.\n\nExamples of converting subtraction to addition:\n• 8 - 3 = 8 + (-3) = 5\n• 8 - (-3) = 8 + (+3) = 11\n• (-8) - 3 = (-8) + (-3) = -11\n• (-8) - (-3) = (-8) + (+3) = -5\n\n**Why this works: The meaning of subtraction**\nSubtraction represents several related concepts:\n1. **Taking away**: If you have 10 apples and give away 3, you have 10 - 3 = 7 left\n2. **Finding the difference**: The difference between 10 and 3 is 10 - 3 = 7\n3. **Finding the distance**: The distance from 3 to 10 on the number line is 10 - 3 = 7\n4. **Reverse addition**: What number added to 3 gives 10? Answer: 7, because 3 + 7 = 10\n\n**Special attention to subtracting negative numbers:**\nSubtracting a negative number (which becomes adding a positive) often confuses students initially, but it makes perfect sense in context:\n• 5 - (-3) = 5 + 3 = 8: If the temperature is 5° and it was supposed to drop 3° but doesn't (subtracting the negative drop), it effectively rises 3°\n• (-2) - (-7) = (-2) + 7 = 5: If you owe $2 and a $7 debt is forgiven (subtracting the negative debt), your net position improves by $7\n\nThe number line visualization remains powerful: to subtract, start at the first number and move in the opposite direction of the second number. Subtracting positive means moving left; subtracting negative means moving right.",
+        "latex": "a - b = a + (-b) \\quad \\text{for all integers } a \\text{ and } b",
+        "visuals": ["NumberLine"]
+      },
+      {
+        "title": "Integer Multiplication: Scaling and Repeated Operations",
+        "content": "Multiplication with integers extends our understanding of 'repeated addition' and 'scaling' to include negative factors, creating four distinct cases that follow logical, consistent patterns. The key insight is that multiplication represents **scaling** - making something larger or smaller, and potentially changing its direction (sign).\n\n**Case 1: Positive × Positive = Positive**\nThis follows our familiar multiplication: (+3) × (+4) = +12. We're scaling a positive quantity by a positive factor, which gives a positive result. Think of it as 'taking 3 groups of 4 positive things' or 'scaling +4 by a factor of 3.'\n\n**Case 2: Positive × Negative = Negative**\n(+3) × (-4) = -12. We're taking 3 groups of 4 negative things, or scaling -4 by a positive factor of 3. The result is negative because we're accumulating negative quantities.\n\n**Case 3: Negative × Positive = Negative**\n(-3) × (+4) = -12. This is trickier conceptually but follows the same logic as Case 2 due to the commutative property of multiplication. We can think of this as 'the opposite of 3 groups of 4 positive things.'\n\n**Case 4: Negative × Negative = Positive**\n(-3) × (-4) = +12. This is often the most challenging to understand intuitively. Think of it as 'the opposite of taking 3 groups of 4 negative things' or 'removing 3 debts of $4 each, which improves your position by $12.'\n\n**The sign rules for multiplication:**\n• Same signs (both positive or both negative) → Positive result\n• Different signs (one positive, one negative) → Negative result\n\n**Real-world applications:**\n• Stock prices: If a stock drops $2 per day (-2) for 5 days (+5), the total change is (-2) × (+5) = -$10\n• Temperature: If temperature drops 3° per hour (-3) for 4 hours (+4), total change is (-3) × (+4) = -12°\n• Debt forgiveness: If 3 debts of $5 each are forgiven, the change is (-3) × (-5) = +$15 improvement\n\nMultiplication by zero always gives zero: any number × 0 = 0, because scaling by zero eliminates the quantity entirely.\n\n**Connection to division:**\nDivision follows the same sign rules as multiplication because division is the inverse operation of multiplication. If (-12) ÷ (+3) = -4, then (-4) × (+3) = -12.",
+        "latex": "\\begin{align} (+a) \\times (+b) &= +(a \\times b) \\\\ (+a) \\times (-b) &= -(a \\times b) \\\\ (-a) \\times (+b) &= -(a \\times b) \\\\ (-a) \\times (-b) &= +(a \\times b) \\end{align}",
+        "visuals": ["NumberLine"]
+      },
+      {
+        "title": "Order of Operations with Integers (PEMDAS)",
+        "content": "The order of operations (PEMDAS/BODMAS) becomes more complex but also more powerful when working with integers. The same sequence applies - Parentheses, Exponents, Multiplication and Division (left to right), Addition and Subtraction (left to right) - but we must carefully track positive and negative signs throughout each step.\n\n**Key principles for PEMDAS with integers:**\n\n1. **Parentheses first**: Always resolve expressions inside parentheses before anything else. This includes handling negative signs correctly: (-3) + (-5) = -8 before applying any outside operations.\n\n2. **Exponents**: When dealing with negative bases, parentheses matter enormously:\n   • (-3)² = (-3) × (-3) = +9 (the negative sign is part of the base)\n   • -3² = -(3²) = -(9) = -9 (the negative sign is applied after squaring)\n\n3. **Multiplication and Division**: Apply sign rules consistently while working left to right. Remember that division follows the same sign rules as multiplication.\n\n4. **Addition and Subtraction**: Convert all subtraction to 'adding the opposite' and then combine terms left to right.\n\n**Complex example walkthrough:**\nEvaluate: -2 × (3 - 7) + (-4)² ÷ (-2)\n\nStep 1 (Parentheses): 3 - 7 = 3 + (-7) = -4\nExpression becomes: -2 × (-4) + (-4)² ÷ (-2)\n\nStep 2 (Exponents): (-4)² = (-4) × (-4) = +16\nExpression becomes: -2 × (-4) + 16 ÷ (-2)\n\nStep 3 (Multiplication and Division, left to right):\n-2 × (-4) = +8\n16 ÷ (-2) = -8\nExpression becomes: 8 + (-8)\n\nStep 4 (Addition): 8 + (-8) = 0\n\n**Common errors to avoid:**\n• Forgetting that -x² ≠ (-x)² when x is positive\n• Not converting subtraction to addition before combining terms\n• Applying operations in the wrong order\n• Losing track of negative signs during multi-step calculations\n\nMastering PEMDAS with integers is crucial for success in algebra, where expressions become increasingly complex and the ability to systematically simplify expressions determines success in solving equations and working with formulas.",
+        "latex": "\\text{PEMDAS: } \\quad P \\rightarrow E \\rightarrow MD \\rightarrow AS",
         "visuals": ["NumberLine"]
       }
     ]
   },
   "examples": [
     {
-      "problem": "Calculate: (-3) + 5",
-      "solution": "2",
+      "problem": "A submarine starts at sea level (0 feet) and descends 150 feet, then descends another 75 feet. What is its final depth?",
+      "solution": "-225 feet (225 feet below sea level)",
       "steps": [
-        "Identify the signs: -3 (negative) and +5 (positive)",
-        "Since signs are different, subtract smaller absolute value from larger: |5| - |-3| = 5 - 3 = 2",
-        "Use the sign of the number with larger absolute value (5 is positive)",
-        "Therefore: (-3) + 5 = 2"
+        "Identify the starting position: 0 feet (sea level)",
+        "First descent: -150 feet (negative because it's below sea level)",
+        "Second descent: -75 feet (additional depth below sea level)",
+        "Set up the addition: 0 + (-150) + (-75)",
+        "Simplify: (-150) + (-75)",
+        "Both numbers are negative, so add absolute values: 150 + 75 = 225",
+        "Keep the negative sign: -225 feet",
+        "Interpretation: The submarine is 225 feet below sea level"
       ],
       "commonErrors": [
-        "Adding the absolute values instead of subtracting when signs differ",
-        "Using the wrong sign for the result"
+        "Forgetting that depths below sea level are negative",
+        "Adding absolute values when signs are the same instead of keeping the common sign",
+        "Misunderstanding what zero represents in the context"
       ],
-      "latex": "(-3) + 5 = 2"
+      "latex": "0 + (-150) + (-75) = -225 \\text{ feet}"
     },
     {
-      "problem": "Calculate: (-4) × (-6)",
-      "solution": "24",
+      "problem": "Calculate the absolute value: |−8| + |3| − |−5|",
+      "solution": "6",
       "steps": [
-        "Identify both numbers are negative",
-        "Apply the rule: negative × negative = positive",
-        "Calculate: 4 × 6 = 24",
-        "Therefore: (-4) × (-6) = 24"
+        "Find each absolute value separately:",
+        "|−8| = 8 (distance from -8 to 0 is 8 units)",
+        "|3| = 3 (distance from 3 to 0 is 3 units)",
+        "|−5| = 5 (distance from -5 to 0 is 5 units)",
+        "Substitute the absolute values: 8 + 3 − 5",
+        "Perform operations left to right: 8 + 3 = 11",
+        "Then: 11 − 5 = 6",
+        "Therefore: |−8| + |3| − |−5| = 6"
       ],
       "commonErrors": [
-        "Forgetting that negative × negative = positive",
-        "Confusing multiplication and addition rules"
+        "Confusing absolute value with the original number",
+        "Forgetting that absolute value is always non-negative",
+        "Not following order of operations after finding absolute values"
       ],
-      "latex": "(-4) \\times (-6) = 24"
+      "latex": "|{-8}| + |3| - |{-5}| = 8 + 3 - 5 = 6"
+    },
+    {
+      "problem": "Evaluate: 7 − (−4) + (−2)",
+      "solution": "9",
+      "steps": [
+        "Convert subtraction to addition: 7 − (−4) = 7 + (+4)",
+        "Rewrite the expression: 7 + 4 + (−2)",
+        "Add from left to right: 7 + 4 = 11",
+        "Then add the negative: 11 + (−2)",
+        "Different signs: subtract smaller absolute value from larger: 11 − 2 = 9",
+        "Use sign of larger absolute value (positive): +9",
+        "Therefore: 7 − (−4) + (−2) = 9"
+      ],
+      "commonErrors": [
+        "Not converting subtraction of negative to addition of positive",
+        "Forgetting that subtracting a negative means adding a positive",
+        "Making sign errors when combining multiple terms"
+      ],
+      "latex": "7 - (-4) + (-2) = 7 + 4 + (-2) = 9"
+    },
+    {
+      "problem": "A stock price changes by −$3 per day for 4 days. What is the total change?",
+      "solution": "−$12 (a decrease of $12)",
+      "steps": [
+        "Identify the daily change: −$3 (negative indicates decrease)",
+        "Identify the number of days: 4 (positive)",
+        "Set up multiplication: (−3) × (+4)",
+        "Apply sign rule: negative × positive = negative",
+        "Calculate absolute values: 3 × 4 = 12",
+        "Apply the negative sign: −12",
+        "Therefore: The total change is −$12",
+        "Interpretation: The stock decreased by $12 over 4 days"
+      ],
+      "commonErrors": [
+        "Forgetting that a decrease should be represented as negative",
+        "Applying wrong sign rules for multiplication",
+        "Not interpreting the final answer in context"
+      ],
+      "latex": "(-3) \\times (+4) = -12 \\text{ dollars}"
+    },
+    {
+      "problem": "Evaluate using order of operations: −2 × (5 − 8) + (−3)²",
+      "solution": "15",
+      "steps": [
+        "Step 1 - Parentheses first: 5 − 8 = 5 + (−8) = −3",
+        "Expression becomes: −2 × (−3) + (−3)²",
+        "Step 2 - Exponents: (−3)² = (−3) × (−3) = +9",
+        "Expression becomes: −2 × (−3) + 9",
+        "Step 3 - Multiplication: −2 × (−3) = +6 (negative × negative = positive)",
+        "Expression becomes: 6 + 9",
+        "Step 4 - Addition: 6 + 9 = 15",
+        "Therefore: −2 × (5 − 8) + (−3)² = 15"
+      ],
+      "commonErrors": [
+        "Not following PEMDAS order correctly",
+        "Confusing (−3)² with −3² (which would equal −9)",
+        "Making sign errors during multiplication",
+        "Forgetting to convert subtraction to addition in parentheses"
+      ],
+      "latex": "-2 \\times (5 - 8) + (-3)^2 = -2 \\times (-3) + 9 = 6 + 9 = 15"
+    },
+    {
+      "problem": "Find the distance between −7 and 3 on the number line",
+      "solution": "10 units",
+      "steps": [
+        "Method 1 - Using absolute value of difference:",
+        "Distance = |3 − (−7)| = |3 + 7| = |10| = 10",
+        "Method 2 - Counting units on number line:",
+        "From −7 to 0: 7 units",
+        "From 0 to 3: 3 units",
+        "Total distance: 7 + 3 = 10 units",
+        "Method 3 - Using the other direction:",
+        "Distance = |(−7) − 3| = |−10| = 10",
+        "All methods confirm: The distance is 10 units"
+      ],
+      "commonErrors": [
+        "Forgetting that distance is always positive",
+        "Subtracting in the wrong order and getting confused by negative results",
+        "Not understanding that |a − b| = |b − a| always"
+      ],
+      "latex": "|3 - (-7)| = |3 + 7| = 10 \\text{ units}"
     }
   ],
   "practice": [
@@ -74,61 +189,174 @@
       "id": "integers-01",
       "type": "multiple-choice",
       "difficulty": 1,
-      "problem": "What is the absolute value of -7?",
-      "options": ["-7", "7", "0", "14"],
+      "problem": "Which statement best describes the absolute value of a number?",
+      "options": [
+        "It's always negative",
+        "It's the distance from zero on the number line",
+        "It's the same as the original number",
+        "It changes the sign of the number"
+      ],
       "correct": 1,
-      "explanation": "Absolute value is always positive and represents distance from zero. |-7| = 7.",
+      "explanation": "Absolute value represents the distance from zero on the number line, which is always non-negative (positive or zero).",
       "hints": [
-        "Absolute value is always positive",
-        "Think about distance from zero on a number line"
+        "Think about what distance means",
+        "Distance cannot be negative",
+        "How far is a number from zero?"
       ]
     },
     {
       "id": "integers-02",
-      "type": "fill-in",
+      "type": "multiple-choice",
       "difficulty": 1,
-      "problem": "Calculate: (-5) + 8",
-      "correct": "3",
-      "explanation": "Different signs: subtract smaller absolute value from larger (8 - 5 = 3) and use sign of larger absolute value (positive).",
+      "problem": "A temperature drops from 5°F to -8°F. What is the total change in temperature?",
+      "options": ["-13°F", "-3°F", "3°F", "13°F"],
+      "correct": 0,
+      "explanation": "Change = final - initial = (-8) - (5) = (-8) + (-5) = -13°F. The negative indicates a decrease.",
       "hints": [
-        "Different signs mean subtract",
-        "Use the sign of the number with larger absolute value"
+        "Change = final temperature - initial temperature",
+        "A drop in temperature should be negative",
+        "Convert subtraction to addition: 5 - (-8) becomes 5 + 8"
       ]
     },
     {
       "id": "integers-03",
       "type": "fill-in",
       "difficulty": 2,
-      "problem": "Calculate: (-3) × 4",
-      "correct": "-12",
-      "explanation": "Different signs in multiplication give a negative result: (-3) × 4 = -12.",
+      "problem": "Calculate: |−12| + |8| − |−3| = ____",
+      "correct": "17",
+      "explanation": "|−12| = 12, |8| = 8, |−3| = 3. So 12 + 8 − 3 = 17.",
       "hints": [
-        "Different signs in multiplication = negative result",
-        "Multiply the absolute values, then apply the sign"
+        "Find each absolute value first",
+        "Remember: |−a| = a for any positive number a",
+        "Then perform the arithmetic: addition and subtraction left to right"
       ]
     },
     {
       "id": "integers-04",
-      "type": "fill-in",
+      "type": "multiple-choice",
       "difficulty": 2,
-      "problem": "Calculate: (-6) ÷ (-2)",
-      "correct": "3",
-      "explanation": "Same signs in division give a positive result: (-6) ÷ (-2) = 3.",
+      "problem": "What is the result of (−7) × (−3)?",
+      "options": ["-21", "21", "-10", "10"],
+      "correct": 1,
+      "explanation": "When multiplying two negative numbers, the result is positive: (−7) × (−3) = +21.",
       "hints": [
-        "Same signs in division = positive result",
-        "Divide the absolute values"
+        "What happens when you multiply two negative numbers?",
+        "Same signs in multiplication give a positive result",
+        "Think: 7 × 3 = 21, and negative × negative = positive"
       ]
     },
     {
       "id": "integers-05",
-      "type": "step-by-step",
-      "difficulty": 3,
-      "problem": "Calculate: 2 × (-3) + (-4) × (-1)",
-      "correct": "2",
-      "explanation": "Follow order of operations: multiply first, then add. 2×(-3) = -6 and (-4)×(-1) = 4, so -6 + 4 = -2.",
+      "type": "fill-in",
+      "difficulty": 2,
+      "problem": "Evaluate: 15 ÷ (−3) = ____",
+      "correct": "-5",
+      "explanation": "Different signs in division give a negative result: 15 ÷ (−3) = −5.",
       "hints": [
-        "Multiply first, then add",
-        "Remember: negative × negative = positive"
+        "Division follows the same sign rules as multiplication",
+        "Positive ÷ negative = negative",
+        "15 ÷ 3 = 5, but we need to apply the negative sign"
+      ]
+    },
+    {
+      "id": "integers-06",
+      "type": "multiple-choice",
+      "difficulty": 3,
+      "problem": "A scuba diver descends 4 meters per minute for 7 minutes. If she started at sea level, what is her final position?",
+      "options": [
+        "28 meters above sea level",
+        "28 meters below sea level",
+        "11 meters below sea level",
+        "3 meters below sea level"
+      ],
+      "correct": 1,
+      "explanation": "Descent is negative: −4 meters/minute × 7 minutes = −28 meters. She is 28 meters below sea level.",
+      "hints": [
+        "Descent should be represented as negative",
+        "Multiply: (rate per minute) × (number of minutes)",
+        "Starting at sea level means starting at 0"
+      ]
+    },
+    {
+      "id": "integers-07",
+      "type": "fill-in",
+      "difficulty": 3,
+      "problem": "Evaluate using order of operations: −3 + 2 × (−4) = ____",
+      "correct": "-11",
+      "explanation": "Following PEMDAS: First multiply 2 × (−4) = −8, then add: −3 + (−8) = −11.",
+      "hints": [
+        "Remember PEMDAS: multiplication before addition",
+        "Calculate 2 × (−4) first",
+        "Then add the result to −3"
+      ]
+    },
+    {
+      "id": "integers-08",
+      "type": "multiple-choice",
+      "difficulty": 3,
+      "problem": "What is the distance between −15 and 7 on the number line?",
+      "options": ["8", "22", "-8", "-22"],
+      "correct": 1,
+      "explanation": "Distance = |7 − (−15)| = |7 + 15| = |22| = 22 units. Distance is always positive.",
+      "hints": [
+        "Distance between two points = |a − b| or |b − a|",
+        "Distance is always positive",
+        "From −15 to 7: count the units or use the formula"
+      ]
+    },
+    {
+      "id": "integers-09",
+      "type": "step-by-step",
+      "difficulty": 4,
+      "problem": "Evaluate: (−2)³ + 4 × (−3) − (−5)",
+      "correct": "-15",
+      "explanation": "Following PEMDAS: (−2)³ = −8, 4 × (−3) = −12, −(−5) = +5. So: −8 + (−12) + 5 = −15.",
+      "hints": [
+        "Handle exponents first: (−2)³ = (−2) × (−2) × (−2)",
+        "Then multiplication: 4 × (−3)",
+        "Convert subtraction: −(−5) = +5",
+        "Finally combine all terms"
+      ]
+    },
+    {
+      "id": "integers-10",
+      "type": "fill-in",
+      "difficulty": 4,
+      "problem": "A company's stock price changes by −$2, +$5, −$3, and +$1 over four days. What is the net change? ____",
+      "correct": "$1",
+      "explanation": "Net change = (−2) + (+5) + (−3) + (+1) = −2 + 5 − 3 + 1 = +1. The stock increased by $1 overall.",
+      "hints": [
+        "Add all the daily changes together",
+        "Negative changes are losses, positive are gains",
+        "Combine: (−2) + (+5) + (−3) + (+1)"
+      ]
+    },
+    {
+      "id": "integers-11",
+      "type": "multiple-choice",
+      "difficulty": 4,
+      "problem": "Which expression equals −24?",
+      "options": ["(−3) × (−8)", "(−4) × 6", "24 ÷ (−1)", "Both B and C"],
+      "correct": 3,
+      "explanation": "(−3) × (−8) = +24, (−4) × 6 = −24, and 24 ÷ (−1) = −24. Both options B and C equal −24.",
+      "hints": [
+        "Check each calculation carefully",
+        "Remember sign rules for multiplication and division",
+        "Same signs give positive, different signs give negative"
+      ]
+    },
+    {
+      "id": "integers-12",
+      "type": "step-by-step",
+      "difficulty": 5,
+      "problem": "Evaluate: |−8 + 3| − |2 − 7| × (−1)",
+      "correct": "10",
+      "explanation": "Step 1: |−8 + 3| = |−5| = 5. Step 2: |2 − 7| = |−5| = 5. Step 3: 5 × (−1) = −5. Step 4: 5 − (−5) = 5 + 5 = 10.",
+      "hints": [
+        "Evaluate expressions inside absolute value bars first",
+        "Then find the absolute values",
+        "Apply multiplication before subtraction",
+        "Remember: subtracting a negative is adding a positive"
       ]
     }
   ],

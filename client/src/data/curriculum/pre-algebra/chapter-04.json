@@ -2,77 +2,280 @@
   "id": "chapter-04",
   "title": "Algebraic Proportions",
   "objectives": [
-    "Solve proportions containing variables",
-    "Set up and solve percent equations with unknowns",
-    "Apply proportional reasoning to real-world problems"
+    "Understand ratios as comparisons between quantities and their real-world significance",
+    "Master the concept of proportions as equations stating that two ratios are equal",
+    "Apply cross-multiplication to solve proportions efficiently and accurately",
+    "Solve real-world problems involving direct and inverse proportional relationships",
+    "Use proportional reasoning in scale drawings, maps, and similar figures",
+    "Calculate unit rates and use them to compare quantities and make decisions",
+    "Understand and apply percent as a special type of ratio and proportion"
   ],
   "prerequisites": [
-    "Arithmetic ratios and percentages",
-    "Solving basic equations"
+    "Mastery of solving linear equations and basic algebraic manipulation",
+    "Understanding of fractions, decimals, and their relationships",
+    "Familiarity with multiplication and division of rational numbers"
   ],
   "introduction": {
-    "context": "If a recipe for 4 people calls for 2 cups of flour, how much flour do you need for 6 people? This scaling problem uses algebraic proportions!",
-    "connection": "Proportions with variables help us solve problems involving scaling recipes, calculating discounts, determining medication dosages, and converting between units."
+    "context": "Proportional relationships are among the most powerful and practical mathematical concepts, appearing everywhere from cooking recipes and map reading to financial calculations and scientific measurements. When we say 'if 2 cups of flour make 12 cookies, how much flour do we need for 18 cookies?' we're using proportional reasoning. This mathematical thinking allows us to scale relationships up or down while maintaining consistent ratios.",
+    "connection": "Proportions appear constantly in daily life and professional fields: adjusting recipe quantities for different serving sizes, reading maps and blueprints, calculating medication dosages based on body weight, determining exchange rates between currencies, analyzing business profit margins, scaling architectural drawings, and comparing unit prices while shopping. Understanding proportions enables us to make informed decisions and solve practical problems efficiently.",
+    "historicalContext": "The concept of proportion dates back to ancient civilizations. Egyptian and Babylonian mathematicians used proportional reasoning for construction projects, including the pyramids. The ancient Greeks, particularly Euclid, formalized the theory of proportions around 300 BCE. The golden ratio, discovered by the Greeks, appears throughout art and architecture. During the Renaissance, artists like Leonardo da Vinci used proportional relationships to create realistic perspective in paintings. Today, proportions are fundamental to fields ranging from photography and design to engineering and economics.",
+    "realWorldApplications": "Proportions are essential in: cooking and baking (scaling recipes), construction and architecture (blueprints and scale models), medicine (dosage calculations based on patient weight), finance (currency exchange, interest calculations), business (profit margins, cost analysis), geography (map scales, distance calculations), art and design (maintaining aspect ratios), science (concentration calculations, scaling experiments), and everyday decision-making (comparing prices, calculating tips, determining best value purchases). Mastering proportions provides a foundation for advanced mathematics and practical problem-solving skills."
   },
   "theory": {
     "concepts": [
       {
-        "title": "Algebraic Proportions",
-        "content": "An equation stating that two ratios are equal, where at least one ratio contains a variable. Like arithmetic proportions, but now we solve for unknown values using algebra.",
-        "latex": "\\frac{2}{5} = \\frac{x}{10} \\text{ where } x \\text{ is unknown}",
-        "visuals": ["NumberLine"]
+        "title": "Understanding Ratios: Comparing Quantities",
+        "content": "A ratio is a comparison between two or more quantities, expressing how many times one quantity contains another or how the quantities relate to each other. Ratios are fundamental to understanding proportional relationships and appear in countless real-world situations where we need to compare, scale, or analyze relationships between different amounts.\n\n**Ways to Express Ratios:**\n\nRatios can be written in several equivalent forms:\n• **Colon notation**: 3:4 (read as '3 to 4')\n• **Fraction notation**: 3/4 (read as '3 to 4' or 'three-fourths')\n• **Word form**: '3 to 4' or 'the ratio of 3 to 4'\n\n**Types of Ratios:**\n\n**Part-to-Part Ratios**: Compare different parts of a whole\nExample: In a class of 30 students with 18 girls and 12 boys, the ratio of girls to boys is 18:12 or 3:2\n\n**Part-to-Whole Ratios**: Compare a part to the entire amount\nExample: The ratio of girls to total students is 18:30 or 3:5\n\n**Unit Ratios**: Compare quantities with different units\nExample: 60 miles per 2 hours gives a ratio of 60:2 or 30:1 (30 miles per hour)\n\n**Simplifying Ratios:**\nLike fractions, ratios should be expressed in simplest form by dividing both terms by their greatest common factor (GCF).\n\nExample: 12:18 = 12÷6:18÷6 = 2:3\n\n**Equivalent Ratios:**\nRatios that represent the same relationship are equivalent, just like equivalent fractions.\nExample: 2:3 = 4:6 = 6:9 = 8:12\n\n**Reading and Interpreting Ratios:**\nThe ratio 2:3 means:\n• For every 2 units of the first quantity, there are 3 units of the second quantity\n• The first quantity is 2/3 the size of the second quantity\n• The second quantity is 3/2 (or 1.5) times the first quantity\n\nUnderstanding ratios is essential because they form the foundation for proportions, rates, percentages, and scaling - all crucial mathematical concepts with extensive real-world applications.",
+        "latex": "\\text{Ratio } a:b = \\frac{a}{b} \\text{ where } b \\neq 0",
+        "visuals": ["RatioVisualizer"]
       },
       {
-        "title": "Cross-Multiplication",
-        "content": "Multiplying diagonally across a proportion to create an equation to solve. If a/b = c/d, then ad = bc. This works even when variables are involved.",
+        "title": "Proportions: Equations of Equal Ratios",
+        "content": "A proportion is a mathematical statement declaring that two ratios are equal. Proportions are powerful tools for solving problems involving scaling, similar figures, rates, and many real-world applications where relationships remain constant even as quantities change.\n\n**The Structure of Proportions:**\n\nA proportion has the form: a/b = c/d or a:b = c:d\n\nThis reads as 'a is to b as c is to d' and means the ratio a:b equals the ratio c:d.\n\n**Terms in a Proportion:**\nIn the proportion a/b = c/d:\n• **a and d** are called the **extremes** (the outer terms)\n• **b and c** are called the **means** (the inner terms)\n\n**The Cross-Product Property:**\nThe fundamental property of proportions states that the cross-products are equal:\nIf a/b = c/d, then a × d = b × c\n\nThis property allows us to solve proportions by cross-multiplying.\n\n**Why Cross-Multiplication Works:**\nStarting with a/b = c/d, if we multiply both sides by bd:\n(bd) × (a/b) = (bd) × (c/d)\nda = bc\n\nThis gives us the cross-product equation: ad = bc\n\n**Solving Proportions:**\n\n**Example**: Solve 3/x = 12/20\n\nStep 1: Cross-multiply\n3 × 20 = x × 12\n60 = 12x\n\nStep 2: Solve for x\n60 ÷ 12 = x\nx = 5\n\nStep 3: Check by substitution\n3/5 = 0.6 and 12/20 = 0.6 ✓\n\n**Identifying Proportional Relationships:**\nTwo quantities are proportional if:\n• Their ratio remains constant\n• When one quantity doubles, the other doubles\n• When graphed, they form a straight line through the origin\n• They can be expressed as y = kx where k is the constant of proportionality\n\n**Applications of Proportions:**\nProportions solve problems involving:\n• Recipe scaling (if 2 cups serve 4 people, how much for 6 people?)\n• Map distances (if 1 inch represents 50 miles, what distance does 3 inches represent?)\n• Similar triangles (corresponding sides are proportional)\n• Unit conversions (currency exchange, measurement conversions)\n• Mixture problems (concentration ratios)",
         "latex": "\\frac{a}{b} = \\frac{c}{d} \\Rightarrow ad = bc",
-        "visuals": ["NumberLine"]
+        "visuals": ["RatioVisualizer"]
+      },
+      {
+        "title": "Cross-Multiplication: The Key to Solving Proportions",
+        "content": "Cross-multiplication is the most efficient method for solving proportions, based on the fundamental property that in any true proportion, the product of the extremes equals the product of the means. This technique transforms a proportion into a simple linear equation that we can solve using familiar algebraic methods.\n\n**The Cross-Multiplication Process:**\n\n**Step 1: Identify the Proportion**\nEnsure you have a proportion in the form a/b = c/d\n\n**Step 2: Cross-Multiply**\nMultiply the numerator of the first fraction by the denominator of the second fraction, and vice versa:\na × d = b × c\n\n**Step 3: Solve the Resulting Equation**\nUse algebraic techniques to isolate the variable\n\n**Step 4: Check Your Answer**\nSubstitute back into the original proportion to verify\n\n**Detailed Example:**\nSolve: (x + 2)/5 = 9/15\n\nStep 1: Cross-multiply\n(x + 2) × 15 = 5 × 9\n15(x + 2) = 45\n\nStep 2: Distribute\n15x + 30 = 45\n\nStep 3: Solve for x\n15x = 45 - 30\n15x = 15\nx = 1\n\nStep 4: Check\n(1 + 2)/5 = 3/5 = 0.6\n9/15 = 3/5 = 0.6 ✓\n\n**Common Patterns in Proportion Problems:**\n\n**Missing Numerator**: x/8 = 3/4\nCross-multiply: 4x = 24, so x = 6\n\n**Missing Denominator**: 5/x = 15/9\nCross-multiply: 45 = 15x, so x = 3\n\n**Variable in Multiple Places**: (x-1)/3 = (x+2)/5\nCross-multiply: 5(x-1) = 3(x+2)\n5x - 5 = 3x + 6\n2x = 11\nx = 5.5\n\n**Why Cross-Multiplication is Reliable:**\n• It eliminates fractions, simplifying the problem\n• It always produces an equivalent equation\n• It works regardless of which term contains the variable\n• It's faster than other methods like finding common denominators\n\n**When to Use Cross-Multiplication:**\n• Any time you have a proportion (two equal ratios)\n• Word problems involving rates, scales, or similar figures\n• Converting between different units or currencies\n• Problems involving direct or inverse variation\n\nMastering cross-multiplication provides a powerful tool for solving a wide variety of practical problems involving proportional relationships.",
+        "latex": "\\frac{a}{b} = \\frac{c}{d} \\Rightarrow ad = bc \\Rightarrow \\text{solve for variable}",
+        "visuals": ["RatioVisualizer"]
+      },
+      {
+        "title": "Direct and Inverse Proportional Relationships",
+        "content": "Understanding the difference between direct and inverse proportional relationships is crucial for correctly modeling real-world situations and choosing appropriate problem-solving strategies. These relationships describe how two quantities change in relation to each other.\n\n**Direct Proportion (Direct Variation):**\n\nTwo quantities are directly proportional when they increase or decrease together at the same rate. As one quantity doubles, the other doubles; as one triples, the other triples.\n\n**Mathematical Form**: y = kx or y/x = k\nwhere k is the **constant of proportionality**\n\n**Characteristics of Direct Proportion:**\n• The ratio y/x remains constant\n• When graphed, the relationship forms a straight line through the origin\n• If one quantity is zero, the other is also zero\n• Both quantities change in the same direction\n\n**Examples of Direct Proportion:**\n• Distance and time (at constant speed): distance = speed × time\n• Cost and quantity: total cost = unit price × number of items\n• Wages and hours worked: pay = hourly rate × hours\n• Circumference and diameter: C = πd\n\n**Inverse Proportion (Inverse Variation):**\n\nTwo quantities are inversely proportional when one increases as the other decreases, such that their product remains constant.\n\n**Mathematical Form**: xy = k or y = k/x\nwhere k is the **constant of proportionality**\n\n**Characteristics of Inverse Proportion:**\n• The product xy remains constant\n• When graphed, the relationship forms a hyperbola\n• As one quantity approaches zero, the other approaches infinity\n• The quantities change in opposite directions\n\n**Examples of Inverse Proportion:**\n• Speed and time (for fixed distance): speed × time = distance\n• Number of workers and time to complete a job: workers × time = total work\n• Pressure and volume (at constant temperature): PV = k\n• Brightness and distance from light source: brightness × distance² = k\n\n**Solving Direct Proportion Problems:**\n\nExample: If 3 pounds of apples cost $4.50, how much do 7 pounds cost?\n\nSet up proportion: 3 pounds/$4.50 = 7 pounds/x\nCross-multiply: 3x = 4.50 × 7 = 31.50\nSolve: x = $10.50\n\n**Solving Inverse Proportion Problems:**\n\nExample: If 4 workers can complete a job in 6 hours, how long will it take 3 workers?\n\nFind the constant: k = 4 workers × 6 hours = 24 worker-hours\nSet up equation: 3 workers × t hours = 24 worker-hours\nSolve: t = 24 ÷ 3 = 8 hours\n\n**Identifying the Type of Relationship:**\n• **Direct**: 'More of A means more of B' or 'Less of A means less of B'\n• **Inverse**: 'More of A means less of B' or 'Less of A means more of B'\n\nRecognizing these patterns helps you choose the correct mathematical model and solve problems accurately.",
+        "latex": "\\text{Direct: } y = kx \\quad \\text{Inverse: } xy = k",
+        "visuals": ["RatioVisualizer"]
+      },
+      {
+        "title": "Unit Rates and Proportional Reasoning",
+        "content": "Unit rates are special ratios that compare a quantity to one unit of another quantity, providing a standardized way to compare different options and make informed decisions. Understanding unit rates is essential for consumer mathematics, scientific calculations, and everyday problem-solving.\n\n**What is a Unit Rate?**\n\nA unit rate expresses how much of one quantity corresponds to exactly one unit of another quantity. It's a ratio where the denominator is 1.\n\n**Common Unit Rates:**\n• **Speed**: miles per hour, kilometers per hour\n• **Price**: dollars per pound, cost per item\n• **Productivity**: pages per minute, items per hour\n• **Density**: grams per cubic centimeter\n• **Rate of change**: degrees per hour, population per year\n\n**Calculating Unit Rates:**\n\nTo find a unit rate, divide the first quantity by the second quantity.\n\n**Example**: If 12 oranges cost $3.60, what's the unit rate?\nUnit rate = $3.60 ÷ 12 oranges = $0.30 per orange\n\n**Using Unit Rates for Comparison:**\n\nUnit rates allow us to compare different options fairly.\n\n**Example**: Which is the better buy?\n• Brand A: 16 oz for $2.40\n• Brand B: 20 oz for $2.80\n\nBrand A unit rate: $2.40 ÷ 16 oz = $0.15 per oz\nBrand B unit rate: $2.80 ÷ 20 oz = $0.14 per oz\nBrand B is the better buy (lower cost per ounce)\n\n**Unit Rates in Proportional Reasoning:**\n\nUnit rates help us set up and solve proportion problems more efficiently.\n\n**Example**: If a car travels 240 miles in 4 hours, how far will it travel in 7 hours?\n\nMethod 1 (Unit Rate):\nSpeed = 240 miles ÷ 4 hours = 60 mph\nDistance in 7 hours = 60 mph × 7 hours = 420 miles\n\nMethod 2 (Proportion):\n240 miles/4 hours = x miles/7 hours\nCross-multiply: 240 × 7 = 4x\n1680 = 4x\nx = 420 miles\n\n**Complex Unit Rates:**\n\nSome situations involve compound units or multiple conversions.\n\n**Example**: A factory produces 1,440 widgets in 6 hours using 8 machines. What's the production rate per machine per hour?\n\nTotal production rate = 1,440 widgets ÷ 6 hours = 240 widgets per hour\nPer machine rate = 240 widgets per hour ÷ 8 machines = 30 widgets per machine per hour\n\n**Applications of Unit Rates:**\n\n**Consumer Decisions**: Comparing prices, fuel efficiency, insurance rates\n**Business Analysis**: Productivity rates, cost per unit, profit margins\n**Science and Engineering**: Reaction rates, flow rates, efficiency measurements\n**Health and Fitness**: Heart rate, calorie burn rate, medication dosages\n**Travel and Transportation**: Speed calculations, fuel consumption, cost per mile\n\n**Tips for Working with Unit Rates:**\n• Always include units in your calculations\n• Check that your answer makes sense in context\n• Use unit rates to verify proportion solutions\n• Round appropriately for the situation (money to cents, measurements to reasonable precision)\n\nMastering unit rates provides a powerful tool for making informed decisions and solving real-world problems efficiently.",
+        "latex": "\\text{Unit Rate} = \\frac{\\text{Quantity}}{\\text{1 Unit}} = \\frac{a}{1}",
+        "visuals": ["RatioVisualizer"]
       }
     ]
   },
   "examples": [
     {
-      "problem": "Solve: 2/5 = x/10",
-      "solution": "4",
+      "problem": "A recipe for 4 servings calls for 2.5 cups of flour. How much flour is needed for 10 servings?",
+      "solution": "6.25 cups of flour",
       "steps": [
-        "Set up cross-multiplication: 2 × 10 = 5 × x",
-        "Multiply: 20 = 5x",
-        "Solve for x: x = 20 ÷ 5 = 4",
-        "Check: 2/5 = 4/10 = 2/5 ✓"
+        "Identify the known ratio: 2.5 cups flour for 4 servings",
+        "Set up a proportion: 2.5 cups/4 servings = x cups/10 servings",
+        "Cross-multiply: 2.5 × 10 = 4 × x",
+        "Simplify: 25 = 4x",
+        "Solve for x: x = 25 ÷ 4 = 6.25",
+        "Answer: 6.25 cups of flour needed for 10 servings",
+        "Check: 6.25/10 = 0.625 and 2.5/4 = 0.625 ✓"
       ],
       "commonErrors": [
-        "Multiplying incorrectly in cross-multiplication",
-        "Forgetting to check the solution"
+        "Setting up the proportion incorrectly (mixing up numerators and denominators)",
+        "Forgetting to cross-multiply properly",
+        "Making arithmetic errors with decimals"
       ],
-      "latex": "\\frac{2}{5} = \\frac{x}{10} \\Rightarrow x = 4"
+      "latex": "\\frac{2.5}{4} = \\frac{x}{10} \\Rightarrow x = 6.25"
+    },
+    {
+      "problem": "On a map, 2 inches represents 50 miles. If two cities are 7 inches apart on the map, what is the actual distance between them?",
+      "solution": "175 miles",
+      "steps": [
+        "Identify the scale: 2 inches = 50 miles",
+        "Set up proportion: 2 inches/50 miles = 7 inches/x miles",
+        "Cross-multiply: 2 × x = 50 × 7",
+        "Simplify: 2x = 350",
+        "Solve: x = 350 ÷ 2 = 175",
+        "Answer: The actual distance is 175 miles",
+        "Check using unit rate: 50 ÷ 2 = 25 miles per inch, so 7 × 25 = 175 miles ✓"
+      ],
+      "commonErrors": [
+        "Confusing map distance with actual distance in the proportion",
+        "Using the wrong units in the setup",
+        "Not checking the reasonableness of the answer"
+      ],
+      "latex": "\\frac{2 \\text{ in}}{50 \\text{ mi}} = \\frac{7 \\text{ in}}{x \\text{ mi}} \\Rightarrow x = 175"
+    },
+    {
+      "problem": "If 6 workers can build a wall in 8 days, how many days will it take 4 workers to build the same wall?",
+      "solution": "12 days",
+      "steps": [
+        "Recognize this as an inverse proportion (fewer workers = more time)",
+        "Find the constant: total work = 6 workers × 8 days = 48 worker-days",
+        "Set up equation for 4 workers: 4 workers × t days = 48 worker-days",
+        "Solve for t: t = 48 ÷ 4 = 12 days",
+        "Answer: It will take 4 workers 12 days to build the wall",
+        "Check: 6 × 8 = 48 and 4 × 12 = 48 ✓"
+      ],
+      "commonErrors": [
+        "Treating this as a direct proportion instead of inverse",
+        "Forgetting that fewer workers means more time needed",
+        "Not recognizing the constant total work requirement"
+      ],
+      "latex": "6 \\times 8 = 4 \\times t \\Rightarrow t = 12"
+    },
+    {
+      "problem": "Which is the better buy: 3 pounds of apples for $4.50 or 5 pounds for $7.25?",
+      "solution": "5 pounds for $7.25 is the better buy",
+      "steps": [
+        "Calculate unit rate for first option: $4.50 ÷ 3 pounds = $1.50 per pound",
+        "Calculate unit rate for second option: $7.25 ÷ 5 pounds = $1.45 per pound",
+        "Compare unit rates: $1.45 < $1.50",
+        "The lower unit rate means better value",
+        "Answer: 5 pounds for $7.25 is the better buy (saves $0.05 per pound)",
+        "Verification: For 15 pounds, first option costs 15 × $1.50 = $22.50",
+        "For 15 pounds, second option costs 15 × $1.45 = $21.75 (saves $0.75)"
+      ],
+      "commonErrors": [
+        "Comparing total prices instead of unit rates",
+        "Calculating unit rates incorrectly",
+        "Choosing the higher unit rate thinking it's better"
+      ],
+      "latex": "\\frac{\\$4.50}{3} = \\$1.50/\\text{lb} \\quad \\frac{\\$7.25}{5} = \\$1.45/\\text{lb}"
     }
   ],
   "practice": [
     {
       "id": "proportions-01",
-      "type": "fill-in",
+      "type": "multiple-choice",
       "difficulty": 1,
-      "problem": "Solve: 3/4 = x/8",
-      "correct": "6",
-      "explanation": "Cross-multiply: 3 × 8 = 4 × x, so 24 = 4x, therefore x = 6.",
-      "hints": ["Use cross-multiplication", "3 × 8 = 4 × x"]
+      "problem": "Which of the following represents a ratio?",
+      "options": ["x + 5 = 12", "3 < 7", "4:7", "2x - 3"],
+      "correct": 2,
+      "explanation": "A ratio compares two quantities. The notation 4:7 means '4 to 7' and represents a ratio.",
+      "hints": [
+        "Look for a comparison between two numbers",
+        "Ratios can be written with colons (:) or as fractions",
+        "Equations and inequalities are not ratios"
+      ]
     },
     {
       "id": "proportions-02",
       "type": "fill-in",
       "difficulty": 2,
-      "problem": "What percent of 25 is 5?",
-      "correct": "20",
-      "explanation": "Set up proportion: 5/25 = x/100. Cross-multiply: 500 = 25x, so x = 20%.",
+      "problem": "Solve the proportion: 3/4 = x/12. x = ____",
+      "correct": "9",
+      "explanation": "Cross-multiply: 3 × 12 = 4 × x, so 36 = 4x, therefore x = 9.",
       "hints": [
-        "Set up as a proportion with 100",
-        "5 out of 25 is what out of 100?"
+        "Use cross-multiplication",
+        "Multiply 3 × 12 and 4 × x",
+        "Then solve the resulting equation"
+      ]
+    },
+    {
+      "id": "proportions-03",
+      "type": "multiple-choice",
+      "difficulty": 2,
+      "problem": "If 2 pencils cost $0.50, how much do 8 pencils cost?",
+      "options": ["$1.00", "$2.00", "$2.50", "$4.00"],
+      "correct": 1,
+      "explanation": "Set up proportion: 2/$0.50 = 8/x. Cross-multiply: 2x = 4, so x = $2.00.",
+      "hints": [
+        "Set up a proportion with pencils and cost",
+        "More pencils will cost more money",
+        "Use cross-multiplication to solve"
+      ]
+    },
+    {
+      "id": "proportions-04",
+      "type": "fill-in",
+      "difficulty": 3,
+      "problem": "A car travels 180 miles in 3 hours. At this rate, how far will it travel in 5 hours? ____ miles",
+      "correct": "300",
+      "explanation": "Set up proportion: 180 miles/3 hours = x miles/5 hours. Cross-multiply: 180 × 5 = 3x, so x = 300 miles.",
+      "hints": [
+        "This is a direct proportion (more time = more distance)",
+        "Set up the proportion with distance and time",
+        "Cross-multiply to solve"
+      ]
+    },
+    {
+      "id": "proportions-05",
+      "type": "multiple-choice",
+      "difficulty": 3,
+      "problem": "Which situation represents an inverse proportion?",
+      "options": [
+        "More hours worked, more pay earned",
+        "More speed, less time to travel the same distance",
+        "More items bought, higher total cost",
+        "Taller person, longer shadow"
+      ],
+      "correct": 1,
+      "explanation": "Inverse proportion means as one increases, the other decreases. Higher speed means less time for the same distance.",
+      "hints": [
+        "Inverse means opposite directions",
+        "When one goes up, the other goes down",
+        "Think about speed and time for a fixed distance"
+      ]
+    },
+    {
+      "id": "proportions-06",
+      "type": "fill-in",
+      "difficulty": 4,
+      "problem": "On a blueprint, 1/4 inch represents 2 feet. If a room is 3 inches long on the blueprint, what is the actual length? ____ feet",
+      "correct": "24",
+      "explanation": "Set up proportion: (1/4 inch)/(2 feet) = (3 inches)/(x feet). Cross-multiply: (1/4)x = 6, so x = 24 feet.",
+      "hints": [
+        "Set up proportion with blueprint measurements and actual measurements",
+        "Be careful with the fraction 1/4",
+        "Cross-multiply: (1/4) × x = 2 × 3"
+      ]
+    },
+    {
+      "id": "proportions-07",
+      "type": "multiple-choice",
+      "difficulty": 4,
+      "problem": "If 8 machines can produce 240 items in 6 hours, how many items can 12 machines produce in the same time?",
+      "options": ["320 items", "360 items", "480 items", "720 items"],
+      "correct": 1,
+      "explanation": "This is direct proportion. 8 machines produce 240 items, so 12 machines produce (12/8) × 240 = 1.5 × 240 = 360 items.",
+      "hints": [
+        "More machines produce more items (direct proportion)",
+        "Find how many items per machine first",
+        "240 items ÷ 8 machines = 30 items per machine"
+      ]
+    },
+    {
+      "id": "proportions-08",
+      "type": "step-by-step",
+      "difficulty": 4,
+      "problem": "A recipe for 6 people uses 4 cups of broth. How much broth is needed for 9 people?",
+      "correct": "6 cups",
+      "explanation": "Set up proportion: 4 cups/6 people = x cups/9 people. Cross-multiply: 4 × 9 = 6x, so 36 = 6x, therefore x = 6 cups.",
+      "hints": [
+        "More people need more broth",
+        "Set up proportion with cups and people",
+        "Cross-multiply to solve"
+      ]
+    },
+    {
+      "id": "proportions-09",
+      "type": "fill-in",
+      "difficulty": 5,
+      "problem": "If it takes 4 workers 12 days to complete a job, how many days will it take 6 workers? ____ days",
+      "correct": "8",
+      "explanation": "Inverse proportion: 4 workers × 12 days = 48 worker-days total. For 6 workers: 6 × t = 48, so t = 8 days.",
+      "hints": [
+        "This is inverse proportion (more workers = less time)",
+        "Find the total worker-days needed",
+        "4 × 12 = 48 worker-days"
+      ]
+    },
+    {
+      "id": "proportions-10",
+      "type": "step-by-step",
+      "difficulty": 5,
+      "problem": "Which is the better buy: 12 oz for $3.60 or 16 oz for $4.40?",
+      "correct": "16 oz for $4.40",
+      "explanation": "Calculate unit rates: $3.60 ÷ 12 oz = $0.30/oz and $4.40 ÷ 16 oz = $0.275/oz. The 16 oz option is cheaper per ounce.",
+      "hints": [
+        "Calculate the cost per ounce for each option",
+        "Divide total cost by number of ounces",
+        "Lower cost per ounce is the better buy"
       ]
     }
   ],
-  "tools": ["calculator"],
+  "tools": ["calculator", "ratio-visualizer"],
   "assessment": {
     "masteryThreshold": 0.8,
-    "requiredProblems": 2
+    "requiredProblems": 5
   }
 }

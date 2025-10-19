@@ -2,67 +2,107 @@
   "id": "chapter-02",
   "title": "Order of Operations and Expressions",
   "objectives": [
-    "Apply PEMDAS to evaluate complex expressions",
-    "Identify terms, coefficients, and constants in expressions",
-    "Combine like terms to simplify expressions",
-    "Use the distributive property correctly"
+    "Master PEMDAS (BODMAS) to evaluate complex numerical and algebraic expressions systematically",
+    "Understand why order of operations is essential for mathematical communication and consistency",
+    "Identify and classify terms, coefficients, constants, and variables in algebraic expressions",
+    "Combine like terms efficiently to simplify expressions and prepare for equation solving",
+    "Apply the distributive property in both directions to expand and factor expressions",
+    "Translate real-world situations into mathematical expressions using proper notation",
+    "Evaluate expressions by substituting specific values for variables"
   ],
-  "prerequisites": ["Integer operations", "Basic arithmetic operations"],
+  "prerequisites": [
+    "Mastery of integer operations (addition, subtraction, multiplication, division)",
+    "Understanding of exponents and their basic properties",
+    "Familiarity with absolute value and number line concepts"
+  ],
   "introduction": {
-    "context": "When following a recipe, order matters - you can't frost a cake before baking it! Mathematics has a similar 'recipe' for solving expressions called the order of operations.",
-    "connection": "Order of operations appears in calculating costs (tax and discounts), programming formulas, and even in everyday calculations like determining total expenses. We'll master PEMDAS and learn to work with algebraic expressions containing variables."
+    "context": "Mathematics is a universal language that must be interpreted consistently by everyone, everywhere. Just as spoken languages have grammar rules that determine meaning, mathematics has operational rules that determine how expressions should be evaluated. Without these rules, the expression 2 + 3 × 4 could equal either 14 or 20, creating chaos in mathematical communication. The order of operations provides the essential 'grammar' that ensures mathematical expressions have one correct interpretation.",
+    "connection": "Order of operations appears constantly in real-world calculations: computing compound interest in finance, calculating areas and volumes in construction, determining medication dosages in healthcare, programming computer algorithms, and even in everyday situations like calculating tips, taxes, and discounts. As we transition from arithmetic to algebra, these rules become even more critical because we begin working with variables and more complex expressions that model real-world relationships.",
+    "historicalContext": "The modern order of operations evolved gradually over centuries. Early mathematicians often used different conventions, leading to confusion and errors. The systematic approach we use today (PEMDAS/BODMAS) became standardized in the 20th century as mathematics education became more formalized. Interestingly, different countries sometimes use different mnemonics (PEMDAS in the US, BODMAS in the UK, PEDMAS in Canada), but they all represent the same underlying rules. The development of computer programming in the mid-20th century made consistent order of operations absolutely essential, as computers needed unambiguous instructions for calculations.",
+    "realWorldApplications": "Order of operations is fundamental in: financial calculations (compound interest formulas, loan payments, investment returns), scientific formulas (physics equations, chemical calculations, statistical analysis), engineering (structural calculations, electrical circuits, fluid dynamics), computer programming (algorithms, data processing, graphics rendering), and everyday problem-solving (calculating costs with multiple discounts, determining travel times with multiple stops, computing grades with weighted categories). Understanding these rules is essential for success in any STEM field and for making informed decisions in an increasingly quantitative world."
   },
   "theory": {
     "concepts": [
       {
-        "title": "PEMDAS Order of Operations",
-        "content": "The standard order for performing mathematical operations: Parentheses, Exponents, Multiplication and Division (left to right), Addition and Subtraction (left to right). PEMDAS ensures everyone gets the same answer when evaluating expressions.",
-        "latex": "2 + 3 \\times 4 = 2 + 12 = 14 \\text{ (not } 20\\text{)}",
+        "title": "PEMDAS: The Universal Mathematical Grammar",
+        "content": "PEMDAS (Parentheses, Exponents, Multiplication and Division, Addition and Subtraction) is the universally accepted order for performing mathematical operations. This system ensures that mathematical expressions have one correct interpretation, regardless of who evaluates them or where in the world they're calculated.\n\n**The PEMDAS Hierarchy:**\n\n1. **P - Parentheses (and other grouping symbols)**: Always evaluate expressions inside parentheses, brackets, or braces first. Work from the innermost grouping outward. This includes absolute value bars and fraction bars, which act as grouping symbols.\n\n2. **E - Exponents (and roots)**: Evaluate all exponential expressions and roots. Be careful with negative signs: (-3)² = 9, but -3² = -9.\n\n3. **MD - Multiplication and Division**: Perform these operations from left to right as they appear. They have equal priority, so the leftmost operation is performed first.\n\n4. **AS - Addition and Subtraction**: Perform these operations from left to right as they appear. Like multiplication and division, they have equal priority.\n\n**Critical Understanding Points:**\n• PEMDAS is not just a memorization trick - it reflects the logical structure of mathematical relationships\n• Multiplication and division have equal priority (same with addition and subtraction)\n• When operations have equal priority, work left to right\n• Grouping symbols can override the natural order, allowing us to force certain operations to occur first\n\n**Memory Devices:**\n• Please Excuse My Dear Aunt Sally (PEMDAS)\n• Brackets, Orders, Division/Multiplication, Addition/Subtraction (BODMAS - UK version)\n• The key is understanding the concept, not just memorizing the acronym",
+        "latex": "\\text{Example: } 2 + 3 \\times 4^2 = 2 + 3 \\times 16 = 2 + 48 = 50",
         "visuals": ["NumberLine"]
       },
       {
-        "title": "Algebraic Terms",
-        "content": "Parts of an expression separated by addition or subtraction signs. In 3x + 5 - 2y, the terms are 3x, +5, and -2y. Each term can contain numbers, variables, or both.",
-        "latex": "3x + 5 - 2y \\text{ has terms: } 3x, +5, -2y",
+        "title": "Introduction to Algebraic Expressions",
+        "content": "An algebraic expression is a mathematical phrase that combines numbers, variables (letters representing unknown values), and operation symbols. Unlike equations, expressions don't have an equals sign - they represent a value that can change depending on what values we substitute for the variables.\n\n**Components of Algebraic Expressions:**\n\n**Variables**: Letters (usually x, y, z, a, b, c) that represent unknown or changing quantities. In the expression 3x + 5, the variable x could represent any number.\n\n**Constants**: Fixed numbers that don't change. In 3x + 5, the number 5 is a constant.\n\n**Coefficients**: Numbers multiplied by variables. In 3x + 5, the coefficient of x is 3. If no number is written before a variable (like in x + 5), the coefficient is understood to be 1.\n\n**Terms**: Parts of an expression separated by addition or subtraction signs. Each term is a single mathematical unit. In the expression 4x² - 3x + 7, there are three terms: 4x², -3x, and +7.\n\n**Like Terms**: Terms that have exactly the same variable parts. For example, 3x and -5x are like terms because they both contain x to the first power. However, 3x and 3x² are not like terms because the exponents are different.\n\n**Understanding Expression Structure:**\nExpressions can be simple (like 2x) or complex (like 3x² - 4xy + 2y² - 7). The ability to identify and work with the components of expressions is fundamental to all of algebra. When we 'simplify' an expression, we're combining like terms and applying properties to write it in the most efficient form possible.",
+        "latex": "\\text{Expression: } 3x^2 - 5x + 2x - 7 \\text{ has terms: } 3x^2, -5x, +2x, -7",
         "visuals": ["NumberLine"]
       },
       {
-        "title": "Distributive Property",
-        "content": "Multiplying a number by a sum equals multiplying the number by each addend separately. This property lets us 'distribute' multiplication over addition or subtraction inside parentheses.",
-        "latex": "a(b + c) = ab + ac",
+        "title": "Combining Like Terms",
+        "content": "Combining like terms is the process of adding or subtracting terms that have identical variable parts. This is one of the most fundamental skills in algebra, as it allows us to simplify expressions and prepare them for further operations.\n\n**The Rule for Combining Like Terms:**\nOnly terms with exactly the same variables raised to exactly the same powers can be combined. We add or subtract the coefficients while keeping the variable part unchanged.\n\n**Examples of Like Terms:**\n• 3x and 7x (both have x to the first power)\n• -4y² and 2y² (both have y squared)\n• 5ab and -3ab (both have the product ab)\n• 8 and -12 (both are constants with no variables)\n\n**Examples of Unlike Terms:**\n• 3x and 3y (different variables)\n• 4x and 4x² (same variable, different exponents)\n• 5xy and 5x (different variable combinations)\n\n**The Process:**\n1. Identify terms with identical variable parts\n2. Add or subtract their coefficients\n3. Keep the variable part unchanged\n4. Write the simplified result\n\n**Example:** 5x + 3y - 2x + 7y\n• Like terms with x: 5x and -2x → (5 - 2)x = 3x\n• Like terms with y: 3y and 7y → (3 + 7)y = 10y\n• Simplified result: 3x + 10y\n\n**Why This Works:**\nCombining like terms is based on the distributive property. When we have 5x - 2x, we're really calculating (5 - 2)x = 3x. This process doesn't change the value of the expression - it just writes it more efficiently.",
+        "latex": "5x + 3x = (5 + 3)x = 8x \\quad \\text{and} \\quad 7y^2 - 4y^2 = (7 - 4)y^2 = 3y^2",
+        "visuals": ["NumberLine"]
+      },
+      {
+        "title": "The Distributive Property: Expanding and Factoring",
+        "content": "The distributive property is one of the most powerful and frequently used properties in algebra. It describes how multiplication interacts with addition and subtraction, allowing us to 'distribute' a factor across terms inside parentheses.\n\n**The Distributive Property Formula:**\na(b + c) = ab + ac\na(b - c) = ab - ac\n\n**Forward Direction (Expanding):**\nWhen we see a number or variable multiplied by a parenthetical expression, we multiply that factor by each term inside the parentheses.\n\nExample: 3(x + 4) = 3·x + 3·4 = 3x + 12\nExample: -2(5y - 3) = -2·5y + (-2)·(-3) = -10y + 6\n\n**Reverse Direction (Factoring):**\nWhen we see terms that share a common factor, we can 'factor out' that common element.\n\nExample: 6x + 9 = 3(2x + 3) because 3 is a common factor\nExample: 4y² - 8y = 4y(y - 2) because 4y is a common factor\n\n**Why the Distributive Property Works:**\nThe distributive property reflects how quantities actually combine in real situations. If you buy 3 packages, and each package contains 5 pencils and 2 erasers, you get 3(5 + 2) = 3·5 + 3·2 = 15 pencils and 6 erasers. The total items is the same whether you calculate 3·7 = 21 or 15 + 6 = 21.\n\n**Advanced Applications:**\n• Distributing negative signs: -(x + 3) = -x - 3\n• Distributing variables: x(x + 5) = x² + 5x\n• Multiple distributions: (x + 2)(x + 3) = x² + 3x + 2x + 6 = x² + 5x + 6\n\nThe distributive property is essential for solving equations, working with polynomials, and understanding how algebraic expressions behave. It's the bridge between arithmetic and algebra, allowing us to manipulate expressions systematically and logically.",
+        "latex": "a(b + c) = ab + ac \\quad \\text{and} \\quad ab + ac = a(b + c)",
         "visuals": ["NumberLine"]
       }
     ]
   },
   "examples": [
     {
-      "problem": "Calculate: 2 + 3 × 4",
-      "solution": "14",
+      "problem": "Evaluate: 2 + 3 × 4² - (5 - 2)",
+      "solution": "47",
       "steps": [
-        "Identify operations: addition and multiplication",
-        "Apply PEMDAS: multiplication before addition",
-        "Calculate: 3 × 4 = 12",
-        "Complete: 2 + 12 = 14"
+        "Step 1 - Parentheses: (5 - 2) = 3",
+        "Expression becomes: 2 + 3 × 4² - 3",
+        "Step 2 - Exponents: 4² = 16",
+        "Expression becomes: 2 + 3 × 16 - 3",
+        "Step 3 - Multiplication: 3 × 16 = 48",
+        "Expression becomes: 2 + 48 - 3",
+        "Step 4 - Addition and Subtraction (left to right): 2 + 48 = 50",
+        "Step 5 - Continue: 50 - 3 = 47"
       ],
       "commonErrors": [
-        "Working left to right: 2 + 3 = 5, then 5 × 4 = 20 (incorrect)",
-        "Forgetting that multiplication comes before addition"
+        "Working left to right without following PEMDAS",
+        "Forgetting to evaluate exponents before multiplication",
+        "Not handling parentheses first"
       ],
-      "latex": "2 + 3 \\times 4 = 14"
+      "latex": "2 + 3 \\times 4^2 - (5 - 2) = 2 + 3 \\times 16 - 3 = 2 + 48 - 3 = 47"
     },
     {
-      "problem": "Simplify: 3(2 + x) for x = 1",
-      "solution": "9",
+      "problem": "Simplify: 5x + 3 - 2x + 7",
+      "solution": "3x + 10",
       "steps": [
-        "Apply distributive property: 3(2 + x) = 6 + 3x",
-        "Substitute x = 1: 6 + 3(1)",
-        "Calculate: 6 + 3 = 9"
+        "Identify like terms: 5x and -2x are like terms (both have x)",
+        "Identify like terms: 3 and 7 are like terms (both are constants)",
+        "Combine x terms: 5x + (-2x) = (5 - 2)x = 3x",
+        "Combine constant terms: 3 + 7 = 10",
+        "Write the simplified expression: 3x + 10"
       ],
       "commonErrors": [
-        "Only multiplying by one term inside parentheses",
-        "Substituting the variable before applying distributive property"
+        "Trying to combine unlike terms (like 5x and 3)",
+        "Forgetting to keep the variable when combining like terms",
+        "Making arithmetic errors when combining coefficients"
       ],
-      "latex": "3(2 + x) = 6 + 3x = 9 \\text{ when } x = 1"
+      "latex": "5x + 3 - 2x + 7 = (5x - 2x) + (3 + 7) = 3x + 10"
+    },
+    {
+      "problem": "Apply the distributive property: -3(2x - 5)",
+      "solution": "-6x + 15",
+      "steps": [
+        "Identify the factor outside parentheses: -3",
+        "Identify the terms inside parentheses: 2x and -5",
+        "Distribute -3 to the first term: (-3) × (2x) = -6x",
+        "Distribute -3 to the second term: (-3) × (-5) = +15",
+        "Combine the results: -6x + 15"
+      ],
+      "commonErrors": [
+        "Forgetting to distribute to all terms inside parentheses",
+        "Making sign errors when multiplying negatives",
+        "Only distributing to the first term"
+      ],
+      "latex": "-3(2x - 5) = (-3)(2x) + (-3)(-5) = -6x + 15"
     }
   ],
   "practice": [
@@ -70,58 +110,82 @@
       "id": "order-ops-01",
       "type": "multiple-choice",
       "difficulty": 1,
-      "problem": "What operation should be performed first in: 8 + 2 × 3?",
+      "problem": "What is the first step in evaluating: 4 + 2 × 3?",
       "options": [
-        "Addition: 8 + 2",
-        "Multiplication: 2 × 3",
+        "Add 4 + 2",
+        "Multiply 2 × 3",
         "Work left to right",
-        "Both at the same time"
+        "Add all numbers first"
       ],
       "correct": 1,
-      "explanation": "According to PEMDAS, multiplication comes before addition.",
-      "hints": ["Remember PEMDAS", "Multiplication comes before addition"]
+      "explanation": "According to PEMDAS, multiplication comes before addition, so we calculate 2 × 3 first.",
+      "hints": [
+        "Remember PEMDAS order",
+        "Multiplication comes before addition",
+        "Don't just work left to right"
+      ]
     },
     {
       "id": "order-ops-02",
       "type": "fill-in",
-      "difficulty": 1,
-      "problem": "Calculate: 12 ÷ 3 + 2",
-      "correct": "6",
-      "explanation": "Division first: 12 ÷ 3 = 4, then addition: 4 + 2 = 6.",
+      "difficulty": 2,
+      "problem": "Evaluate: 15 - 3 × 2 + 1 = ____",
+      "correct": "10",
+      "explanation": "Following PEMDAS: 15 - (3 × 2) + 1 = 15 - 6 + 1 = 10.",
       "hints": [
-        "Division comes before addition",
-        "Work left to right for same-level operations"
+        "Multiply first: 3 × 2",
+        "Then work left to right for addition and subtraction",
+        "15 - 6 + 1"
       ]
     },
     {
       "id": "order-ops-03",
-      "type": "fill-in",
-      "difficulty": 2,
-      "problem": "Calculate: (5 + 3) × 2",
-      "correct": "16",
-      "explanation": "Parentheses first: 5 + 3 = 8, then multiplication: 8 × 2 = 16.",
-      "hints": ["Parentheses first", "Then multiply the result"]
+      "type": "multiple-choice",
+      "difficulty": 3,
+      "problem": "Which terms are like terms in: 3x + 5y - 2x + 7?",
+      "options": [
+        "3x and 5y",
+        "3x and -2x",
+        "5y and 7",
+        "All terms are like terms"
+      ],
+      "correct": 1,
+      "explanation": "3x and -2x are like terms because they both contain the variable x to the first power.",
+      "hints": [
+        "Like terms have identical variable parts",
+        "Look for terms with the same variable and exponent",
+        "Constants are like terms with other constants"
+      ]
     },
     {
       "id": "order-ops-04",
       "type": "fill-in",
-      "difficulty": 2,
-      "problem": "Simplify: 4x + 2x",
-      "correct": "6x",
-      "explanation": "These are like terms. Add the coefficients: 4 + 2 = 6, so 4x + 2x = 6x.",
-      "hints": ["These are like terms", "Add the coefficients"]
+      "difficulty": 3,
+      "problem": "Simplify: 4x - 7 + 2x + 3 = ____",
+      "correct": "6x - 4",
+      "explanation": "Combine like terms: (4x + 2x) + (-7 + 3) = 6x + (-4) = 6x - 4.",
+      "hints": [
+        "Group like terms together",
+        "Combine x terms: 4x + 2x",
+        "Combine constants: -7 + 3"
+      ]
     },
     {
       "id": "order-ops-05",
-      "type": "fill-in",
-      "difficulty": 3,
-      "problem": "Apply distributive property: 3(x + 4)",
-      "correct": "3x + 12",
-      "explanation": "Distribute 3 to both terms: 3 × x + 3 × 4 = 3x + 12.",
-      "hints": ["Multiply 3 by each term inside", "3 × x = 3x and 3 × 4 = 12"]
+      "type": "multiple-choice",
+      "difficulty": 4,
+      "problem": "What is 2(3x + 4) when expanded using the distributive property?",
+      "options": ["6x + 4", "2x + 8", "6x + 8", "5x + 6"],
+      "correct": 2,
+      "explanation": "Using the distributive property: 2(3x + 4) = 2·3x + 2·4 = 6x + 8.",
+      "hints": [
+        "Multiply 2 by each term inside the parentheses",
+        "2 × 3x = 6x",
+        "2 × 4 = 8"
+      ]
     }
   ],
-  "tools": ["calculator"],
+  "tools": ["calculator", "equation-solver"],
   "assessment": {
     "masteryThreshold": 0.8,
     "requiredProblems": 4

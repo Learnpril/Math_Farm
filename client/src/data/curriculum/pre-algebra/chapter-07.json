@@ -2,77 +2,103 @@
   "id": "chapter-07",
   "title": "Data and Statistics Basics",
   "objectives": [
-    "Read and interpret various types of graphs and charts",
-    "Calculate measures of central tendency (mean, median, mode)",
-    "Understand and calculate basic probability"
+    "Understand different types of data and appropriate methods for collection and organization",
+    "Create and interpret various types of graphs including bar graphs, line graphs, and scatter plots",
+    "Calculate and interpret measures of central tendency: mean, median, and mode",
+    "Understand measures of variability and what they reveal about data sets",
+    "Analyze real-world data to identify trends, patterns, and make informed conclusions",
+    "Distinguish between correlation and causation in data relationships",
+    "Use statistical reasoning to evaluate claims and make data-driven decisions"
   ],
   "prerequisites": [
-    "Basic arithmetic operations",
-    "Working with fractions and decimals"
+    "Mastery of arithmetic operations including fractions and decimals",
+    "Understanding of coordinate plane and basic graphing skills",
+    "Familiarity with proportional reasoning and percentages"
   ],
   "introduction": {
-    "context": "Every day we see statistics: weather forecasts, sports scores, election polls, and social media analytics. Understanding data helps us make informed decisions!",
-    "connection": "Data analysis skills are essential for interpreting news, making business decisions, understanding scientific research, and even managing personal finances."
+    "context": "We live in the age of data, where information surrounds us constantly through news reports, social media, business analytics, and scientific research. The ability to collect, organize, analyze, and interpret data has become one of the most valuable skills in the modern world. Statistics provides the tools to make sense of this information, helping us identify patterns, make predictions, and make informed decisions based on evidence rather than guesswork.",
+    "connection": "Statistical thinking appears in countless aspects of daily life: interpreting weather forecasts and their probability of accuracy, understanding medical test results and treatment effectiveness, analyzing sports statistics to evaluate player performance, making financial decisions based on market trends, evaluating product reviews and ratings, understanding poll results and election predictions, and assessing risk in insurance and safety decisions. Statistical literacy enables critical thinking about the information we encounter daily.",
+    "historicalContext": "Statistics emerged from the practical need to collect and analyze information for governance and commerce. The word 'statistics' comes from the Latin 'statisticum,' meaning 'of the state,' reflecting its origins in collecting data about populations and resources. Key developments include John Graunt's analysis of mortality data in 1662, the development of probability theory by Pascal and Fermat, and the work of statisticians like Karl Pearson and Ronald Fisher in the early 20th century who established modern statistical methods. Today, statistics is essential in fields from medicine and psychology to business and sports analytics.",
+    "realWorldApplications": "Statistics is fundamental in: healthcare (clinical trials, epidemiology, treatment effectiveness), business (market research, quality control, financial analysis), science (experimental design, data analysis, hypothesis testing), government (census data, policy evaluation, economic indicators), sports (performance analysis, player evaluation, strategy development), technology (machine learning, data mining, user analytics), and everyday decision-making (comparing products, understanding risks, evaluating information credibility). Statistical literacy is essential for informed citizenship and professional success in virtually any field."
   },
   "theory": {
     "concepts": [
       {
-        "title": "Mean, Median, Mode",
-        "content": "Mean is the average (sum divided by count). Median is the middle value when data is ordered. Mode is the most frequent value. These measures help us understand the center of data.",
-        "latex": "\\text{Mean} = \\frac{\\sum x}{n}",
-        "visuals": ["NumberLine"]
-      },
-      {
-        "title": "Probability",
-        "content": "The likelihood that an event will occur, expressed as a fraction, decimal, or percentage. Probability ranges from 0 (impossible) to 1 (certain).",
-        "latex": "P(\\text{event}) = \\frac{\\text{favorable outcomes}}{\\text{total possible outcomes}}",
-        "visuals": ["NumberLine"]
+        "title": "Types of Data and Data Collection",
+        "content": "Understanding different types of data is crucial for choosing appropriate collection methods, analysis techniques, and interpretation strategies. Data classification helps us determine which statistical tools to use and how to present findings effectively.\n\n**Quantitative vs. Qualitative Data:**\n\n**Quantitative Data**: Numerical data that can be measured or counted\n• **Discrete**: Countable values (number of students, cars, books)\n• **Continuous**: Measurable values that can take any value within a range (height, weight, temperature)\n\n**Qualitative Data**: Descriptive data that represents categories or characteristics\n• **Nominal**: Categories with no natural order (colors, names, types)\n• **Ordinal**: Categories with natural order (grades: A, B, C, D, F; satisfaction: poor, fair, good, excellent)\n\n**Data Collection Methods:**\n\n**Surveys**: Collecting information through questionnaires or interviews\n• Advantages: Can gather large amounts of data quickly\n• Considerations: Question wording affects responses; sample selection matters\n\n**Observations**: Recording data by watching and measuring\n• Advantages: Captures actual behavior, not reported behavior\n• Considerations: Observer bias; subjects may change behavior when observed\n\n**Experiments**: Controlled studies to test cause-and-effect relationships\n• Advantages: Can establish causation, not just correlation\n• Considerations: Ethical constraints; artificial conditions may not reflect real world\n\n**Existing Records**: Using previously collected data\n• Advantages: Large datasets; historical perspective\n• Considerations: Data may not be collected for your specific purpose; quality varies\n\n**Sampling Considerations:**\n\n**Population**: The entire group you want to study\n**Sample**: A subset of the population actually studied\n**Representative Sample**: A sample that accurately reflects the population\n**Bias**: Systematic error that makes the sample unrepresentative\n\n**Common Sampling Methods:**\n• **Random Sampling**: Every member has equal chance of selection\n• **Systematic Sampling**: Select every nth member\n• **Stratified Sampling**: Divide population into groups, then sample from each\n• **Convenience Sampling**: Use easily accessible subjects (often biased)\n\nUnderstanding data types and collection methods is essential for conducting valid research and interpreting statistical results accurately.",
+        "latex": "\\text{Data Types: Quantitative (numerical) vs. Qualitative (categorical)}",
+        "visuals": ["PercentageGrid"]
       }
     ]
   },
   "examples": [
     {
-      "problem": "Find the mean of: 4, 6, 8, 10, 12",
-      "solution": "8",
+      "problem": "A class of 20 students took a math test. Their scores were: 85, 92, 78, 95, 88, 82, 90, 87, 93, 79, 86, 91, 84, 89, 83, 94, 80, 88, 92, 85. Find the mean, median, and mode.",
+      "solution": "Mean: 87, Median: 87.5, Mode: 85, 88, and 92 (trimodal)",
       "steps": [
-        "Add all values: 4 + 6 + 8 + 10 + 12 = 40",
-        "Count the values: 5 numbers",
-        "Divide sum by count: 40 ÷ 5 = 8"
+        "Find the mean: Add all scores and divide by number of students",
+        "Sum = 85+92+78+95+88+82+90+87+93+79+86+91+84+89+83+94+80+88+92+85 = 1740",
+        "Mean = 1740 ÷ 20 = 87",
+        "Find the median: Arrange scores in order and find middle value(s)",
+        "Ordered: 78,79,80,82,83,84,85,85,86,87,88,88,89,90,91,92,92,93,94,95",
+        "With 20 values, median is average of 10th and 11th values: (87+88)÷2 = 87.5",
+        "Find the mode: Look for most frequently occurring value(s)",
+        "85 appears twice, 88 appears twice, 92 appears twice (trimodal)"
       ],
       "commonErrors": [
-        "Forgetting to divide by the count",
-        "Adding incorrectly"
+        "Forgetting to order data before finding median",
+        "Not averaging the two middle values for even number of data points",
+        "Confusing mean, median, and mode definitions"
       ],
-      "latex": "\\text{Mean} = \\frac{40}{5} = 8"
+      "latex": "\\bar{x} = \\frac{\\sum x_i}{n} = \\frac{1740}{20} = 87"
     }
   ],
   "practice": [
     {
-      "id": "stats-01",
-      "type": "fill-in",
+      "id": "statistics-01",
+      "type": "multiple-choice",
       "difficulty": 1,
-      "problem": "Find the mean of: 2, 4, 6, 8",
-      "correct": "5",
-      "explanation": "Mean = (2+4+6+8) ÷ 4 = 20 ÷ 4 = 5.",
-      "hints": ["Add all values first", "Then divide by the count"]
+      "problem": "Which type of graph is best for showing how data changes over time?",
+      "options": ["Bar graph", "Line graph", "Pie chart", "Histogram"],
+      "correct": 1,
+      "explanation": "Line graphs are specifically designed to show trends and changes over time by connecting data points.",
+      "hints": [
+        "Think about which graph connects points to show trends",
+        "Time is usually shown on the horizontal axis",
+        "Which graph type shows continuous change?"
+      ]
     },
     {
-      "id": "stats-02",
-      "type": "multiple-choice",
+      "id": "statistics-02",
+      "type": "fill-in",
       "difficulty": 2,
-      "problem": "What is the mode of: 2, 5, 3, 5, 1, 5, 4?",
-      "options": ["2", "3", "5", "No mode"],
-      "correct": 2,
-      "explanation": "The mode is 5 because it appears 3 times, more than any other value.",
+      "problem": "The data set 2, 5, 7, 5, 3, 5, 8 has a mode of ____.",
+      "correct": "5",
+      "explanation": "The mode is the value that appears most frequently. The number 5 appears three times, more than any other value.",
       "hints": [
-        "Look for the most frequent value",
-        "Count how many times each number appears"
+        "Mode is the most frequent value",
+        "Count how many times each number appears",
+        "Which number appears most often?"
+      ]
+    },
+    {
+      "id": "statistics-03",
+      "type": "multiple-choice",
+      "difficulty": 3,
+      "problem": "For the data set 10, 15, 20, 25, 30, what is the mean?",
+      "options": ["15", "20", "25", "100"],
+      "correct": 1,
+      "explanation": "Mean = (10+15+20+25+30) ÷ 5 = 100 ÷ 5 = 20.",
+      "hints": [
+        "Add all the values together",
+        "Divide by the number of values",
+        "10+15+20+25+30 = 100, and there are 5 values"
       ]
     }
   ],
-  "tools": ["calculator"],
+  "tools": ["calculator", "graphing-tools"],
   "assessment": {
     "masteryThreshold": 0.8,
-    "requiredProblems": 2
+    "requiredProblems": 4
   }
 }

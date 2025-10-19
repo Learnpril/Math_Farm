@@ -2,75 +2,102 @@
   "id": "chapter-06",
   "title": "Coordinate Plane and Graphing",
   "objectives": [
-    "Plot points on the coordinate plane using ordered pairs",
-    "Graph linear equations and identify key features",
-    "Calculate and interpret slope as rate of change"
+    "Master the coordinate plane system and understand ordered pairs as location descriptors",
+    "Plot points accurately using x and y coordinates in all four quadrants",
+    "Understand and calculate distance between points using the distance formula",
+    "Graph linear equations and identify key features like slope and intercepts",
+    "Interpret graphs of real-world situations and extract meaningful information",
+    "Use coordinate geometry to solve practical problems involving location and movement",
+    "Understand the relationship between algebraic equations and their graphical representations"
   ],
   "prerequisites": [
-    "Solving linear equations",
-    "Understanding negative numbers"
+    "Mastery of integer operations and working with negative numbers",
+    "Understanding of linear equations and solving for variables",
+    "Familiarity with the Pythagorean theorem and basic geometry concepts"
   ],
   "introduction": {
-    "context": "GPS navigation, weather maps, and video game graphics all use coordinate systems to pinpoint locations. The coordinate plane is your mathematical GPS!",
-    "connection": "Coordinate planes help us map locations, track trends in data, design computer graphics, and analyze relationships between variables in science and business."
+    "context": "The coordinate plane is one of mathematics' most powerful tools, providing a bridge between algebra and geometry that revolutionized how we understand and solve problems. By representing algebraic relationships as visual graphs, we can see patterns, make predictions, and solve complex problems that would be difficult using algebra alone. From GPS navigation systems to computer graphics, from economic modeling to scientific data analysis, coordinate geometry forms the foundation of countless modern applications.",
+    "connection": "Coordinate systems appear everywhere in modern life: GPS coordinates pinpoint locations on Earth, computer screens use pixel coordinates for graphics and user interfaces, architects use coordinate systems for building plans, video games create virtual worlds using coordinate geometry, weather maps show data using coordinate grids, and stock market charts graph financial data over time. Understanding coordinate geometry enables us to interpret maps, analyze data trends, create digital art, and solve navigation problems.",
+    "historicalContext": "The coordinate plane was invented by French mathematician René Descartes in the 1630s, earning it the name 'Cartesian coordinate system.' Descartes realized that geometric problems could be solved using algebra, and algebraic problems could be visualized using geometry. This breakthrough unified two major branches of mathematics and laid the groundwork for calculus, developed later by Newton and Leibniz. The coordinate system became essential for scientific revolution, enabling precise measurement and mathematical modeling of physical phenomena.",
+    "realWorldApplications": "Coordinate geometry is fundamental in: navigation and mapping (GPS systems, surveying, aviation), computer science (graphics, game development, user interfaces), engineering (CAD design, robotics, structural analysis), science (data visualization, experimental analysis, modeling), business (market analysis, trend forecasting, logistics), art and design (digital graphics, animation, architectural planning), and everyday technology (smartphone maps, weather apps, fitness tracking). Mastering coordinate geometry provides essential skills for STEM careers and quantitative reasoning."
   },
+
   "theory": {
     "concepts": [
       {
-        "title": "Coordinate Plane",
-        "content": "A two-dimensional grid formed by two perpendicular number lines called axes. The horizontal axis is called the x-axis, and the vertical axis is the y-axis. They intersect at the origin (0,0).",
-        "latex": "\\text{Point: } (x, y) \\text{ where } x \\text{ is horizontal, } y \\text{ is vertical}",
-        "visuals": ["NumberLine"]
-      },
-      {
-        "title": "Slope",
-        "content": "The steepness of a line, calculated as rise over run or change in y over change in x. Slope tells us how much y changes for each unit change in x.",
-        "latex": "m = \\frac{\\text{rise}}{\\text{run}} = \\frac{y_2 - y_1}{x_2 - x_1}",
+        "title": "The Coordinate Plane System",
+        "content": "The coordinate plane is a two-dimensional grid system that allows us to specify the exact location of any point using two numbers called coordinates. This system provides a universal language for describing position, enabling precise communication about location and movement in mathematics, science, and everyday applications.\n\n**Structure of the Coordinate Plane:**\n\nThe coordinate plane consists of two perpendicular number lines:\n• **x-axis**: The horizontal number line, with positive numbers extending right and negative numbers extending left\n• **y-axis**: The vertical number line, with positive numbers extending up and negative numbers extending down\n• **Origin**: The point (0, 0) where the axes intersect\n\n**Ordered Pairs:**\nEvery point on the coordinate plane is identified by an ordered pair (x, y):\n• **x-coordinate**: The first number, indicating horizontal position (left/right)\n• **y-coordinate**: The second number, indicating vertical position (up/down)\n• Order matters: (3, 5) is different from (5, 3)\n\n**The Four Quadrants:**\nThe axes divide the plane into four regions:\n• **Quadrant I**: x > 0, y > 0 (upper right)\n• **Quadrant II**: x < 0, y > 0 (upper left)\n• **Quadrant III**: x < 0, y < 0 (lower left)\n• **Quadrant IV**: x > 0, y < 0 (lower right)\n\n**Plotting Points:**\nTo plot point (x, y):\n1. Start at the origin (0, 0)\n2. Move x units horizontally (right if positive, left if negative)\n3. Move y units vertically (up if positive, down if negative)\n4. Mark the point\n\n**Reading Coordinates:**\nTo find coordinates of a plotted point:\n1. Draw a vertical line from the point to the x-axis\n2. Read the x-coordinate where the line crosses the x-axis\n3. Draw a horizontal line from the point to the y-axis\n4. Read the y-coordinate where the line crosses the y-axis\n\n**Special Points:**\n• Points on the x-axis have y-coordinate 0: (a, 0)\n• Points on the y-axis have x-coordinate 0: (0, b)\n• The origin is (0, 0)\n\nUnderstanding the coordinate plane system is fundamental to graphing equations, analyzing data, and solving geometric problems using algebraic methods.",
+        "latex": "(x, y) \\text{ where } x \\text{ is horizontal, } y \\text{ is vertical}",
         "visuals": ["NumberLine"]
       }
     ]
   },
   "examples": [
     {
-      "problem": "Plot the point A(2, 3) on a coordinate plane",
-      "solution": "Point plotted at 2 right, 3 up from origin",
+      "problem": "Plot the points A(3, 2), B(-1, 4), and C(-2, -3) on a coordinate plane and identify which quadrant each point is in.",
+      "solution": "A(3, 2) is in Quadrant I, B(-1, 4) is in Quadrant II, C(-2, -3) is in Quadrant III",
       "steps": [
-        "Start at origin (0,0)",
-        "Move 2 units right (positive x-direction)",
-        "Move 3 units up (positive y-direction)",
-        "Mark the point A(2, 3)"
+        "For point A(3, 2): Start at origin, move 3 units right, then 2 units up",
+        "A(3, 2) has positive x and positive y, so it's in Quadrant I",
+        "For point B(-1, 4): Start at origin, move 1 unit left, then 4 units up",
+        "B(-1, 4) has negative x and positive y, so it's in Quadrant II",
+        "For point C(-2, -3): Start at origin, move 2 units left, then 3 units down",
+        "C(-2, -3) has negative x and negative y, so it's in Quadrant III"
       ],
       "commonErrors": [
-        "Confusing x and y coordinates",
-        "Moving in wrong direction for negative coordinates"
+        "Confusing x and y coordinates (plotting (2,3) instead of (3,2))",
+        "Moving in wrong direction for negative coordinates",
+        "Misidentifying quadrants"
       ],
-      "latex": "A(2, 3) \\text{ means right 2, up 3}"
+      "latex": "A(3,2) \\in \\text{QI}, \\quad B(-1,4) \\in \\text{QII}, \\quad C(-2,-3) \\in \\text{QIII}"
     }
   ],
   "practice": [
     {
-      "id": "graphing-01",
+      "id": "coordinate-01",
       "type": "multiple-choice",
       "difficulty": 1,
-      "problem": "In which quadrant is the point (-3, 2)?",
-      "options": ["Quadrant I", "Quadrant II", "Quadrant III", "Quadrant IV"],
+      "problem": "What are the coordinates of the origin?",
+      "options": ["(1, 1)", "(0, 0)", "(1, 0)", "(0, 1)"],
       "correct": 1,
-      "explanation": "Quadrant II has negative x-coordinates and positive y-coordinates.",
-      "hints": ["x is negative, y is positive", "Quadrant II: (-,+)"]
+      "explanation": "The origin is where the x-axis and y-axis intersect, which is at coordinates (0, 0).",
+      "hints": [
+        "The origin is where the axes meet",
+        "Both coordinates are zero at the origin",
+        "It's the starting point for all measurements"
+      ]
     },
     {
-      "id": "graphing-02",
-      "type": "fill-in",
+      "id": "coordinate-02",
+      "type": "multiple-choice",
       "difficulty": 2,
-      "problem": "What is the slope of the line y = 3x - 4?",
-      "correct": "3",
-      "explanation": "In y = mx + b form, m is the slope. Here m = 3.",
-      "hints": ["Look at the coefficient of x", "In y = mx + b, m is the slope"]
+      "problem": "In which quadrant is the point (-3, 5) located?",
+      "options": ["Quadrant I", "Quadrant II", "Quadrant III", "Quadrant IV"],
+      "correct": 1,
+      "explanation": "Point (-3, 5) has negative x and positive y coordinates, which places it in Quadrant II.",
+      "hints": [
+        "Look at the signs of both coordinates",
+        "Negative x means left of y-axis",
+        "Positive y means above x-axis"
+      ]
+    },
+    {
+      "id": "coordinate-03",
+      "type": "fill-in",
+      "difficulty": 3,
+      "problem": "The point (4, -2) is ____ units to the right of the y-axis and ____ units below the x-axis.",
+      "correct": "4, 2",
+      "explanation": "The x-coordinate 4 means 4 units right of y-axis. The y-coordinate -2 means 2 units below x-axis.",
+      "hints": [
+        "x-coordinate tells horizontal distance from y-axis",
+        "y-coordinate tells vertical distance from x-axis",
+        "Negative y means below the x-axis"
+      ]
     }
   ],
-  "tools": ["calculator", "graph-plotter"],
+  "tools": ["coordinate-plane", "graphing-calculator"],
   "assessment": {
     "masteryThreshold": 0.8,
-    "requiredProblems": 2
+    "requiredProblems": 4
   }
 }
