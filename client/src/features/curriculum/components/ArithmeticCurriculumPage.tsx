@@ -215,6 +215,7 @@ export function ArithmeticCurriculumPage() {
                   progress={progress.chapterProgress[currentChapter.id]}
                   currentChapter={currentChapterNumber}
                   totalChapters={metadata.chapters}
+                  curriculum='arithmetic'
                   onNext={() => {
                     if (currentChapterNumber < metadata.chapters) {
                       handleChapterSelect(currentChapterNumber + 1);

@@ -29,6 +29,7 @@ interface ChapterContentProps {
   onPrevious: () => void;
   currentChapter: number;
   totalChapters: number;
+  curriculum?: string; // Add curriculum type to distinguish between arithmetic and pre-algebra
 }
 
 type SectionType =
@@ -46,6 +47,7 @@ export function ChapterContent({
   onPrevious,
   currentChapter,
   totalChapters,
+  curriculum = 'arithmetic', // Default to arithmetic for backward compatibility
 }: ChapterContentProps) {
   const [activeSection, setActiveSection] = useState<SectionType>('theory');
   const {
@@ -123,7 +125,7 @@ export function ChapterContent({
     currentChapterProgressString,
   ]);
 
-  // Show drills for Chapter 3 (Addition and Subtraction), Chapter 4 (Multiplication Basics), and Chapter 5 (Division Basics)
+  // Show drills only for Arithmetic curriculum chapters 3, 4, and 5 (Addition/Subtraction, Multiplication, Division)
   const baseSections = [
     { id: 'theory' as SectionType, label: 'Reading', icon: BookOpen },
     { id: 'examples' as SectionType, label: 'Examples', icon: PenTool },
@@ -148,12 +150,16 @@ export function ChapterContent({
     },
   ];
 
-  const sections =
-    chapter.id === 'chapter-03' ||
-    chapter.id === 'chapter-04' ||
-    chapter.id === 'chapter-05'
-      ? [...baseSections, ...drillSections]
-      : baseSections;
+  // Only show drills for arithmetic curriculum chapters 3, 4, and 5
+  const shouldShowDrills =
+    curriculum === 'arithmetic' &&
+    (chapter.id === 'chapter-03' ||
+      chapter.id === 'chapter-04' ||
+      chapter.id === 'chapter-05');
+
+  const sections = shouldShowDrills
+    ? [...baseSections, ...drillSections]
+    : baseSections;
 
   const renderSectionContent = () => {
     switch (activeSection) {
@@ -194,39 +200,31 @@ export function ChapterContent({
         );
 
       case 'drills':
-        // Render drills for Chapter 3 (Addition and Subtraction), Chapter 4 (Multiplication Basics), and Chapter 5 (Division Basics)
-        if (
-          chapter.id === 'chapter-03' ||
-          chapter.id === 'chapter-04' ||
-          chapter.id === 'chapter-05'
-        ) {
+        // Render drills only for arithmetic curriculum chapters 3, 4, and 5
+        if (shouldShowDrills) {
           return <DrillsSection />;
         }
         return (
           <div className='text-center py-12'>
             <p className='text-gray-600 dark:text-gray-400'>
-              Drills are available for Addition and Subtraction (Chapter 3),
-              Multiplication Basics (Chapter 4), and Division Basics (Chapter
-              5).
+              Drills are available in the Arithmetic curriculum for Addition and
+              Subtraction (Chapter 3), Multiplication Basics (Chapter 4), and
+              Division Basics (Chapter 5).
             </p>
           </div>
         );
 
       case 'drill-answers':
-        // Render drill answers for Chapter 3 (Addition and Subtraction), Chapter 4 (Multiplication Basics), and Chapter 5 (Division Basics)
-        if (
-          chapter.id === 'chapter-03' ||
-          chapter.id === 'chapter-04' ||
-          chapter.id === 'chapter-05'
-        ) {
+        // Render drill answers only for arithmetic curriculum chapters 3, 4, and 5
+        if (shouldShowDrills) {
           return <DrillAnswersSection />;
         }
         return (
           <div className='text-center py-12'>
             <p className='text-gray-600 dark:text-gray-400'>
-              Drill answers are available for Addition and Subtraction (Chapter
-              3), Multiplication Basics (Chapter 4), and Division Basics
-              (Chapter 5).
+              Drill answers are available in the Arithmetic curriculum for
+              Addition and Subtraction (Chapter 3), Multiplication Basics
+              (Chapter 4), and Division Basics (Chapter 5).
             </p>
           </div>
         );
@@ -340,9 +338,7 @@ export function ChapterContent({
 
       {/* Section Content */}
       <div className='p-6'>
-        {chapter.id === 'chapter-03' ||
-        chapter.id === 'chapter-04' ||
-        chapter.id === 'chapter-05' ? (
+        {shouldShowDrills ? (
           <DrillProvider chapterId={chapter.id} chapterTitle={chapter.title}>
             {renderSectionContent()}
           </DrillProvider>

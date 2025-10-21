@@ -230,6 +230,7 @@ export function PreAlgebraCurriculumPage() {
                   progress={progress.chapterProgress[currentChapter.id]}
                   currentChapter={currentChapterNumber}
                   totalChapters={metadata.chapters}
+                  curriculum='pre-algebra'
                   onNext={() => {
                     if (currentChapterNumber < metadata.chapters) {
                       handleChapterSelect(currentChapterNumber + 1);

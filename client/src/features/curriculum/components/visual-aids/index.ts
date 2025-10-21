@@ -1,3 +1,4 @@
+// Arithmetic visual components
 export { PlaceValueChart } from './PlaceValueChart';
 export { NumberLine } from './NumberLine';
 export { Base10Blocks } from './Base10Blocks';
@@ -37,3 +38,15 @@ export { FractionDivisionBars } from './FractionDivisionBars';
 export { EquivalentRatiosBars } from './EquivalentRatiosBars';
 export { PercentageChangeVisualizer } from './PercentageChangeVisualizer';
 export { RatioToPercentageConverter } from './RatioToPercentageConverter';
+
+// Pre-Algebra visual components
+export { IntegerNumberLine } from './IntegerNumberLine';
+export { OrderOfOperationsVisualizer } from './OrderOfOperationsVisualizer';
+export { AlgebraicExpressionBuilder } from './AlgebraicExpressionBuilder';
+export { EquationBalanceScale } from './EquationBalanceScale';
+export { InequalityNumberLine } from './InequalityNumberLine';
+export { ProportionCrossMultiply } from './ProportionCrossMultiply';
+export { GeometryShapeCalculator } from './GeometryShapeCalculator';
+export { PythagoreanTheoremVisualizer } from './PythagoreanTheoremVisualizer';
+export { CoordinatePlaneInteractive } from './CoordinatePlaneInteractive';
+export { StatisticsDataVisualizer } from './StatisticsDataVisualizer';

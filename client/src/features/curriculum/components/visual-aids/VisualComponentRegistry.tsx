@@ -46,6 +46,18 @@ import {
   RatioToPercentageConverter,
 } from './index';
 
+// Pre-Algebra specific components
+import { IntegerNumberLine } from './IntegerNumberLine';
+import { OrderOfOperationsVisualizer } from './OrderOfOperationsVisualizer';
+import { AlgebraicExpressionBuilder } from './AlgebraicExpressionBuilder';
+import { EquationBalanceScale } from './EquationBalanceScale';
+import { InequalityNumberLine } from './InequalityNumberLine';
+import { ProportionCrossMultiply } from './ProportionCrossMultiply';
+import { GeometryShapeCalculator } from './GeometryShapeCalculator';
+import { PythagoreanTheoremVisualizer } from './PythagoreanTheoremVisualizer';
+import { CoordinatePlaneInteractive } from './CoordinatePlaneInteractive';
+import { StatisticsDataVisualizer } from './StatisticsDataVisualizer';
+
 // Type for visual component props - flexible to accommodate different component prop types
 interface VisualComponentProps {
   className?: string;
@@ -113,6 +125,31 @@ const VISUAL_COMPONENTS: Record<string, VisualComponent> = {
   EquivalentRatiosBars,
   PercentageChangeVisualizer,
   RatioToPercentageConverter,
+
+  // Pre-Algebra Components
+  // Chapter 1: Integers and Operations
+  IntegerNumberLine,
+
+  // Chapter 2: Order of Operations and Expressions
+  OrderOfOperationsVisualizer,
+  AlgebraicExpressionBuilder,
+
+  // Chapter 3: Equations and Inequalities
+  EquationBalanceScale,
+  InequalityNumberLine,
+
+  // Chapter 4: Algebraic Proportions
+  ProportionCrossMultiply,
+
+  // Chapter 5: Geometry Basics
+  GeometryShapeCalculator,
+  PythagoreanTheoremVisualizer,
+
+  // Chapter 6: Coordinate Plane and Graphing
+  CoordinatePlaneInteractive,
+
+  // Chapter 7: Data and Statistics Basics
+  StatisticsDataVisualizer,
 } as const;
 
 // Component name aliases for backward compatibility and alternative naming
@@ -157,6 +194,18 @@ const COMPONENT_ALIASES: Record<string, string> = {
   'equivalent-ratios-bars': 'EquivalentRatiosBars',
   'percentage-change-visualizer': 'PercentageChangeVisualizer',
   'ratio-to-percentage-converter': 'RatioToPercentageConverter',
+
+  // Pre-Algebra component aliases
+  'integer-number-line': 'IntegerNumberLine',
+  'order-of-operations-visualizer': 'OrderOfOperationsVisualizer',
+  'algebraic-expression-builder': 'AlgebraicExpressionBuilder',
+  'equation-balance-scale': 'EquationBalanceScale',
+  'inequality-number-line': 'InequalityNumberLine',
+  'proportion-cross-multiply': 'ProportionCrossMultiply',
+  'geometry-shape-calculator': 'GeometryShapeCalculator',
+  'pythagorean-theorem-visualizer': 'PythagoreanTheoremVisualizer',
+  'coordinate-plane-interactive': 'CoordinatePlaneInteractive',
+  'statistics-data-visualizer': 'StatisticsDataVisualizer',
 
   // Legacy aliases for backward compatibility
   FractionSimplifier: 'EquivalentFractionBars',

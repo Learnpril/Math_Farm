@@ -575,4 +575,58 @@
   .animate-accordion-up {
     animation: accordion-up 0.2s ease-out;
   }
+}/* Inlin
+e math expressions */
+.inline-math .MathJax {
+  font-size: 1em !important;
+  display: inline !important;
+  margin: 0 2px !important;
+}
+
+/* Display math expressions */
+.inline-block .MathJax {
+  font-size: 1.1em !important;
+  display: block !important;
+  text-align: center !important;
+  margin: 8px 0 !important;
+}
+
+/* Reading section math expressions */
+.reading-section-math .MathJax {
+  font-size: 1.1em !important;
+}/* Inl
+ine math expressions - truly inline */
+.inline-math {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  vertical-align: baseline !important;
+}
+
+.inline-math .MathJax {
+  font-size: 1em !important;
+  display: inline !important;
+  margin: 0 1px !important;
+  padding: 0 !important;
+  vertical-align: baseline !important;
+}
+
+/* Display math expressions - centered blocks */
+.display-math {
+  display: block !important;
+  text-align: center !important;
+  margin: 12px 0 !important;
+  padding: 8px 0 !important;
+}
+
+.display-math .MathJax {
+  font-size: 1.1em !important;
+  display: block !important;
+  text-align: center !important;
+  margin: 0 auto !important;
+}
+
+/* Reading section math expressions */
+.reading-section-math .MathJax {
+  font-size: 1.1em !important;
 }
