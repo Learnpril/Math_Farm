@@ -1,5 +1,5 @@
 /**
- * CoordinatePlaneInteractive - Interactive coordinate plane for plotting points and understanding coordinates
+ * CoordinatePlaneInteractive - Simplified interactive coordinate plane for plotting points
  * Specifically designed for Pre-Algebra Chapter 6: Coordinate Plane and Graphing
  */
 
@@ -7,8 +7,6 @@ import React, { useState } from 'react';
 
 interface CoordinatePlaneInteractiveProps {
   className?: string;
-  gridSize?: number;
-  showQuadrants?: boolean;
 }
 
 interface Point {
@@ -21,23 +19,21 @@ interface Point {
 
 export const CoordinatePlaneInteractive: React.FC<
   CoordinatePlaneInteractiveProps
-> = ({ className = '', gridSize = 10, showQuadrants = true }) => {
+> = ({ className = '' }) => {
   const [points, setPoints] = useState<Point[]>([
-    { id: '1', x: 3, y: 2, label: 'A', color: '#ef4444' },
-    { id: '2', x: -2, y: 4, label: 'B', color: '#22c55e' },
-    { id: '3', x: -4, y: -3, label: 'C', color: '#3b82f6' },
-    { id: '4', x: 1, y: -2, label: 'D', color: '#a855f7' },
+    { id: '1', x: -4, y: -3, label: 'C', color: '#3b82f6' },
+    { id: '2', x: 1, y: -2, label: 'D', color: '#a855f7' },
   ]);
 
-  const [newPoint, setNewPoint] = useState({ x: 0, y: 0, label: 'E' });
-  const [selectedPoint, setSelectedPoint] = useState<string | null>(null);
-  const [showCoordinates, setShowCoordinates] = useState(true);
-  const [showGrid, setShowGrid] = useState(true);
+  const [inputX, setInputX] = useState<string>('2');
+  const [inputY, setInputY] = useState<string>('-1');
+  const [nextLabel, setNextLabel] = useState('E');
 
-  const scale = 20; // pixels per unit
-  const centerX = 250;
-  const centerY = 250;
-  const svgSize = 500;
+  const gridSize = 6; // Show -6 to +6 range
+  const scale = 30; // Larger scale for easier clicking
+  const centerX = 210;
+  const centerY = 210;
+  const svgSize = 420;
 
   // Convert coordinate to SVG position
   const coordToSvg = (x: number, y: number) => ({
@@ -52,43 +48,41 @@ export const CoordinatePlaneInteractive: React.FC<
   });
 
   const addPoint = () => {
-    if (newPoint.label && !points.find(p => p.label === newPoint.label)) {
-      const colors = [
-        '#ef4444',
-        '#22c55e',
-        '#3b82f6',
-        '#a855f7',
-        '#f59e0b',
-        '#ec4899',
-      ];
-      const newId = Date.now().toString();
-      setPoints([
-        ...points,
-        {
-          id: newId,
-          x: newPoint.x,
-          y: newPoint.y,
-          label: newPoint.label,
-          color: colors[points.length % colors.length],
-        },
-      ]);
-      setNewPoint({
-        x: 0,
-        y: 0,
-        label: String.fromCharCode(65 + points.length),
-      });
-    }
+    const x = parseInt(inputX);
+    const y = parseInt(inputY);
+
+    // Validate inputs
+    if (isNaN(x) || isNaN(y)) return;
+    if (Math.abs(x) > gridSize || Math.abs(y) > gridSize) return;
+    if (points.find(p => p.x === x && p.y === y)) return; // Don't add duplicate points
+
+    const colors = [
+      '#ef4444',
+      '#22c55e',
+      '#3b82f6',
+      '#a855f7',
+      '#f59e0b',
+      '#ec4899',
+    ];
+    const newId = Date.now().toString();
+
+    setPoints([
+      ...points,
+      {
+        id: newId,
+        x,
+        y,
+        label: nextLabel,
+        color: colors[points.length % colors.length],
+      },
+    ]);
+
+    // Auto-increment label
+    setNextLabel(String.fromCharCode(nextLabel.charCodeAt(0) + 1));
   };
 
   const removePoint = (id: string) => {
     setPoints(points.filter(p => p.id !== id));
-    if (selectedPoint === id) {
-      setSelectedPoint(null);
-    }
-  };
-
-  const updatePoint = (id: string, x: number, y: number) => {
-    setPoints(points.map(p => (p.id === id ? { ...p, x, y } : p)));
   };
 
   const handleSvgClick = (event: React.MouseEvent<SVGSVGElement>) => {
@@ -99,16 +93,18 @@ export const CoordinatePlaneInteractive: React.FC<
 
     // Check if coordinates are within bounds
     if (Math.abs(coord.x) <= gridSize && Math.abs(coord.y) <= gridSize) {
-      setNewPoint({ ...newPoint, x: coord.x, y: coord.y });
+      setInputX(coord.x.toString());
+      setInputY(coord.y.toString());
     }
   };
 
   const getQuadrant = (x: number, y: number) => {
+    if (x === 0 || y === 0) return 'On axis';
     if (x > 0 && y > 0) return 'I';
     if (x < 0 && y > 0) return 'II';
     if (x < 0 && y < 0) return 'III';
     if (x > 0 && y < 0) return 'IV';
-    return 'Origin/Axis';
+    return '';
   };
 
   const renderGridLines = () => {
@@ -117,6 +113,7 @@ export const CoordinatePlaneInteractive: React.FC<
     // Vertical lines
     for (let i = -gridSize; i <= gridSize; i++) {
       const x = centerX + i * scale;
+      const isAxis = i === 0;
       lines.push(
         <line
           key={`v${i}`}
@@ -124,13 +121,9 @@ export const CoordinatePlaneInteractive: React.FC<
           y1={centerY - gridSize * scale}
           x2={x}
           y2={centerY + gridSize * scale}
-          stroke={i === 0 ? '#374151' : '#e5e7eb'}
-          strokeWidth={i === 0 ? '2' : '1'}
-          className={
-            i === 0
-              ? 'text-gray-700 dark:text-gray-300'
-              : 'text-gray-200 dark:text-gray-700'
-          }
+          stroke={isAxis ? '#374151' : '#e5e7eb'}
+          strokeWidth={isAxis ? '3' : '1'}
+          className={isAxis ? 'dark:stroke-gray-300' : 'dark:stroke-gray-600'}
         />
       );
     }
@@ -138,6 +131,7 @@ export const CoordinatePlaneInteractive: React.FC<
     // Horizontal lines
     for (let i = -gridSize; i <= gridSize; i++) {
       const y = centerY - i * scale;
+      const isAxis = i === 0;
       lines.push(
         <line
           key={`h${i}`}
@@ -145,13 +139,9 @@ export const CoordinatePlaneInteractive: React.FC<
           y1={y}
           x2={centerX + gridSize * scale}
           y2={y}
-          stroke={i === 0 ? '#374151' : '#e5e7eb'}
-          strokeWidth={i === 0 ? '2' : '1'}
-          className={
-            i === 0
-              ? 'text-gray-700 dark:text-gray-300'
-              : 'text-gray-200 dark:text-gray-700'
-          }
+          stroke={isAxis ? '#374151' : '#e5e7eb'}
+          strokeWidth={isAxis ? '3' : '1'}
+          className={isAxis ? 'dark:stroke-gray-300' : 'dark:stroke-gray-600'}
         />
       );
     }
@@ -162,17 +152,17 @@ export const CoordinatePlaneInteractive: React.FC<
   const renderAxisLabels = () => {
     const labels = [];
 
-    // X-axis labels
-    for (let i = -gridSize; i <= gridSize; i += 2) {
+    // X-axis labels (every unit)
+    for (let i = -gridSize; i <= gridSize; i++) {
       if (i !== 0) {
         const x = centerX + i * scale;
         labels.push(
           <text
             key={`x${i}`}
             x={x}
-            y={centerY + 15}
+            y={centerY + 18}
             textAnchor='middle'
-            className='text-xs fill-current text-gray-600 dark:text-gray-400'
+            className='text-sm font-medium fill-current text-gray-700 dark:text-gray-300'
           >
             {i}
           </text>
@@ -180,17 +170,17 @@ export const CoordinatePlaneInteractive: React.FC<
       }
     }
 
-    // Y-axis labels
-    for (let i = -gridSize; i <= gridSize; i += 2) {
+    // Y-axis labels (every unit)
+    for (let i = -gridSize; i <= gridSize; i++) {
       if (i !== 0) {
         const y = centerY - i * scale;
         labels.push(
           <text
             key={`y${i}`}
-            x={centerX - 15}
-            y={y + 4}
+            x={centerX - 18}
+            y={y + 5}
             textAnchor='middle'
-            className='text-xs fill-current text-gray-600 dark:text-gray-400'
+            className='text-sm font-medium fill-current text-gray-700 dark:text-gray-300'
           >
             {i}
           </text>
@@ -202,16 +192,14 @@ export const CoordinatePlaneInteractive: React.FC<
   };
 
   const renderQuadrantLabels = () => {
-    if (!showQuadrants) return null;
-
-    const offset = scale * 1.5;
+    const offset = scale * 2.5;
     return (
       <g>
         <text
           x={centerX + offset}
           y={centerY - offset}
           textAnchor='middle'
-          className='text-lg font-bold fill-current text-blue-600 dark:text-blue-400'
+          className='text-2xl font-bold fill-current text-blue-600 dark:text-blue-400 opacity-30'
         >
           I
         </text>
@@ -219,7 +207,7 @@ export const CoordinatePlaneInteractive: React.FC<
           x={centerX - offset}
           y={centerY - offset}
           textAnchor='middle'
-          className='text-lg font-bold fill-current text-green-600 dark:text-green-400'
+          className='text-2xl font-bold fill-current text-green-600 dark:text-green-400 opacity-30'
         >
           II
         </text>
@@ -227,7 +215,7 @@ export const CoordinatePlaneInteractive: React.FC<
           x={centerX - offset}
           y={centerY + offset}
           textAnchor='middle'
-          className='text-lg font-bold fill-current text-red-600 dark:text-red-400'
+          className='text-2xl font-bold fill-current text-red-600 dark:text-red-400 opacity-30'
         >
           III
         </text>
@@ -235,7 +223,7 @@ export const CoordinatePlaneInteractive: React.FC<
           x={centerX + offset}
           y={centerY + offset}
           textAnchor='middle'
-          className='text-lg font-bold fill-current text-purple-600 dark:text-purple-400'
+          className='text-2xl font-bold fill-current text-purple-600 dark:text-purple-400 opacity-30'
         >
           IV
         </text>
@@ -245,30 +233,31 @@ export const CoordinatePlaneInteractive: React.FC<
 
   return (
     <div
-      className={`p-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 ${className}`}
+      className={`p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 ${className}`}
     >
-      <div className='mb-6'>
+      <div className='mb-4'>
         <h3 className='text-lg font-semibold text-gray-900 dark:text-white mb-2'>
           Interactive Coordinate Plane
         </h3>
         <p className='text-sm text-gray-600 dark:text-gray-300'>
-          Click on the grid to place points, or use the controls below. Explore
-          how coordinates work in all four quadrants.
+          Click on the grid to set coordinates, then add the point. Each point
+          shows its quadrant location.
         </p>
       </div>
 
-      <div className='grid lg:grid-cols-3 gap-6'>
+      <div className='flex flex-col lg:flex-row gap-6'>
         {/* Coordinate Plane */}
-        <div className='lg:col-span-2'>
+        <div className='flex-1'>
           <div className='flex justify-center mb-4'>
             <svg
               width={svgSize}
               height={svgSize}
-              className='border border-gray-300 dark:border-gray-600 rounded cursor-crosshair'
+              className='border-2 border-gray-300 dark:border-gray-600 rounded-lg cursor-crosshair bg-white dark:bg-gray-900'
               onClick={handleSvgClick}
+              viewBox={`0 0 ${svgSize} ${svgSize}`}
             >
               {/* Grid lines */}
-              {showGrid && renderGridLines()}
+              {renderGridLines()}
 
               {/* Axis labels */}
               {renderAxisLabels()}
@@ -278,8 +267,8 @@ export const CoordinatePlaneInteractive: React.FC<
 
               {/* Origin label */}
               <text
-                x={centerX + 10}
-                y={centerY - 10}
+                x={centerX + 12}
+                y={centerY - 12}
                 className='text-sm font-bold fill-current text-gray-700 dark:text-gray-300'
               >
                 (0, 0)
@@ -297,27 +286,27 @@ export const CoordinatePlaneInteractive: React.FC<
                 >
                   <polygon
                     points='0 0, 10 3.5, 0 7'
-                    fill='currentColor'
-                    className='text-gray-700 dark:text-gray-300'
+                    fill='#374151'
+                    className='dark:fill-gray-300'
                   />
                 </marker>
               </defs>
 
               {/* X-axis arrow */}
               <line
-                x1={centerX + gridSize * scale - 10}
+                x1={centerX + gridSize * scale - 15}
                 y1={centerY}
-                x2={centerX + gridSize * scale + 10}
+                x2={centerX + gridSize * scale + 15}
                 y2={centerY}
-                stroke='currentColor'
-                strokeWidth='2'
+                stroke='#374151'
+                strokeWidth='3'
                 markerEnd='url(#arrowhead)'
-                className='text-gray-700 dark:text-gray-300'
+                className='dark:stroke-gray-300'
               />
               <text
-                x={centerX + gridSize * scale + 20}
-                y={centerY + 5}
-                className='text-sm font-bold fill-current text-gray-700 dark:text-gray-300'
+                x={centerX + gridSize * scale + 25}
+                y={centerY + 6}
+                className='text-lg font-bold fill-current text-gray-700 dark:text-gray-300'
               >
                 x
               </text>
@@ -325,18 +314,18 @@ export const CoordinatePlaneInteractive: React.FC<
               {/* Y-axis arrow */}
               <line
                 x1={centerX}
-                y1={centerY - gridSize * scale + 10}
+                y1={centerY - gridSize * scale + 15}
                 x2={centerX}
-                y2={centerY - gridSize * scale - 10}
-                stroke='currentColor'
-                strokeWidth='2'
+                y2={centerY - gridSize * scale - 15}
+                stroke='#374151'
+                strokeWidth='3'
                 markerEnd='url(#arrowhead)'
-                className='text-gray-700 dark:text-gray-300'
+                className='dark:stroke-gray-300'
               />
               <text
-                x={centerX + 10}
-                y={centerY - gridSize * scale - 10}
-                className='text-sm font-bold fill-current text-gray-700 dark:text-gray-300'
+                x={centerX + 15}
+                y={centerY - gridSize * scale - 15}
+                className='text-lg font-bold fill-current text-gray-700 dark:text-gray-300'
               >
                 y
               </text>
@@ -344,242 +333,190 @@ export const CoordinatePlaneInteractive: React.FC<
               {/* Points */}
               {points.map(point => {
                 const svgPos = coordToSvg(point.x, point.y);
-                const isSelected = selectedPoint === point.id;
 
                 return (
                   <g key={point.id}>
                     <circle
                       cx={svgPos.x}
                       cy={svgPos.y}
-                      r={isSelected ? '8' : '6'}
+                      r='8'
                       fill={point.color}
                       stroke='white'
-                      strokeWidth='2'
-                      className='cursor-pointer'
-                      onClick={e => {
-                        e.stopPropagation();
-                        setSelectedPoint(point.id);
-                      }}
+                      strokeWidth='3'
+                      className='cursor-pointer hover:r-10 transition-all'
                     />
                     <text
-                      x={svgPos.x + 12}
-                      y={svgPos.y - 8}
-                      className='text-sm font-bold fill-current text-gray-700 dark:text-gray-300'
+                      x={svgPos.x + 15}
+                      y={svgPos.y - 10}
+                      className='text-lg font-bold fill-current text-gray-700 dark:text-gray-300'
                     >
                       {point.label}
                     </text>
-                    {showCoordinates && (
-                      <text
-                        x={svgPos.x + 12}
-                        y={svgPos.y + 6}
-                        className='text-xs fill-current text-gray-600 dark:text-gray-400'
-                      >
-                        ({point.x}, {point.y})
-                      </text>
-                    )}
+                    <text
+                      x={svgPos.x + 15}
+                      y={svgPos.y + 8}
+                      className='text-sm fill-current text-gray-600 dark:text-gray-400'
+                    >
+                      ({point.x}, {point.y})
+                    </text>
                   </g>
                 );
               })}
 
               {/* Preview point */}
-              {newPoint.x !== undefined && newPoint.y !== undefined && (
-                <circle
-                  cx={coordToSvg(newPoint.x, newPoint.y).x}
-                  cy={coordToSvg(newPoint.x, newPoint.y).y}
-                  r='4'
-                  fill='rgba(156, 163, 175, 0.5)'
-                  stroke='#9ca3af'
-                  strokeWidth='1'
-                  strokeDasharray='3,3'
-                />
-              )}
+              {inputX &&
+                inputY &&
+                !isNaN(parseInt(inputX)) &&
+                !isNaN(parseInt(inputY)) && (
+                  <circle
+                    cx={coordToSvg(parseInt(inputX), parseInt(inputY)).x}
+                    cy={coordToSvg(parseInt(inputX), parseInt(inputY)).y}
+                    r='6'
+                    fill='rgba(59, 130, 246, 0.5)'
+                    stroke='#3b82f6'
+                    strokeWidth='2'
+                    strokeDasharray='4,4'
+                  />
+                )}
             </svg>
-          </div>
-
-          {/* Display Options */}
-          <div className='flex flex-wrap gap-4 justify-center'>
-            <label className='flex items-center gap-2'>
-              <input
-                type='checkbox'
-                checked={showGrid}
-                onChange={e => setShowGrid(e.target.checked)}
-                className='rounded'
-              />
-              <span className='text-sm text-gray-700 dark:text-gray-300'>
-                Show Grid
-              </span>
-            </label>
-            <label className='flex items-center gap-2'>
-              <input
-                type='checkbox'
-                checked={showCoordinates}
-                onChange={e => setShowCoordinates(e.target.checked)}
-                className='rounded'
-              />
-              <span className='text-sm text-gray-700 dark:text-gray-300'>
-                Show Coordinates
-              </span>
-            </label>
-            <label className='flex items-center gap-2'>
-              <input
-                type='checkbox'
-                checked={showQuadrants}
-                onChange={e => setShowQuadrants(e.target.checked)}
-                className='rounded'
-              />
-              <span className='text-sm text-gray-700 dark:text-gray-300'>
-                Show Quadrants
-              </span>
-            </label>
           </div>
         </div>
 
-        {/* Controls */}
-        <div>
-          <h4 className='text-md font-medium text-gray-900 dark:text-white mb-3'>
-            Add Point:
-          </h4>
+        {/* Simple Controls */}
+        <div className='w-full lg:w-80'>
+          <div className='bg-gray-50 dark:bg-gray-700 p-4 rounded-lg'>
+            <h4 className='text-md font-medium text-gray-900 dark:text-white mb-4'>
+              Add Point:
+            </h4>
 
-          <div className='space-y-3 mb-6'>
-            <div>
-              <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
-                X-coordinate:
-              </label>
-              <input
-                type='number'
-                value={newPoint.x}
-                onChange={e =>
-                  setNewPoint({ ...newPoint, x: Number(e.target.value) })
-                }
-                className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-white'
-                min={-gridSize}
-                max={gridSize}
-              />
-            </div>
-
-            <div>
-              <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
-                Y-coordinate:
-              </label>
-              <input
-                type='number'
-                value={newPoint.y}
-                onChange={e =>
-                  setNewPoint({ ...newPoint, y: Number(e.target.value) })
-                }
-                className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-white'
-                min={-gridSize}
-                max={gridSize}
-              />
-            </div>
-
-            <div>
-              <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
-                Label:
-              </label>
-              <input
-                type='text'
-                value={newPoint.label}
-                onChange={e =>
-                  setNewPoint({ ...newPoint, label: e.target.value })
-                }
-                className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-white'
-                maxLength={2}
-              />
-            </div>
-
-            <button
-              onClick={addPoint}
-              className='w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors'
-            >
-              Add Point ({newPoint.x}, {newPoint.y})
-            </button>
-          </div>
-
-          {/* Points List */}
-          <h4 className='text-md font-medium text-gray-900 dark:text-white mb-3'>
-            Current Points:
-          </h4>
-
-          <div className='space-y-2 mb-6'>
-            {points.map(point => (
-              <div
-                key={point.id}
-                className={`p-3 rounded-lg border-2 cursor-pointer transition-all ${
-                  selectedPoint === point.id
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                    : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500'
-                }`}
-                onClick={() => setSelectedPoint(point.id)}
-              >
-                <div className='flex items-center justify-between'>
-                  <div className='flex items-center gap-2'>
-                    <div
-                      className='w-4 h-4 rounded-full border-2 border-white'
-                      style={{ backgroundColor: point.color }}
-                    ></div>
-                    <span className='font-medium text-gray-900 dark:text-white'>
-                      {point.label}: ({point.x}, {point.y})
-                    </span>
-                  </div>
-                  <button
-                    onClick={e => {
-                      e.stopPropagation();
-                      removePoint(point.id);
-                    }}
-                    className='text-red-600 hover:text-red-700 text-sm'
-                  >
-                    Remove
-                  </button>
+            <div className='space-y-3 mb-4'>
+              <div className='grid grid-cols-2 gap-3'>
+                <div>
+                  <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
+                    X-coordinate:
+                  </label>
+                  <input
+                    type='number'
+                    value={inputX}
+                    onChange={e => setInputX(e.target.value)}
+                    className='w-full px-3 py-2 text-lg text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-white'
+                    min={-gridSize}
+                    max={gridSize}
+                  />
                 </div>
-                <div className='text-xs text-gray-500 dark:text-gray-400 mt-1'>
-                  Quadrant {getQuadrant(point.x, point.y)}
+
+                <div>
+                  <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
+                    Y-coordinate:
+                  </label>
+                  <input
+                    type='number'
+                    value={inputY}
+                    onChange={e => setInputY(e.target.value)}
+                    className='w-full px-3 py-2 text-lg text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-white'
+                    min={-gridSize}
+                    max={gridSize}
+                  />
                 </div>
               </div>
-            ))}
-          </div>
 
-          {/* Quick Examples */}
-          <div className='p-3 bg-gray-50 dark:bg-gray-700 rounded-lg'>
-            <h5 className='text-sm font-medium text-gray-900 dark:text-white mb-2'>
-              Quick Examples:
-            </h5>
-            <div className='grid grid-cols-2 gap-1 text-xs'>
               <button
-                onClick={() => setNewPoint({ x: 4, y: 3, label: 'P' })}
-                className='p-1 bg-blue-100 dark:bg-blue-800 hover:bg-blue-200 dark:hover:bg-blue-700 text-blue-800 dark:text-blue-200 rounded'
+                onClick={addPoint}
+                disabled={isNaN(parseInt(inputX)) || isNaN(parseInt(inputY))}
+                className='w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg font-medium transition-colors'
               >
-                (4, 3)
+                Add Point {nextLabel} ({inputX}, {inputY})
               </button>
-              <button
-                onClick={() => setNewPoint({ x: -3, y: 2, label: 'Q' })}
-                className='p-1 bg-green-100 dark:bg-green-800 hover:bg-green-200 dark:hover:bg-green-700 text-green-800 dark:text-green-200 rounded'
-              >
-                (-3, 2)
-              </button>
-              <button
-                onClick={() => setNewPoint({ x: -2, y: -4, label: 'R' })}
-                className='p-1 bg-red-100 dark:bg-red-800 hover:bg-red-200 dark:hover:bg-red-700 text-red-800 dark:text-red-200 rounded'
-              >
-                (-2, -4)
-              </button>
-              <button
-                onClick={() => setNewPoint({ x: 5, y: -1, label: 'S' })}
-                className='p-1 bg-purple-100 dark:bg-purple-800 hover:bg-purple-200 dark:hover:bg-purple-700 text-purple-800 dark:text-purple-200 rounded'
-              >
-                (5, -1)
-              </button>
+            </div>
+
+            {/* Current Points */}
+            {points.length > 0 && (
+              <div>
+                <h4 className='text-md font-medium text-gray-900 dark:text-white mb-3'>
+                  Current Points:
+                </h4>
+
+                <div className='space-y-2'>
+                  {points.map(point => (
+                    <div
+                      key={point.id}
+                      className='flex items-center justify-between p-2 bg-white dark:bg-gray-800 rounded border'
+                    >
+                      <div className='flex items-center gap-2'>
+                        <div
+                          className='w-4 h-4 rounded-full border-2 border-white'
+                          style={{ backgroundColor: point.color }}
+                        ></div>
+                        <span className='font-medium text-gray-900 dark:text-white'>
+                          {point.label}: ({point.x}, {point.y})
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => removePoint(point.id)}
+                        className='text-red-600 hover:text-red-700 text-sm px-2 py-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20'
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Quick Examples */}
+            <div className='mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg'>
+              <h5 className='text-sm font-medium text-blue-800 dark:text-blue-200 mb-2'>
+                Quick Examples:
+              </h5>
+              <div className='grid grid-cols-2 gap-2 text-xs'>
+                <button
+                  onClick={() => {
+                    setInputX('4');
+                    setInputY('3');
+                  }}
+                  className='p-2 bg-blue-100 dark:bg-blue-800 hover:bg-blue-200 dark:hover:bg-blue-700 text-blue-800 dark:text-blue-200 rounded'
+                >
+                  (4, 3)
+                </button>
+                <button
+                  onClick={() => {
+                    setInputX('-3');
+                    setInputY('2');
+                  }}
+                  className='p-2 bg-green-100 dark:bg-green-800 hover:bg-green-200 dark:hover:bg-green-700 text-green-800 dark:text-green-200 rounded'
+                >
+                  (-3, 2)
+                </button>
+                <button
+                  onClick={() => {
+                    setInputX('-2');
+                    setInputY('-4');
+                  }}
+                  className='p-2 bg-red-100 dark:bg-red-800 hover:bg-red-200 dark:hover:bg-red-700 text-red-800 dark:text-red-200 rounded'
+                >
+                  (-2, -4)
+                </button>
+                <button
+                  onClick={() => {
+                    setInputX('5');
+                    setInputY('-1');
+                  }}
+                  className='p-2 bg-purple-100 dark:bg-purple-800 hover:bg-purple-200 dark:hover:bg-purple-700 text-purple-800 dark:text-purple-200 rounded'
+                >
+                  (5, -1)
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Quadrant Information */}
-      <div className='mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg'>
+      <div className='mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg'>
         <h5 className='text-sm font-medium text-blue-800 dark:text-blue-200 mb-2'>
           📍 Quadrant Guide:
         </h5>
-        <div className='grid grid-cols-2 md:grid-cols-4 gap-2 text-xs text-blue-700 dark:text-blue-300'>
+        <div className='grid grid-cols-2 md:grid-cols-4 gap-2 text-sm text-blue-700 dark:text-blue-300'>
           <div>
             <strong>Quadrant I:</strong> (+, +)
           </div>
@@ -593,9 +530,9 @@ export const CoordinatePlaneInteractive: React.FC<
             <strong>Quadrant IV:</strong> (+, -)
           </div>
         </div>
-        <div className='mt-2 text-xs text-blue-600 dark:text-blue-400'>
-          <strong>Remember:</strong> The first number is x (horizontal), the
-          second is y (vertical).
+        <div className='mt-2 text-sm text-blue-600 dark:text-blue-400'>
+          <strong>Tip:</strong> Click anywhere on the grid to set coordinates,
+          then click "Add Point" to place it!
         </div>
       </div>
     </div>

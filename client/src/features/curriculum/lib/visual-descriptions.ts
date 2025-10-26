@@ -223,6 +223,13 @@ export const VISUAL_DESCRIPTIONS: Record<string, VisualDescription> = {
       'This converter shows the relationship between ratios and percentages using both pie charts and bar models.',
     category: 'percentages-ratios',
   },
+
+  // Chapter 7: Data and Statistics Basics
+  StatisticsDataVisualizer: {
+    description:
+      'Interactive tool for exploring **Quantitative** and **Qualitative** data types, calculating mean, median, and mode.',
+    category: 'statistics',
+  },
 };
 
 // Component name aliases for descriptions (matches VisualComponentRegistry)
@@ -267,6 +274,7 @@ const DESCRIPTION_ALIASES: Record<string, string> = {
   'equivalent-ratios-bars': 'EquivalentRatiosBars',
   'percentage-change-visualizer': 'PercentageChangeVisualizer',
   'ratio-to-percentage-converter': 'RatioToPercentageConverter',
+  'statistics-data-visualizer': 'StatisticsDataVisualizer',
 
   // Legacy aliases
   FractionSimplifier: 'EquivalentFractionBars',

@@ -104,21 +104,28 @@ export const StatisticsDataVisualizer: React.FC<
       .map(Number)
       .sort((a, b) => a - b);
 
-    const barWidth = Math.min(40, 300 / values.length);
-    const chartHeight = 200;
-    const chartWidth = values.length * (barWidth + 10) + 20;
+    const barWidth = Math.min(60, 500 / values.length);
+    const chartHeight = 300;
+    const svgWidth = Math.max(600, values.length * (barWidth + 15) + 80);
+    const svgHeight = chartHeight + 120; // Increased height for more spacing
+    const topOffset = svgHeight * 0.2; // 20% offset from top
+
+    // Calculate total chart content width
+    const totalContentWidth = values.length * (barWidth + 15) - 15;
+    // Center the chart content within the SVG
+    const startX = (svgWidth - totalContentWidth) / 2;
 
     return (
       <svg
-        width={Math.max(chartWidth, 300)}
-        height={chartHeight + 60}
+        width={svgWidth}
+        height={svgHeight}
         className='border border-gray-300 dark:border-gray-600 rounded'
       >
         {values.map((value, index) => {
           const freq = frequency[value];
-          const barHeight = (freq / maxFreq) * (chartHeight - 40);
-          const x = 20 + index * (barWidth + 10);
-          const y = chartHeight - barHeight - 20;
+          const barHeight = (freq / maxFreq) * (chartHeight - 60);
+          const x = startX + index * (barWidth + 15);
+          const y = topOffset + chartHeight - barHeight - 30;
 
           return (
             <g key={value}>
@@ -132,7 +139,7 @@ export const StatisticsDataVisualizer: React.FC<
               />
               <text
                 x={x + barWidth / 2}
-                y={chartHeight - 5}
+                y={topOffset + chartHeight - 5}
                 textAnchor='middle'
                 className='text-xs fill-current text-gray-700 dark:text-gray-300'
               >
@@ -149,25 +156,6 @@ export const StatisticsDataVisualizer: React.FC<
             </g>
           );
         })}
-
-        {/* Y-axis label */}
-        <text
-          x='10'
-          y='20'
-          className='text-xs fill-current text-gray-600 dark:text-gray-400'
-        >
-          Frequency
-        </text>
-
-        {/* X-axis label */}
-        <text
-          x={chartWidth / 2}
-          y={chartHeight + 40}
-          textAnchor='middle'
-          className='text-xs fill-current text-gray-600 dark:text-gray-400'
-        >
-          Values
-        </text>
       </svg>
     );
   };
@@ -179,20 +167,24 @@ export const StatisticsDataVisualizer: React.FC<
       .sort((a, b) => a - b);
     const maxFreq = Math.max(...Object.values(frequency));
 
-    const dotSize = 8;
-    const spacing = 25;
-    const chartWidth = values.length * spacing + 40;
-    const chartHeight = maxFreq * (dotSize + 2) + 60;
+    const dotSize = 10;
+    const spacing = Math.max(35, 600 / values.length);
+    const svgWidth = Math.max(600, values.length * spacing + 80);
+    const svgHeight = maxFreq * (dotSize + 3) + 80;
+
+    // Calculate total content width and center it
+    const totalContentWidth = (values.length - 1) * spacing;
+    const startX = (svgWidth - totalContentWidth) / 2;
 
     return (
       <svg
-        width={Math.max(chartWidth, 300)}
-        height={chartHeight}
+        width={svgWidth}
+        height={svgHeight}
         className='border border-gray-300 dark:border-gray-600 rounded'
       >
         {values.map((value, valueIndex) => {
           const freq = frequency[value];
-          const x = 20 + valueIndex * spacing;
+          const x = startX + valueIndex * spacing;
 
           return (
             <g key={value}>
@@ -201,7 +193,7 @@ export const StatisticsDataVisualizer: React.FC<
                 <circle
                   key={dotIndex}
                   cx={x}
-                  cy={chartHeight - 30 - dotIndex * (dotSize + 2)}
+                  cy={svgHeight - 40 - dotIndex * (dotSize + 2)}
                   r={dotSize / 2}
                   fill='#22c55e'
                   className='hover:fill-green-600'
@@ -211,7 +203,7 @@ export const StatisticsDataVisualizer: React.FC<
               {/* Value label */}
               <text
                 x={x}
-                y={chartHeight - 10}
+                y={svgHeight - 15}
                 textAnchor='middle'
                 className='text-xs fill-current text-gray-700 dark:text-gray-300'
               >
@@ -220,16 +212,6 @@ export const StatisticsDataVisualizer: React.FC<
             </g>
           );
         })}
-
-        {/* X-axis label */}
-        <text
-          x={chartWidth / 2}
-          y={chartHeight - 5}
-          textAnchor='middle'
-          className='text-xs fill-current text-gray-600 dark:text-gray-400'
-        >
-          Values
-        </text>
       </svg>
     );
   };
@@ -259,20 +241,23 @@ export const StatisticsDataVisualizer: React.FC<
     });
 
     const maxCount = Math.max(...bins.map(bin => bin.count));
-    const chartHeight = 200;
-    const chartWidth = 400;
-    const barWidth = (chartWidth - 40) / binCount;
+    const chartHeight = 300;
+    const svgWidth = 700;
+    const svgHeight = chartHeight + 80;
+    const totalBarsWidth = binCount * 50; // Approximate bar width with spacing
+    const startX = (svgWidth - totalBarsWidth) / 2;
+    const barWidth = totalBarsWidth / binCount - 2;
 
     return (
       <svg
-        width={chartWidth}
-        height={chartHeight + 60}
+        width={svgWidth}
+        height={svgHeight}
         className='border border-gray-300 dark:border-gray-600 rounded'
       >
         {bins.map((bin, index) => {
-          const barHeight = (bin.count / maxCount) * (chartHeight - 40);
-          const x = 20 + index * barWidth;
-          const y = chartHeight - barHeight - 20;
+          const barHeight = (bin.count / maxCount) * (chartHeight - 60);
+          const x = startX + index * (barWidth + 2);
+          const y = chartHeight - barHeight - 30;
 
           return (
             <g key={index}>
@@ -305,23 +290,6 @@ export const StatisticsDataVisualizer: React.FC<
             </g>
           );
         })}
-
-        {/* Labels */}
-        <text
-          x='10'
-          y='20'
-          className='text-xs fill-current text-gray-600 dark:text-gray-400'
-        >
-          Frequency
-        </text>
-        <text
-          x={chartWidth / 2}
-          y={chartHeight + 40}
-          textAnchor='middle'
-          className='text-xs fill-current text-gray-600 dark:text-gray-400'
-        >
-          Value Ranges
-        </text>
       </svg>
     );
   };
@@ -390,130 +358,176 @@ export const StatisticsDataVisualizer: React.FC<
         </div>
       </div>
 
-      <div className='grid lg:grid-cols-2 gap-6'>
-        {/* Statistics Results */}
-        <div>
-          <h4 className='text-md font-medium text-gray-900 dark:text-white mb-4'>
-            Statistical Measures:
+      {/* Statistical Measures - Compact Horizontal Layout */}
+      <div className='mb-6'>
+        <h4 className='text-md font-medium text-gray-900 dark:text-white mb-4'>
+          Statistical Measures:
+        </h4>
+
+        <div className='grid grid-cols-2 lg:grid-cols-4 gap-4'>
+          {/* Mean */}
+          <div className='p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg'>
+            <div className='flex items-center justify-between mb-1'>
+              <div className='text-xs font-medium text-blue-700 dark:text-blue-300'>
+                Mean (Average)
+              </div>
+              <div className='text-blue-600 dark:text-blue-400 text-lg'>📊</div>
+            </div>
+            <div className='text-xl font-bold text-blue-900 dark:text-blue-100'>
+              {dataSet.mean.toFixed(2)}
+            </div>
+            {showCalculations && (
+              <div className='mt-1 text-xs text-blue-600 dark:text-blue-400'>
+                Sum: {dataSet.values.reduce((sum, val) => sum + val, 0)} ÷
+                Count: {dataSet.values.length}
+              </div>
+            )}
+          </div>
+
+          {/* Median */}
+          <div className='p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg'>
+            <div className='flex items-center justify-between mb-1'>
+              <div className='text-xs font-medium text-green-700 dark:text-green-300'>
+                Median (Middle)
+              </div>
+              <div className='text-green-600 dark:text-green-400 text-lg'>
+                📍
+              </div>
+            </div>
+            <div className='text-xl font-bold text-green-900 dark:text-green-100'>
+              {dataSet.median}
+            </div>
+            {showCalculations && (
+              <div className='mt-1 text-xs text-green-600 dark:text-green-400'>
+                Sorted: [{dataSet.values.join(', ')}]
+              </div>
+            )}
+          </div>
+
+          {/* Mode */}
+          <div className='p-3 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg'>
+            <div className='flex items-center justify-between mb-1'>
+              <div className='text-xs font-medium text-purple-700 dark:text-purple-300'>
+                Mode (Most Frequent)
+              </div>
+              <div className='text-purple-600 dark:text-purple-400 text-lg'>
+                🎯
+              </div>
+            </div>
+            <div className='text-xl font-bold text-purple-900 dark:text-purple-100'>
+              {dataSet.mode.length === dataSet.values.length
+                ? 'No mode'
+                : dataSet.mode.join(', ')}
+            </div>
+          </div>
+
+          {/* Range */}
+          <div className='p-3 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg'>
+            <div className='flex items-center justify-between mb-1'>
+              <div className='text-xs font-medium text-orange-700 dark:text-orange-300'>
+                Range (Spread)
+              </div>
+              <div className='text-orange-600 dark:text-orange-400 text-lg'>
+                📏
+              </div>
+            </div>
+            <div className='text-xl font-bold text-orange-900 dark:text-orange-100'>
+              {dataSet.range}
+            </div>
+            {showCalculations && (
+              <div className='mt-1 text-xs text-orange-600 dark:text-orange-400'>
+                Max: {Math.max(...dataSet.values)} - Min:{' '}
+                {Math.min(...dataSet.values)}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Data Visualization - Full Width */}
+      <div>
+        <div className='flex justify-between items-center mb-4'>
+          <h4 className='text-md font-medium text-gray-900 dark:text-white'>
+            Data Visualization:
           </h4>
+          <select
+            value={chartType}
+            onChange={e =>
+              setChartType(e.target.value as 'bar' | 'dot' | 'histogram')
+            }
+            className='px-3 py-1 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm'
+          >
+            <option value='bar'>Bar Chart</option>
+            <option value='dot'>Dot Plot</option>
+            <option value='histogram'>Histogram</option>
+          </select>
+        </div>
 
-          <div className='space-y-4'>
-            {/* Mean */}
-            <div className='p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg'>
-              <div className='flex justify-between items-center'>
-                <div>
-                  <div className='text-sm font-medium text-blue-700 dark:text-blue-300'>
-                    Mean (Average)
-                  </div>
-                  <div className='text-2xl font-bold text-blue-900 dark:text-blue-100'>
-                    {dataSet.mean.toFixed(2)}
-                  </div>
-                </div>
-                <div className='text-blue-600 dark:text-blue-400 text-2xl'>
-                  📊
-                </div>
-              </div>
-              {showCalculations && (
-                <div className='mt-2 text-xs text-blue-600 dark:text-blue-400'>
-                  Sum: {dataSet.values.reduce((sum, val) => sum + val, 0)} ÷
-                  Count: {dataSet.values.length}
-                </div>
-              )}
-            </div>
-
-            {/* Median */}
-            <div className='p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg'>
-              <div className='flex justify-between items-center'>
-                <div>
-                  <div className='text-sm font-medium text-green-700 dark:text-green-300'>
-                    Median (Middle)
-                  </div>
-                  <div className='text-2xl font-bold text-green-900 dark:text-green-100'>
-                    {dataSet.median}
-                  </div>
-                </div>
-                <div className='text-green-600 dark:text-green-400 text-2xl'>
-                  📍
-                </div>
-              </div>
-              {showCalculations && (
-                <div className='mt-2 text-xs text-green-600 dark:text-green-400'>
-                  Sorted: [{dataSet.values.join(', ')}]
-                </div>
-              )}
-            </div>
-
-            {/* Mode */}
-            <div className='p-4 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg'>
-              <div className='flex justify-between items-center'>
-                <div>
-                  <div className='text-sm font-medium text-purple-700 dark:text-purple-300'>
-                    Mode (Most Frequent)
-                  </div>
-                  <div className='text-2xl font-bold text-purple-900 dark:text-purple-100'>
-                    {dataSet.mode.length === dataSet.values.length
-                      ? 'No mode'
-                      : dataSet.mode.join(', ')}
-                  </div>
-                </div>
-                <div className='text-purple-600 dark:text-purple-400 text-2xl'>
-                  🎯
-                </div>
-              </div>
-            </div>
-
-            {/* Range */}
-            <div className='p-4 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg'>
-              <div className='flex justify-between items-center'>
-                <div>
-                  <div className='text-sm font-medium text-orange-700 dark:text-orange-300'>
-                    Range (Spread)
-                  </div>
-                  <div className='text-2xl font-bold text-orange-900 dark:text-orange-100'>
-                    {dataSet.range}
-                  </div>
-                </div>
-                <div className='text-orange-600 dark:text-orange-400 text-2xl'>
-                  📏
-                </div>
-              </div>
-              {showCalculations && (
-                <div className='mt-2 text-xs text-orange-600 dark:text-orange-400'>
-                  Max: {Math.max(...dataSet.values)} - Min:{' '}
-                  {Math.min(...dataSet.values)}
-                </div>
-              )}
-            </div>
+        <div className='flex flex-col items-center'>
+          <div className='mb-2 text-sm font-medium text-gray-600 dark:text-gray-400'>
+            Frequency
+          </div>
+          <div className='flex justify-center items-center p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700'>
+            {renderChart()}
+          </div>
+          <div className='mt-2 text-sm font-medium text-gray-600 dark:text-gray-400'>
+            Values
           </div>
         </div>
 
-        {/* Data Visualization */}
-        <div>
-          <div className='flex justify-between items-center mb-4'>
-            <h4 className='text-md font-medium text-gray-900 dark:text-white'>
-              Data Visualization:
-            </h4>
-            <select
-              value={chartType}
-              onChange={e =>
-                setChartType(e.target.value as 'bar' | 'dot' | 'histogram')
-              }
-              className='px-3 py-1 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm'
-            >
-              <option value='bar'>Bar Chart</option>
-              <option value='dot'>Dot Plot</option>
-              <option value='histogram'>Histogram</option>
-            </select>
-          </div>
+        <div className='mt-3 text-xs text-gray-500 dark:text-gray-400 text-center'>
+          {chartType === 'bar' && 'Bar Chart: Shows frequency of each value'}
+          {chartType === 'dot' &&
+            'Dot Plot: Each dot represents one data point'}
+          {chartType === 'histogram' &&
+            'Histogram: Shows distribution across value ranges'}
+        </div>
 
-          <div className='flex justify-center'>{renderChart()}</div>
-
-          <div className='mt-3 text-xs text-gray-500 dark:text-gray-400 text-center'>
-            {chartType === 'bar' && 'Bar Chart: Shows frequency of each value'}
-            {chartType === 'dot' &&
-              'Dot Plot: Each dot represents one data point'}
-            {chartType === 'histogram' &&
-              'Histogram: Shows distribution across value ranges'}
+        {/* Educational Explanation */}
+        <div className='mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg'>
+          <h5 className='text-sm font-medium text-blue-800 dark:text-blue-200 mb-2'>
+            💡 Understanding the Chart:
+          </h5>
+          <div className='text-xs text-blue-700 dark:text-blue-300'>
+            {chartType === 'bar' && (
+              <div>
+                <p className='mb-1'>
+                  <strong>Bar height = how often each value appears</strong>{' '}
+                  (not the value itself)
+                </p>
+                <p>
+                  If all bars are the same height, it means each value appears
+                  the same number of times in your data. Try the "Simple
+                  Dataset" example to see different bar heights!
+                </p>
+              </div>
+            )}
+            {chartType === 'dot' && (
+              <div>
+                <p className='mb-1'>
+                  <strong>
+                    Number of dots stacked = how often each value appears
+                  </strong>
+                </p>
+                <p>
+                  More dots stacked means that value appears more frequently in
+                  your data.
+                </p>
+              </div>
+            )}
+            {chartType === 'histogram' && (
+              <div>
+                <p className='mb-1'>
+                  <strong>
+                    Bar height = how many values fall in each range
+                  </strong>
+                </p>
+                <p>
+                  This groups similar values together to show the overall
+                  distribution pattern.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
