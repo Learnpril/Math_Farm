@@ -148,18 +148,18 @@
   }
 
   .math-expression mjx-math {
-    font-size: 0.875rem !important;
+    font-size: 1.125rem !important;
     max-width: 100%;
   }
 
   /* Responsive font sizes for reading section math expressions */
   .reading-section-math .math-expression mjx-math {
-    font-size: 0.9rem !important;
+    font-size: 1.225rem !important;
   }
 
   @media (min-width: 1024px) {
     .reading-section-math .math-expression mjx-math {
-      font-size: 1rem !important;
+      font-size: 1.275rem !important;
     }
   }
 
@@ -593,9 +593,10 @@ e math expressions */
 
 /* Reading section math expressions */
 .reading-section-math .MathJax {
-  font-size: 1.1em !important;
-}/* Inl
-ine math expressions - truly inline */
+  font-size: 1.275em !important;
+}
+
+/* Inline math expressions - truly inline */
 .inline-math {
   display: inline !important;
   margin: 0 !important;
@@ -604,7 +605,7 @@ ine math expressions - truly inline */
 }
 
 .inline-math .MathJax {
-  font-size: 1em !important;
+  font-size: 1.175em !important;
   display: inline !important;
   margin: 0 1px !important;
   padding: 0 !important;
@@ -620,13 +621,13 @@ ine math expressions - truly inline */
 }
 
 .display-math .MathJax {
-  font-size: 1.1em !important;
+  font-size: 1.325em !important;
   display: block !important;
   text-align: center !important;
   margin: 0 auto !important;
 }
 
-/* Reading section math expressions */
+/* Reading section math expressions (duplicate - keeping consistent) */
 .reading-section-math .MathJax {
-  font-size: 1.1em !important;
+  font-size: 1.275em !important;
 }

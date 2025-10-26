@@ -44,7 +44,7 @@ export function MathExpression({
           },
           svg: {
             fontCache: 'local',
-            scale: 1.2,
+            scale: 1.55,
           },
           startup: {
             ready: () => {
@@ -131,7 +131,11 @@ export function MathExpression({
         textAlign: inline ? 'inherit' : 'center',
         margin: inline ? '0 2px' : '1rem 0',
         // Only set fontSize if no text size class is provided in className
-        fontSize: className.includes('text-') ? 'inherit' : (inline ? '1.1em' : '1.25em'),
+        fontSize: className.includes('text-')
+          ? 'inherit'
+          : inline
+            ? '1.25em'
+            : '1.4em',
         lineHeight: inline ? '1.4' : '1.5',
       }}
     />

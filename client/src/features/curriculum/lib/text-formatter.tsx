@@ -1,10 +1,13 @@
 import React from 'react';
+import { MathExpression } from '../components/MathExpression';
 
 /**
  * Enhanced text formatter that creates textbook-like readable content:
  * **bold** -> <strong>bold</strong>
  * *italic* -> <em>italic</em>
  * __underline__ -> <u>underline</u>
+ * \(math\) -> <MathExpression inline>math</MathExpression>
+ * \[math\] -> <MathExpression>math</MathExpression>
  *
  * Groups content into natural paragraphs for better readability
  */
@@ -153,6 +156,20 @@ function formatInlineText(text: string): React.ReactNode[] {
 
   // Regex patterns for different formatting
   const patterns = [
+    {
+      regex: /\\\((.*?)\\\)/g,
+      component: (content: string, key: number) => (
+        <MathExpression key={key} inline>
+          {content}
+        </MathExpression>
+      ),
+    },
+    {
+      regex: /\\\[(.*?)\\\]/g,
+      component: (content: string, key: number) => (
+        <MathExpression key={key}>{content}</MathExpression>
+      ),
+    },
     {
       regex: /\*\*(.*?)\*\*/g,
       component: (content: string, key: number) => (
