@@ -1,0 +1,145 @@
+{
+  "id": "chapter-02",
+  "title": "Systems of Linear Equations",
+  "objectives": [
+    "Understand what constitutes a system of linear equations",
+    "Solve systems using the substitution method",
+    "Solve systems using the elimination method",
+    "Solve systems using graphical methods",
+    "Identify systems with no solution, one solution, or infinitely many solutions",
+    "Apply systems of equations to real-world problems",
+    "Choose the most efficient method for solving different types of systems"
+  ],
+  "prerequisites": [
+    "Mastery of solving single linear equations",
+    "Understanding of graphing linear equations",
+    "Ability to work with fractions and negative numbers",
+    "Knowledge of coordinate plane and slope-intercept form"
+  ],
+  "introduction": {
+    "context": "Many real-world problems involve multiple unknown quantities with multiple constraints. Systems of linear equations provide a powerful tool for solving such problems systematically. Whether determining optimal production levels, analyzing market equilibrium, or planning resource allocation, systems of equations model complex relationships between variables.",
+    "connection": "Systems appear in everyday scenarios: mixing solutions in chemistry, planning budgets with multiple constraints, determining break-even points in business, analyzing supply and demand in economics, and optimizing routes in logistics. This chapter extends single-equation solving to handle multiple equations simultaneously.",
+    "historicalContext": "Systems of linear equations have ancient roots. Chinese mathematicians used matrix-like methods around 200 BCE in 'The Nine Chapters on the Mathematical Art.' Gaussian elimination, named after Carl Friedrich Gauss, was actually known to Chinese mathematicians over 1000 years earlier. Modern applications in linear programming and optimization theory have made systems of equations central to operations research, economics, and computer science.",
+    "realWorldApplications": "Systems model countless real situations: business (profit optimization with constraints), engineering (circuit analysis, structural design), economics (market equilibrium, resource allocation), science (chemical reactions, population dynamics), and daily life (diet planning, time management, financial planning)."
+  },
+  "theory": {
+    "concepts": [
+      {
+        "title": "Introduction to Systems of Linear Equations",
+        "content": "A system of linear equations consists of two or more linear equations with the same variables. The solution to a system is the set of values that satisfies all equations simultaneously.\n\nConsider this system:\nx + y = 7\n2x - y = 5\n\nThe solution is the point (x, y) that makes both equations true. We can verify that x = 4, y = 3 works:\nFirst equation: 4 + 3 = 7 ✓\nSecond equation: 2(4) - 3 = 8 - 3 = 5 ✓\n\nSystems can have:\n- **Exactly one solution**: Lines intersect at one point (consistent and independent)\n- **No solution**: Lines are parallel (inconsistent)\n- **Infinitely many solutions**: Lines are identical (consistent and dependent)\n\nGraphically, each linear equation represents a line on the coordinate plane. The solution(s) correspond to the intersection point(s) of these lines.\n\nUnderstanding the geometric interpretation helps visualize why different solution types exist and guides our choice of solving methods.",
+        "latex": "\\begin{cases} x + y = 7 \\\\ 2x - y = 5 \\end{cases}",
+        "visuals": ["SystemOfEquationsVisualizer"]
+      },
+      {
+        "title": "Substitution Method",
+        "content": "The substitution method solves systems by expressing one variable in terms of another, then substituting this expression into the other equation.\n\nSteps for substitution:\n1. Solve one equation for one variable\n2. Substitute this expression into the other equation\n3. Solve the resulting single-variable equation\n4. Substitute back to find the other variable\n5. Check the solution in both original equations\n\nExample: Solve the system\nx + y = 10\n3x - 2y = 5\n\nStep 1: From the first equation, y = 10 - x\nStep 2: Substitute into the second equation:\n3x - 2(10 - x) = 5\n3x - 20 + 2x = 5\n5x - 20 = 5\n5x = 25\nx = 5\n\nStep 3: Find y: y = 10 - 5 = 5\nStep 4: Check: 5 + 5 = 10 ✓ and 3(5) - 2(5) = 15 - 10 = 5 ✓\n\nSubstitution works well when one equation can be easily solved for a variable, especially when coefficients are 1 or -1.",
+        "latex": "\\begin{cases} x + y = 10 \\\\ 3x - 2y = 5 \\end{cases} \\Rightarrow (5, 5)",
+        "visuals": []
+      },
+      {
+        "title": "Elimination Method",
+        "content": "The elimination method solves systems by adding or subtracting equations to eliminate one variable, creating a single-variable equation.\n\nSteps for elimination:\n1. Align equations with like terms in columns\n2. Multiply one or both equations to make coefficients of one variable opposites\n3. Add the equations to eliminate that variable\n4. Solve the resulting single-variable equation\n5. Substitute back to find the other variable\n6. Check the solution\n\nExample: Solve the system\n3x + 2y = 16\n5x - 2y = 8\n\nNotice the y-coefficients are already opposites (2 and -2).\nAdd the equations:\n(3x + 2y) + (5x - 2y) = 16 + 8\n8x = 24\nx = 3\n\nSubstitute x = 3 into the first equation:\n3(3) + 2y = 16\n9 + 2y = 16\n2y = 7\ny = 3.5\n\nCheck: 3(3) + 2(3.5) = 9 + 7 = 16 ✓ and 5(3) - 2(3.5) = 15 - 7 = 8 ✓\n\nElimination is efficient when coefficients align well or when substitution would create fractions.",
+        "latex": "\\begin{cases} 3x + 2y = 16 \\\\ 5x - 2y = 8 \\end{cases} \\Rightarrow (3, 3.5)",
+        "visuals": []
+      }
+    ]
+  },
+  "examples": [
+    {
+      "problem": "Solve using substitution: x + y = 5 and 2x - y = 4",
+      "solution": "(3, 2)",
+      "steps": [
+        "From first equation: y = 5 - x",
+        "Substitute into second equation: 2x - (5 - x) = 4",
+        "Expand: 2x - 5 + x = 4",
+        "Combine like terms: 3x - 5 = 4",
+        "Add 5 to both sides: 3x = 9",
+        "Divide by 3: x = 3",
+        "Find y: y = 5 - 3 = 2",
+        "Check: 3 + 2 = 5 ✓ and 2(3) - 2 = 6 - 2 = 4 ✓"
+      ],
+      "latex": "\\begin{cases} x + y = 5 \\\\ 2x - y = 4 \\end{cases}"
+    },
+    {
+      "problem": "Solve using elimination: 3x + 2y = 16 and 5x - 2y = 8",
+      "solution": "(3, 3.5)",
+      "steps": [
+        "Notice y-coefficients are opposites: +2y and -2y",
+        "Add the equations: (3x + 2y) + (5x - 2y) = 16 + 8",
+        "Simplify: 8x = 24",
+        "Solve: x = 3",
+        "Substitute into first equation: 3(3) + 2y = 16",
+        "Simplify: 9 + 2y = 16",
+        "Solve: 2y = 7, so y = 3.5",
+        "Check: 3(3) + 2(3.5) = 9 + 7 = 16 ✓"
+      ],
+      "latex": "\\begin{cases} 3x + 2y = 16 \\\\ 5x - 2y = 8 \\end{cases}"
+    }
+  ],
+  "practice": [
+    {
+      "id": "algebra-02-01",
+      "type": "fill-in",
+      "difficulty": 3,
+      "problem": "Solve using substitution: x + y = 5 and 2x - y = 4. What is x?",
+      "correct": "3",
+      "explanation": "From first equation: y = 5 - x. Substitute: 2x - (5 - x) = 4. Simplify: 3x - 5 = 4. Solve: x = 3.",
+      "hints": [
+        "Solve the first equation for y",
+        "Substitute this expression into the second equation",
+        "Solve the resulting equation for x"
+      ]
+    },
+    {
+      "id": "algebra-02-02",
+      "type": "multiple-choice",
+      "difficulty": 3,
+      "problem": "Solve using elimination: 2x + 3y = 12 and 2x - y = 4",
+      "options": ["(3, 2)", "(2, 3)", "(4, 1)", "(1, 4)"],
+      "correct": 0,
+      "explanation": "Subtract the second equation from the first: (2x + 3y) - (2x - y) = 12 - 4. This gives 4y = 8, so y = 2. Substitute back: 2x + 3(2) = 12, so x = 3.",
+      "hints": [
+        "Look for coefficients that can be easily eliminated",
+        "Subtract the equations to eliminate x",
+        "Substitute back to find the other variable"
+      ]
+    },
+    {
+      "id": "algebra-02-03",
+      "type": "fill-in",
+      "difficulty": 4,
+      "problem": "A system has equations x + 2y = 7 and 3x + 6y = 21. How many solutions does this system have?",
+      "correct": "infinitely many",
+      "explanation": "The second equation is exactly 3 times the first equation: 3(x + 2y) = 3(7) gives 3x + 6y = 21. Since both equations represent the same line, the system has infinitely many solutions.",
+      "hints": [
+        "Check if one equation is a multiple of the other",
+        "If the equations represent parallel lines, there's no solution",
+        "If they represent the same line, there are infinitely many solutions"
+      ]
+    },
+    {
+      "id": "algebra-02-04",
+      "type": "multiple-choice",
+      "difficulty": 2,
+      "problem": "Which method would be most efficient for solving: 4x + y = 11 and 2x - y = 7?",
+      "options": [
+        "Elimination",
+        "Substitution",
+        "Graphing",
+        "All equally efficient"
+      ],
+      "correct": 0,
+      "explanation": "Elimination is most efficient because the y-coefficients are already opposites (+1 and -1), so we can immediately add the equations to eliminate y.",
+      "hints": [
+        "Look at the coefficients of the variables",
+        "Are any coefficients already opposites?",
+        "Which method requires the fewest steps?"
+      ]
+    }
+  ],
+  "tools": ["SystemOfEquationsVisualizer"],
+  "assessment": {
+    "masteryThreshold": 0.8,
+    "requiredProblems": 4
+  }
+}

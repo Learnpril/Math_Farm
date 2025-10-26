@@ -24,7 +24,8 @@ export function ArithmeticCurriculumPage() {
   const [error, setError] = useState<string | null>(null);
 
   const currentChapterNumber = chapterParam ? parseInt(chapterParam) : 1;
-  const { progress, loading: progressLoading } = useCurriculumProgress();
+  const { progress, loading: progressLoading } =
+    useCurriculumProgress('arithmetic');
 
   // Convert ChapterData to ChapterContentType
   const convertChapterData = (data: ChapterData): ChapterContentType => {

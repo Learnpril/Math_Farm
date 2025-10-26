@@ -26,6 +26,7 @@ import { installDOMErrorHandler } from './lib/domErrorHandler';
 import { PerformanceMonitor } from './components/PerformanceMonitor';
 import { ArithmeticCurriculumPage } from './features/curriculum/components/ArithmeticCurriculumPage';
 import { PreAlgebraCurriculumPage } from './features/curriculum/components/PreAlgebraCurriculumPage';
+import { AlgebraCurriculumPage } from './features/curriculum/components/AlgebraCurriculumPage';
 
 function App() {
   const handleGlobalError = (error: Error, errorId: string) => {
@@ -62,6 +63,13 @@ function App() {
                 path='/topic/pre-algebra'
                 component={() => {
                   window.location.href = '/topic/pre-algebra/curriculum/1';
+                  return null;
+                }}
+              />
+              <Route
+                path='/topic/algebra'
+                component={() => {
+                  window.location.href = '/topic/algebra/curriculum/1';
                   return null;
                 }}
               />
@@ -200,6 +208,18 @@ function App() {
                     loadingText='Loading curriculum...'
                   >
                     <PreAlgebraCurriculumPage />
+                  </LazyWrapper>
+                )}
+              />
+              <Route
+                path='/topic/algebra/curriculum/:chapter?'
+                component={() => (
+                  <LazyWrapper
+                    fallback='skeleton'
+                    skeletonVariant='page'
+                    loadingText='Loading curriculum...'
+                  >
+                    <AlgebraCurriculumPage />
                   </LazyWrapper>
                 )}
               />

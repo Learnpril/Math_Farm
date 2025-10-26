@@ -1,0 +1,39 @@
+{
+  "topic": "algebra",
+  "title": "Algebra I",
+  "estimatedHours": 120,
+  "difficulty": "high-school",
+  "prerequisites": [
+    "Pre-Algebra completion",
+    "Proficiency with integer operations",
+    "Understanding of coordinate plane",
+    "Basic geometry concepts"
+  ],
+  "objectives": [
+    "Solve linear and quadratic equations algebraically and graphically",
+    "Work with systems of equations using multiple methods",
+    "Factor polynomials and understand polynomial operations",
+    "Analyze and graph various function types",
+    "Apply algebraic concepts to real-world problem solving",
+    "Understand exponential growth and decay models",
+    "Work with rational expressions and equations",
+    "Analyze data using algebraic and statistical methods"
+  ],
+  "chapters": 8,
+  "tools": [
+    "LinearEquationSolver",
+    "SystemOfEquationsVisualizer",
+    "QuadraticGrapher",
+    "InequalityNumberLine"
+  ],
+  "chapterFiles": [
+    "chapter-01.json",
+    "chapter-02.json",
+    "chapter-03.json",
+    "chapter-04.json",
+    "chapter-05.json",
+    "chapter-06.json",
+    "chapter-07.json",
+    "chapter-08.json"
+  ]
+}

@@ -65,6 +65,11 @@ import { PythagoreanTheoremVisualizer } from './PythagoreanTheoremVisualizer';
 import { CoordinatePlaneInteractive } from './CoordinatePlaneInteractive';
 import { StatisticsDataVisualizer } from './StatisticsDataVisualizer';
 
+// Algebra specific components
+import { LinearEquationSolver } from './LinearEquationSolver';
+import { SystemOfEquationsVisualizer } from './SystemOfEquationsVisualizer';
+import { QuadraticGrapher } from './QuadraticGrapher';
+
 // Type for visual component props - flexible to accommodate different component prop types
 interface VisualComponentProps {
   className?: string;
@@ -164,6 +169,16 @@ const VISUAL_COMPONENTS: Record<string, VisualComponent> = {
 
   // Chapter 7: Data and Statistics Basics
   StatisticsDataVisualizer,
+
+  // Algebra Components
+  // Chapter 1: Linear Equations and Inequalities
+  LinearEquationSolver,
+
+  // Chapter 2: Systems of Linear Equations
+  SystemOfEquationsVisualizer,
+
+  // Chapter 4: Quadratic Equations and Functions
+  QuadraticGrapher,
 } as const;
 
 // Component name aliases for backward compatibility and alternative naming
@@ -227,6 +242,11 @@ const COMPONENT_ALIASES: Record<string, string> = {
   'pythagorean-theorem-visualizer': 'PythagoreanTheoremVisualizer',
   'coordinate-plane-interactive': 'CoordinatePlaneInteractive',
   'statistics-data-visualizer': 'StatisticsDataVisualizer',
+
+  // Algebra component aliases
+  'linear-equation-solver': 'LinearEquationSolver',
+  'system-of-equations-visualizer': 'SystemOfEquationsVisualizer',
+  'quadratic-grapher': 'QuadraticGrapher',
 
   // Legacy aliases for backward compatibility
   FractionSimplifier: 'EquivalentFractionBars',

@@ -1,0 +1,177 @@
+{
+  "id": "chapter-01",
+  "title": "Linear Equations and Inequalities",
+  "objectives": [
+    "Understand the concept of variables and algebraic expressions",
+    "Solve one-step and multi-step linear equations systematically",
+    "Apply the properties of equality to maintain equation balance",
+    "Solve and graph linear inequalities on number lines",
+    "Translate word problems into algebraic equations and inequalities",
+    "Check solutions by substitution and logical reasoning",
+    "Apply linear equations to real-world scenarios and problem-solving"
+  ],
+  "prerequisites": [
+    "Mastery of integer operations and order of operations",
+    "Understanding of the coordinate plane and graphing points",
+    "Ability to work with fractions and decimals",
+    "Basic understanding of inverse operations"
+  ],
+  "introduction": {
+    "context": "Algebra represents one of humanity's greatest intellectual achievements - the ability to work with unknown quantities and solve problems using symbolic reasoning. While arithmetic deals with specific numbers, algebra introduces variables that can represent any number, opening up infinite possibilities for mathematical modeling and problem-solving.",
+    "connection": "Linear equations appear everywhere in daily life: calculating costs (if each item costs $5, how many can I buy with $50?), planning travel (at 60 mph, how long to travel 240 miles?), managing finances (what salary do I need to save $10,000 per year?), and analyzing relationships between quantities. This chapter builds the foundation for all future algebraic thinking.",
+    "historicalContext": "The word 'algebra' comes from the Arabic 'al-jabr,' meaning 'reunion of broken parts,' from the 9th-century mathematician Al-Khwarizmi's treatise 'Al-Kitab al-mukhtasar fi hisab al-jabr wa'l-muqabala.' Ancient Babylonians solved quadratic equations around 2000 BCE, but modern algebraic notation developed slowly. François Viète (1540-1603) first used letters for variables, and René Descartes established much of our current notation. Today's algebraic methods represent centuries of mathematical refinement.",
+    "realWorldApplications": "Linear equations model countless real-world relationships: business (profit = revenue - costs), science (distance = rate × time), economics (supply and demand curves), engineering (load calculations), and everyday decisions (budgeting, planning, optimization). Mastering linear equations provides the foundation for advanced mathematics, science, and quantitative reasoning in any field."
+  },
+  "theory": {
+    "concepts": [
+      {
+        "title": "Variables and Algebraic Expressions",
+        "content": "A variable is a symbol (usually a letter) that represents an unknown or changing quantity. Think of variables as mathematical placeholders - containers that can hold different numerical values depending on the context.\n\nConsider the expression 3x + 5. Here, x is the variable, and the entire expression represents a mathematical relationship. If x = 2, then 3x + 5 = 3(2) + 5 = 11. If x = 10, then 3x + 5 = 3(10) + 5 = 35. The variable allows us to describe this pattern for any possible value.\n\nAlgebraic expressions combine variables, numbers (called constants), and operations. The expression 2x² - 7x + 3 contains:\n- Variables: x (appearing in different powers)\n- Constants: 2, -7, and 3\n- Operations: multiplication, subtraction, and addition\n\nTerms are the individual parts of an expression separated by addition or subtraction. In 4x² - 3x + 8, the terms are 4x², -3x, and 8. Like terms have identical variable parts and can be combined: 5x + 3x = 8x, but 5x + 3y cannot be simplified further.\n\nCoefficients are the numerical factors of variable terms. In 7x², the coefficient is 7. In -x, the coefficient is -1 (often written implicitly).\n\nUnderstanding these components allows us to manipulate expressions systematically and solve equations efficiently.",
+        "latex": "3x + 5, \\quad 2x^2 - 7x + 3, \\quad 4x^2 - 3x + 8",
+        "visuals": ["AlgebraicExpressionBuilder"]
+      },
+      {
+        "title": "Properties of Equality",
+        "content": "Equations are mathematical statements asserting that two expressions are equal. The equals sign (=) acts like a balance scale - whatever we do to one side, we must do to the other to maintain equality.\n\nThe fundamental properties of equality provide the rules for solving equations:\n\n**Addition Property**: If a = b, then a + c = b + c\nWe can add the same quantity to both sides of an equation without changing the solution.\n\n**Subtraction Property**: If a = b, then a - c = b - c\nWe can subtract the same quantity from both sides.\n\n**Multiplication Property**: If a = b, then ac = bc (where c ≠ 0)\nWe can multiply both sides by the same non-zero quantity.\n\n**Division Property**: If a = b, then a/c = b/c (where c ≠ 0)\nWe can divide both sides by the same non-zero quantity.\n\nThese properties allow us to isolate variables systematically. For example, to solve x + 7 = 15:\n- Use the subtraction property: subtract 7 from both sides\n- x + 7 - 7 = 15 - 7\n- x = 8\n\nThe key insight is that equations remain balanced when we perform the same operation on both sides. This principle transforms equation-solving from guesswork into a systematic, logical process.",
+        "latex": "\\text{If } a = b, \\text{ then } a + c = b + c",
+        "visuals": ["EquationStepsVisualizer"]
+      },
+      {
+        "title": "Solving Multi-Step Linear Equations",
+        "content": "Multi-step linear equations require a systematic approach, typically following the reverse order of operations (PEMDAS backwards). The goal is always to isolate the variable on one side of the equation.\n\nGeneral strategy for solving ax + b = c:\n1. Eliminate constants from the variable side (add/subtract)\n2. Eliminate coefficients from the variable (multiply/divide)\n3. Check the solution by substitution\n\nExample: Solve 3x - 8 = 19\nStep 1: Add 8 to both sides to eliminate the constant\n3x - 8 + 8 = 19 + 8\n3x = 27\n\nStep 2: Divide both sides by 3 to eliminate the coefficient\n3x ÷ 3 = 27 ÷ 3\nx = 9\n\nStep 3: Check by substituting x = 9 into the original equation\n3(9) - 8 = 27 - 8 = 19 ✓\n\nFor equations with variables on both sides, like 5x - 3 = 2x + 12:\n1. Collect all variable terms on one side: 5x - 2x = 12 + 3\n2. Simplify: 3x = 15\n3. Solve: x = 5\n\nFor equations with fractions or decimals, consider clearing them first by multiplying by the least common denominator or appropriate power of 10.\n\nThe systematic approach ensures accuracy and builds confidence in algebraic manipulation.",
+        "latex": "3x - 8 = 19 \\Rightarrow x = 9",
+        "visuals": ["LinearEquationSolver"]
+      },
+      {
+        "title": "Linear Inequalities",
+        "content": "Linear inequalities compare expressions using symbols like <, >, ≤, or ≥ instead of =. While equations have specific solutions, inequalities typically have ranges of solutions.\n\nSolving inequalities follows the same steps as equations, with one crucial exception: when multiplying or dividing both sides by a negative number, the inequality symbol must be reversed.\n\nExample: Solve 2x + 5 > 13\nStep 1: Subtract 5 from both sides\n2x + 5 - 5 > 13 - 5\n2x > 8\n\nStep 2: Divide both sides by 2 (positive, so no sign change)\n2x ÷ 2 > 8 ÷ 2\nx > 4\n\nThis means x can be any number greater than 4.\n\nExample with sign reversal: Solve -3x + 7 ≤ 16\nStep 1: Subtract 7 from both sides\n-3x ≤ 9\n\nStep 2: Divide by -3 (negative, so reverse the inequality)\n-3x ÷ (-3) ≥ 9 ÷ (-3)\nx ≥ -3\n\nGraphing inequalities on a number line uses:\n- Open circles (○) for < or > (value not included)\n- Closed circles (●) for ≤ or ≥ (value included)\n- Arrows showing the direction of the solution set\n\nCompound inequalities like -2 < x ≤ 5 represent ranges between two values.",
+        "latex": "2x + 5 > 13 \\Rightarrow x > 4",
+        "visuals": ["InequalityNumberLine"]
+      }
+    ]
+  },
+  "examples": [
+    {
+      "problem": "Solve the equation: 4x - 7 = 21",
+      "solution": "x = 7",
+      "steps": [
+        "Start with the equation: 4x - 7 = 21",
+        "Add 7 to both sides: 4x - 7 + 7 = 21 + 7",
+        "Simplify: 4x = 28",
+        "Divide both sides by 4: 4x ÷ 4 = 28 ÷ 4",
+        "Solution: x = 7",
+        "Check: 4(7) - 7 = 28 - 7 = 21 ✓"
+      ],
+      "latex": "4x - 7 = 21 \\Rightarrow x = 7"
+    },
+    {
+      "problem": "Solve the inequality: -2x + 9 ≥ 15",
+      "solution": "x ≤ -3",
+      "steps": [
+        "Start with: -2x + 9 ≥ 15",
+        "Subtract 9 from both sides: -2x + 9 - 9 ≥ 15 - 9",
+        "Simplify: -2x ≥ 6",
+        "Divide by -2 (reverse inequality): -2x ÷ (-2) ≤ 6 ÷ (-2)",
+        "Solution: x ≤ -3",
+        "Check with x = -4: -2(-4) + 9 = 8 + 9 = 17 ≥ 15 ✓"
+      ],
+      "latex": "-2x + 9 \\geq 15 \\Rightarrow x \\leq -3"
+    },
+    {
+      "problem": "A cell phone plan costs $30 per month plus $0.10 per text message. If the monthly bill is $45, how many text messages were sent?",
+      "solution": "150 text messages",
+      "steps": [
+        "Let x = number of text messages",
+        "Set up equation: 30 + 0.10x = 45",
+        "Subtract 30 from both sides: 0.10x = 15",
+        "Divide by 0.10: x = 150",
+        "Check: 30 + 0.10(150) = 30 + 15 = 45 ✓"
+      ],
+      "latex": "30 + 0.10x = 45 \\Rightarrow x = 150"
+    }
+  ],
+  "practice": [
+    {
+      "id": "algebra-01-01",
+      "type": "fill-in",
+      "difficulty": 2,
+      "problem": "Solve: 3x + 8 = 26",
+      "correct": "6",
+      "explanation": "Subtract 8 from both sides: 3x = 18. Then divide by 3: x = 6.",
+      "hints": [
+        "First isolate the term with x",
+        "What operation undoes addition?",
+        "What operation undoes multiplication?"
+      ]
+    },
+    {
+      "id": "algebra-01-02",
+      "type": "fill-in",
+      "difficulty": 3,
+      "problem": "Solve: 5x - 12 = 2x + 9",
+      "correct": "7",
+      "explanation": "Subtract 2x from both sides: 3x - 12 = 9. Add 12: 3x = 21. Divide by 3: x = 7.",
+      "hints": [
+        "Get all x terms on one side",
+        "Get all constants on the other side",
+        "Then solve for x"
+      ]
+    },
+    {
+      "id": "algebra-01-03",
+      "type": "multiple-choice",
+      "difficulty": 2,
+      "problem": "Solve: 2x + 7 < 19",
+      "options": ["x < 6", "x > 6", "x < 12", "x > 12"],
+      "correct": 0,
+      "explanation": "Subtract 7: 2x < 12. Divide by 2: x < 6.",
+      "hints": [
+        "Treat inequalities like equations",
+        "Just remember the direction of the inequality",
+        "When do you flip the inequality sign?"
+      ]
+    },
+    {
+      "id": "algebra-01-04",
+      "type": "multiple-choice",
+      "difficulty": 3,
+      "problem": "Solve: -4x + 5 ≥ 17",
+      "options": ["x ≤ -3", "x ≥ -3", "x ≤ 3", "x ≥ 3"],
+      "correct": 0,
+      "explanation": "Subtract 5: -4x ≥ 12. Divide by -4 (flip inequality): x ≤ -3.",
+      "hints": [
+        "Isolate the x term first",
+        "When dividing by negative, flip the inequality",
+        "Check your answer by substituting back"
+      ]
+    }
+  ],
+  "tools": ["LinearEquationSolver", "InequalityNumberLine"],
+  "commonPitfalls": {
+    "title": "Common Mistakes in Linear Equations",
+    "pitfalls": [
+      {
+        "title": "Forgetting to Reverse Inequality Signs",
+        "description": "When multiplying or dividing both sides of an inequality by a negative number, students often forget to reverse the inequality symbol.",
+        "example": "Solving -2x > 6: Incorrect: x > -3, Correct: x < -3",
+        "prevention": "Always check: 'Am I multiplying/dividing by a negative?' If yes, flip the sign."
+      },
+      {
+        "title": "Not Checking Solutions",
+        "description": "Students solve equations but don't verify their answers by substituting back into the original equation.",
+        "example": "For x + 5 = 12, if x = 8, check: 8 + 5 = 13 ≠ 12, so x = 8 is wrong.",
+        "prevention": "Always substitute your answer back into the original equation to verify."
+      },
+      {
+        "title": "Incorrect Distribution",
+        "description": "When distributing negative signs or coefficients, students often make sign errors.",
+        "example": "-(3x - 4) should become -3x + 4, not -3x - 4",
+        "prevention": "Distribute carefully, paying attention to signs. Check each term individually."
+      }
+    ]
+  },
+  "assessment": {
+    "masteryThreshold": 0.8,
+    "requiredProblems": 4
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "id": "chapter-05",
+  "title": "Exponential and Radical Functions",
+  "objectives": [
+    "Understand exponential functions and their properties",
+    "Graph exponential functions and identify key features",
+    "Solve exponential equations using logarithms",
+    "Work with radical functions and expressions",
+    "Simplify radical expressions and solve radical equations",
+    "Apply exponential and radical functions to real-world problems",
+    "Understand the relationship between exponential and logarithmic functions"
+  ],
+  "prerequisites": [
+    "Mastery of exponent rules and properties",
+    "Understanding of function notation and graphing",
+    "Ability to solve quadratic equations",
+    "Knowledge of inverse functions"
+  ],
+  "introduction": {
+    "context": "Exponential and radical functions represent some of the most powerful mathematical tools for modeling real-world phenomena. From population growth and radioactive decay to compound interest and earthquake measurements, these functions describe relationships where quantities change at rates proportional to their current values or involve roots and fractional exponents.",
+    "connection": "Exponential functions appear in finance (compound interest, investment growth), science (population dynamics, radioactive decay), technology (computer processing power, data growth), and everyday life (viral spread, learning curves). Radical functions model relationships involving square roots, cube roots, and other fractional powers.",
+    "historicalContext": "Exponential functions were first studied systematically by John Napier (1550-1617) in his work on logarithms. The number e was discovered by Jacob Bernoulli while studying compound interest. Radical notation evolved over centuries, with the modern radical symbol (√) introduced by Christoff Rudolff in 1525. These functions became central to calculus and advanced mathematics.",
+    "realWorldApplications": "Exponential functions model growth and decay processes in biology, chemistry, physics, and economics. Radical functions appear in physics (relating area to radius, volume to surface area), engineering (stress-strain relationships), and statistics (standard deviation calculations)."
+  },
+  "theory": {
+    "concepts": [
+      {
+        "title": "Exponential Functions and Their Properties",
+        "content": "An exponential function has the form f(x) = a·b^x, where a ≠ 0, b > 0, and b ≠ 1.\n\nKey components:\n- **Base (b)**: Determines the growth or decay rate\n- **Initial value (a)**: The y-intercept, representing the starting amount\n- **Exponent (x)**: The independent variable\n\nProperties of exponential functions:\n- Domain: All real numbers\n- Range: (0, ∞) if a > 0, (-∞, 0) if a < 0\n- Y-intercept: (0, a)\n- Horizontal asymptote: y = 0\n- Always passes through (0, a) and (1, ab)\n\nBehavior based on base:\n- If b > 1: Exponential growth (increasing function)\n- If 0 < b < 1: Exponential decay (decreasing function)\n\nThe natural exponential function f(x) = e^x uses Euler's number e ≈ 2.718 as the base. This function has unique properties that make it fundamental in calculus and mathematical modeling.\n\nExponential functions grow (or decay) at rates proportional to their current values, making them ideal for modeling compound interest, population growth, radioactive decay, and many other natural phenomena.",
+        "latex": "f(x) = a \\cdot b^x, \\quad f(x) = e^x",
+        "visuals": ["ExponentGrowthChart"]
+      },
+      {
+        "title": "Solving Exponential Equations",
+        "content": "Exponential equations contain variables in the exponent. Solving them often requires logarithms, which are the inverse operations of exponentials.\n\nBasic strategies:\n\n**Same Base Method**: If both sides can be written with the same base, set exponents equal.\nExample: 2^(x+1) = 2^5\nSolution: x + 1 = 5, so x = 4\n\n**Taking Logarithms**: When bases are different, take the logarithm of both sides.\nExample: 3^x = 15\nTake log of both sides: log(3^x) = log(15)\nUse power rule: x·log(3) = log(15)\nSolve: x = log(15)/log(3) ≈ 2.465\n\n**Natural Logarithm**: For equations with base e, use ln (natural log).\nExample: e^(2x) = 50\nTake natural log: ln(e^(2x)) = ln(50)\nSimplify: 2x = ln(50)\nSolve: x = ln(50)/2 ≈ 1.956\n\n**Quadratic Form**: Some exponential equations can be solved by substitution.\nExample: e^(2x) - 5e^x + 6 = 0\nLet u = e^x: u² - 5u + 6 = 0\nFactor: (u - 2)(u - 3) = 0\nSo u = 2 or u = 3\nTherefore: e^x = 2 or e^x = 3\nSolutions: x = ln(2) or x = ln(3)",
+        "latex": "3^x = 15 \\Rightarrow x = \\frac{\\log(15)}{\\log(3)}",
+        "visuals": []
+      },
+      {
+        "title": "Radical Functions and Expressions",
+        "content": "A radical function contains a variable under a radical sign (√, ∛, etc.). The most common is the square root function f(x) = √x.\n\nProperties of f(x) = √x:\n- Domain: [0, ∞) (non-negative real numbers)\n- Range: [0, ∞)\n- Always increasing\n- Passes through (0, 0) and (1, 1)\n- Concave down (rate of increase slows)\n\nGeneral radical function: f(x) = a√(bx + c) + d\n- **a**: Vertical stretch/compression and reflection\n- **b**: Horizontal stretch/compression\n- **c**: Horizontal shift\n- **d**: Vertical shift\n\nSimplifying radical expressions:\n- √(ab) = √a · √b (product rule)\n- √(a/b) = √a / √b (quotient rule)\n- √(a²) = |a| (for even roots)\n- ⁿ√(aⁿ) = a (for odd roots)\n\nRationalizing denominators:\n- For √a in denominator: multiply by √a/√a\n- For (a + √b): multiply by conjugate (a - √b)/(a - √b)\n\nExample: Simplify √50\n√50 = √(25 · 2) = √25 · √2 = 5√2",
+        "latex": "f(x) = \\sqrt{x}, \\quad \\sqrt{50} = 5\\sqrt{2}",
+        "visuals": []
+      }
+    ]
+  },
+  "examples": [
+    {
+      "problem": "Solve: 2^(x+3) = 32",
+      "solution": "x = 2",
+      "steps": [
+        "Recognize that 32 = 2^5",
+        "Rewrite equation: 2^(x+3) = 2^5",
+        "Since bases are equal, exponents must be equal: x + 3 = 5",
+        "Solve: x = 5 - 3 = 2",
+        "Check: 2^(2+3) = 2^5 = 32 ✓"
+      ],
+      "latex": "2^{x+3} = 32 = 2^5"
+    },
+    {
+      "problem": "Simplify: √72",
+      "solution": "6√2",
+      "steps": [
+        "Find the prime factorization: 72 = 36 × 2 = 6² × 2",
+        "Apply the product rule: √72 = √(36 × 2) = √36 × √2",
+        "Simplify: √36 × √2 = 6√2"
+      ],
+      "latex": "\\sqrt{72} = \\sqrt{36 \\times 2} = 6\\sqrt{2}"
+    }
+  ],
+  "practice": [
+    {
+      "id": "algebra-05-01",
+      "type": "fill-in",
+      "difficulty": 2,
+      "problem": "Solve: 3^x = 27",
+      "correct": "x = 3",
+      "explanation": "Recognize that 27 = 3³, so 3^x = 3³. Since the bases are equal, the exponents must be equal: x = 3.",
+      "hints": [
+        "Express 27 as a power of 3",
+        "When bases are equal, set the exponents equal",
+        "27 = 3 × 3 × 3 = 3³"
+      ]
+    },
+    {
+      "id": "algebra-05-02",
+      "type": "fill-in",
+      "difficulty": 3,
+      "problem": "Simplify: √48",
+      "correct": "4√3",
+      "explanation": "Factor 48 = 16 × 3. Since √16 = 4, we have √48 = √(16 × 3) = √16 × √3 = 4√3.",
+      "hints": [
+        "Look for perfect square factors of 48",
+        "48 = 16 × 3, and 16 is a perfect square",
+        "Use the property √(ab) = √a × √b"
+      ]
+    },
+    {
+      "id": "algebra-05-03",
+      "type": "multiple-choice",
+      "difficulty": 3,
+      "problem": "Which function represents exponential decay?",
+      "options": ["f(x) = 2^x", "f(x) = (1/2)^x", "f(x) = x²", "f(x) = 2x"],
+      "correct": 1,
+      "explanation": "Exponential decay occurs when the base is between 0 and 1. Since 1/2 < 1, f(x) = (1/2)^x represents exponential decay.",
+      "hints": [
+        "Exponential decay has a base between 0 and 1",
+        "Exponential growth has a base greater than 1",
+        "Check which option has a base less than 1"
+      ]
+    },
+    {
+      "id": "algebra-05-04",
+      "type": "fill-in",
+      "difficulty": 4,
+      "problem": "Solve: 2^(x+1) = 16",
+      "correct": "x = 3",
+      "explanation": "Since 16 = 2⁴, we have 2^(x+1) = 2⁴. Setting exponents equal: x + 1 = 4, so x = 3.",
+      "hints": [
+        "Express 16 as a power of 2",
+        "16 = 2 × 2 × 2 × 2 = 2⁴",
+        "Set the exponents equal and solve for x"
+      ]
+    }
+  ],
+  "tools": ["ExponentGrowthChart"],
+  "assessment": {
+    "masteryThreshold": 0.8,
+    "requiredProblems": 4
+  }
+}

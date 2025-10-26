@@ -230,6 +230,28 @@ export const VISUAL_DESCRIPTIONS: Record<string, VisualDescription> = {
       'Interactive tool for exploring **Quantitative** and **Qualitative** data types, calculating mean, median, and mode.',
     category: 'statistics',
   },
+
+  // Algebra Components
+  // Chapter 1: Linear Equations and Inequalities
+  LinearEquationSolver: {
+    description:
+      'Step-by-step solver for linear equations showing each algebraic manipulation with detailed explanations.',
+    category: 'algebra',
+  },
+
+  // Chapter 2: Systems of Linear Equations
+  SystemOfEquationsVisualizer: {
+    description:
+      'Interactive tool for solving systems of equations using substitution, elimination, and graphical methods.',
+    category: 'algebra',
+  },
+
+  // Chapter 4: Quadratic Equations and Functions
+  QuadraticGrapher: {
+    description:
+      'Dynamic graphing tool for quadratic functions showing vertex, intercepts, axis of symmetry, and key features.',
+    category: 'algebra',
+  },
 };
 
 // Component name aliases for descriptions (matches VisualComponentRegistry)
@@ -275,6 +297,11 @@ const DESCRIPTION_ALIASES: Record<string, string> = {
   'percentage-change-visualizer': 'PercentageChangeVisualizer',
   'ratio-to-percentage-converter': 'RatioToPercentageConverter',
   'statistics-data-visualizer': 'StatisticsDataVisualizer',
+
+  // Algebra component aliases
+  'linear-equation-solver': 'LinearEquationSolver',
+  'system-of-equations-visualizer': 'SystemOfEquationsVisualizer',
+  'quadratic-grapher': 'QuadraticGrapher',
 
   // Legacy aliases
   FractionSimplifier: 'EquivalentFractionBars',

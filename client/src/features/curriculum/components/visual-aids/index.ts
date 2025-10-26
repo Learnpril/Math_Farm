@@ -57,3 +57,8 @@ export { GeometryShapeCalculator } from './GeometryShapeCalculator';
 export { PythagoreanTheoremVisualizer } from './PythagoreanTheoremVisualizer';
 export { CoordinatePlaneInteractive } from './CoordinatePlaneInteractive';
 export { StatisticsDataVisualizer } from './StatisticsDataVisualizer';
+
+// Algebra visual components
+export { LinearEquationSolver } from './LinearEquationSolver';
+export { SystemOfEquationsVisualizer } from './SystemOfEquationsVisualizer';
+export { QuadraticGrapher } from './QuadraticGrapher';

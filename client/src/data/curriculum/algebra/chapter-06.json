@@ -1,0 +1,128 @@
+{
+  "id": "chapter-06",
+  "title": "Rational Functions and Equations",
+  "objectives": [
+    "Understand rational functions and their properties",
+    "Identify domain restrictions and asymptotes",
+    "Graph rational functions accurately",
+    "Solve rational equations algebraically",
+    "Simplify complex rational expressions",
+    "Apply rational functions to real-world problems",
+    "Work with inverse and joint variation"
+  ],
+  "prerequisites": [
+    "Mastery of polynomial operations and factoring",
+    "Understanding of function graphing and transformations",
+    "Ability to solve quadratic equations",
+    "Knowledge of asymptotes and discontinuities"
+  ],
+  "introduction": {
+    "context": "Rational functions, which are ratios of polynomials, appear frequently in mathematics and real-world applications. They model relationships involving rates, proportions, and inverse relationships, making them essential for understanding physics, engineering, economics, and many other fields.",
+    "connection": "Rational functions model inverse relationships (as one quantity increases, another decreases proportionally), efficiency curves, concentration problems in chemistry, electrical resistance, and economic supply-demand relationships. Understanding these functions is crucial for advanced mathematics and scientific applications.",
+    "historicalContext": "Rational functions have been studied since ancient times, with early work on proportions and ratios by Greek mathematicians. The systematic study of rational functions developed alongside algebra in the Renaissance. Modern applications in engineering and science have made rational functions indispensable in mathematical modeling.",
+    "realWorldApplications": "Rational functions appear in physics (inverse square laws, lens equations), chemistry (reaction rates, concentration), economics (cost-benefit analysis), engineering (efficiency curves), and medicine (drug concentration over time)."
+  },
+  "theory": {
+    "concepts": [
+      {
+        "title": "Introduction to Rational Functions",
+        "content": "A rational function is a function that can be written as the ratio of two polynomials:\n\nf(x) = P(x)/Q(x)\n\nwhere P(x) and Q(x) are polynomials and Q(x) ≠ 0.\n\nKey characteristics:\n- **Domain**: All real numbers except where Q(x) = 0\n- **Vertical asymptotes**: Occur where Q(x) = 0 but P(x) ≠ 0\n- **Horizontal asymptotes**: Determined by the degrees of P(x) and Q(x)\n- **Holes**: Occur where both P(x) = 0 and Q(x) = 0 (removable discontinuities)\n\nSimple rational functions:\n- f(x) = 1/x (reciprocal function)\n- f(x) = 1/x² (reciprocal squared function)\n- f(x) = (x+1)/(x-2) (linear rational function)\n\nThe reciprocal function f(x) = 1/x serves as the parent function for rational functions. It has:\n- Domain: (-∞, 0) ∪ (0, ∞)\n- Range: (-∞, 0) ∪ (0, ∞)\n- Vertical asymptote: x = 0\n- Horizontal asymptote: y = 0\n- Decreasing on (-∞, 0) and (0, ∞)\n\nRational functions often model inverse relationships where the product of two variables remains constant: xy = k, or y = k/x.",
+        "latex": "f(x) = \\frac{P(x)}{Q(x)}, \\quad f(x) = \\frac{1}{x}",
+        "visuals": []
+      },
+      {
+        "title": "Finding Asymptotes",
+        "content": "Asymptotes are lines that a function approaches but never touches. Rational functions can have vertical, horizontal, and oblique asymptotes.\n\n**Vertical Asymptotes**:\nOccur where the denominator equals zero but the numerator doesn't.\nTo find: Set Q(x) = 0 and solve for x.\n\nExample: f(x) = (x+1)/(x-3)\nVertical asymptote: x = 3\n\n**Horizontal Asymptotes**:\nDetermined by comparing degrees of numerator and denominator.\n- If degree of P(x) < degree of Q(x): y = 0\n- If degree of P(x) = degree of Q(x): y = ratio of leading coefficients\n- If degree of P(x) > degree of Q(x): no horizontal asymptote\n\nExample: f(x) = (2x² + 1)/(3x² - 4)\nBoth degrees are 2, so y = 2/3\n\n**Oblique (Slant) Asymptotes**:\nOccur when degree of numerator is exactly one more than degree of denominator.\nFound by polynomial long division.\n\nExample: f(x) = (x² + 1)/(x - 2)\nDividing: x² + 1 = (x - 2)(x + 2) + 5\nSo f(x) = x + 2 + 5/(x - 2)\nOblique asymptote: y = x + 2\n\n**Holes (Removable Discontinuities)**:\nOccur when both numerator and denominator have a common factor.\n\nExample: f(x) = (x² - 4)/(x - 2) = (x + 2)(x - 2)/(x - 2) = x + 2 (x ≠ 2)\nHole at (2, 4)",
+        "latex": "f(x) = \\frac{2x^2 + 1}{3x^2 - 4} \\text{ has } y = \\frac{2}{3}",
+        "visuals": []
+      },
+      {
+        "title": "Solving Rational Equations",
+        "content": "Rational equations contain fractions with variables in the denominator. The key strategy is to eliminate fractions by multiplying by the least common denominator (LCD).\n\nGeneral steps:\n1. Find the LCD of all fractions\n2. Multiply every term by the LCD\n3. Solve the resulting polynomial equation\n4. Check solutions in the original equation (exclude values that make denominators zero)\n\nExample: Solve 3/x + 2/(x-1) = 5\n\nStep 1: LCD = x(x-1)\nStep 2: Multiply by LCD:\nx(x-1) · 3/x + x(x-1) · 2/(x-1) = x(x-1) · 5\n3(x-1) + 2x = 5x(x-1)\n3x - 3 + 2x = 5x² - 5x\n5x - 3 = 5x² - 5x\n\nStep 3: Rearrange:\n0 = 5x² - 10x + 3\n\nUsing quadratic formula:\nx = (10 ± √(100-60))/10 = (10 ± √40)/10 = (10 ± 2√10)/10 = (5 ± √10)/5\n\nStep 4: Check both solutions in original equation (both are valid since neither makes a denominator zero).\n\n**Extraneous Solutions**: Always check solutions because multiplying by expressions containing variables can introduce false solutions.",
+        "latex": "\\frac{3}{x} + \\frac{2}{x-1} = 5",
+        "visuals": []
+      }
+    ]
+  },
+  "examples": [
+    {
+      "problem": "Find the vertical and horizontal asymptotes of f(x) = (2x-1)/(x+3)",
+      "solution": "Vertical: x = -3, Horizontal: y = 2",
+      "steps": [
+        "For vertical asymptote: set denominator = 0",
+        "x + 3 = 0, so x = -3",
+        "For horizontal asymptote: compare degrees",
+        "Both numerator and denominator have degree 1",
+        "Ratio of leading coefficients: 2/1 = 2",
+        "So horizontal asymptote is y = 2"
+      ],
+      "latex": "f(x) = \\frac{2x-1}{x+3}"
+    }
+  ],
+  "practice": [
+    {
+      "id": "algebra-06-01",
+      "type": "fill-in",
+      "difficulty": 3,
+      "problem": "Find the domain of f(x) = (x+1)/(x²-4)",
+      "correct": "All real numbers except x = 2 and x = -2",
+      "explanation": "Set the denominator ≠ 0: x² - 4 ≠ 0. Factor: (x-2)(x+2) ≠ 0. So x ≠ 2 and x ≠ -2.",
+      "hints": [
+        "The domain excludes values that make the denominator zero",
+        "Set x² - 4 = 0 and solve for x",
+        "Factor x² - 4 as a difference of squares"
+      ]
+    },
+    {
+      "id": "algebra-06-02",
+      "type": "multiple-choice",
+      "difficulty": 2,
+      "problem": "What is the horizontal asymptote of f(x) = (2x + 1)/(x - 3)?",
+      "options": ["y = 0", "y = 1", "y = 2", "y = 3"],
+      "correct": 2,
+      "explanation": "Since both numerator and denominator have degree 1, the horizontal asymptote is the ratio of leading coefficients: y = 2/1 = 2.",
+      "hints": [
+        "Compare the degrees of the numerator and denominator",
+        "When degrees are equal, divide the leading coefficients",
+        "The leading coefficient of 2x + 1 is 2, and of x - 3 is 1"
+      ]
+    },
+    {
+      "id": "algebra-06-03",
+      "type": "fill-in",
+      "difficulty": 4,
+      "problem": "Solve: 1/x + 2/(x-1) = 3",
+      "correct": "x = 1/2 or x = 1",
+      "explanation": "Multiply by LCD x(x-1): (x-1) + 2x = 3x(x-1). Simplify: 3x - 1 = 3x² - 3x. Rearrange: 3x² - 6x + 1 = 0. Use quadratic formula to get x = (6 ± √24)/6 = (3 ± √6)/3.",
+      "hints": [
+        "Find the LCD of the fractions",
+        "Multiply every term by the LCD",
+        "Solve the resulting quadratic equation"
+      ]
+    },
+    {
+      "id": "algebra-06-04",
+      "type": "multiple-choice",
+      "difficulty": 3,
+      "problem": "Which function has a vertical asymptote at x = -2?",
+      "options": [
+        "f(x) = 1/(x+2)",
+        "f(x) = 1/(x-2)",
+        "f(x) = (x+2)/x",
+        "f(x) = x/(x+2)"
+      ],
+      "correct": 0,
+      "explanation": "A vertical asymptote occurs where the denominator equals zero but the numerator doesn't. For f(x) = 1/(x+2), the denominator is zero when x = -2.",
+      "hints": [
+        "Vertical asymptotes occur where the denominator equals zero",
+        "Set each denominator equal to zero and solve",
+        "Check that the numerator is not also zero at that point"
+      ]
+    }
+  ],
+  "tools": ["calculator"],
+  "assessment": {
+    "masteryThreshold": 0.8,
+    "requiredProblems": 4
+  }
+}

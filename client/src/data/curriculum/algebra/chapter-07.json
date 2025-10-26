@@ -1,0 +1,120 @@
+{
+  "id": "chapter-07",
+  "title": "Data Analysis and Statistics",
+  "objectives": [
+    "Understand different types of data and variables",
+    "Calculate and interpret measures of central tendency",
+    "Determine measures of variability and spread",
+    "Create and interpret various types of graphs and charts",
+    "Understand correlation and causation",
+    "Analyze linear relationships using scatter plots",
+    "Apply statistical concepts to real-world problems"
+  ],
+  "prerequisites": [
+    "Basic arithmetic and fraction operations",
+    "Understanding of coordinate plane and graphing",
+    "Ability to work with formulas and substitution",
+    "Knowledge of linear functions"
+  ],
+  "introduction": {
+    "context": "Statistics and data analysis have become essential skills in our data-driven world. From understanding polls and surveys to making informed decisions based on evidence, statistical literacy helps us interpret information critically and draw meaningful conclusions from data.",
+    "connection": "Statistical concepts appear everywhere: sports statistics, medical research, business analytics, social media metrics, weather forecasting, and academic research. Understanding how to collect, analyze, and interpret data is crucial for informed citizenship and professional success.",
+    "historicalContext": "Statistics emerged from the need to collect and analyze data for governments and businesses. Key figures include John Graunt (17th century mortality tables), Carl Friedrich Gauss (normal distribution), and Florence Nightingale (statistical graphics). Modern statistics developed in the 20th century with contributions from Ronald Fisher, Karl Pearson, and others.",
+    "realWorldApplications": "Statistics are used in medicine (clinical trials, epidemiology), business (market research, quality control), sports (performance analysis), politics (polling, demographics), science (experimental design, hypothesis testing), and technology (machine learning, data mining)."
+  },
+  "theory": {
+    "concepts": [
+      {
+        "title": "Types of Data and Variables",
+        "content": "Understanding different types of data is fundamental to choosing appropriate statistical methods and creating meaningful analyses.\n\n**Quantitative Data** (Numerical):\nData that can be measured and expressed numerically.\n- **Discrete**: Countable values (number of students, cars, books)\n- **Continuous**: Measurable values that can take any value within a range (height, weight, temperature)\n\n**Qualitative Data** (Categorical):\nData that describes qualities or characteristics.\n- **Nominal**: Categories with no natural order (colors, names, types)\n- **Ordinal**: Categories with a natural order (grades: A, B, C, D, F; satisfaction: poor, fair, good, excellent)\n\nExamples:\n- Quantitative Discrete: Number of pets (0, 1, 2, 3, ...)\n- Quantitative Continuous: Height (5.2 ft, 5.75 ft, 6.1 ft, ...)\n- Qualitative Nominal: Favorite color (red, blue, green, ...)\n- Qualitative Ordinal: Movie rating (★, ★★, ★★★, ★★★★, ★★★★★)\n\nThe type of data determines which statistical measures are appropriate:\n- Quantitative data: Can calculate mean, median, mode, standard deviation\n- Qualitative data: Can find mode and create frequency tables, but mean doesn't make sense for categories",
+        "latex": "\\text{Data Types: Quantitative vs. Qualitative}",
+        "visuals": ["StatisticsDataVisualizer"]
+      },
+      {
+        "title": "Measures of Central Tendency",
+        "content": "Measures of central tendency describe the center or typical value of a dataset.\n\n**Mean (Average)**:\nSum of all values divided by the number of values.\nFormula: x̄ = (x₁ + x₂ + ... + xₙ)/n\n\nExample: Test scores: 85, 92, 78, 96, 89\nMean = (85 + 92 + 78 + 96 + 89)/5 = 440/5 = 88\n\n**Median**:\nMiddle value when data is arranged in order.\n- For odd number of values: middle value\n- For even number of values: average of two middle values\n\nExample: 78, 85, 89, 92, 96\nMedian = 89 (middle value)\n\n**Mode**:\nMost frequently occurring value(s).\n- Can have no mode, one mode, or multiple modes\n- Only measure that can be used with qualitative data\n\nExample: 2, 3, 3, 5, 7, 7, 7, 9\nMode = 7 (appears most frequently)\n\n**When to use each**:\n- Mean: Best for symmetric distributions without outliers\n- Median: Best for skewed distributions or when outliers are present\n- Mode: Best for categorical data or when identifying most common value\n\nOutliers (extreme values) can significantly affect the mean but have little impact on the median.",
+        "latex": "\\bar{x} = \\frac{\\sum x_i}{n}",
+        "visuals": []
+      },
+      {
+        "title": "Measures of Variability",
+        "content": "Measures of variability describe how spread out or scattered the data values are.\n\n**Range**:\nDifference between the maximum and minimum values.\nRange = Maximum - Minimum\n\nExample: Test scores: 78, 85, 89, 92, 96\nRange = 96 - 78 = 18\n\n**Interquartile Range (IQR)**:\nRange of the middle 50% of the data.\nIQR = Q₃ - Q₁ (third quartile minus first quartile)\n\nQuartiles divide data into four equal parts:\n- Q₁ (25th percentile): 25% of data below this value\n- Q₂ (50th percentile): Median\n- Q₃ (75th percentile): 75% of data below this value\n\n**Standard Deviation**:\nMeasures average distance of data points from the mean.\n- Larger standard deviation = more spread out data\n- Smaller standard deviation = data clustered closer to mean\n\nFormula: s = √[Σ(xᵢ - x̄)²/(n-1)]\n\nSteps to calculate:\n1. Find the mean\n2. Find each deviation from the mean (xᵢ - x̄)\n3. Square each deviation\n4. Sum the squared deviations\n5. Divide by (n-1)\n6. Take the square root\n\n**Variance**:\nSquare of the standard deviation (s²)\nMeasures average squared deviation from the mean",
+        "latex": "s = \\sqrt{\\frac{\\sum(x_i - \\bar{x})^2}{n-1}}",
+        "visuals": []
+      }
+    ]
+  },
+  "examples": [
+    {
+      "problem": "Find the mean, median, and mode of: 12, 15, 18, 15, 22, 19, 15",
+      "solution": "Mean = 16.6, Median = 15, Mode = 15",
+      "steps": [
+        "Arrange in order: 12, 15, 15, 15, 18, 19, 22",
+        "Mean: (12+15+15+15+18+19+22)/7 = 116/7 ≈ 16.6",
+        "Median: Middle value = 15 (4th value out of 7)",
+        "Mode: 15 appears most frequently (3 times)"
+      ],
+      "latex": "\\text{Data: } 12, 15, 18, 15, 22, 19, 15"
+    }
+  ],
+  "practice": [
+    {
+      "id": "algebra-07-01",
+      "type": "fill-in",
+      "difficulty": 2,
+      "problem": "Find the range of: 8, 12, 15, 9, 23, 11",
+      "correct": "15",
+      "explanation": "Range = Maximum - Minimum = 23 - 8 = 15",
+      "hints": [
+        "Find the largest value in the dataset",
+        "Find the smallest value in the dataset",
+        "Subtract: Range = Max - Min"
+      ]
+    },
+    {
+      "id": "algebra-07-02",
+      "type": "fill-in",
+      "difficulty": 2,
+      "problem": "Find the mean of: 4, 7, 9, 12, 8",
+      "correct": "8",
+      "explanation": "Mean = (4 + 7 + 9 + 12 + 8) ÷ 5 = 40 ÷ 5 = 8",
+      "hints": [
+        "Add all the values together",
+        "Count how many values there are",
+        "Divide the sum by the count"
+      ]
+    },
+    {
+      "id": "algebra-07-03",
+      "type": "multiple-choice",
+      "difficulty": 3,
+      "problem": "Which measure of central tendency is most affected by outliers?",
+      "options": ["Mean", "Median", "Mode", "Range"],
+      "correct": 0,
+      "explanation": "The mean is most affected by outliers because it uses all values in its calculation, while the median only depends on the middle value(s).",
+      "hints": [
+        "Consider how each measure is calculated",
+        "Think about which measure uses all data values",
+        "Outliers are extreme values that differ greatly from other data"
+      ]
+    },
+    {
+      "id": "algebra-07-04",
+      "type": "fill-in",
+      "difficulty": 3,
+      "problem": "Find the median of: 3, 8, 5, 12, 9, 7, 6",
+      "correct": "7",
+      "explanation": "First arrange in order: 3, 5, 6, 7, 8, 9, 12. The median is the middle value: 7",
+      "hints": [
+        "Arrange the data in ascending order first",
+        "Find the middle position (4th value out of 7)",
+        "The median is the value in the middle position"
+      ]
+    }
+  ],
+  "tools": ["StatisticsDataVisualizer"],
+  "assessment": {
+    "masteryThreshold": 0.8,
+    "requiredProblems": 4
+  }
+}

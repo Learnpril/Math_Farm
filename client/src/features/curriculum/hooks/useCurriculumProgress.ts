@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { CurriculumProgress, ChapterProgress } from '../types';
 
-const STORAGE_KEY = 'mathfarm_arithmetic_progress';
+const getStorageKey = (curriculum: string = 'arithmetic') =>
+  `mathfarm_${curriculum}_progress`;
 
 const defaultProgress: CurriculumProgress = {
   currentChapter: 999, // Allow access to all chapters - no locking
@@ -12,9 +13,11 @@ const defaultProgress: CurriculumProgress = {
   lastAccessed: new Date().toISOString(),
 };
 
-export function useCurriculumProgress() {
+export function useCurriculumProgress(curriculum: string = 'arithmetic') {
   const [progress, setProgress] = useState<CurriculumProgress>(defaultProgress);
   const [loading, setLoading] = useState(true);
+
+  const STORAGE_KEY = getStorageKey(curriculum);
 
   // Load progress from localStorage on mount
   useEffect(() => {
@@ -34,7 +37,7 @@ export function useCurriculumProgress() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [STORAGE_KEY]);
 
   // Save progress to localStorage whenever it changes
   useEffect(() => {
@@ -43,6 +46,7 @@ export function useCurriculumProgress() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
         console.log('Progress saved to localStorage:', {
           key: STORAGE_KEY,
+          curriculum,
           chapterProgress: Object.keys(progress.chapterProgress),
           saved: true,
         });
@@ -86,7 +90,11 @@ export function useCurriculumProgress() {
   );
 
   const completeChapter = useCallback((chapterId: string) => {
-    const chapterNum = parseInt(chapterId.split('-')[1]);
+    const chapterParts = chapterId.split('-');
+    if (chapterParts.length < 2) return;
+
+    const chapterNum = parseInt(chapterParts[1]);
+    if (isNaN(chapterNum)) return;
 
     setProgress(prev => ({
       ...prev,
@@ -95,9 +103,12 @@ export function useCurriculumProgress() {
       chapterProgress: {
         ...prev.chapterProgress,
         [chapterId]: {
-          ...prev.chapterProgress[chapterId],
           completed: true,
+          timeSpent: prev.chapterProgress[chapterId]?.timeSpent || 0,
+          practiceScores: prev.chapterProgress[chapterId]?.practiceScores || {},
           masteryLevel: 1,
+          attemptsCount: prev.chapterProgress[chapterId]?.attemptsCount || 0,
+          hintsUsed: prev.chapterProgress[chapterId]?.hintsUsed || 0,
         },
       },
       lastAccessed: new Date().toISOString(),
@@ -196,7 +207,6 @@ export function useCurriculumProgress() {
 
       const storedMastery = chapterProgress.masteryLevel;
       const calculatedMastery = calculateMasteryLevel(chapterId, totalProblems);
-      const finalMastery = storedMastery ?? calculatedMastery;
 
       // Debug: Log mastery calculation (can be removed in production)
       if (storedMastery !== calculatedMastery) {
