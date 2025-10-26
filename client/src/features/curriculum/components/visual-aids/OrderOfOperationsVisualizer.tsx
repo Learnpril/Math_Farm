@@ -182,9 +182,7 @@ export const OrderOfOperationsVisualizer: React.FC<
           {pemdas.map((item, index) => (
             <div
               key={item.letter}
-              className={`p-2 rounded-lg border-2 transition-all duration-300 ${
-                item.bg
-              } ${index <= 1 ? 'border-current' : 'border-transparent'}`}
+              className={`p-2 rounded-lg border-2 border-transparent transition-all duration-300 ${item.bg}`}
             >
               <div className={`text-lg font-bold ${item.color}`}>
                 {item.letter}

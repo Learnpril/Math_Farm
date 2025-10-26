@@ -48,9 +48,16 @@ import {
 
 // Pre-Algebra specific components
 import { IntegerNumberLine } from './IntegerNumberLine';
+import { AbsoluteValueVisualizer } from './AbsoluteValueVisualizer';
 import { OrderOfOperationsVisualizer } from './OrderOfOperationsVisualizer';
 import { AlgebraicExpressionBuilder } from './AlgebraicExpressionBuilder';
 import { EquationBalanceScale } from './EquationBalanceScale';
+import { EquationStepsVisualizer } from './EquationStepsVisualizer';
+import { InverseOperationsDemonstrator } from './InverseOperationsDemonstrator';
+import { SimpleInverseOperations } from './SimpleInverseOperations';
+import { SimpleRatioDisplay } from './SimpleRatioDisplay';
+import { DirectInverseComparison } from './DirectInverseComparison';
+import { UnitRateComparison } from './UnitRateComparison';
 import { InequalityNumberLine } from './InequalityNumberLine';
 import { ProportionCrossMultiply } from './ProportionCrossMultiply';
 import { GeometryShapeCalculator } from './GeometryShapeCalculator';
@@ -129,6 +136,7 @@ const VISUAL_COMPONENTS: Record<string, VisualComponent> = {
   // Pre-Algebra Components
   // Chapter 1: Integers and Operations
   IntegerNumberLine,
+  AbsoluteValueVisualizer,
 
   // Chapter 2: Order of Operations and Expressions
   OrderOfOperationsVisualizer,
@@ -136,6 +144,12 @@ const VISUAL_COMPONENTS: Record<string, VisualComponent> = {
 
   // Chapter 3: Equations and Inequalities
   EquationBalanceScale,
+  EquationStepsVisualizer,
+  InverseOperationsDemonstrator,
+  SimpleInverseOperations,
+  SimpleRatioDisplay,
+  DirectInverseComparison,
+  UnitRateComparison,
   InequalityNumberLine,
 
   // Chapter 4: Algebraic Proportions
@@ -197,9 +211,16 @@ const COMPONENT_ALIASES: Record<string, string> = {
 
   // Pre-Algebra component aliases
   'integer-number-line': 'IntegerNumberLine',
+  'absolute-value-visualizer': 'AbsoluteValueVisualizer',
   'order-of-operations-visualizer': 'OrderOfOperationsVisualizer',
   'algebraic-expression-builder': 'AlgebraicExpressionBuilder',
   'equation-balance-scale': 'EquationBalanceScale',
+  'equation-steps-visualizer': 'EquationStepsVisualizer',
+  'inverse-operations-demonstrator': 'InverseOperationsDemonstrator',
+  'simple-inverse-operations': 'SimpleInverseOperations',
+  'simple-ratio-display': 'SimpleRatioDisplay',
+  'direct-inverse-comparison': 'DirectInverseComparison',
+  'unit-rate-comparison': 'UnitRateComparison',
   'inequality-number-line': 'InequalityNumberLine',
   'proportion-cross-multiply': 'ProportionCrossMultiply',
   'geometry-shape-calculator': 'GeometryShapeCalculator',

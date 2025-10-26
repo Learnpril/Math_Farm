@@ -37,6 +37,7 @@ export const GeometryShapeCalculator: React.FC<
   const shapes = {
     rectangle: {
       name: 'Rectangle',
+      sides: 4,
       dimensions: ['length', 'width'],
       perimeterFormula: 'P = 2(l + w)',
       areaFormula: 'A = l × w',
@@ -44,6 +45,7 @@ export const GeometryShapeCalculator: React.FC<
     },
     square: {
       name: 'Square',
+      sides: 4,
       dimensions: ['side'],
       perimeterFormula: 'P = 4s',
       areaFormula: 'A = s²',
@@ -51,6 +53,7 @@ export const GeometryShapeCalculator: React.FC<
     },
     triangle: {
       name: 'Triangle',
+      sides: 3,
       dimensions: ['base', 'height', 'side1', 'side2'],
       perimeterFormula: 'P = a + b + c',
       areaFormula: 'A = ½bh',
@@ -58,6 +61,7 @@ export const GeometryShapeCalculator: React.FC<
     },
     circle: {
       name: 'Circle',
+      sides: 0,
       dimensions: ['radius'],
       perimeterFormula: 'C = 2πr',
       areaFormula: 'A = πr²',
@@ -65,6 +69,7 @@ export const GeometryShapeCalculator: React.FC<
     },
     parallelogram: {
       name: 'Parallelogram',
+      sides: 4,
       dimensions: ['base', 'height', 'side'],
       perimeterFormula: 'P = 2(a + b)',
       areaFormula: 'A = bh',
@@ -72,6 +77,7 @@ export const GeometryShapeCalculator: React.FC<
     },
     trapezoid: {
       name: 'Trapezoid',
+      sides: 4,
       dimensions: ['base1', 'base2', 'height', 'side1', 'side2'],
       perimeterFormula: 'P = a + b₁ + b₂ + c',
       areaFormula: 'A = ½(b₁ + b₂)h',
@@ -190,7 +196,7 @@ export const GeometryShapeCalculator: React.FC<
               textAnchor='middle'
               className='text-sm fill-current text-gray-700 dark:text-gray-300'
             >
-              {dimensions.length} × {dimensions.width}
+              length = {dimensions.length}, width = {dimensions.width}
             </text>
           </svg>
         );
@@ -218,7 +224,7 @@ export const GeometryShapeCalculator: React.FC<
               textAnchor='middle'
               className='text-sm fill-current text-gray-700 dark:text-gray-300'
             >
-              {dimensions.side}
+              side = {dimensions.side}
             </text>
           </svg>
         );
@@ -278,7 +284,64 @@ export const GeometryShapeCalculator: React.FC<
               textAnchor='middle'
               className='text-sm fill-current text-gray-700 dark:text-gray-300'
             >
-              r={dimensions.radius}
+              radius = {dimensions.radius}
+            </text>
+          </svg>
+        );
+
+      case 'parallelogram':
+        const baseWidth = Math.min(120, dimensions.base * 8);
+        const height = Math.min(60, dimensions.height * 8);
+        const skew = 20; // Skew amount for parallelogram effect
+        return (
+          <svg
+            width='200'
+            height='120'
+            className='border border-gray-300 dark:border-gray-600 rounded'
+          >
+            <polygon
+              points={`${40 + skew},${60 - height / 2} ${40 + skew + baseWidth},${60 - height / 2} ${40 + baseWidth},${60 + height / 2} ${40},${60 + height / 2}`}
+              fill='rgba(245, 158, 11, 0.3)'
+              stroke='#f59e0b'
+              strokeWidth='2'
+            />
+            <text
+              x='100'
+              y='65'
+              textAnchor='middle'
+              className='text-sm fill-current text-gray-700 dark:text-gray-300'
+            >
+              base = {dimensions.base}, height = {dimensions.height}
+            </text>
+          </svg>
+        );
+
+      case 'trapezoid':
+        const base1Width = Math.min(80, dimensions.base1 * 6);
+        const base2Width = Math.min(120, dimensions.base2 * 6);
+        const trapHeight = Math.min(60, dimensions.height * 8);
+        const centerX = 100;
+        const topY = 60 - trapHeight / 2;
+        const bottomY = 60 + trapHeight / 2;
+        return (
+          <svg
+            width='200'
+            height='120'
+            className='border border-gray-300 dark:border-gray-600 rounded'
+          >
+            <polygon
+              points={`${centerX - base1Width / 2},${topY} ${centerX + base1Width / 2},${topY} ${centerX + base2Width / 2},${bottomY} ${centerX - base2Width / 2},${bottomY}`}
+              fill='rgba(139, 69, 19, 0.3)'
+              stroke='#8b4513'
+              strokeWidth='2'
+            />
+            <text
+              x='100'
+              y='65'
+              textAnchor='middle'
+              className='text-sm fill-current text-gray-700 dark:text-gray-300'
+            >
+              b1 = {dimensions.base1}, b2 = {dimensions.base2}
             </text>
           </svg>
         );
@@ -326,6 +389,30 @@ export const GeometryShapeCalculator: React.FC<
               <div className='text-xs font-medium'>{shape.name}</div>
             </button>
           ))}
+        </div>
+      </div>
+
+      {/* Shape Information */}
+      <div className='mb-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg'>
+        <div className='flex items-center justify-center space-x-6 text-sm'>
+          <div className='text-center'>
+            <div className='text-2xl mb-1'>{shapes[selectedShape].icon}</div>
+            <div className='font-medium text-gray-900 dark:text-white'>
+              {shapes[selectedShape].name}
+            </div>
+          </div>
+          <div className='text-center'>
+            <div className='text-lg font-bold text-yellow-700 dark:text-yellow-300'>
+              {shapes[selectedShape].sides === 0
+                ? 'No sides'
+                : `${shapes[selectedShape].sides} sides`}
+            </div>
+            <div className='text-xs text-yellow-600 dark:text-yellow-400'>
+              {shapes[selectedShape].sides === 0
+                ? '(curved shape)'
+                : '(straight edges)'}
+            </div>
+          </div>
         </div>
       </div>
 

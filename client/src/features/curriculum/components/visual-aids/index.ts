@@ -41,9 +41,16 @@ export { RatioToPercentageConverter } from './RatioToPercentageConverter';
 
 // Pre-Algebra visual components
 export { IntegerNumberLine } from './IntegerNumberLine';
+export { AbsoluteValueVisualizer } from './AbsoluteValueVisualizer';
 export { OrderOfOperationsVisualizer } from './OrderOfOperationsVisualizer';
 export { AlgebraicExpressionBuilder } from './AlgebraicExpressionBuilder';
 export { EquationBalanceScale } from './EquationBalanceScale';
+export { EquationStepsVisualizer } from './EquationStepsVisualizer';
+export { InverseOperationsDemonstrator } from './InverseOperationsDemonstrator';
+export { SimpleInverseOperations } from './SimpleInverseOperations';
+export { SimpleRatioDisplay } from './SimpleRatioDisplay';
+export { DirectInverseComparison } from './DirectInverseComparison';
+export { UnitRateComparison } from './UnitRateComparison';
 export { InequalityNumberLine } from './InequalityNumberLine';
 export { ProportionCrossMultiply } from './ProportionCrossMultiply';
 export { GeometryShapeCalculator } from './GeometryShapeCalculator';
