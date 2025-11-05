@@ -52,6 +52,7 @@ export { SimpleRatioDisplay } from './SimpleRatioDisplay';
 export { DirectInverseComparison } from './DirectInverseComparison';
 export { UnitRateComparison } from './UnitRateComparison';
 export { InequalityNumberLine } from './InequalityNumberLine';
+export { SimpleInequalityGraph } from './SimpleInequalityGraph';
 export { ProportionCrossMultiply } from './ProportionCrossMultiply';
 export { GeometryShapeCalculator } from './GeometryShapeCalculator';
 export { PythagoreanTheoremVisualizer } from './PythagoreanTheoremVisualizer';

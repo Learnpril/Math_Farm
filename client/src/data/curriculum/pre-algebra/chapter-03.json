@@ -42,7 +42,7 @@
       },
       {
         "title": "Introduction to Inequalities: Relationships Beyond Equality",
-        "content": "While equations express exact equality, inequalities describe relationships where one quantity is greater than, less than, or possibly equal to another. Inequalities are essential for describing ranges, constraints, and conditions in real-world situations where exact equality isn't required or possible.\n\n**Inequality Symbols and Their Meanings:**\n\n**< (Less than)**: The left side is smaller than the right side\nExample: 3 < 7 means '3 is less than 7'\n\n**> (Greater than)**: The left side is larger than the right side\nExample: 9 > 4 means '9 is greater than 4'\n\n**≤ (Less than or equal to)**: The left side is smaller than or equal to the right side\nExample: x ≤ 5 means 'x is less than or equal to 5'\n\n**≥ (Greater than or equal to)**: The left side is larger than or equal to the right side\nExample: y ≥ -2 means 'y is greater than or equal to -2'\n\n**Reading Inequalities:**\nInequalities can be read from left to right or right to left:\n• x < 5 reads as 'x is less than 5' or '5 is greater than x'\n• 10 ≥ y reads as '10 is greater than or equal to y' or 'y is less than or equal to 10'\n\n**Solution Sets:**\nUnlike equations (which typically have one solution), inequalities usually have infinitely many solutions forming a **solution set**. For example:\n• x > 3 has solutions: 4, 5, 6, 3.1, 3.001, 100, etc.\n• y ≤ -1 has solutions: -1, -2, -3, -1.5, -100, etc.\n\n**Graphing Inequalities on Number Lines:**\n• **Open circle (○)**: Use for < or > (the endpoint is not included)\n• **Closed circle (●)**: Use for ≤ or ≥ (the endpoint is included)\n• **Arrow direction**: Points toward the values that satisfy the inequality\n\nInequalities model real-world constraints like speed limits (speed ≤ 65 mph), age requirements (age ≥ 18), temperature ranges (32°F ≤ temp ≤ 100°F), and budget constraints (cost ≤ $500).",
+        "content": "While equations express exact equality, inequalities describe relationships where one quantity is greater than, less than, or possibly equal to another. Inequalities are essential for describing ranges, constraints, and conditions in real-world situations where exact equality isn't required or possible.\n\n**Understanding the Four Inequality Symbols:**\n\n**< (Less Than)**\nMathematical meaning: The value on the left is smaller in magnitude than the value on the right.\nThink of it as: 'The left side has a smaller numerical value.'\nExample: 3 < 7 means '3 is less than 7' because 3 has a smaller value than 7.\nMemory tip: The symbol points toward the smaller number (like an arrow pointing left).\n\n**> (Greater Than)**\nMathematical meaning: The value on the left is larger in magnitude than the value on the right.\nThink of it as: 'The left side has a larger numerical value.'\nExample: 9 > 4 means '9 is greater than 4' because 9 has a larger value than 4.\nMemory tip: The symbol opens toward the larger number (like a mouth opening toward more food).\n\n**≤ (Less Than or Equal To)**\nMathematical meaning: The value on the left is either smaller than OR exactly equal to the value on the right.\nThink of it as: 'The left side is at most this value - it could be smaller or exactly this amount.'\nExample: x ≤ 5 means 'x is less than or equal to 5' - so x could be 5, 4, 3, 2, 1, 0, -1, etc.\nMemory tip: The line under the < symbol adds the 'equal to' possibility.\n\n**≥ (Greater Than or Equal To)**\nMathematical meaning: The value on the left is either larger than OR exactly equal to the value on the right.\nThink of it as: 'The left side is at least this value - it could be larger or exactly this amount.'\nExample: y ≥ -2 means 'y is greater than or equal to -2' - so y could be -2, -1, 0, 1, 2, 3, etc.\nMemory tip: The line under the > symbol adds the 'equal to' possibility.\n\n**Reading Inequalities:**\nInequalities can be read from left to right or right to left:\n• x < 5 reads as 'x is less than 5' or '5 is greater than x'\n• 10 ≥ y reads as '10 is greater than or equal to y' or 'y is less than or equal to 10'\n\n**Solution Sets:**\nUnlike equations (which typically have one solution), inequalities usually have infinitely many solutions forming a **solution set**. For example:\n• x > 3 has solutions: 4, 5, 6, 3.1, 3.001, 100, etc.\n• y ≤ -1 has solutions: -1, -2, -3, -1.5, -100, etc.\n\n**Graphing Inequalities on Number Lines:**\n• **Open circle (○)**: Use for < or > because the endpoint value is NOT included in the solution\n  - Think: 'The boundary point doesn't count, so we leave it open'\n• **Closed circle (●)**: Use for ≤ or ≥ because the endpoint value IS included in the solution\n  - Think: 'The boundary point counts, so we fill it in'\n• **Arrow direction**: Points toward all the values that satisfy the inequality\n  - For x < 5: arrow points left (toward smaller numbers)\n  - For x > 5: arrow points right (toward larger numbers)\n\nInequalities model real-world constraints like speed limits (speed ≤ 65 mph), age requirements (age ≥ 18), temperature ranges (32°F ≤ temp ≤ 100°F), and budget constraints (cost ≤ $500).",
         "latex": "x < a \\text{ or } x > a \\text{ or } x \\leq a \\text{ or } x \\geq a",
         "visuals": ["InequalityNumberLine"]
       },
@@ -84,8 +84,11 @@
         "Simplify: 3x ≤ 15",
         "Divide both sides by 3: 3x ÷ 3 ≤ 15 ÷ 3",
         "Solution: x ≤ 5",
-        "Graph: Draw a closed circle at 5 (since ≤ includes 5)",
-        "Draw an arrow pointing left (toward smaller values)",
+        "Graph Step 1: Draw a closed circle (●) at 5 on the number line",
+        "Why closed? Because ≤ means 'less than OR equal to' - the value 5 IS included in our solution",
+        "Graph Step 2: Draw an arrow pointing left from the circle",
+        "Why left? Because x ≤ 5 means x can be 5 or any number smaller than 5",
+        "The completed graph shows all values from 5 and extending infinitely to the left",
         "Check: Try x = 3: 3(3) - 7 = 2 ≤ 8 ✓"
       ],
       "commonErrors": [
@@ -93,7 +96,16 @@
         "Drawing the arrow in the wrong direction",
         "Forgetting to check the solution"
       ],
-      "latex": "3x - 7 \\leq 8 \\Rightarrow 3x \\leq 15 \\Rightarrow x \\leq 5"
+      "latex": "3x - 7 \\leq 8 \\Rightarrow 3x \\leq 15 \\Rightarrow x \\leq 5",
+      "visual": {
+        "type": "SimpleInequalityGraph",
+        "config": {
+          "inequality": "x ≤ 5",
+          "endpoint": 5,
+          "operator": "≤",
+          "range": 10
+        }
+      }
     },
     {
       "problem": "Solve: -2x + 9 = 3x - 6",

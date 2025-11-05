@@ -76,7 +76,21 @@
         "Two solutions: x = (-2 + 4)/6 = 2/6 = 1/3",
         "And: x = (-2 - 4)/6 = -6/6 = -1"
       ],
-      "latex": "x = \\frac{-2 \\pm \\sqrt{16}}{6} = \\frac{1}{3} \\text{ or } -1"
+      "latex": "x = \\frac{-2 \\pm \\sqrt{16}}{6} = \\frac{1}{3} \\text{ or } -1",
+      "visual": {
+        "type": "QuadraticGrapher",
+        "config": {
+          "equation": "3x² + 2x - 1",
+          "a": 3,
+          "b": 2,
+          "c": -1,
+          "showSolutions": true,
+          "solutions": [0.333, -1],
+          "showVertex": true,
+          "showIntercepts": true,
+          "range": 4
+        }
+      }
     }
   ],
   "practice": [

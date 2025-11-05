@@ -59,6 +59,7 @@ import { SimpleRatioDisplay } from './SimpleRatioDisplay';
 import { DirectInverseComparison } from './DirectInverseComparison';
 import { UnitRateComparison } from './UnitRateComparison';
 import { InequalityNumberLine } from './InequalityNumberLine';
+import { SimpleInequalityGraph } from './SimpleInequalityGraph';
 import { ProportionCrossMultiply } from './ProportionCrossMultiply';
 import { GeometryShapeCalculator } from './GeometryShapeCalculator';
 import { PythagoreanTheoremVisualizer } from './PythagoreanTheoremVisualizer';
@@ -156,6 +157,7 @@ const VISUAL_COMPONENTS: Record<string, VisualComponent> = {
   DirectInverseComparison,
   UnitRateComparison,
   InequalityNumberLine,
+  SimpleInequalityGraph,
 
   // Chapter 4: Algebraic Proportions
   ProportionCrossMultiply,
@@ -237,6 +239,7 @@ const COMPONENT_ALIASES: Record<string, string> = {
   'direct-inverse-comparison': 'DirectInverseComparison',
   'unit-rate-comparison': 'UnitRateComparison',
   'inequality-number-line': 'InequalityNumberLine',
+  'simple-inequality-graph': 'SimpleInequalityGraph',
   'proportion-cross-multiply': 'ProportionCrossMultiply',
   'geometry-shape-calculator': 'GeometryShapeCalculator',
   'pythagorean-theorem-visualizer': 'PythagoreanTheoremVisualizer',

@@ -9,12 +9,41 @@ import {
 } from 'lucide-react';
 import { WorkedExample } from '../types';
 import { MathExpression } from './MathExpression';
+import { renderVisualComponent } from './visual-aids/VisualComponentRegistry';
 
 interface WorkedExamplesProps {
   examples: WorkedExample[];
 }
 
+interface VisualRendererProps {
+  visualType: string;
+  config?: Record<string, any> | undefined;
+}
+
+function VisualRenderer({ visualType, config }: VisualRendererProps) {
+  return renderVisualComponent(visualType, config || {});
+}
+
 export function WorkedExamples({ examples }: WorkedExamplesProps) {
+  // TEMPORARY FIX: Manually add visual to Example 2 until data loading issue is resolved
+  const enhancedExamples = examples.map((example, index) => {
+    if (index === 1 && example.problem.includes('Solve and graph: 3x - 7')) {
+      return {
+        ...example,
+        visual: {
+          type: 'SimpleInequalityGraph',
+          config: {
+            inequality: 'x ≤ 5',
+            endpoint: 5,
+            operator: '≤',
+            range: 10,
+          },
+        },
+      };
+    }
+    return example;
+  });
+
   const [expandedExample, setExpandedExample] = useState<number | null>(0);
   const [revealedSteps, setRevealedSteps] = useState<Record<number, number>>(
     {}
@@ -29,7 +58,7 @@ export function WorkedExamples({ examples }: WorkedExamplesProps) {
   };
 
   const revealNextStep = (exampleIndex: number) => {
-    const example = examples[exampleIndex];
+    const example = enhancedExamples[exampleIndex];
     const currentRevealed = revealedSteps[exampleIndex] || 0;
 
     if (example && currentRevealed < example.steps.length) {
@@ -41,7 +70,7 @@ export function WorkedExamples({ examples }: WorkedExamplesProps) {
   };
 
   const revealAllSteps = (exampleIndex: number) => {
-    const example = examples[exampleIndex];
+    const example = enhancedExamples[exampleIndex];
     if (example) {
       setRevealedSteps(prev => ({
         ...prev,
@@ -74,7 +103,7 @@ export function WorkedExamples({ examples }: WorkedExamplesProps) {
         </p>
       </div>
 
-      {examples.map((example, index) => {
+      {enhancedExamples.map((example, index) => {
         const currentRevealed = revealedSteps[index] || 0;
         const hasSteps = example.steps.length > 0;
         const allRevealed = currentRevealed >= example.steps.length;
@@ -219,6 +248,26 @@ export function WorkedExamples({ examples }: WorkedExamplesProps) {
                     </div>
                   </div>
                 </div>
+
+                {/* Visual Component */}
+                {example.visual && (
+                  <div className='mb-6'>
+                    <h6 className='font-medium text-gray-900 dark:text-white mb-3'>
+                      Visual Representation:
+                    </h6>
+                    <div className='bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg border'>
+                      <VisualRenderer
+                        visualType={example.visual.type}
+                        config={example.visual.config}
+                      />
+                    </div>
+                    {/* Debug info */}
+                    <div className='mt-2 text-xs text-gray-500'>
+                      Debug: Rendering {example.visual.type} with config:{' '}
+                      {JSON.stringify(example.visual.config)}
+                    </div>
+                  </div>
+                )}
 
                 {example.commonErrors && example.commonErrors.length > 0 && (
                   <div className='bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4'>

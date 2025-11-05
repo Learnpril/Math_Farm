@@ -167,6 +167,33 @@ function validateWorkedExample(
     });
   }
 
+  // Validate visual property if provided
+  if (example.visual) {
+    if (typeof example.visual !== 'object') {
+      errors.push({
+        field: `${prefix}.visual`,
+        message: 'visual must be an object if provided',
+        value: example.visual,
+      });
+    } else {
+      if (!example.visual.type || typeof example.visual.type !== 'string') {
+        errors.push({
+          field: `${prefix}.visual.type`,
+          message: 'visual.type is required and must be a string',
+          value: example.visual.type,
+        });
+      }
+
+      if (example.visual.config && typeof example.visual.config !== 'object') {
+        errors.push({
+          field: `${prefix}.visual.config`,
+          message: 'visual.config must be an object if provided',
+          value: example.visual.config,
+        });
+      }
+    }
+  }
+
   return errors;
 }
 

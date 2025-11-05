@@ -59,6 +59,12 @@ export interface WorkedExample {
   steps: string[];
   commonErrors?: string[] | undefined;
   latex?: string | undefined;
+  visual?:
+    | {
+        type: string;
+        config?: Record<string, any>;
+      }
+    | undefined;
 }
 
 export interface PracticeProblem {

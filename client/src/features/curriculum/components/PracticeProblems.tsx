@@ -171,7 +171,7 @@ export function PracticeProblems({
 
     if (problem.type === 'multiple-choice') {
       isCorrect = selectedAnswer === problem.correct;
-    } else if (problem.type === 'fill-in') {
+    } else if (problem.type === 'fill-in' || problem.type === 'step-by-step') {
       isCorrect = await validateAnswer(selectedAnswer, problem.correct);
     }
 
@@ -424,7 +424,7 @@ export function PracticeProblems({
         )}
 
         {/* Fill-in Answer */}
-        {problem.type === 'fill-in' && (
+        {(problem.type === 'fill-in' || problem.type === 'step-by-step') && (
           <div className='mb-6'>
             <input
               type='text'
